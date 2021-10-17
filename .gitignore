@@ -77,4 +77,6 @@ typings/
 
 # Build folder
 build
+
 composer.phar
+vendor/

@@ -1,0 +1,66 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "070845c50111d075aea67e82232aba1c",
+    "packages": [
+        {
+            "name": "graceas/php-ics-reader",
+            "version": "v1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Graceas/php-ics-reader.git",
+                "reference": "a8490296455de036f59ddf663eda2ceec45cf18d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Graceas/php-ics-reader/zipball/a8490296455de036f59ddf663eda2ceec45cf18d",
+                "reference": "a8490296455de036f59ddf663eda2ceec45cf18d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "IcsReader": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Gorelov",
+                    "email": "grac.ga@gmail.com",
+                    "homepage": "https://github.com/Graceas",
+                    "role": "Developer"
+                }
+            ],
+            "description": "This class for parse iCal-file (*.ics).",
+            "keywords": [
+                "ical",
+                "ics",
+                "ics-parser"
+            ],
+            "support": {
+                "issues": "https://github.com/Graceas/php-ics-reader/issues",
+                "source": "https://github.com/Graceas/php-ics-reader/tree/v1.1"
+            },
+            "time": "2020-11-25T15:50:24+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.1.0"
+}

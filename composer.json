@@ -1,0 +1,5 @@
+{
+    "require": {
+        "graceas/php-ics-reader": "^1.1"
+    }
+}
