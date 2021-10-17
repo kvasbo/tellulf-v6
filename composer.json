@@ -1,5 +1,6 @@
 {
     "require": {
-        "graceas/php-ics-reader": "^1.1"
+        "graceas/php-ics-reader": "^1.1",
+        "twig/twig": "^2.0"
     }
 }
