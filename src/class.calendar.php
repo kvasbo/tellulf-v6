@@ -12,13 +12,11 @@ class Calendar
   public static function Fetch($calendar_url)
   {
     $data = file_get_contents($calendar_url);
-    // $ics = $reader->parse($data);
-
-    // echo $data;
 
     $iCal = new \iCal($data);
-    $events = $iCal->eventsByDateUntil("+30 days");
+    $events = @$iCal->eventsByDateUntil("+30 days");
 
+    /*
     foreach ($events as $date => $events) {
       echo $date . "\n";
       echo "----------" . "\n";
@@ -29,5 +27,8 @@ class Calendar
 
       echo "\n";
     }
+    */
+
+    return $events;
   }
 }
