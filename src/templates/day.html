@@ -5,4 +5,9 @@
 		  {{ include('forecast.html') }}
 		{% endfor %}
 	</div>
+	<div class="events">
+		{% for event in day.events %}
+		  {{ include('event.html') }}
+		{% endfor %}
+	</div>
 </div>

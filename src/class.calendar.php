@@ -15,23 +15,8 @@ class Calendar
 
     $iCal = new \iCal($data);
     
-    return $iCal;
-    
-    // $events = @$iCal->eventsByDateUntil("+30 days");
+    $events = @$iCal->eventsByDateUntil("+10 days");
 
-    /*
-    foreach ($events as $date => $events) {
-      echo $date . "\n";
-      echo "----------" . "\n";
-
-      foreach ($events as $event) {
-        echo "* " . $event->title() . "\n";
-      }
-
-      echo "\n";
-    }
-    */
-
-    // return $events;
+    return $events;
   }
 }
