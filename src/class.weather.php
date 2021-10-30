@@ -7,7 +7,7 @@ require_once "./kok/ical.php";
 class Weather
 {
 
-  private $forecast;
+  public $forecast;
   public $nowcast;
   
   public function __construct() {
@@ -27,17 +27,18 @@ class Weather
 		
 		// Parse the time and handle time zones
 		$time = strtotime($series->time);
+		$date = date( "Y-m-d", $time);
 		$date_data = \date_parse(date( "Y-m-d H:i:s", $time));
-
+		
 		if($date_data['hour'] % 6 === 1 && !empty($series->data->next_6_hours->details)) {
 
 			// Init array
-			if (empty($return[$date_data['day']])) {
-				$return[$date_data['day']] = [];
+			if (empty($return[$date])) {
+				$return[$date] = [];
 			}
 			
 			// Build return data set
-			$return[$date_data['day']][$date_data['hour']] = array(
+			$return[$date][$date_data['hour']] = array(
 				"symbol" => $series->data->next_6_hours->summary->symbol_code,
 				"details" => $series->data->next_6_hours->details
 			);
@@ -47,6 +48,7 @@ class Weather
 		}
 		
 	}
+
 	return $return;
 	  
   }

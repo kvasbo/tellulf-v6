@@ -26,10 +26,12 @@ class Tellulf
 		for ($i = 1; $i <= 5; $i++) {
 			// Create date 
 			$datetime = new \DateTime("today + $i days");
+			$date = $datetime->format('Y-m-d');
 			
 			// Build return array
 			$days[] = array(
 				'date' => $datetime->format('d.m.Y'),
+				'forecast' => $this->weather->forecast[$date],
 			);
 		}
 		return $days;
