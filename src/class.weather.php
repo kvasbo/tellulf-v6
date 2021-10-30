@@ -6,7 +6,16 @@ require_once "./kok/ical.php";
 
 class Weather
 {
-  public static function Get_Forecast()
+
+  private $forecast;
+  public $nowcast;
+  
+  public function __construct() {
+	  $this->forecast = static::Fetch_Forecast();
+	  $this->nowcast = static::Fetch_Nowcast();
+  }	
+	
+  private static function Fetch_Forecast()
   {
 	// Fetch and decode JSON
   	$data = file_get_contents($_ENV["YR_URL_FORECAST"], false, static::Get_Yr_Context());
@@ -42,7 +51,7 @@ class Weather
 	  
   }
 
-  public static function Get_Nowcast()
+  private static function Fetch_Nowcast()
   {
   	$data = file_get_contents($_ENV["YR_URL_NOWCAST"], false, static::Get_Yr_Context());
 	$nowcast = json_decode($data);

@@ -10,13 +10,11 @@ require_once "./class.weather.php";
 
 class Tellulf
 {
-	private $forecast;
-	private $nowcast;
+	private $weather;
 	private $calendar;
 	
 	public function __construct() {
-		$this->forecast = Weather::Get_Forecast();
-		$this->nowcast = Weather::Get_Nowcast();
+		$this->weather = new Weather();
 		$this->events = Calendar::Fetch($_ENV["CAL_FELLES"]);
 	}
 	
@@ -38,7 +36,7 @@ class Tellulf
 	}
 	
 	public function Get_Nowcast() {
-		return $this->nowcast;
+		return $this->weather->nowcast;
 	}
 	
 }
