@@ -8,10 +8,38 @@ class Weather
 {
   public static function Get_Forecast()
   {
+	// Fetch and decode JSON
   	$data = file_get_contents($_ENV["YR_URL_FORECAST"], false, static::Get_Yr_Context());
   	$forecast = json_decode($data);
 	  
-  	//echo "<pre>".htmlentities(print_r($forecast->properties->timeseries, true))."</pre>";
+	$return = [];
+	  
+	foreach($forecast->properties->timeseries as $series) {
+		
+		// Parse the time and handle time zones
+		$time = strtotime($series->time);
+		$date_data = \date_parse(date( "Y-m-d H:i:s", $time));
+
+		if($date_data['hour'] % 6 === 1 && !empty($series->data->next_6_hours->details)) {
+
+			// Init array
+			if (empty($return[$date_data['day']])) {
+				$return[$date_data['day']] = [];
+			}
+			
+			// Build return data set
+			$return[$date_data['day']][$date_data['hour']] = array(
+				"symbol" => $series->data->next_6_hours->summary->symbol_code,
+				"details" => $series->data->next_6_hours->details
+			);
+			
+			// echo "<pre>".htmlentities(print_r($date_data, true))."</pre>";
+			// echo "<pre>".htmlentities(print_r($series, true))."</pre>";
+		}
+		
+	}
+	return $return;
+	  
   }
 
   public static function Get_Nowcast()

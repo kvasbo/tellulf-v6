@@ -14,7 +14,10 @@ class Calendar
     $data = file_get_contents($calendar_url);
 
     $iCal = new \iCal($data);
-    $events = @$iCal->eventsByDateUntil("+30 days");
+    
+    return $iCal;
+    
+    // $events = @$iCal->eventsByDateUntil("+30 days");
 
     /*
     foreach ($events as $date => $events) {
@@ -29,6 +32,6 @@ class Calendar
     }
     */
 
-    return $events;
+    // return $events;
   }
 }

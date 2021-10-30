@@ -5,11 +5,12 @@
 
 namespace kvasbo\tellulf;
 
+date_default_timezone_set('Europe/Oslo');
+
 // Auto loader
 require __DIR__ . "/vendor/autoload.php";
 
-require_once "./class.calendar.php";
-require_once "./class.weather.php";
+require_once "./class.tellulf.php";
 
 // Load Twig
 $twig_loader = new \Twig\Loader\FilesystemLoader("./templates");
@@ -17,13 +18,16 @@ $twig = new \Twig\Environment($twig_loader, [
   "cache" => false, //"./twig-cache",
 ]);
 
-Calendar::Fetch($_ENV["CAL_FELLES"]);
-$forecast = Weather::Get_Forecast();
-$nowcast = Weather::Get_Nowcast();
+$tellulf = new Tellulf();
+
+$coming_days = $tellulf->Generate_Coming_Days();
+  
+$nowcast = $tellulf->Get_Nowcast();
   
 $render_vars = [
   "current_temperature" => $nowcast['temperature'],
   "current_weather_icon" => $nowcast['symbol'],
+  "days" => $coming_days
 ];
 
 $template_index = $twig->load("index.html");
