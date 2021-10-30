@@ -11,7 +11,7 @@ class Weather
   	$data = file_get_contents($_ENV["YR_URL_FORECAST"], false, static::Get_Yr_Context());
   	$forecast = json_decode($data);
 	  
-  	// echo "<pre>".htmlentities(print_r($forecast, true))."</pre>";
+  	//echo "<pre>".htmlentities(print_r($forecast->properties->timeseries, true))."</pre>";
   }
 
   public static function Get_Nowcast()
