@@ -3,15 +3,24 @@
  *	Tellulf main file
  */
 
+namespace kvasbo\tellulf;
+
 // Auto loader
-require_once "./vendor/autoload.php";
+require __DIR__ . "/vendor/autoload.php";
+
+require_once "./class.calendar.php";
 
 // Load Twig
 $twig_loader = new \Twig\Loader\FilesystemLoader("./templates");
-
 $twig = new \Twig\Environment($twig_loader, [
-  "cache" => "./twig-cache",
+  "cache" => false, //"./twig-cache",
 ]);
 
+Calendar::Fetch($_ENV["CAL_FELLES"]);
+
+$render_vars = [
+  "date" => "hei",
+];
+
 $template_index = $twig->load("index.html");
-$template_index->display();
+$template_index->display($render_vars);

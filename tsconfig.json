@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
+    "outDir": "./src/js",
     "noImplicitAny": true,
-    "module": "CommonJS",
-    "target": "ES2015",
-    "jsx": "react",
+    "module": "commonjs",
+    "target": "es6",
     "allowJs": true,
     "moduleResolution": "node",
     "esModuleInterop": true
-  }
+  },
+  "include": ["ts/**/*"],
+  "exclude": ["node_modules/**/*"]
 }

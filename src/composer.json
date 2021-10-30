@@ -4,6 +4,6 @@
     "twig/twig": "^2.0"
   },
   "config": {
-    "vendor-dir": "/src/vendor"
+    "vendor-dir": "/vendor"
   }
 }
