@@ -18,11 +18,12 @@ $twig = new \Twig\Environment($twig_loader, [
 ]);
 
 Calendar::Fetch($_ENV["CAL_FELLES"]);
-Weather::Get_Forecast();
-Weather::Get_Nowcast();
+$forecast = Weather::Get_Forecast();
+$nowcast = Weather::Get_Nowcast();
   
 $render_vars = [
-  "date" => "hei",
+  "current_temperature" => $nowcast['temperature'],
+  "current_weather_icon" => $nowcast['symbol'],
 ];
 
 $template_index = $twig->load("index.html");
