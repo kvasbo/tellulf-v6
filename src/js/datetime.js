@@ -1,5 +1,6 @@
 $(function () {
     updateTime();
+    updateBattery();
 });
 var months = [
     "januar",
@@ -24,6 +25,17 @@ var days = [
     "fredag",
     "lørdag",
 ];
+function updateBattery() {
+    try {
+        if (okular && okular.DevicesStatus) {
+            var status_1 = okular.DevicesStatus();
+            var battery = status_1['28003d00-0f47-3830-3933-303600000000']["Battery"];
+            $(".battery").html(battery + "%");
+        }
+    }
+    catch (e) {
+    }
+}
 function updateTime() {
     var time = new Date();
     $("#now_time").html(formatTime(time));

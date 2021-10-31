@@ -1,6 +1,9 @@
+declare const okular: any;
+
 $(function () {
   // Init time update
-  updateTime();    
+  updateTime();
+  updateBattery();
 });
 
 const months = [
@@ -28,6 +31,18 @@ const days = [
   "lørdag",
 ];
 
+
+function updateBattery() {
+  try {
+    if (okular && okular.DevicesStatus) {
+      const status = okular.DevicesStatus();
+      const battery = status['28003d00-0f47-3830-3933-303600000000']["Battery"];
+      $(".battery").html(`${battery}%`);
+    }
+  } catch(e) {
+    // console.log(e);
+  }
+}
 
 // Update time, and set itself to re-update on the start of next minute.
 function updateTime() {

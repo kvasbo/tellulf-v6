@@ -40,7 +40,7 @@ class Tellulf
 		$date = $datetime->format('Y-m-d');
 		return array(
 			'date' => $datetime->format('d.m.Y'),
-			'forecast' => $this->weather->forecast[$date],
+			'forecast' => !empty($this->weather->forecast[$date]) ? $this->weather->forecast[$date] : [],
 			'events' => !empty($this->events[$date]) ? $this->events[$date] : [],
 			'birthdays' => !empty($this->birthdays[$date]) ? $this->birthdays[$date] : []
 		);
