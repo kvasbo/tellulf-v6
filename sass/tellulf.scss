@@ -6,26 +6,39 @@ body {
 	font-family: 'Zen Antique Soft', serif;
 }
 
-.day {
-	.date {
-		font-size: 24px;
-		font-weight: bold;
-	}
-	.weather {
-		display: flex;
-		flex-direction: row;
-		.forecast_point {
+#content {
+	display: flex;
+    flex-direction: row;
+}
+
+#today {
+	flex: 1;
+}
+
+#coming_days {
+	flex: 1;
+	.day {
+		.date {
+			font-size: 24px;
+			font-weight: bold;
+		}
+		.weather {
 			display: flex;
-			flex-direction: column;
-			margin: 10px;
-			align-items: center;
-			justify-content: center;
-			.weather_symbol {
-				.weather_icon {
-					width: 75px;
-					height: 75px;
+			flex-direction: row;
+			.forecast_point {
+				display: flex;
+				flex-direction: column;
+				margin: 10px;
+				align-items: center;
+				justify-content: center;
+				.weather_symbol {
+					.weather_icon {
+						width: 75px;
+						height: 75px;
+					}
 				}
 			}
 		}
 	}
 }
+

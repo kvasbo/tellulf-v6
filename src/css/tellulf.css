@@ -5,22 +5,34 @@ body {
   font-family: "Zen Antique Soft", serif;
 }
 
-.day .date {
-  font-size: 24px;
-  font-weight: bold;
-}
-.day .weather {
+#content {
   display: flex;
   flex-direction: row;
 }
-.day .weather .forecast_point {
+
+#today {
+  flex: 1;
+}
+
+#coming_days {
+  flex: 1;
+}
+#coming_days .day .date {
+  font-size: 24px;
+  font-weight: bold;
+}
+#coming_days .day .weather {
+  display: flex;
+  flex-direction: row;
+}
+#coming_days .day .weather .forecast_point {
   display: flex;
   flex-direction: column;
   margin: 10px;
   align-items: center;
   justify-content: center;
 }
-.day .weather .forecast_point .weather_symbol .weather_icon {
+#coming_days .day .weather .forecast_point .weather_symbol .weather_icon {
   width: 75px;
   height: 75px;
 }

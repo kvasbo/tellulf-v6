@@ -8,16 +8,15 @@
   </head>
   <body>
     <div id="content">
-      <div id="time_and_date">
-        <div id="now_date"></div>
-        <div id="now_time"></div>
-      </div>
-      <div id="current_weather">
-        <div class='current_temperature'>{{ current_temperature|round }}&deg;</div>
-        <div class='current_weather_symbol'><img src="weathericon/png/{{ current_weather_icon }}.png" /></div>
-      </div>
       <div id="today">
-        
+        <div id="time_and_date">
+          <div id="now_date"></div>
+          <div id="now_time"></div>
+        </div>
+        <div id="current_weather">
+          <div class='current_temperature'>{{ current_temperature|round }}&deg;</div>
+          <div class='current_weather_symbol'><img src="weathericon/png/{{ current_weather_icon }}.png" /></div>
+        </div>
       </div>
       <div id="coming_days">
         {% for day in days %}
