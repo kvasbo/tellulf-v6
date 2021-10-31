@@ -14,6 +14,7 @@ body {
 	height: 1200px;
 	width: 1600px;
 	padding: 0;
+	overflow: hidden;
 }
 
 .content {
@@ -61,7 +62,7 @@ body {
 	flex: 1;
 	align-items: space-evenly;
 	.day {
-		
+		margin-top: $text_subheader;
 		.date {
 			font-size: $text_subheader;
 			font-weight: bold;
