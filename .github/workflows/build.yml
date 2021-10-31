@@ -18,6 +18,10 @@ jobs:
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_TOKEN }}
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
@@ -39,3 +43,5 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tellulf:latest
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
+      - name: Deploy to DigitalOcean
+        run: doctl apps create-deployment kvasbo-tellulf
