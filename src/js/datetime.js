@@ -1,7 +1,7 @@
 $(function () {
     updateTime();
 });
-const months = [
+var months = [
     "januar",
     "februar",
     "mars",
@@ -15,7 +15,7 @@ const months = [
     "november",
     "desember",
 ];
-const days = [
+var days = [
     "søndag",
     "mandag",
     "tirsdag",
@@ -24,31 +24,34 @@ const days = [
     "fredag",
     "lørdag",
 ];
-/**
-Update time, and set itself to re-update on the start of next minute.
-*/
 function updateTime() {
-    const time = new Date();
+    var time = new Date();
     $("#now_time").html(formatTime(time));
     $("#now_date").html(formatDate(time, true));
+    var nextMinute = new Date();
+    nextMinute.setMinutes(nextMinute.getMinutes() + 1);
+    nextMinute.setSeconds(0);
+    var diff = nextMinute.getTime() - new Date().getTime();
+    setTimeout(function () { updateTime(); }, diff);
 }
-function formatDate(d, withMonth = false) {
-    const date = d.getDate();
-    const wDay = days[d.getDay()];
-    const month = months[d.getMonth()];
+function formatDate(d, withMonth) {
+    if (withMonth === void 0) { withMonth = false; }
+    var date = d.getDate();
+    var wDay = days[d.getDay()];
+    var month = months[d.getMonth()];
     if (withMonth) {
-        return `${wDay} ${date}. ${month}`;
+        return wDay + " " + date + ". " + month;
     }
     else {
-        return `${wDay} ${date}.`;
+        return wDay + " " + date + ".";
     }
 }
 function formatTime(d) {
-    const h = d.getHours();
-    const m = d.getMinutes();
-    let mS = m.toString();
+    var h = d.getHours();
+    var m = d.getMinutes();
+    var mS = m.toString();
     if (m < 10) {
-        mS = `0${m.toString()}`;
+        mS = "0" + m.toString();
     }
-    return `${h}:${mS}`;
+    return h + ":" + mS;
 }

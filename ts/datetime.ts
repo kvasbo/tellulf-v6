@@ -1,5 +1,6 @@
 $(function () {
-  updateTime();
+  // Init time update
+  updateTime();    
 });
 
 const months = [
@@ -27,16 +28,25 @@ const days = [
   "lørdag",
 ];
 
-/**
-Update time, and set itself to re-update on the start of next minute.
-*/
+
+// Update time, and set itself to re-update on the start of next minute.
 function updateTime() {
   const time = new Date();
 
   $("#now_time").html(formatTime(time));
   $("#now_date").html(formatDate(time, true));
+  
+  // Pure JS
+  const nextMinute = new Date();
+  nextMinute.setMinutes(nextMinute.getMinutes() + 1);
+  nextMinute.setSeconds(0);
+
+  const diff = nextMinute.getTime() - new Date().getTime();
+
+  setTimeout(function(){ updateTime(); }, diff);
 }
 
+// Just format a date
 function formatDate(d: Date, withMonth: boolean = false) {
   const date = d.getDate();
   const wDay = days[d.getDay()];
