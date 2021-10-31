@@ -11,7 +11,7 @@ RUN apt-get -y update \
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Copy source
-COPY ./src/* /var/www/html
+COPY ./src/* /var/www/html/
 
 # Set workdir
 WORKDIR /var/www/html
