@@ -1,10 +1,6 @@
 <div class='day'>
 	<div class="date">{{ day.date }}</div>
-	<div class="weather">
-		{% for weather in day.forecast %}
-		  {{ include('forecast.html') }}
-		{% endfor %}
-	</div>
+		{{ include("weather.html") }}
 	<div class="events">
 		{% for event in day.events %}
 		  {{ include('event.html') }}

@@ -21,13 +21,15 @@ $twig = new \Twig\Environment($twig_loader, [
 $tellulf = new Tellulf();
 
 $coming_days = $tellulf->Generate_Coming_Days();
+$today = $tellulf->Generate_Today();
   
 $nowcast = $tellulf->Get_Nowcast();
   
 $render_vars = [
   "current_temperature" => $nowcast['temperature'],
   "current_weather_icon" => $nowcast['symbol'],
-  "days" => $coming_days
+  "days" => $coming_days,
+  "today" => $today,
 ];
 
 $template_index = $twig->load("index.html");
