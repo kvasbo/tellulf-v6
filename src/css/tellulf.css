@@ -1,6 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Zen+Antique+Soft");
 body {
   margin: 0;
   background-color: white;
+  font-family: "Zen Antique Soft", serif;
 }
 
 .day .date {
@@ -15,6 +17,8 @@ body {
   display: flex;
   flex-direction: column;
   margin: 10px;
+  align-items: center;
+  justify-content: center;
 }
 .day .weather .forecast_point .weather_symbol .weather_icon {
   width: 75px;
