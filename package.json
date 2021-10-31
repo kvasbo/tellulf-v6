@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "sass-watcn": "npx sass --watch sass:src/css",
+    "sass": "npx sass sass:src/css"
+  },
   "devDependencies": {
     "@types/jquery": "^3.5.7",
     "@types/luxon": "^2.0.5",
