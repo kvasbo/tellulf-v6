@@ -27,7 +27,7 @@ RUN yarn run sass
 
 # Clean target and move content
 RUN rm -rf /var/www/html/*
-RUN mv /tellulf-temp/* /var/www/html/
+RUN mv /tellulf-temp/src/* /var/www/html/
 
 # WORKDIR /var/www/html
 
