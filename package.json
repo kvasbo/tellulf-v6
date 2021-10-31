@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "sass-watcn": "npx sass --watch sass:src/css",
+    "sass-watch": "npx sass --watch sass:src/css",
     "sass": "npx sass sass:src/css"
   },
   "devDependencies": {

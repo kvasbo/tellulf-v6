@@ -4,6 +4,7 @@
     <title>Tellulf v6</title>
     <script src="https://cdn.jsdelivr.net/combine/npm/jquery@3"></script>
     <script src="js/datetime.js"></script>
+    <link rel="stylesheet" href="css/tellulf.css" />
   </head>
   <body>
     <div id="content">
@@ -12,7 +13,7 @@
         <div id="now_time"></div>
       </div>
       <div id="current_weather">
-        <div class='current_temperature'>{{ current_temperature }}</div>
+        <div class='current_temperature'>{{ current_temperature|round }}&deg;</div>
         <div class='current_weather_symbol'><img src="weathericon/png/{{ current_weather_icon }}.png" /></div>
       </div>
       <div id="today">

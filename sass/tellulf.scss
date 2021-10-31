@@ -1,0 +1,25 @@
+body {
+	margin: 0;
+	background-color: white;
+}
+
+.day {
+	.date {
+		font-size: 16px;
+	}
+	.weather {
+		display: flex;
+		flex-direction: row;
+		.forecast_point {
+			display: flex;
+			flex-direction: column;
+			margin: 10px;
+			.weather_symbol {
+				.weather_icon {
+					width: 75px;
+					height: 75px;
+				}
+			}
+		}
+	}
+}

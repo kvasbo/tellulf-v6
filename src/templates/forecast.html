@@ -1,5 +1,5 @@
 <div class="forecast_point">
-	<div class="weather_symbol"><img src="weathericon/png/{{ weather.symbol }}.png" /></div>
+	<div class="weather_symbol"><img class="weather_icon" src="weathericon/png/{{ weather.symbol }}.png" /></div>
+	<div class="temperature">{{ weather.details.air_temperature_min|round }}&deg; - {{ weather.details.air_temperature_max|round }}&deg;</div>
 	<div class="forecast_prob">{{ weather.details.probability_of_precipitation|round }}%</div>
-	<div class="temperature">{{ weather.details.air_temperature_min|round }} - {{ weather.details.air_temperature_max|round }}</div>
 </div>
