@@ -1,13 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Zen+Antique+Soft');
 
+$text_huge: 120px;
+$text_large: 75px;
+$text_subheader: 25px;
+$text_size: 20px;
+$margin: 10px;
+
 body {
 	margin: 0;
 	background-color: white;
 	font-family: 'Zen Antique Soft', serif;
+	font-size: $text_size;
+	height: 1200px;
+	width: 1600px;
+	padding: 0;
 }
 
 .content {
 	display: flex;
+	height: 1200px;
+	width: 1600px;
     flex-direction: row;
 }
 
@@ -22,10 +34,10 @@ body {
 		align-items: center;
 		justify-content: center;
 		.now_time {
-			font-size: 80px;
+			font-size: $text_huge;
 		}
 		.now_date {
-			font-size: 50px;
+			font-size: $text_large;
 		}
 	}
 	.current_weather {
@@ -34,20 +46,24 @@ body {
 		align-items: center;
 		justify-content: center;
 		.current_temperature {
-			font-size: 80px;
+			font-size: $text_huge;
 		}
 	}
 	.today_forecast {
 		display: flex;
 		flex: 1;
+		align-items: center;
+		justify-content: center;
 	}
 }
 
 .coming_days {
 	flex: 1;
+	align-items: space-evenly;
 	.day {
+		
 		.date {
-			font-size: 24px;
+			font-size: $text_subheader;
 			font-weight: bold;
 		}
 	}
@@ -59,13 +75,13 @@ body {
 	.forecast_point {
 		display: flex;
 		flex-direction: column;
-		margin: 10px;
+		margin: $margin;
 		align-items: center;
 		justify-content: center;
 		.weather_symbol {
 			.weather_icon {
-				width: 75px;
-				height: 75px;
+				width: $text_large;
+				height: $text_large;
 			}
 		}
 	}

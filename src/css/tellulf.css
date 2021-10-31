@@ -3,10 +3,16 @@ body {
   margin: 0;
   background-color: white;
   font-family: "Zen Antique Soft", serif;
+  font-size: 20px;
+  height: 1200px;
+  width: 1600px;
+  padding: 0;
 }
 
 .content {
   display: flex;
+  height: 1200px;
+  width: 1600px;
   flex-direction: row;
 }
 
@@ -23,10 +29,10 @@ body {
   justify-content: center;
 }
 .today .time_and_date .now_time {
-  font-size: 80px;
+  font-size: 120px;
 }
 .today .time_and_date .now_date {
-  font-size: 50px;
+  font-size: 75px;
 }
 .today .current_weather {
   display: flex;
@@ -35,18 +41,21 @@ body {
   justify-content: center;
 }
 .today .current_weather .current_temperature {
-  font-size: 80px;
+  font-size: 120px;
 }
 .today .today_forecast {
   display: flex;
   flex: 1;
+  align-items: center;
+  justify-content: center;
 }
 
 .coming_days {
   flex: 1;
+  align-items: space-evenly;
 }
 .coming_days .day .date {
-  font-size: 24px;
+  font-size: 25px;
   font-weight: bold;
 }
 
