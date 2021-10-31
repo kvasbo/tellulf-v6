@@ -4,32 +4,23 @@ FROM php:8.0-apache
 RUN apt-get -y update \
  && apt-get -y autoremove \
  && apt-get clean \
- && apt-get install -y zip nodejs npm \
+ && apt-get install -y zip \
  && rm -rf /var/lib/apt/lists/*
 
 # ADD Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Create temp dir
-RUN mkdir /tellulf-temp
-WORKDIR /tellulf-temp
+# Copy source
+COPY ./src/ /var/www/html/
 
-# Copy source to web directory
-COPY ./ /tellulf-temp
+# Set workdir
+WORKDIR /var/www/html
 
 # Install dependencies
 RUN composer install --no-dev
 
-# Run NPM stuff
-RUN npm install --global yarn
-RUN yarn
-RUN yarn run sass
-
-# Clean target and move content
-RUN rm -rf /var/www/html/*
-RUN mv /tellulf-temp/* /var/www/html/
-
-# WORKDIR /var/www/html
+# Create twig cache dir
+RUN mkdir twig-cache
 
 # Set port
 EXPOSE 80
