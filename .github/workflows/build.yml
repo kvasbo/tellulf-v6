@@ -44,4 +44,4 @@ jobs:
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
       - name: Deploy to DigitalOcean
-        run: doctl apps create-deployment kvasbo-tellulf
+        run: doctl apps create-deployment ${{ secrets.DIGITALOCEAN_APP_ID }}
