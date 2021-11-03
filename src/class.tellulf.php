@@ -7,17 +7,20 @@ namespace kvasbo\tellulf;
 
 require_once "./class.calendar.php";
 require_once "./class.weather.php";
+require_once "./class.s3.php";
 
 class Tellulf
 {
 	private $weather;
 	private $events;
 	private $birthdays;
+	private $s3;
 	
 	public function __construct() {
 		$this->weather = new Weather();
 		$this->events = Calendar::Fetch($_ENV["CAL_FELLES"]);
 		$this->birthdays = Calendar::Fetch($_ENV["CAL_BIRTHDAYS"]);
+		$this->s3 = new s3();
 	}
 	
 	/** 
@@ -29,6 +32,7 @@ class Tellulf
 			// Build return array
 			$days[] = $this->Get_Data_For_Date(new \DateTime("today + $i days"));
 		}
+		$this->s3->Store_Array("today.json", $days);
 		return $days;
 	}
 	

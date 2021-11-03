@@ -1,7 +1,8 @@
 {
   "require": {
     "graceas/php-ics-reader": "^1.1",
-    "twig/twig": "^2.0"
+    "twig/twig": "^2.0",
+    "aws/aws-sdk-php": "^3.199"
   },
   "config": {
     "vendor-dir": "src/vendor"
