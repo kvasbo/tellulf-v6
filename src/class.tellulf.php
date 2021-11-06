@@ -11,7 +11,7 @@ require_once "./class.s3.php";
 
 class Tellulf
 {
-    private $weather;
+    public $weather;
     private $events;
     private $birthdays;
     private $s3;
@@ -46,18 +46,21 @@ class Tellulf
     private function Get_Data_For_Date(\Datetime $datetime)
     {
         $date = $datetime->format('Y-m-d');
+        $forecast = $this->weather->Get_Six_Hour_Forecasts();
         return array(
             'date' => static::Create_Nice_Date($datetime),
-            'forecast' => !empty($this->weather->forecast[$date]) ? $this->weather->forecast[$date] : [],
+            'forecast' => !empty($forecast[$date]) ? $forecast[$date] : [],
             'events' => !empty($this->events[$date]) ? $this->events[$date] : [],
             'birthdays' => !empty($this->birthdays[$date]) ? $this->birthdays[$date] : []
         );
     }
 
-    public function Get_Nowcast()
+    /*
+    public function Get_Current_Weather()
     {
-        return $this->weather->Get_Current_Weather();
+    return $this->weather->Get_Current_Weather();
     }
+     */
 
     private static function Create_Nice_Date(\Datetime $datetime)
     {

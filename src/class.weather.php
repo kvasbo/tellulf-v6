@@ -31,20 +31,18 @@ class Weather
 
     }
 
-    /**
-     * Fetch_Forecast
-     *
-     * @return void
-     */
-    private static function Fetch_Forecast()
+    public function Get_Nowcast()
     {
-        // Fetch and decode JSON
-        $data = file_get_contents($_ENV["YR_URL_FORECAST"], false, static::Get_Yr_Context());
-        $forecast = json_decode($data);
+        foreach ($this->nowcast as $w) {
+            // print_r($w);
+            // echo "<br>";
+        }
+    }
 
+    public function Get_Six_Hour_Forecasts()
+    {
         $return = [];
-
-        foreach ($forecast->properties->timeseries as $series) {
+        foreach ($this->forecast as $series) {
 
             // Parse the time and handle time zones
             $time = strtotime($series->time);
@@ -63,12 +61,24 @@ class Weather
                     "symbol" => $series->data->next_6_hours->summary->symbol_code,
                     "details" => $series->data->next_6_hours->details,
                 );
-
             }
-
         }
-
         return $return;
+    }
+
+    /**
+     * Fetch_Forecast
+     *
+     * @return void
+     */
+    private static function Fetch_Forecast()
+    {
+        // Fetch and decode JSON
+        $data = file_get_contents($_ENV["YR_URL_FORECAST"], false, static::Get_Yr_Context());
+        $forecast = json_decode($data);
+
+        return $forecast->properties->timeseries;
+
     }
 
     /**
