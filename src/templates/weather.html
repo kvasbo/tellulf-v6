@@ -1,5 +1,3 @@
 <div class="weather">
-	{% for weather in day.forecast %}
-	  {{ include('forecast_point.html') }}
-	{% endfor %}
+    {% for weather in day.forecast %} {{ include('forecast_point.html') }} {% endfor %}
 </div>
