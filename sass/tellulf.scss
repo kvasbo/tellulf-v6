@@ -1,96 +1,94 @@
-@import url('https://fonts.googleapis.com/css2?family=Zen+Antique+Soft');
-
+@import url("https://fonts.googleapis.com/css2?family=Zen+Antique+Soft");
 $text_huge: 120px;
 $text_large: 75px;
 $text_subheader: 25px;
 $text_size: 20px;
 $margin: 10px;
-
 body {
-	margin: 0;
-	background-color: white;
-	font-family: 'Zen Antique Soft', serif;
-	font-size: $text_size;
-	height: 1200px;
-	width: 1600px;
-	padding: 0;
-	overflow: hidden;
+    margin: 0;
+    background-color: white;
+    font-family: "Zen Antique Soft", serif;
+    font-size: $text_size;
+    height: 1200px;
+    width: 1600px;
+    padding: 0;
+    overflow: hidden;
 }
 
 .content {
-	display: flex;
-	height: 1200px;
-	width: 1600px;
+    display: flex;
+    height: 1200px;
+    width: 1600px;
     flex-direction: row;
 }
 
 .today {
-	flex: 1;
-	display: flex;
-	flex-direction: column;
-	.time_and_date {
-		display: flex;
-		flex-direction: column;
-		flex: 1;
-		align-items: center;
-		justify-content: center;
-		.now_time {
-			font-size: $text_huge;
-		}
-		.now_date {
-			font-size: $text_large;
-		}
-	}
-	.current_weather {
-		display: flex;
-		flex: 1;
-		align-items: center;
-		justify-content: center;
-		.current_temperature {
-			font-size: $text_huge;
-		}
-	}
-	.today_forecast {
-		display: flex;
-		flex: 1;
-		align-items: center;
-		justify-content: center;
-	}
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    .time_and_date {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        align-items: center;
+        justify-content: center;
+        .now_time {
+            font-size: $text_huge;
+        }
+        .now_date {
+            font-size: $text_large;
+        }
+    }
+    .current_weather {
+        display: flex;
+        flex: 3;
+        align-items: center;
+        justify-content: center;
+        .current_temperature {
+            font-size: $text_huge;
+        }
+    }
+    .today_forecast {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 .coming_days {
-	flex: 1;
-	align-items: space-evenly;
-	.day {
-		margin-top: $text_subheader;
-		.date {
-			font-size: $text_subheader;
-			font-weight: bold;
-		}
-	}
+    flex: 2;
+    align-items: space-evenly;
+    .day {
+        margin-top: $text_subheader;
+        .date {
+            font-size: $text_subheader;
+            font-weight: bold;
+        }
+    }
 }
 
 .weather {
-	display: flex;
-	flex-direction: row;
-	.forecast_point {
-		display: flex;
-		flex-direction: column;
-		margin: $margin;
-		align-items: center;
-		justify-content: center;
-		.weather_symbol {
-			.weather_icon {
-				width: $text_large;
-				height: $text_large;
-			}
-		}
-	}
+    display: flex;
+    flex-direction: row;
+    .forecast_point {
+        display: flex;
+        flex-direction: column;
+        margin: $margin;
+        align-items: center;
+        justify-content: center;
+        .weather_symbol {
+            .weather_icon {
+                width: $text_large;
+                height: $text_large;
+            }
+        }
+    }
 }
 
 .battery {
-	position: absolute;
-	top: 0;
-	right: 0;
-	padding: 10px 15px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px 15px;
 }
