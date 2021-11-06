@@ -47,11 +47,14 @@ class Tellulf
     {
         $date = $datetime->format('Y-m-d');
         $forecast = $this->weather->Get_Six_Hour_Forecasts();
+        $weather_details = $this->weather->Get_Detailed_Weather();
+
         return array(
             'date' => static::Create_Nice_Date($datetime),
             'forecast' => !empty($forecast[$date]) ? $forecast[$date] : [],
             'events' => !empty($this->events[$date]) ? $this->events[$date] : [],
-            'birthdays' => !empty($this->birthdays[$date]) ? $this->birthdays[$date] : []
+            'birthdays' => !empty($this->birthdays[$date]) ? $this->birthdays[$date] : [],
+            'detail_forecast' => !empty($weather_details[$date]) ? $weather_details[$date] : [],
         );
     }
 

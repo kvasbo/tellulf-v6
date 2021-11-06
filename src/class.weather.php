@@ -39,6 +39,31 @@ class Weather
         }
     }
 
+    public function Get_Detailed_Weather()
+    {
+        $return = [];
+        foreach ($this->forecast as $series) {
+            $time = strtotime($series->time);
+            $date = date("Y-m-d", $time);
+            $date_data = \date_parse(date("Y-m-d H:i:s", $time));
+            if (!empty($series->data->next_1_hours->details)) {
+
+                // Init array
+                if (empty($return[$date])) {
+                    $return[$date] = [];
+                }
+
+                // Build return data set
+                $return[$date][$date_data['hour']] = array(
+                    "symbol" => $series->data->next_1_hours->summary->symbol_code,
+                    "details" => $series->data->next_1_hours->details,
+                    "instant" => $series->data->instant->details,
+                );
+            }
+        }
+        return $return;
+    }
+
     public function Get_Six_Hour_Forecasts()
     {
         $return = [];
