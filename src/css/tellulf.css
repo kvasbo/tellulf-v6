@@ -37,7 +37,7 @@ body {
 }
 .today .current_weather {
   display: flex;
-  flex: 3;
+  flex: 1;
   align-items: center;
   justify-content: center;
 }
@@ -66,6 +66,7 @@ body {
 .weather {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 .weather .forecast_point {
   display: flex;

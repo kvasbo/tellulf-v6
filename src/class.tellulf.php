@@ -58,13 +58,6 @@ class Tellulf
         );
     }
 
-    /*
-    public function Get_Current_Weather()
-    {
-    return $this->weather->Get_Current_Weather();
-    }
-     */
-
     private static function Create_Nice_Date(\Datetime $datetime)
     {
 

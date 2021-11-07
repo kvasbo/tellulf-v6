@@ -50,6 +50,7 @@ class Weather
                     "symbol" => $series->data->next_1_hours->summary->symbol_code,
                     "details" => $series->data->next_1_hours->details,
                     "instant" => $series->data->instant->details,
+                    "hour" => $date_data['hour'],
                 );
             }
         }
@@ -77,6 +78,7 @@ class Weather
                 $return[$date][$date_data['hour']] = array(
                     "symbol" => $series->data->next_6_hours->summary->symbol_code,
                     "details" => $series->data->next_6_hours->details,
+                    "hour" => $date_data['hour'],
                 );
             }
         }
