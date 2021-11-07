@@ -40,7 +40,18 @@ class Tellulf
 
     public function Generate_Today()
     {
-        return $this->Get_Data_For_Date(new \DateTime("today"));
+        $data = $this->Get_Data_For_Date(new \DateTime("today"));
+        $now = date("H");
+
+        $data['detail_forecast'] = array_filter(
+            $data['detail_forecast'], function ($k) {
+                $now = date("H");
+                return $k > $now;
+            },
+            ARRAY_FILTER_USE_KEY
+        );
+
+        return $data;
     }
 
     private function Get_Data_For_Date(\Datetime $datetime)
