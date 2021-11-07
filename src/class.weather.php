@@ -31,14 +31,6 @@ class Weather
 
     }
 
-    public function Get_Nowcast()
-    {
-        foreach ($this->nowcast as $w) {
-            // print_r($w);
-            // echo "<br>";
-        }
-    }
-
     public function Get_Detailed_Weather()
     {
         $return = [];

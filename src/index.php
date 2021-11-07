@@ -28,7 +28,6 @@ $weather = $tellulf->weather->Get_Current_Weather();
 $render_vars = [
     "current_temperature" => $weather['temperature'],
     "current_weather_icon" => $weather['symbol'],
-    "nowcast" => $tellulf->weather->Get_Nowcast(),
     "days" => $coming_days,
     "today" => $today,
 ];
