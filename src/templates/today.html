@@ -1,0 +1,18 @@
+<div class="today" id="today">
+    <div class="time_and_date">
+        <div class="now_date" id="now_date"></div>
+        <div class="now_time" id="now_time"></div>
+    </div>
+    <div class="events">
+        {% for event in today.events %} {{ include('event.html') }} {% endfor %}
+    </div>
+    <div class="current_weather">
+        <div class="current_temperature">{{ current_temperature|round }}&deg;</div>
+        <div class="current_weather_symbol">
+            <img class="weather_icon" src="weathericon/png/{{ current_weather_icon }}.png" />
+        </div>
+    </div>
+    <div class="today_forecast">
+        {% include("detailed_forecast.html") with {"day": today} %}
+    </div>
+</div>
