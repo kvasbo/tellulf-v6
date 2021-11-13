@@ -1,6 +1,9 @@
 <div class="day">
     <div class="date">{{ day.date }}</div>
     {{ include("weather.html") }}
+    <div class="birthdays">
+        {% for birthday in day.birthdays %} {{ include('birthday.html') }} {% endfor %}
+    </div>
     <div class="events">
         {% for event in day.events %} {{ include('event.html') }} {% endfor %}
     </div>

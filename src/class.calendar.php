@@ -50,13 +50,29 @@ class Calendar
 
     public function Get_Birthdays(string $date)
     {
+        $out = [];
+
         if (empty($this->birthdays[$date])) {
-            return [];
+            return $out;
         }
 
-        $events = $this->birthdays[$date];
+        foreach ($this->birthdays[$date] as $e) {
 
-        return $events;
+            // Look for year
+            $b = $e->summary;
+            $exp = explode(" ", $b);
+
+            if (is_numeric(($exp[count($exp) - 1]))) {
+                $age = date("Y") - $exp[count($exp) - 1];
+                array_pop($exp);
+                $out[] = join(" ", $exp) . " " . $age;
+            } else {
+                $out[] = $e->summary;
+            }
+
+        }
+
+        return $out;
     }
 
     /**
