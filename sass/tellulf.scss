@@ -1,13 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Zen+Antique+Soft");
-$text_huge: 120px;
+@import url("https://fonts.googleapis.com/css2?family=Montserrat");
+$text_huge: 160px;
 $text_large: 75px;
 $text_subheader: 25px;
 $text_size: 20px;
 $margin: 10px;
+$gray: #888888;
 body {
     margin: 0;
     background-color: white;
-    font-family: "Zen Antique Soft", serif;
+    font-family: "Montserrat", serif;
     font-size: $text_size;
     height: 1200px;
     width: 1600px;
@@ -23,9 +24,10 @@ body {
 }
 
 .today {
-    flex: 3;
+    flex: 2;
     display: flex;
     flex-direction: column;
+    padding: 50px;
     .time_and_date {
         display: flex;
         flex-direction: column;
@@ -57,13 +59,21 @@ body {
 }
 
 .coming_days {
-    flex: 2;
-    align-items: space-evenly;
+    flex: 1;
+    align-content: space-evenly;
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    border-left: 1px solid $gray;
     .day {
-        margin-top: $text_subheader;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        padding-bottom: 0.25em;
         .date {
             font-size: $text_subheader;
             font-weight: bold;
+            border-bottom: 1px solid $gray;
         }
     }
 }
@@ -78,6 +88,9 @@ body {
         margin: $margin;
         align-items: center;
         justify-content: center;
+        .forecast_prob {
+            color: $gray;
+        }
         .weather_symbol {
             .weather_icon {
                 width: $text_large;

@@ -1,8 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Zen+Antique+Soft");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat");
 body {
   margin: 0;
   background-color: white;
-  font-family: "Zen Antique Soft", serif;
+  font-family: "Montserrat", serif;
   font-size: 20px;
   height: 1200px;
   width: 1600px;
@@ -18,9 +18,10 @@ body {
 }
 
 .today {
-  flex: 3;
+  flex: 2;
   display: flex;
   flex-direction: column;
+  padding: 50px;
 }
 .today .time_and_date {
   display: flex;
@@ -30,7 +31,7 @@ body {
   justify-content: center;
 }
 .today .time_and_date .now_time {
-  font-size: 120px;
+  font-size: 160px;
 }
 .today .time_and_date .now_date {
   font-size: 75px;
@@ -42,7 +43,7 @@ body {
   justify-content: center;
 }
 .today .current_weather .current_temperature {
-  font-size: 120px;
+  font-size: 160px;
 }
 .today .today_forecast {
   display: flex;
@@ -52,15 +53,23 @@ body {
 }
 
 .coming_days {
-  flex: 2;
-  align-items: space-evenly;
+  flex: 1;
+  align-content: space-evenly;
+  display: flex;
+  flex-direction: column;
+  padding: 50px;
+  border-left: 1px solid #888888;
 }
 .coming_days .day {
-  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding-bottom: 0.25em;
 }
 .coming_days .day .date {
   font-size: 25px;
   font-weight: bold;
+  border-bottom: 1px solid #888888;
 }
 
 .weather {
@@ -74,6 +83,9 @@ body {
   margin: 10px;
   align-items: center;
   justify-content: center;
+}
+.weather .forecast_point .forecast_prob {
+  color: #888888;
 }
 .weather .forecast_point .weather_symbol .weather_icon {
   width: 75px;

@@ -7,8 +7,8 @@ require_once "./kok/ical.php";
 class Weather
 {
 
-    public $forecast;
-    public $nowcast;
+    public $forecast = [];
+    public $nowcast = [];
 
     /**
      * __construct
@@ -35,6 +35,10 @@ class Weather
     {
         $return = [];
         foreach ($this->forecast as $series) {
+
+            if (count($return) >= 18) {
+                break;
+            }
             $time = strtotime($series->time);
             $date = date("Y-m-d", $time);
             $date_data = \date_parse(date("Y-m-d H:i:s", $time));

@@ -6,7 +6,5 @@
     <div class="temperature">
         {{ weather.instant.air_temperature|round }}&deg;
     </div>
-    <div class="forecast_prob">
-        {{ weather.details.probability_of_precipitation|round }}%
-    </div>
+    <div class="forecast_prob">{{ include('rain-prob.html') }}</div>
 </div>
