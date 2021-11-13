@@ -99,4 +99,16 @@ body {
   padding: 10px 15px;
 }
 
+.events .event {
+  display: flex;
+  flex-direction: row;
+}
+.events .event .event-time {
+  color: #888888;
+  display: flex;
+  width: 60px;
+  margin-right: 10px;
+  justify-content: flex-end;
+}
+
 /*# sourceMappingURL=tellulf.css.map */

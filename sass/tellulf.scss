@@ -106,3 +106,17 @@ body {
     right: 0;
     padding: 10px 15px;
 }
+
+.events {
+    .event {
+        display: flex;
+        flex-direction: row;
+        .event-time {
+            color: $gray;
+            display: flex;
+            width: 60px;
+            margin-right: 10px;
+            justify-content: flex-end;
+        }
+    }
+}
