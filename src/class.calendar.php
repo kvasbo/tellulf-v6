@@ -32,15 +32,15 @@ class Calendar
             $start = strtotime($e->dateStart);
 
             // Full day
+            $fullDay = false;
             if (date("H", $start) === "00" && $e->duration() % 86400 === 0) {
-                $startDisplay = "";
-            } else {
-                $startDisplay = date("H:i", $start);
+                $fullDay = true;
             }
 
             $tmp = array(
-                'time' => $startDisplay,
+                'time' => date("H:i", $start),
                 'title' => $title = $e->summary,
+                'fullDay' => $fullDay,
             );
             $out[] = $tmp;
         }

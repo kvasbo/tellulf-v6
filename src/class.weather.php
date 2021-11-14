@@ -24,11 +24,17 @@ class Weather
     public function Get_Current_Weather(): array
     {
 
-        return array(
+        $temp = array(
             'temperature' => $this->nowcast[0]->data->instant->details->air_temperature,
             'symbol' => $this->nowcast[0]->data->next_1_hours->summary->symbol_code,
         );
 
+        // Fix strange edge case
+        if ($temp['temperature'] > -1 && $temp['temperature'] < 0) {
+            $temp['temperature'] = 0;
+        }
+
+        return $temp;
     }
 
     public function Get_Detailed_Weather()

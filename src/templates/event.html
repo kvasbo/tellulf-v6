@@ -1,3 +1,7 @@
+{% if event.fullDay == true %}
+<div class="event"><span class="event-time"></span>{{ event.title }}</div>
+{% else %}
 <div class="event">
     <span class="event-time">{{ event.time }}</span>{{ event.title }}
 </div>
+{% endif %}
