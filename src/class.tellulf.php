@@ -8,6 +8,7 @@ namespace kvasbo\tellulf;
 require_once "./class.calendar.php";
 require_once "./class.weather.php";
 require_once "./class.s3.php";
+require_once "./class.power.php";
 
 class Tellulf
 {
@@ -39,7 +40,6 @@ class Tellulf
     public function Generate_Today()
     {
         $data = $this->Get_Data_For_Date(new \DateTime("today"));
-        $now = date("H");
 
         // only stuff that happens later.
         $data['detail_forecast'] = array_filter(
@@ -49,6 +49,8 @@ class Tellulf
             },
             ARRAY_FILTER_USE_KEY
         );
+
+        $data['power'] = Power::Get_Consumption();
 
         return $data;
     }

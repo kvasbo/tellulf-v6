@@ -3,6 +3,7 @@ $text_huge: 160px;
 $text_large: 75px;
 $text_subheader: 25px;
 $text_size: 20px;
+$text_small: 14px;
 $margin: 10px;
 $gray: #888888;
 body {
@@ -55,6 +56,14 @@ body {
         flex: 1;
         align-items: center;
         justify-content: center;
+    }
+    .power {
+        display: flex;
+        flex-direction: column;
+        flex: 0.25;
+        justify-content: center;
+        align-items: flex-start;
+        font-size: $text_small;
     }
 }
 
