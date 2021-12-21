@@ -22,4 +22,8 @@
     <div class="today_forecast">
         {% include("detailed_forecast.html") with {"day": today} %}
     </div>
+
+    <div class="power">
+        {% include("power.html") with {"power": today.power} %}
+    </div>
 </div>
