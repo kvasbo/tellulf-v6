@@ -10,6 +10,14 @@ body {
   overflow: hidden;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin-bottom: 6.6px;
+}
+
 .content {
   display: flex;
   height: 1200px;
@@ -21,7 +29,7 @@ body {
   flex: 2;
   display: flex;
   flex-direction: column;
-  padding: 50px;
+  padding: 25px;
 }
 .today .time_and_date {
   display: flex;
