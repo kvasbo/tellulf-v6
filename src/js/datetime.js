@@ -29,7 +29,7 @@ function updateBattery() {
     try {
         if (okular && okular.DevicesStatus) {
             var status_1 = okular.DevicesStatus();
-            var battery = status_1["28003d00-0f47-3830-3933-303600000000"]["Battery"];
+            var battery = status_1['28003d00-0f47-3830-3933-303600000000']["Battery"];
             $(".battery").html(battery + "%");
         }
     }
@@ -37,19 +37,14 @@ function updateBattery() {
     }
 }
 function updateTime() {
-    var oslo_datetime_str = new Date().toLocaleString("en-US", {
-        timeZone: "Europe/Oslo",
-    });
-    var date_oslo = new Date(oslo_datetime_str);
-    $("#now_time").html(formatTime(date_oslo));
-    $("#now_date").html(formatDate(date_oslo, true));
+    var time = new Date();
+    $("#now_time").html(formatTime(time));
+    $("#now_date").html(formatDate(time, true));
     var nextMinute = new Date();
     nextMinute.setMinutes(nextMinute.getMinutes() + 1);
     nextMinute.setSeconds(0);
     var diff = nextMinute.getTime() - new Date().getTime();
-    setTimeout(function () {
-        updateTime();
-    }, diff);
+    setTimeout(function () { updateTime(); }, diff);
 }
 function formatDate(d, withMonth) {
     if (withMonth === void 0) { withMonth = false; }

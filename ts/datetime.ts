@@ -31,29 +31,26 @@ const days = [
   "lørdag",
 ];
 
-function updateBattery() {
+
+function updateBattery() {
   try {
     if (okular && okular.DevicesStatus) {
       const status = okular.DevicesStatus();
-      const battery = status["28003d00-0f47-3830-3933-303600000000"]["Battery"];
+      const battery = status['28003d00-0f47-3830-3933-303600000000']["Battery"];
       $(".battery").html(`${battery}%`);
     }
-  } catch (e) {
+  } catch(e) {
     // console.log(e);
   }
 }
 
 // Update time, and set itself to re-update on the start of next minute.
 function updateTime() {
-  // Make sure we get Oslo time
-  const oslo_datetime_str = new Date().toLocaleString("en-US", {
-    timeZone: "Europe/Oslo",
-  });
-  const date_oslo = new Date(oslo_datetime_str);
+  const time = new Date();
 
-  $("#now_time").html(formatTime(date_oslo));
-  $("#now_date").html(formatDate(date_oslo, true));
-
+  $("#now_time").html(formatTime(time));
+  $("#now_date").html(formatDate(time, true));
+  
   // Pure JS
   const nextMinute = new Date();
   nextMinute.setMinutes(nextMinute.getMinutes() + 1);
@@ -61,9 +58,7 @@ function updateTime() {
 
   const diff = nextMinute.getTime() - new Date().getTime();
 
-  setTimeout(function () {
-    updateTime();
-  }, diff);
+  setTimeout(function(){ updateTime(); }, diff);
 }
 
 // Just format a date
