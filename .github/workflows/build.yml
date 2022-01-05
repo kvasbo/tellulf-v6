@@ -41,7 +41,5 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tellulf:latest
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
       - name: Deploy to DigitalOcean
         run: doctl apps create-deployment ${{ secrets.DIGITALOCEAN_APP_ID }}
