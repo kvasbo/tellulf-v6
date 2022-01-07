@@ -8,7 +8,7 @@ namespace kvasbo\tellulf;
 require_once "./class.calendar.php";
 require_once "./class.weather.php";
 require_once "./class.s3.php";
-require_once "./class.power.php";
+
 
 class Tellulf
 {
@@ -49,8 +49,6 @@ class Tellulf
             },
             ARRAY_FILTER_USE_KEY
         );
-
-        $data['power'] = Power::Get_Consumption();
 
         return $data;
     }

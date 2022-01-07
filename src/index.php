@@ -64,5 +64,26 @@ $app->get("/time", function (Request $request, Response $response, $args) {
   return $response->withHeader('Content-Type', 'application/json');
 });
 
+// Tibber
+$app->get("/tibber", function (Request $request, Response $response, $args) {
+  require_once "./class.power.php";
+  $power = Power::Get_Consumption();
+  $data = array(
+      'cabin' => array(
+        'usageToday' => $power['hytta']['used'],
+        'costToday' => $power['hytta']['cost']
+        ),
+      'home' => array(
+        'usageToday' => $power['hjemme']['used'],
+        'costToday' => $power['hjemme']['cost']
+      )
+    );
+  $payload = json_encode($data);
+  $response->getBody()->write($payload);
+  return $response->withHeader('Content-Type', 'application/json');
+});
+
+
+
 // Run app
 $app->run();

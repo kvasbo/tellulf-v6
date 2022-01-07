@@ -7,7 +7,7 @@ $(function () {
     }, 5000);
     window.setInterval(function () {
         updatePowerUsage();
-    }, 15000);
+    }, 60000);
 });
 function updateTime() {
     jQuery.get("/time").then((timeData) => {
@@ -17,7 +17,10 @@ function updateTime() {
 }
 function updatePowerUsage() {
     jQuery.get("/tibber").then((d) => {
-        console.log(d);
+        $(".powerUsageTodayHome").html(Math.round(d.home.usageToday).toString());
+        $(".powerUsageTodayCabin").html(Math.round(d.cabin.usageToday).toString());
+        $(".powerCostTodayHome").html(Math.round(d.home.costToday).toString());
+        $(".powerCostTodayCabin").html(Math.round(d.cabin.costToday).toString());
     });
 }
 function updateBattery() {
