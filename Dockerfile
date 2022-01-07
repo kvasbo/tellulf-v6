@@ -29,7 +29,8 @@ RUN yarn run sass
 RUN rm -rf /var/www/html/*
 RUN mv /tellulf-temp/src/* /var/www/html/
 
-# WORKDIR /var/www/html
+# Add rewrite module
+RUN a2enmod rewrite
 
 # Set port
 EXPOSE 80
