@@ -85,7 +85,6 @@ class Tellulf
      */
     private static function Create_Nice_Date(\Datetime $datetime)
     {
-
         $dager = ['søndag', 'mandag', 'tirsdag', 'onsdag', 'torsdag', 'fredag', 'lørdag'];
         $weekday = $datetime->format("w");
         return $dager[$weekday] . " " . $datetime->format('j.');

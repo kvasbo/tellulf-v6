@@ -1,85 +1,32 @@
 declare const okular: any;
 
+interface timeData {
+  time: string;
+  date: string;
+}
+
 $(function () {
   // Init time update
   updateTime();
   updateBattery();
+  window.setInterval(function () {
+    updateTime();
+  }, 5000);
 });
 
-const months = [
-  "januar",
-  "februar",
-  "mars",
-  "april",
-  "mai",
-  "juni",
-  "juni",
-  "august",
-  "september",
-  "oktober",
-  "november",
-  "desember",
-];
-
-const days = [
-  "søndag",
-  "mandag",
-  "tirsdag",
-  "onsdag",
-  "torsdag",
-  "fredag",
-  "lørdag",
-];
-
-
-function updateBattery() {
+function updateBattery() {
   try {
     if (okular && okular.DevicesStatus) {
       const status = okular.DevicesStatus();
-      const battery = status['28003d00-0f47-3830-3933-303600000000']["Battery"];
+      const battery = status["28003d00-0f47-3830-3933-303600000000"]["Battery"];
       $(".battery").html(`${battery}%`);
     }
-  } catch(e) {
-    // console.log(e);
-  }
+  } catch (e) {}
 }
 
 // Update time, and set itself to re-update on the start of next minute.
-function updateTime() {
-  const time = new Date();
-
-  $("#now_time").html(formatTime(time));
-  $("#now_date").html(formatDate(time, true));
-  
-  // Pure JS
-  const nextMinute = new Date();
-  nextMinute.setMinutes(nextMinute.getMinutes() + 1);
-  nextMinute.setSeconds(0);
-
-  const diff = nextMinute.getTime() - new Date().getTime();
-
-  setTimeout(function(){ updateTime(); }, diff);
-}
-
-// Just format a date
-function formatDate(d: Date, withMonth: boolean = false) {
-  const date = d.getDate();
-  const wDay = days[d.getDay()];
-  const month = months[d.getMonth()];
-
-  if (withMonth) {
-    return `${wDay} ${date}. ${month}`;
-  } else {
-    return `${wDay} ${date}.`;
-  }
-}
-
-function formatTime(d: Date) {
-  const h = d.getHours();
-  const m = d.getMinutes();
-  let mS = m.toString();
-  if (m < 10) {
-    mS = `0${m.toString()}`;
-  }
-  return `${h}:${mS}`;
+async function updateTime() {
+  const timeData = await jQuery.get("/time");
+  $("#now_time").html(timeData.time);
+  $("#now_date").html(timeData.date);
 }

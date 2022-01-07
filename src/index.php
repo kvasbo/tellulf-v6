@@ -23,6 +23,7 @@ $app->addRoutingMiddleware();
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
 
 require_once "./class.tellulf.php";
+require_once "./class.clock.php";
 
 // Load Twig
 $twig_loader = new \Twig\Loader\FilesystemLoader("./templates");
@@ -30,6 +31,7 @@ $twig = new \Twig\Environment($twig_loader, [
     "cache" => false, //"./twig-cache",
 ]);
 
+// Main user interface
 $app->get('/', function (Request $request, Response $response, $args) {
 
   global $twig;
@@ -52,6 +54,14 @@ $app->get('/', function (Request $request, Response $response, $args) {
   $response->getBody()->write($page);
   return $response;
   
+});
+
+// Clock
+$app->get("/time", function (Request $request, Response $response, $args) {
+  $data = array('time' => Clock::getTime(), 'date' => Clock::getDateFormatted());
+  $payload = json_encode($data);
+  $response->getBody()->write($payload);
+  return $response->withHeader('Content-Type', 'application/json');
 });
 
 // Run app
