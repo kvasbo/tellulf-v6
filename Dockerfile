@@ -28,8 +28,7 @@ RUN yarn run sass
 # Clean target and move content
 RUN rm -rf /var/www/html/*
 RUN mv /tellulf-temp/src/* /var/www/html/
-
-COPY .htaccess /var/www/html
+RUN mv /tellulf-temp/src/.htaccess /var/www/html/
 
 # Add rewrite module
 RUN a2enmod rewrite
