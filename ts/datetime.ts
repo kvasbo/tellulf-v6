@@ -14,6 +14,14 @@ $(function () {
   }, 5000);
 });
 
+// Update time from the server
+function updateTime() {
+  jQuery.get("/time").then((timeData: timeData) => {
+    $("#now_time").html(timeData.time);
+    $("#now_date").html(timeData.date);
+  });
+}
+
 function updateBattery() {
   try {
     if (okular && okular.DevicesStatus) {
@@ -22,11 +30,4 @@ function updateBattery() {
       $(".battery").html(`${battery}%`);
     }
   } catch (e) {}
-}
-
-// Update time, and set itself to re-update on the start of next minute.
-async function updateTime() {
-  const timeData = await jQuery.get("/time");
-  $("#now_time").html(timeData.time);
-  $("#now_date").html(timeData.date);
 }
