@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat");
+@import url("https://fonts.googleapis.com/css2?family=Overpass+Mono");
 body {
   margin: 0;
   background-color: white;
@@ -40,6 +41,7 @@ h5 {
 }
 .today .time_and_date .now_time {
   font-size: 160px;
+  font-family: "Overpass Mono", monospace;
 }
 .today .time_and_date .now_date {
   font-size: 75px;
@@ -52,6 +54,7 @@ h5 {
 }
 .today .current_weather .current_temperature {
   font-size: 160px;
+  font-family: "Overpass Mono", monospace;
 }
 .today .today_forecast {
   display: flex;
