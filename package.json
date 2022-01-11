@@ -1,12 +1,12 @@
 {
-  "scripts": {
-    "sass-watch": "npx sass --watch sass:src/css",
-    "sass": "npx sass sass:src/css"
-  },
-  "devDependencies": {
-    "@types/jquery": "^3.5.7",
-    "eslint": "^8.0.1",
-    "sass": "^1.43.2",
-    "typescript": "^4.4.4"
-  }
+    "scripts": {
+        "sass-watch": "npx sass --watch sass:src/css",
+        "sass": "npx sass sass:src/css"
+    },
+    "devDependencies": {
+        "@types/jquery": "^3.5",
+        "eslint": "^8.0",
+        "sass": "^1.43",
+        "typescript": "^4"
+    }
 }
