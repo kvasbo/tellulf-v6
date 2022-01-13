@@ -19,6 +19,10 @@
         </div>
     </div>
 
+    <div class="day_info">
+        <img src="assets/sunrise.png" width="22px" />&nbsp;{{ today.sunrise }}&nbsp;&nbsp; <img src="assets/sunset.png" width="22px" />&nbsp;{{ today.sunset }}
+    </div>
+
     <div class="today_forecast">
         {% include("detailed_forecast.html") with {"day": today} %}
     </div>

@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Azeret+Mono");
-@import url("https://fonts.googleapis.com/css2?family=Overpass+Mono");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat");
 body {
   margin: 0;
   background-color: white;
@@ -41,10 +40,15 @@ h5 {
 }
 .today .time_and_date .now_time {
   font-size: 160px;
-  font-family: "Azeret Mono", monospace;
 }
 .today .time_and_date .now_date {
   font-size: 75px;
+}
+.today .day_info {
+  display: flex;
+  flex: 0.1;
+  align-items: flex-start;
+  justify-content: center;
 }
 .today .current_weather {
   display: flex;
@@ -54,7 +58,6 @@ h5 {
 }
 .today .current_weather .current_temperature {
   font-size: 160px;
-  font-family: "Azeret Mono", monospace;
 }
 .today .today_forecast {
   display: flex;

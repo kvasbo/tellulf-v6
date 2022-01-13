@@ -4,8 +4,9 @@ namespace kvasbo\tellulf;
 
 class Clock {
 
-  public static function getTime() {
-    return date("G:i");
+  public static function getTime($time = null) {
+    if (is_null(($time))) $time = time();
+    return date("G:i", $time);
   }
 
   public static function getDateFormatted() {
