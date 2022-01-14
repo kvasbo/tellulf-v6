@@ -2,6 +2,7 @@ $(function () {
     updateTime();
     updateBattery();
     updatePowerUsage();
+    updateFact();
     window.setInterval(function () {
         updateTime();
     }, 5000);
@@ -21,6 +22,11 @@ function updatePowerUsage() {
         $(".powerUsageTodayCabin").html(Math.round(d.cabin.usageToday).toString());
         $(".powerCostTodayHome").html(Math.round(d.home.costToday).toString());
         $(".powerCostTodayCabin").html(Math.round(d.cabin.costToday).toString());
+    });
+}
+function updateFact() {
+    jQuery.get("/fact").then((d) => {
+        $(".fact-text").html(`${d.fact}`);
     });
 }
 function updateBattery() {

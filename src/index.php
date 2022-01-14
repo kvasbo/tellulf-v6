@@ -24,6 +24,7 @@ $errorMiddleware = $app->addErrorMiddleware(true, true, true);
 
 require_once "./class.tellulf.php";
 require_once "./class.clock.php";
+require_once "./class.fact.php";
 
 // Load Twig
 $twig_loader = new \Twig\Loader\FilesystemLoader("./templates");
@@ -49,7 +50,7 @@ $app->get('/', function (Request $request, Response $response, $args) {
       "today" => $today,
   ];
 
-  $template_index = $twig->load("index.html");
+  $template_index = $twig->load("grid.html");
   $page = $template_index->render($render_vars);
   $response->getBody()->write($page);
   return $response;
@@ -80,6 +81,13 @@ $app->get("/tibber", function (Request $request, Response $response, $args) {
     );
   $payload = json_encode($data);
   $response->getBody()->write($payload);
+  return $response->withHeader('Content-Type', 'application/json');
+});
+
+// Fact
+$app->get("/fact", function (Request $request, Response $response, $args) {
+  $data = Fact::Get_Fact();
+  $response->getBody()->write(json_encode($data));
   return $response->withHeader('Content-Type', 'application/json');
 });
 
