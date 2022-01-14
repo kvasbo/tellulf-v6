@@ -46,26 +46,23 @@ h5 {
 .fact {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   background-color: #cccccc;
-  padding: 2rem;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .power {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background-color: #bababa;
+  justify-content: flex-start;
   align-items: center;
+  background-color: #bababa;
 }
 
 .coming_days {
   flex-direction: column;
   flex-wrap: wrap;
   display: flex;
-  padding: 2rem;
 }
 .coming_days .day {
   display: flex;
