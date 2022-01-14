@@ -6,7 +6,7 @@ class Fact {
   public static function Get_Fact(): object {
 
     for($i = 0; $i < 10; $i++) {
-      $data = file_get_contents("http://api.fungenerators.com/fact/random", false, static::Get_Context());
+      $data = file_get_contents("https://api.fungenerators.com/fact/random", false, static::Get_Context());
       $decoded = json_decode($data);
       if (!empty($decoded->contents) && strlen($decoded->contents->fact) < 225) {
         return $decoded->contents;
