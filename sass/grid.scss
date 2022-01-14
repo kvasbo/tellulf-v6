@@ -7,39 +7,58 @@
     width: 1600px;
     padding: 0;
     overflow: hidden;
-    // Define grid
-    display: grid;
-    grid-gap: 0px;
-    grid-template-columns: 25% 25% 25% 25%;
-    grid-template-rows: 25% 25% 25% 25%;
+    display: block;
+}
+
+.block {
+    padding: 2rem;
+    box-sizing: border-box;
 }
 
 .time_and_date {
-    grid-row: 1 / span 2;
-    grid-column: 1 / span 2;
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    left: 0;
+    top: 0;
 }
 
 .current_weather {
-    grid-row: 1 / span 2;
-    grid-column: 3 / span 1;
+    position: absolute;
+    width: 25%;
+    height: 50%;
+    left: 50%;
+    top: 0;
 }
 
 .today_forecast {
-    grid-row: 1 / span 2;
-    grid-column: 4 / span 1;
+    position: absolute;
+    width: 25%;
+    height: 50%;
+    left: 75%;
+    top: 0;
 }
 
 .fact {
-    grid-row: 4 / span 1;
-    grid-column: 4 / span 1;
+    position: absolute;
+    width: 25%;
+    height: 25%;
+    left: 75%;
+    top: 75%;
 }
 
 .power {
-    grid-row: 3 / span 1;
-    grid-column: 4 / span 1;
+    position: absolute;
+    width: 25%;
+    height: 25%;
+    left: 75%;
+    top: 50%;
 }
 
 .coming_days {
-    grid-row: 3 / span 2;
-    grid-column: 1 / span 3;
+    position: absolute;
+    width: 75%;
+    height: 50%;
+    left: 0;
+    top: 50%;
 }

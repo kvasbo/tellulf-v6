@@ -11,11 +11,11 @@
 </head>
 
 <body class="grid">
-    <div class="time_and_date">
+    <div class="block time_and_date">
         <div class="now_time" id="now_time"></div>
         <div class="now_date" id="now_date"></div>
     </div>
-    <div class="current_weather">
+    <div class="block current_weather">
         <div class="current_weather_symbol">
             <img class="weather_icon" src="weathericon/png/{{ current_weather_icon }}.png" />
         </div>
@@ -26,17 +26,19 @@
             <img src="assets/sunrise.png" width="22px" />&nbsp;{{ today.sunrise }}&nbsp;&nbsp; <img src="assets/sunset.png" width="22px" />&nbsp;{{ today.sunset }}
         </div>
     </div>
-    <div class="today_forecast">
+    <div class="block today_forecast">
         {% include("detailed_forecast.html") with {"day": today} %}
     </div>
-    <div class="fact">
+    <div class="block fact">
         <p class="fact-text"></p>
     </div>
-    <div class="power">{% include("power.html") %}</div>
+    <div class="block power">{% include("power.html") %}</div>
 
-    <div class="coming_days" id="coming_days">
+    <div class="block coming_days" id="coming_days">
         {% for day in days %} {{ include('day.html') }} {% endfor %}
     </div>
+
+    <div class="battery" id="battery"></div>
 </body>
 
 </html>
