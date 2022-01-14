@@ -12,7 +12,7 @@ h5 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #cccccc;
+  background-color: #dddddd;
   color: #222222;
 }
 .time_and_date .now_time {
@@ -40,14 +40,14 @@ h5 {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  background-color: #aaaaaa;
+  background-color: #fafafa;
 }
 
 .fact {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  background-color: #cccccc;
+  background-color: #cfcfcf;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -56,7 +56,7 @@ h5 {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  background-color: #bababa;
+  background-color: #dddddd;
 }
 
 .coming_days {
