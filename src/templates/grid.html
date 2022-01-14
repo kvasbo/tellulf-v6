@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="nb-NO">
+
+<head>
+    <title>Tellulf v6</title>
+    <link rel="icon" href="data:," />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/combine/npm/jquery@3"></script>
+    <script src="js/tellulf.js"></script>
+    <link rel="stylesheet" href="css/grid.css" />
+    <link rel="stylesheet" href="css/tellulf.css" />
+</head>
+
+<body class="grid">
+    <div class="time_and_date">
+        <div class="now_time" id="now_time"></div>
+        <div class="now_date" id="now_date"></div>
+    </div>
+    <div class="current_weather">
+        <div class="current_weather_symbol">
+            <img class="weather_icon" src="weathericon/png/{{ current_weather_icon }}.png" />
+        </div>
+        <div class="current_temperature">
+            {{ current_temperature|round }}&deg;
+        </div>
+        <div class="day_info">
+            <img src="assets/sunrise.png" width="22px" />&nbsp;{{ today.sunrise }}&nbsp;&nbsp; <img src="assets/sunset.png" width="22px" />&nbsp;{{ today.sunset }}
+        </div>
+    </div>
+    <div class="today_forecast">
+        {% include("detailed_forecast.html") with {"day": today} %}
+    </div>
+    <div class="fact">
+        <p class="fact-text"></p>
+    </div>
+    <div class="power">{% include("power.html") %}</div>
+
+    <div class="coming_days" id="coming_days">
+        {% for day in days %} {{ include('day.html') }} {% endfor %}
+    </div>
+</body>
+
+</html>

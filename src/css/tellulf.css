@@ -1,15 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat");
-body {
-  margin: 0;
-  background-color: white;
-  font-family: "Montserrat", serif;
-  font-size: 20px;
-  height: 1200px;
-  width: 1600px;
-  padding: 0;
-  overflow: hidden;
-}
-
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600");
 h1,
 h2,
 h3,
@@ -18,80 +7,74 @@ h5 {
   margin-bottom: 6.6px;
 }
 
-.content {
-  display: flex;
-  height: 1200px;
-  width: 1600px;
-  flex-direction: row;
-}
-
-.today {
-  flex: 2;
+.time_and_date {
   display: flex;
   flex-direction: column;
-  padding: 25px;
-}
-.today .time_and_date {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
   align-items: center;
   justify-content: center;
+  background-color: #cccccc;
+  color: #222222;
 }
-.today .time_and_date .now_time {
-  font-size: 160px;
+.time_and_date .now_time {
+  font-size: 220px;
+  font-weight: 600;
 }
-.today .time_and_date .now_date {
+.time_and_date .now_date {
   font-size: 75px;
 }
-.today .day_info {
-  display: flex;
-  flex: 0.1;
-  align-items: flex-start;
-  justify-content: center;
-}
-.today .current_weather {
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-}
-.today .current_weather .current_temperature {
-  font-size: 160px;
-}
-.today .today_forecast {
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-}
-.today .power {
+
+.current_weather {
   display: flex;
   flex-direction: column;
-  flex: 0.25;
+  align-items: center;
   justify-content: center;
-  align-items: flex-start;
-  font-size: 14px;
+  background-color: #eeeeee;
+}
+.current_weather .current_temperature {
+  font-size: 125px;
+}
+
+.today_forecast {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  background-color: #aaaaaa;
+}
+
+.fact {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #cccccc;
+  padding: 2rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.power {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #bababa;
+  align-items: center;
 }
 
 .coming_days {
-  flex: 1;
-  align-content: space-evenly;
-  display: flex;
   flex-direction: column;
-  padding: 50px;
-  border-left: 1px solid #888888;
+  flex-wrap: wrap;
+  display: flex;
+  padding: 2rem;
 }
 .coming_days .day {
   display: flex;
   flex-direction: column;
-  flex: 1;
-  padding-bottom: 0.25em;
+  padding-bottom: 0.25rem;
 }
 .coming_days .day .date {
   font-size: 25px;
   font-weight: bold;
-  border-bottom: 1px solid #888888;
 }
 
 .weather {

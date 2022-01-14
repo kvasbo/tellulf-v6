@@ -15,11 +15,18 @@ interface PowerInfoSet {
   home: PowerData;
 }
 
+interface FactSet {
+  fact: string;
+  category: string;
+  subcategory: string;
+}
+
 $(function () {
   // Init time update
   updateTime();
   updateBattery();
   updatePowerUsage();
+  updateFact();
   window.setInterval(function () {
     updateTime();
   }, 5000);
@@ -45,6 +52,15 @@ function updatePowerUsage() {
     $(".powerUsageTodayCabin").html(Math.round(d.cabin.usageToday).toString());
     $(".powerCostTodayHome").html(Math.round(d.home.costToday).toString());
     $(".powerCostTodayCabin").html(Math.round(d.cabin.costToday).toString());
+  });
+}
+
+/**
+ * Live update power usage.
+ */
+function updateFact() {
+  jQuery.get("/fact").then((d: FactSet) => {
+    $(".fact-text").html(`${d.fact}`);
   });
 }
 

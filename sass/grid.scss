@@ -1,0 +1,45 @@
+.grid {
+    margin: 0;
+    background-color: white;
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+    height: 1200px;
+    width: 1600px;
+    padding: 0;
+    overflow: hidden;
+    // Define grid
+    display: grid;
+    grid-gap: 0px;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-rows: 25% 25% 25% 25%;
+}
+
+.time_and_date {
+    grid-row: 1 / span 2;
+    grid-column: 1 / span 2;
+}
+
+.current_weather {
+    grid-row: 1 / span 2;
+    grid-column: 3 / span 1;
+}
+
+.today_forecast {
+    grid-row: 1 / span 2;
+    grid-column: 4 / span 1;
+}
+
+.fact {
+    grid-row: 4 / span 1;
+    grid-column: 4 / span 1;
+}
+
+.power {
+    grid-row: 3 / span 1;
+    grid-column: 4 / span 1;
+}
+
+.coming_days {
+    grid-row: 3 / span 2;
+    grid-column: 1 / span 3;
+}

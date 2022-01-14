@@ -1,22 +1,12 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat");
-$text_huge: 160px;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600");
+$text_huge: 220px;
+$text_xlarge: 125px;
 $text_large: 75px;
 $text_subheader: 25px;
 $text_size: 20px;
 $text_small: 14px;
 $margin: 10px;
 $gray: #888888;
-body {
-    margin: 0;
-    background-color: white;
-    font-family: "Montserrat", serif;
-    font-size: $text_size;
-    height: 1200px;
-    width: 1600px;
-    padding: 0;
-    overflow: hidden;
-}
-
 h1,
 h2,
 h3,
@@ -25,78 +15,72 @@ h5 {
     margin-bottom: calc($margin * 0.66);
 }
 
-.content {
-    display: flex;
-    height: 1200px;
-    width: 1600px;
-    flex-direction: row;
-}
-
-.today {
-    flex: 2;
+.time_and_date {
     display: flex;
     flex-direction: column;
-    padding: 25px;
-    .time_and_date {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        align-items: center;
-        justify-content: center;
-        .now_time {
-            font-size: $text_huge;
-        }
-        .now_date {
-            font-size: $text_large;
-        }
+    align-items: center;
+    justify-content: center;
+    background-color: #cccccc;
+    color: #222222;
+    .now_time {
+        font-size: $text_huge;
+        font-weight: 600;
     }
-    .day_info {
-        display: flex;
-        flex: 0.1;
-        align-items: flex-start;
-        justify-content: center;
+    .now_date {
+        font-size: $text_large;
     }
-    .current_weather {
-        display: flex;
-        flex: 1;
-        align-items: center;
-        justify-content: center;
-        .current_temperature {
-            font-size: $text_huge;
-        }
+}
+
+.current_weather {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #eeeeee;
+    .current_temperature {
+        font-size: $text_xlarge;
     }
-    .today_forecast {
-        display: flex;
-        flex: 1;
-        align-items: center;
-        justify-content: center;
-    }
-    .power {
-        display: flex;
-        flex-direction: column;
-        flex: 0.25;
-        justify-content: center;
-        align-items: flex-start;
-        font-size: $text_small;
-    }
+}
+
+.today_forecast {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    background-color: #aaaaaa;
+}
+
+.fact {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #cccccc;
+    padding: 2rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.power {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #bababa;
+    align-items: center;
 }
 
 .coming_days {
-    flex: 1;
-    align-content: space-evenly;
-    display: flex;
     flex-direction: column;
-    padding: 50px;
-    border-left: 1px solid $gray;
+    flex-wrap: wrap;
+    display: flex;
+    padding: 2rem;
     .day {
         display: flex;
         flex-direction: column;
-        flex: 1;
         padding-bottom: 0.25rem;
         .date {
             font-size: $text_subheader;
             font-weight: bold;
-            border-bottom: 1px solid $gray;
         }
     }
 }
