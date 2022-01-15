@@ -45,6 +45,7 @@ class Weather
             if (count($return) >= 18) {
                 break;
             }
+            
             $time = strtotime($series->time);
             $date = date("Y-m-d", $time);
             $date_data = \date_parse(date("Y-m-d H:i:s", $time));
@@ -70,6 +71,8 @@ class Weather
     public function Get_Six_Hour_Forecasts()
     {
         $return = [];
+        $forecast = static::Parse_Forecast($this->forecast);
+         // print_r($forecast);
         foreach ($this->forecast as $series) {
 
             // Parse the time and handle time zones
@@ -95,10 +98,40 @@ class Weather
         return $return;
     }
 
+    private static function Parse_Forecast(array $forecast): array {
+      $out = [];
+
+      foreach ($forecast as $series) {
+        $time = strtotime($series->time);
+        $date = date("Y-m-d", $time);
+        $date_data = \date_parse(date("Y-m-d H:i:s", $time));
+         // Init array
+         if (empty($out[$date])) {
+            $out[$date] = static::Init_Forecast_Data();
+         }
+         if ($series->data->instant->details->air_temperature > $out[$date]['temp_max']) {
+          $out[$date]['temp_max'] = $series->data->instant->details->air_temperature;
+         }
+         if ($series->data->instant->details->air_temperature < $out[$date]['temp_min']) {
+          $out[$date]['temp_min'] = $series->data->instant->details->air_temperature;
+         }      
+      }
+
+
+      return $out;
+    }
+
+    private static function Init_Forecast_Data() {
+      return array (
+        'temp_max' => -99,
+        'temp_min' => 99,
+      );
+    }
+
     /**
      * Fetch_Forecast
      *
-     * @return void
+     * @return array
      */
     private static function Fetch_Forecast()
     {
@@ -113,7 +146,7 @@ class Weather
     /**
      * Fetch_Nowcast
      *
-     * @return void
+     * @return array
      */
     private static function Fetch_Nowcast()
     {
