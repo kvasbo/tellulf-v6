@@ -1,7 +1,7 @@
 .grid {
   margin: 0;
   background-color: white;
-  font-family: "Poppins", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 20px;
   height: 1200px;
   width: 1600px;
@@ -13,6 +13,8 @@
 .block {
   padding: 2rem;
   box-sizing: border-box;
+  overflow: hidden;
+  background-color: #ffffff;
 }
 
 .time_and_date {

@@ -8,8 +8,12 @@ class Fact {
     for($i = 0; $i < 10; $i++) {
       $data = file_get_contents("https://api.fungenerators.com/fact/random", false, static::Get_Context());
       $decoded = json_decode($data);
-      if (!empty($decoded->contents) && strlen($decoded->contents->fact) < 225) {
-        return $decoded->contents;
+      
+      if (!empty($decoded->contents)) {
+        $length = strlen($decoded->contents->fact) + strlen($decoded->contents->category) + strlen($decoded->contents->subcategory);
+        if ($length < 300) {
+          return $decoded->contents;
+        }
       }
       sleep(1);
     }

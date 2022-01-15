@@ -60,6 +60,7 @@ function updatePowerUsage() {
  */
 function updateFact() {
   jQuery.get("/fact").then((d: FactSet) => {
+    $(".fact-title").html(`${d.category} - ${d.subcategory}`);
     $(".fact-text").html(`${d.fact}`);
   });
 }

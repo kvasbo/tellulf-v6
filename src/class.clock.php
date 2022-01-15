@@ -6,7 +6,7 @@ class Clock {
 
   public static function getTime($time = null) {
     if (is_null(($time))) $time = time();
-    return date("G:i", $time);
+    return date("H:i", $time);
   }
 
   public static function getDateFormatted() {
