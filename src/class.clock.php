@@ -11,7 +11,7 @@ class Clock {
 
   public static function getDateFormatted() {
     $day = static::getDayName((int) date('w'));
-    $month = static::getMonthName((int) date('n'));
+    $month = static::getMonthName((int) date('n') - 1);
     $date = date("j");
     return "$day $date. $month";
   }
