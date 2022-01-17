@@ -23,10 +23,10 @@ class Tellulf
     /**
      *    Generate N days ahead
      */
-    public function Generate_Coming_Days(int $number_of_days = 4)
+    public function Generate_Coming_Days(int $number_of_days = 3)
     {
         $days = [];
-        for ($i = 1; $i <= $number_of_days; $i++) {
+        for ($i = 0; $i <= $number_of_days; $i++) {
             // Build return array
             $days[] = $this->Get_Data_For_Date(new \DateTime("today + $i days"));
         }
