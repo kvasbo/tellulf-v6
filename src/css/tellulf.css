@@ -44,11 +44,6 @@ h5 {
   justify-content: center;
 }
 
-.fact {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .power {
   display: flex;
   justify-content: flex-start;

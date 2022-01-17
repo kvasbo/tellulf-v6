@@ -2,7 +2,7 @@ $(function () {
     updateTime();
     updateBattery();
     updatePowerUsage();
-    updateFact();
+    setReload();
     window.setInterval(function () {
         updateTime();
     }, 5000);
@@ -24,12 +24,6 @@ function updatePowerUsage() {
         $(".powerCostTodayCabin").html(Math.round(d.cabin.costToday).toString());
     });
 }
-function updateFact() {
-    jQuery.get("/fact").then((d) => {
-        $(".fact-title").html(`${d.category} - ${d.subcategory}`);
-        $(".fact-text").html(`${d.fact}`);
-    });
-}
 function updateBattery() {
     try {
         if (okular && okular.DevicesStatus) {
@@ -39,4 +33,11 @@ function updateBattery() {
         }
     }
     catch (e) { }
+}
+function setReload() {
+    const now = new Date();
+    const startOfNextHour = new Date();
+    startOfNextHour.setUTCHours(now.getUTCHours() + 1, 0, 1, 0);
+    const diff = startOfNextHour.getTime() - now.getTime();
+    setTimeout(() => window.location.reload(), diff);
 }
