@@ -21,7 +21,11 @@
     <div class="block power">{% include("power.html") %}</div>
 
     <div class="block coming_days" id="coming_days">
-        {% for day in days %} {{ include('day.html') }} {% endfor %}
+        {% for day in days|slice(1, 6) %} {{ include('weather_day.html') }} {% endfor %}
+    </div>
+
+    <div class="block calendar" id="calendar">
+        {% for day in days %} {{ include('calendar_day.html') }} {% endfor %}
     </div>
 
     <div class="battery" id="battery"></div>

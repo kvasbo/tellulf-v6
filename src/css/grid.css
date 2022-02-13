@@ -18,26 +18,34 @@
 
 .time_and_date {
   position: absolute;
-  width: 50%;
-  height: 50%;
+  width: 40%;
+  height: 33%;
   left: 0;
   top: 0;
 }
 
+.calendar {
+  position: absolute;
+  width: 40%;
+  height: 67%;
+  left: 0;
+  top: 33%;
+}
+
 .current_weather {
   position: absolute;
-  width: 25%;
-  height: 50%;
-  left: 50%;
+  width: 60%;
+  height: 22.5%;
+  left: 40%;
   top: 0;
 }
 
 .today_forecast {
   position: absolute;
-  width: 25%;
-  height: 50%;
-  left: 75%;
-  top: 0;
+  width: 60%;
+  height: 22.5%;
+  left: 40%;
+  top: 22.5%;
 }
 
 .power {
@@ -50,10 +58,10 @@
 
 .coming_days {
   position: absolute;
-  width: 75%;
-  height: 50%;
-  left: 0;
-  top: 50%;
+  width: 60%;
+  height: 55%;
+  left: 40%;
+  top: 45%;
 }
 
 /*# sourceMappingURL=grid.css.map */
