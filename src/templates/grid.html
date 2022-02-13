@@ -12,12 +12,15 @@
 
 <body class="grid">
     <div class="block time_and_date">{% include("clock.html") %}</div>
+
     <div class="block current_weather">
         {% include("current_weather.html") %}
     </div>
+
     <div class="block today_forecast">
         {% include("detailed_forecast.html") with {"day": today} %}
     </div>
+
     <div class="block power">{% include("power.html") %}</div>
 
     <div class="block coming_days" id="coming_days">

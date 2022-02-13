@@ -28,7 +28,7 @@ $first-column-width: 40%;
 .calendar {
     position: absolute;
     width: $first-column-width;
-    height: 100% - 33%;
+    height: 100% - 33% - 10%;
     left: 0;
     top: 33%;
 }
@@ -51,10 +51,10 @@ $first-column-width: 40%;
 
 .power {
     position: absolute;
-    width: 25%;
-    height: 25%;
-    left: 75%;
-    top: 50%;
+    width: $first-column-width;
+    height: 10%;
+    left: 0;
+    top: 90%;
 }
 
 .coming_days {

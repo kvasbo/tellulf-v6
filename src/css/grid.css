@@ -27,7 +27,7 @@
 .calendar {
   position: absolute;
   width: 40%;
-  height: 67%;
+  height: 57%;
   left: 0;
   top: 33%;
 }
@@ -50,10 +50,10 @@
 
 .power {
   position: absolute;
-  width: 25%;
-  height: 25%;
-  left: 75%;
-  top: 50%;
+  width: 40%;
+  height: 10%;
+  left: 0;
+  top: 90%;
 }
 
 .coming_days {
