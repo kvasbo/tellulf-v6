@@ -52,8 +52,9 @@ h5 {
 
 .power {
   display: flex;
+  flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .coming_days {
@@ -103,11 +104,12 @@ h5 {
 .calendar {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 .calendar .calendar_day .date {
   margin-top: 0.5rem;
   margin-bottom: 0.25rem;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #888888;
 }
 .calendar .calendar_day .event {
   display: flex;
