@@ -23,7 +23,7 @@ class Tellulf
     /**
      *    Generate N days ahead
      */
-    public function Generate_Coming_Days(int $number_of_days = 3)
+    public function Generate_Coming_Days(int $number_of_days = 12)
     {
         $days = [];
         for ($i = 0; $i <= $number_of_days; $i++) {

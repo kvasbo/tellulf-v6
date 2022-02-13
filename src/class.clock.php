@@ -13,7 +13,7 @@ class Clock {
     $day = static::getDayName((int) date('w'));
     $month = static::getMonthName((int) date('n') - 1);
     $date = date("j");
-    return "$day $date. $month";
+    return "$day $date.";
   }
 
   public static function getDayName(int $day) {

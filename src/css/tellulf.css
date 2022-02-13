@@ -18,7 +18,7 @@ h5 {
   justify-content: center;
 }
 .time_and_date .now_time {
-  font-size: 240px;
+  font-size: 200px;
   font-weight: 600;
 }
 .time_and_date .now_date {
@@ -31,7 +31,13 @@ h5 {
   align-items: center;
   justify-content: center;
 }
-.current_weather .current_temperature {
+.current_weather .current_weather_temp_and_icon {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.current_weather .current_weather_temp_and_icon .current_temperature {
   font-size: 125px;
   font-weight: 600;
 }
@@ -51,14 +57,16 @@ h5 {
 }
 
 .coming_days {
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: wrap;
   display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
 }
 .coming_days .day {
   display: flex;
   flex-direction: column;
-  padding-bottom: 0.25rem;
+  margin-bottom: 1rem;
 }
 .coming_days .day .date {
   font-size: 25px;
@@ -92,11 +100,20 @@ h5 {
   padding: 10px 15px;
 }
 
-.events .event {
+.calendar {
+  display: flex;
+  flex-direction: column;
+}
+.calendar .calendar_day .date {
+  margin-top: 0.5rem;
+  margin-bottom: 0.25rem;
+  border-bottom: 1px solid black;
+}
+.calendar .calendar_day .event {
   display: flex;
   flex-direction: row;
 }
-.events .event .event-time {
+.calendar .calendar_day .event .event-time {
   color: #888888;
   display: flex;
   width: 60px;

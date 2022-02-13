@@ -1,3 +1,4 @@
+$first-column-width: 40%;
 .grid {
     margin: 0;
     background-color: white;
@@ -18,26 +19,34 @@
 
 .time_and_date {
     position: absolute;
-    width: 50%;
-    height: 50%;
+    width: $first-column-width;
+    height: 33%;
     left: 0;
     top: 0;
 }
 
+.calendar {
+    position: absolute;
+    width: $first-column-width;
+    height: 100% - 33%;
+    left: 0;
+    top: 33%;
+}
+
 .current_weather {
     position: absolute;
-    width: 25%;
-    height: 50%;
-    left: 50%;
+    width: 100% - $first-column-width;
+    height: 22.5%;
+    left: $first-column-width;
     top: 0;
 }
 
 .today_forecast {
     position: absolute;
-    width: 25%;
-    height: 50%;
-    left: 75%;
-    top: 0;
+    width: 100% - $first-column-width;
+    height: 22.5%;
+    left: $first-column-width;
+    top: 22.5%;
 }
 
 .power {
@@ -50,8 +59,8 @@
 
 .coming_days {
     position: absolute;
-    width: 75%;
-    height: 50%;
-    left: 0;
-    top: 50%;
+    width: 100% - $first-column-width;
+    height: 55%;
+    left: $first-column-width;
+    top: 45%;
 }
