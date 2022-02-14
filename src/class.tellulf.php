@@ -37,15 +37,7 @@ class Tellulf
     {
         $data = $this->Get_Data_For_Date(new \DateTime("today"));
 
-        // only stuff that happens later.
-        $data['detail_forecast'] = array_filter(
-            $data['detail_forecast'], function ($k) {
-                $now = date("H");
-                return $k > $now;
-            },
-            ARRAY_FILTER_USE_KEY
-        );
-
+  
         return $data;
     }
 
@@ -61,7 +53,6 @@ class Tellulf
 
         $forecast = $this->weather->Get_Six_Hour_Forecasts();
 
-        $weather_details = $this->weather->Get_Detailed_Weather();
         $sun = \date_sun_info(time(), 59.9508301, 10.685248);
 
         return array(
@@ -69,7 +60,6 @@ class Tellulf
             'forecast' => !empty($forecast[$date]) ? $forecast[$date] : [],
             'events' => $this->calendar->Get_Events($date),
             'birthdays' => $this->calendar->Get_Birthdays($date),
-            'detail_forecast' => !empty($weather_details[$date]) ? $weather_details[$date] : [],
             'sunrise' => Clock::getTime($sun['sunrise']),
             'sunset' => Clock::getTime($sun['sunset']),
         );

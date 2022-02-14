@@ -1,3 +1,3 @@
 <div class="weather">
-    {% for weather in day.detail_forecast|slice(0, 8) %} {{ include('detailed_forecast_point.html') }} {% endfor %}
+    {% for weather in hourly|slice(1, 9) %} {{ include('detailed_forecast_point.html') }} {% endfor %}
 </div>

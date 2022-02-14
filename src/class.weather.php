@@ -37,42 +37,29 @@ class Weather
         return $temp;
     }
 
-    public function Get_Detailed_Weather()
-    {
-        $return = [];
-        foreach ($this->forecast as $series) {
-
-            if (count($return) >= 18) {
-                break;
-            }
-            
-            $time = strtotime($series->time);
-            $date = date("Y-m-d", $time);
-            $date_data = \date_parse(date("Y-m-d H:i:s", $time));
-            if (!empty($series->data->next_1_hours->details)) {
-
-                // Init array
-                if (empty($return[$date])) {
-                    $return[$date] = [];
-                }
-
-                // Build return data set
-                $return[$date][$date_data['hour']] = array(
-                    "symbol" => $series->data->next_1_hours->summary->symbol_code,
-                    "details" => $series->data->next_1_hours->details,
-                    "instant" => $series->data->instant->details,
-                    "hour" => $date_data['hour'],
-                );
-            }
+    public function Get_Hourly_Forecasts() {
+      $out = [];
+      foreach ($this->forecast as $series) {
+        if (!empty($series->data->next_1_hours->details)) {
+          $time = strtotime($series->time);
+          $date = date("Y-m-d-H", $time);
+          $date_data = \date_parse(date("Y-m-d H:i:s", $time));
+          $out[$date] = array(
+            "symbol" => $series->data->next_1_hours->summary->symbol_code,
+            "details" => $series->data->next_1_hours->details,
+            "instant" => $series->data->instant->details,
+            "hour" => $date_data['hour'],
+        );
+        } else {
+          break;
         }
-        return $return;
+      }
+      return $out;
     }
 
     public function Get_Six_Hour_Forecasts()
     {
         $return = [];
-        $forecast = static::Parse_Forecast($this->forecast);
-         // print_r($forecast);
         foreach ($this->forecast as $series) {
 
             // Parse the time and handle time zones
@@ -96,29 +83,6 @@ class Weather
             }
         }
         return $return;
-    }
-
-    private static function Parse_Forecast(array $forecast): array {
-      $out = [];
-
-      foreach ($forecast as $series) {
-        $time = strtotime($series->time);
-        $date = date("Y-m-d", $time);
-        $date_data = \date_parse(date("Y-m-d H:i:s", $time));
-         // Init array
-         if (empty($out[$date])) {
-            $out[$date] = static::Init_Forecast_Data();
-         }
-         if ($series->data->instant->details->air_temperature > $out[$date]['temp_max']) {
-          $out[$date]['temp_max'] = $series->data->instant->details->air_temperature;
-         }
-         if ($series->data->instant->details->air_temperature < $out[$date]['temp_min']) {
-          $out[$date]['temp_min'] = $series->data->instant->details->air_temperature;
-         }      
-      }
-
-
-      return $out;
     }
 
     private static function Init_Forecast_Data() {

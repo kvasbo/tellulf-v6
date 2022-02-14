@@ -41,15 +41,17 @@ $app->get('/', function (Request $request, Response $response, $args) {
   $today = $tellulf->Generate_Today();
 
   $weather = $tellulf->weather->Get_Current_Weather();
+  $hourly = $tellulf->weather->Get_Hourly_Forecasts();
 
   $render_vars = [
       "current_temperature" => $weather['temperature'],
       "current_weather_icon" => $weather['symbol'],
       "days" => $coming_days,
       "today" => $today,
+      "hourly_weather" => $hourly,
   ];
 
-  $template_index = $twig->load("grid.html");
+  $template_index = $twig->load("index.html");
   $page = $template_index->render($render_vars);
   $response->getBody()->write($page);
   return $response;
