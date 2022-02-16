@@ -1,4 +1,5 @@
 $first-column-width: 40%;
+$second-column-width: 17.5%;
 .grid {
     margin: 0;
     background-color: white;
@@ -35,18 +36,18 @@ $first-column-width: 40%;
 
 .current_weather {
     position: absolute;
-    width: 100% - $first-column-width;
-    height: 22.5%;
+    width: $second-column-width;
+    height: 40%;
     left: $first-column-width;
     top: 0;
 }
 
 .today_forecast {
     position: absolute;
-    width: 100% - $first-column-width;
-    height: 22.5%;
-    left: $first-column-width;
-    top: 22.5%;
+    width: 100% - $first-column-width - $second-column-width;
+    height: 40%;
+    left: $first-column-width + $second-column-width;
+    top: 0%;
 }
 
 .power {

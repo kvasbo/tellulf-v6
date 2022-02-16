@@ -34,18 +34,18 @@
 
 .current_weather {
   position: absolute;
-  width: 60%;
-  height: 22.5%;
+  width: 17.5%;
+  height: 40%;
   left: 40%;
   top: 0;
 }
 
 .today_forecast {
   position: absolute;
-  width: 60%;
-  height: 22.5%;
-  left: 40%;
-  top: 22.5%;
+  width: 42.5%;
+  height: 40%;
+  left: 57.5%;
+  top: 0%;
 }
 
 .power {

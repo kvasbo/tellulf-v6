@@ -33,7 +33,7 @@ h5 {
 }
 .current_weather .current_weather_temp_and_icon {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
