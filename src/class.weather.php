@@ -30,7 +30,7 @@ class Weather
         );
 
         // Fix strange edge case
-        if ($temp['temperature'] > -1 && $temp['temperature'] < 0) {
+        if ($temp['temperature'] > -1 && $temp['temperature'] < 1) {
             $temp['temperature'] = 0;
         }
 
@@ -74,22 +74,25 @@ class Weather
                     $return[$date] = [];
                 }
 
+                // Get max absolute temp
+                $temps = [$series->data->next_6_hours->details->air_temperature_min, $series->data->next_6_hours->details->air_temperature_max];
+                $abs = array_map(function($d){ return abs($d); }, $temps);
+                $maxVal = max($abs);
+                $maxKey = array_search($maxVal, $abs);
+                
+                // Find from original array by key from absolute values.
+                $temperature = $temps[$maxKey];
+
                 // Build return data set
                 $return[$date][$date_data['hour']] = array(
                     "symbol" => $series->data->next_6_hours->summary->symbol_code,
                     "details" => $series->data->next_6_hours->details,
                     "hour" => $date_data['hour'],
+                    "temperature" => $temperature,
                 );
             }
         }
         return $return;
-    }
-
-    private static function Init_Forecast_Data() {
-      return array (
-        'temp_max' => -99,
-        'temp_min' => 99,
-      );
     }
 
     /**

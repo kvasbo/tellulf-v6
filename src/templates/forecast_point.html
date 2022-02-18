@@ -2,8 +2,6 @@
     <div class="weather_symbol">
         <img class="weather_icon" src="weathericon/png/{{ weather.symbol }}.png" />
     </div>
-    <div class="temperature">
-        {{ weather.details.air_temperature_min|round }}&deg; / {{ weather.details.air_temperature_max|round }}&deg;
-    </div>
+    <div class="temperature">{{ weather.temperature|round }}&deg;</div>
     <!--<div class="forecast_prob">{{ include('rain-prob.html') }}</div>-->
 </div>
