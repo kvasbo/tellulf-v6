@@ -3,6 +3,7 @@ declare const okular: any;
 interface TimeData {
   time: string;
   date: string;
+  week: string;
 }
 
 interface PowerData {
@@ -40,6 +41,7 @@ function updateTime() {
   jQuery.get("/time").then((timeData: TimeData) => {
     $("#now_time").html(timeData.time);
     $("#now_date").html(timeData.date);
+    $("#now_week").html(`Uke ${timeData.week}`);
   });
 }
 

@@ -60,7 +60,7 @@ $app->get('/', function (Request $request, Response $response, $args) {
 
 // Clock
 $app->get("/time", function (Request $request, Response $response, $args) {
-  $data = array('time' => Clock::getTime(), 'date' => Clock::getDateFormatted());
+  $data = array('time' => Clock::getTime(), 'date' => Clock::getDateFormatted(), 'week' => Clock::getWeek());
   $payload = json_encode($data);
   $response->getBody()->write($payload);
   return $response->withHeader('Content-Type', 'application/json');

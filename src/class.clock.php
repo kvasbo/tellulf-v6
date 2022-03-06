@@ -11,7 +11,6 @@ class Clock {
 
   public static function getDateFormatted() {
     $day = static::getDayName((int) date('w'));
-    $month = static::getMonthName((int) date('n') - 1);
     $date = date("j");
     return "$day $date.";
   }
@@ -24,6 +23,11 @@ class Clock {
   public static function getMonthName(int $month) {
     $months = ['januar', 'februar', 'mars', 'april', 'mai', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'desember'];
     return $months[$month];
+  }
+
+  public static function getWeek($time = null): string {
+    if (is_null(($time))) $time = time();
+    return (string) (int) date("W", $time);
   }
 
 }

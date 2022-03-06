@@ -14,6 +14,7 @@ function updateTime() {
     jQuery.get("/time").then((timeData) => {
         $("#now_time").html(timeData.time);
         $("#now_date").html(timeData.date);
+        $("#now_week").html(`Uke ${timeData.week}`);
     });
 }
 function updatePowerUsage() {
