@@ -62,12 +62,15 @@ class Weather
         $return = [];
         foreach ($this->forecast as $series) {
 
+            // Find UTC Hour in order to correctly select hours to use.
+            $utc_hour = (int) substr($series->time, 11, 2);
+
             // Parse the time and handle time zones
             $time = strtotime($series->time);
             $date = date("Y-m-d", $time);
             $date_data = \date_parse(date("Y-m-d H:i:s", $time));
 
-            if ($date_data['hour'] % 6 === 1 && !empty($series->data->next_6_hours->details)) {
+            if ($utc_hour % 6 === 0 && !empty($series->data->next_6_hours->details)) {
 
                 // Init array
                 if (empty($return[$date])) {
