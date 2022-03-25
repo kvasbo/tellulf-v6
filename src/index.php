@@ -7,6 +7,8 @@
 
 namespace kvasbo\tellulf;
 
+define("HOMEY_FILE", "homey.json");
+
  // Auto loader
 require __DIR__ . "/vendor/autoload.php";
 
@@ -83,6 +85,28 @@ $app->get("/tibber", function (Request $request, Response $response, $args) {
   $payload = json_encode($data);
   $response->getBody()->write($payload);
   return $response->withHeader('Content-Type', 'application/json');
+});
+
+// Receive data from Homey
+$app->get("/homey", function (Request $request, Response $response, $args) {
+  $content = file_get_contents(HOMEY_FILE);
+  if(!$content) {
+    $payload = json_encode([]); // Set empty json
+  } else {
+    $payload = json_encode(json_decode($content)); // Just to ensure niceness
+  }
+  $response->getBody()->write($payload);
+  return $response;
+});
+
+// Receive data from Homey
+$app->get("/homey_put", function (Request $request, Response $response, $args) {
+  $params = $request->getQueryParams();
+  $params['time'] = time();
+  $toStore = json_encode($params);
+  file_put_contents(HOMEY_FILE, $toStore);
+  $response->getBody()->write($toStore);
+  return $response;
 });
 
 

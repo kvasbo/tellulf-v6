@@ -81,3 +81,4 @@ build
 composer.phar
 vendor/
 src/twig-cache
+src/homey.json
