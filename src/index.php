@@ -89,14 +89,16 @@ $app->get("/tibber", function (Request $request, Response $response, $args) {
 
 // Receive data from Homey
 $app->get("/homey", function (Request $request, Response $response, $args) {
-  $content = file_get_contents(HOMEY_FILE);
+  $content = @file_get_contents(HOMEY_FILE);
   if(!$content) {
     $payload = json_encode([]); // Set empty json
   } else {
-    $payload = json_encode(json_decode($content)); // Just to ensure niceness
+    $data = json_decode($content);
+    $data->age = time() - (int) $data->time; // Set age
+    $payload = json_encode($data); // Just to ensure niceness
   }
   $response->getBody()->write($payload);
-  return $response;
+  return $response->withHeader('Content-Type', 'application/json');
 });
 
 // Receive data from Homey
