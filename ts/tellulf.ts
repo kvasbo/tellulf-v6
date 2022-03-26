@@ -67,7 +67,7 @@ function updatePowerUsage() {
 function updateHomey() {
   jQuery.get("/homey").then((d: HomeySet) => {
     if (d.tempOut && d.age && d.age < 60) {
-      const t = Math.round(Number(d.tempOut)).toFixed(1);
+      const t = Number(d.tempOut).toFixed(1);
       $(".current_temperature").html(`${t}&deg;`);
     }
   });
