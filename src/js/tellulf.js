@@ -2,6 +2,7 @@ $(function () {
     updateTime();
     updateBattery();
     updatePowerUsage();
+    updateHomey();
     setReload();
     window.setInterval(function () {
         updateTime();
@@ -9,6 +10,9 @@ $(function () {
     window.setInterval(function () {
         updatePowerUsage();
     }, 60000);
+    window.setInterval(function () {
+        updateHomey();
+    }, 600000);
 });
 function updateTime() {
     jQuery.get("/time").then((timeData) => {
@@ -23,6 +27,14 @@ function updatePowerUsage() {
         $(".powerUsageTodayCabin").html(Math.round(d.cabin.usageToday).toString());
         $(".powerCostTodayHome").html(Math.round(d.home.costToday).toString());
         $(".powerCostTodayCabin").html(Math.round(d.cabin.costToday).toString());
+    });
+}
+function updateHomey() {
+    jQuery.get("/homey").then((d) => {
+        if (d.tempOut && d.age && d.age < 60) {
+            const t = Math.round(Number(d.tempOut));
+            $(".current_temperature").html(`${d.tempOut}&deg;`);
+        }
     });
 }
 function updateBattery() {

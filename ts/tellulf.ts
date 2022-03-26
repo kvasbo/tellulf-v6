@@ -16,10 +16,13 @@ interface PowerInfoSet {
   home: PowerData;
 }
 
-interface FactSet {
-  fact: string;
-  category: string;
-  subcategory: string;
+interface HomeySet {
+  age?: number;
+  humOut?: string;
+  power?: string;
+  pressure?: string;
+  tempOut?: string;
+  time?: number;
 }
 
 $(function () {
@@ -27,6 +30,7 @@ $(function () {
   updateTime();
   updateBattery();
   updatePowerUsage();
+  updateHomey();
   setReload();
   window.setInterval(function () {
     updateTime();
@@ -34,6 +38,9 @@ $(function () {
   window.setInterval(function () {
     updatePowerUsage();
   }, 60000);
+  window.setInterval(function () {
+    updateHomey();
+  }, 600000);
 });
 
 // Update time from the server
@@ -54,6 +61,15 @@ function updatePowerUsage() {
     $(".powerUsageTodayCabin").html(Math.round(d.cabin.usageToday).toString());
     $(".powerCostTodayHome").html(Math.round(d.home.costToday).toString());
     $(".powerCostTodayCabin").html(Math.round(d.cabin.costToday).toString());
+  });
+}
+
+function updateHomey() {
+  jQuery.get("/homey").then((d: HomeySet) => {
+    if (d.tempOut && d.age && d.age < 60) {
+      const t = Math.round(Number(d.tempOut));
+      $(".current_temperature").html(`${d.tempOut}&deg;`);
+    }
   });
 }
 
