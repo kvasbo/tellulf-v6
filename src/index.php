@@ -7,7 +7,7 @@
 
 namespace kvasbo\tellulf;
 
-define("HOMEY_FILE", "homey.json");
+define("HOMEY_FILE", "./homey.json");
 
  // Auto loader
 require __DIR__ . "/vendor/autoload.php";
@@ -26,6 +26,7 @@ $errorMiddleware = $app->addErrorMiddleware(true, true, true);
 
 require_once "./class.tellulf.php";
 require_once "./class.clock.php";
+require_once "./class.homey.php";
 
 // Load Twig
 $twig_loader = new \Twig\Loader\FilesystemLoader("./templates");
@@ -45,8 +46,16 @@ $app->get('/', function (Request $request, Response $response, $args) {
   $weather = $tellulf->weather->Get_Current_Weather();
   $hourly = $tellulf->weather->Get_Hourly_Forecasts();
 
+  $homey = Homey::Get_Latest_Data();
+  
+  $current_temp = $weather['temperature'];
+
+  if(!empty($homey->tempOut) && !empty($homey->age) && $homey->age < 100) {
+    $current_temp = $homey->tempOut;
+  }
+
   $render_vars = [
-      "current_temperature" => $weather['temperature'],
+      "current_temperature" => $current_temp,
       "current_weather_icon" => $weather['symbol'],
       "days" => $coming_days,
       "today" => $today,
@@ -89,15 +98,8 @@ $app->get("/tibber", function (Request $request, Response $response, $args) {
 
 // Receive data from Homey
 $app->get("/homey", function (Request $request, Response $response, $args) {
-  $content = @file_get_contents(HOMEY_FILE);
-  if(!$content) {
-    $payload = json_encode([]); // Set empty json
-  } else {
-    $data = json_decode($content);
-    $data->age = time() - (int) $data->time; // Set age
-    $payload = json_encode($data); // Just to ensure niceness
-  }
-  $response->getBody()->write($payload);
+  $payload = Homey::Get_Latest_Data();
+  $response->getBody()->write(json_encode($payload));
   return $response->withHeader('Content-Type', 'application/json');
 });
 
