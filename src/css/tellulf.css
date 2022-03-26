@@ -38,7 +38,7 @@ h5 {
   justify-content: center;
 }
 .current_weather .current_weather_temp_and_icon .current_temperature {
-  font-size: 125px;
+  font-size: 100px;
   font-weight: 600;
 }
 
