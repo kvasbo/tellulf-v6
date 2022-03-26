@@ -34,13 +34,11 @@ $(function () {
   setReload();
   window.setInterval(function () {
     updateTime();
-  }, 5000);
+  }, 10000);
   window.setInterval(function () {
     updatePowerUsage();
-  }, 60000);
-  window.setInterval(function () {
     updateHomey();
-  }, 600000);
+  }, 60000);
 });
 
 // Update time from the server
