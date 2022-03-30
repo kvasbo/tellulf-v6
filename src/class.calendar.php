@@ -39,7 +39,7 @@ class Calendar
 
             $tmp = array(
                 'time' => date("H:i", $start),
-                'title' => $title = $e->summary,
+                'title' => $e->summary,
                 'fullDay' => $fullDay,
             );
             $out[] = $tmp;
@@ -84,7 +84,7 @@ class Calendar
 
         $iCal = new \iCal($data);
 
-        $events = @$iCal->eventsByDateUntil("+10 days");
+        $events = @$iCal->eventsByDateUntil("+7 days");
 
         return $events;
     }
