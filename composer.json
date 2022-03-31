@@ -1,6 +1,6 @@
 {
     "require": {
-        "graceas/php-ics-reader": "^1.1",
+        "johngrogg/ics-parser": "^3",
         "twig/twig": "^2.0",
         "gmostafa/php-graphql-client": "^1.13",
         "slim/slim": "4.*",

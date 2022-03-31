@@ -2,47 +2,61 @@
 
 namespace kvasbo\tellulf;
 
-require_once "./kok/ical.php";
+use ICal\ICal as ICal;
 
 class Calendar
 {
 
     private $events;
     private $birthdays;
+    private $parser;
+    private $parser_settings = array(
+      'defaultSpan'                 => 2,     // Default value
+      'defaultTimeZone'             => 'UTC',
+      'defaultWeekStart'            => 'MO',  // Default value
+      'disableCharacterReplacement' => false, // Default value
+      'filterDaysAfter'             => 7,  // Default value
+      'filterDaysBefore'            => 1,  // Default value
+      'skipRecurrence'              => false, // Default value
+    );
 
     public function __construct()
-    {
-        $this->events = Calendar::Fetch($_ENV["CAL_FELLES"]);
-        $this->birthdays = Calendar::Fetch($_ENV["CAL_BIRTHDAYS"]);
+    { 
+        $this->parser = new Ical(false, $this->parser_settings);
+        $this->events = $this->Fetch($_ENV["CAL_FELLES"]);
+        $this->birthdays = $this->Fetch($_ENV["CAL_BIRTHDAYS"]);
     }
 
     public function Get_Events(string $date)
     {
+        
+        $events = $this->events->eventsFromRange($date, $date);
 
-        if (empty($this->events[$date])) {
-            return [];
-        }
-
-        $events = $this->events[$date];
+        // print_r($events);
 
         $out = [];
 
         foreach ($events as $e) {
 
-            $start = strtotime($e->dateStart);
+          // Full day
+          $fullDay = false;
 
-            // Full day
-            $fullDay = false;
-            if (date("H", $start) === "00" && $e->duration() % 86400 === 0) {
+          print_r($e);
+          // echo $e->dtstart_tc;
+
+          $start = substr($e->dtstart_tz, 9, 2) . ":" . substr($e->dtstart_tz, 11, 2);
+           
+           /* if (date("H", $start) === "00" && $e->duration() % 86400 === 0) {
                 $fullDay = true;
-            }
+            }*/
 
             $tmp = array(
-                'time' => date("H:i", $start),
+                'time' => $start,
                 'title' => $e->summary,
                 'fullDay' => $fullDay,
             );
             $out[] = $tmp;
+            
         }
 
         return $out;
@@ -51,6 +65,8 @@ class Calendar
     public function Get_Birthdays(string $date)
     {
         $out = [];
+
+        return $out;
 
         if (empty($this->birthdays[$date])) {
             return $out;
@@ -76,16 +92,14 @@ class Calendar
     }
 
     /**
-     *    Read the Ics and return an array of events.
+     *    Fetch the Ics and return a parser.
      */
-    public static function Fetch($calendar_url)
+    public function Fetch($calendar_url)
     {
-        $data = file_get_contents($calendar_url);
+        $ical = new ICal(false, $this->parser_settings);
 
-        $iCal = new \iCal($data);
+        $ical->initUrl($calendar_url, null, null, );
 
-        $events = @$iCal->eventsByDateUntil("+7 days");
-
-        return $events;
+        return $ical;
     }
 }

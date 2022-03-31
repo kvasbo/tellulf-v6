@@ -2,8 +2,6 @@
 
 namespace kvasbo\tellulf;
 
-require_once "./kok/ical.php";
-
 class Weather
 {
 
