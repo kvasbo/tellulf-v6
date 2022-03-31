@@ -2,6 +2,7 @@
 
 namespace kvasbo\tellulf;
 
+// https://github.com/u01jmg3/ics-parser
 use ICal\ICal as ICal;
 
 class Calendar
@@ -9,20 +10,14 @@ class Calendar
 
     private $events;
     private $birthdays;
-    private $parser;
     private $parser_settings = array(
-      'defaultSpan'                 => 2,     // Default value
       'defaultTimeZone'             => 'UTC',
-      'defaultWeekStart'            => 'MO',  // Default value
-      'disableCharacterReplacement' => false, // Default value
-      'filterDaysAfter'             => 7,  // Default value
-      'filterDaysBefore'            => 1,  // Default value
-      'skipRecurrence'              => false, // Default value
+      'filterDaysAfter'             => 7,
+      'filterDaysBefore'            => 1,
     );
 
     public function __construct()
     { 
-        $this->parser = new Ical(false, $this->parser_settings);
         $this->events = $this->Fetch($_ENV["CAL_FELLES"]);
         $this->birthdays = $this->Fetch($_ENV["CAL_BIRTHDAYS"]);
     }
