@@ -27,6 +27,7 @@ class Calendar
         $this->birthdays = $this->Fetch($_ENV["CAL_BIRTHDAYS"]);
     }
 
+    // TODO: Handle full day, and timezones, and multi-day events.
     public function Get_Events(string $date)
     {
         
@@ -41,7 +42,7 @@ class Calendar
           // Full day
           $fullDay = false;
 
-          print_r($e);
+          // print_r($e);
           // echo $e->dtstart_tc;
 
           $start = substr($e->dtstart_tz, 9, 2) . ":" . substr($e->dtstart_tz, 11, 2);
@@ -66,13 +67,13 @@ class Calendar
     {
         $out = [];
 
-        return $out;
+        $events = $this->birthdays->eventsFromRange($date, $date);
 
-        if (empty($this->birthdays[$date])) {
+        if (empty($events)) {
             return $out;
         }
 
-        foreach ($this->birthdays[$date] as $e) {
+        foreach ($events as $e) {
 
             // Look for year
             $b = $e->summary;
