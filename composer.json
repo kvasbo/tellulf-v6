@@ -1,8 +1,8 @@
 {
     "require": {
         "johngrogg/ics-parser": "^3",
-        "twig/twig": "^2.0",
-        "gmostafa/php-graphql-client": "^1.13",
+        "twig/twig": "^3",
+        "gmostafa/php-graphql-client": "^1",
         "slim/slim": "4.*",
         "slim/psr7": "^1.5"
     },
