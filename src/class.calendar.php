@@ -22,36 +22,34 @@ class Calendar
         $this->birthdays = $this->Fetch($_ENV["CAL_BIRTHDAYS"]);
     }
 
-    // TODO: Handle full day, and timezones, and multi-day events.
     public function Get_Events(string $date)
     {
         
         $events = $this->events->eventsFromRange($date, $date);
 
-        // print_r($events);
-
         $out = [];
 
         foreach ($events as $e) {
 
-          // Full day
-          $fullDay = false;
-
-          // print_r($e);
-          // echo $e->dtstart_tc;
+          $duration = $e->dtend_array[2] - $e->dtstart_array[2];
+          $startHour = substr($e->dtstart_tz, 9, 2);
 
           $start = substr($e->dtstart_tz, 9, 2) . ":" . substr($e->dtstart_tz, 11, 2);
-           
-           /* if (date("H", $start) === "00" && $e->duration() % 86400 === 0) {
-                $fullDay = true;
-            }*/
 
-            $tmp = array(
-                'time' => $start,
-                'title' => $e->summary,
-                'fullDay' => $fullDay,
-            );
-            $out[] = $tmp;
+          // Full day detection
+          $fullDay = false;
+          if ( $duration % 86400 == 0 && ($startHour == "00" || $startHour == "01" || $startHour == "02") ) {
+            $fullDay = true;
+          }
+
+          // Handle events that starts before the date
+
+          $tmp = array(
+              'time' => $start,
+              'title' => $e->summary,
+              'fullDay' => $fullDay,
+          );
+          $out[] = $tmp;
             
         }
 
