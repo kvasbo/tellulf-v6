@@ -35,6 +35,7 @@ class Calendar
           $startHour = substr($e->dtstart_tz, 9, 2);
 
           $start = substr($e->dtstart_tz, 9, 2) . ":" . substr($e->dtstart_tz, 11, 2);
+          $end = substr($e->dtend_tz, 9, 2) . ":" . substr($e->dtend_tz, 11, 2);
 
           // Full day detection
           $fullDay = false;
@@ -43,6 +44,21 @@ class Calendar
           }
 
           // Handle events that starts before the date
+          $start_date = date("Y-m-d", $e->dtstart_array[2]);
+          $end_date = date("Y-m-d", $e->dtend_array[2]);
+
+          if ($start_date !== $date && $end_date !== $date) {
+            // We are inside the event
+            $start = "...";
+          } else if ($start_date !== $date && $end_date === $date) {
+            // We are on the last date
+            $start = "»" . $end;
+          } else if ($start_date === $date && $end_date !== $date) {
+            // We are inside the event
+            $start .= "»";
+          }
+
+          echo $start_date . " " . $end_date;
 
           $tmp = array(
               'time' => $start,

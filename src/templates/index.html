@@ -28,7 +28,7 @@
     </div>
 
     <div class="block calendar" id="calendar">
-        {% for day in days %} {{ include('calendar_day.html') }} {% endfor %}
+        {% for day in days|slice(0, 7) %} {{ include('calendar_day.html') }} {% endfor %}
     </div>
 
     <div class="battery" id="battery"></div>
