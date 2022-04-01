@@ -24,6 +24,9 @@ h5 {
 .time_and_date .now_date {
   font-size: 75px;
 }
+.time_and_date .now_week {
+  margin-top: 0.5em;
+}
 
 .current_weather {
   display: flex;
