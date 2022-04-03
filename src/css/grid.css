@@ -40,6 +40,14 @@
   top: 0;
 }
 
+.weather_graph_container {
+  position: absolute;
+  width: 42.5%;
+  height: 40%;
+  left: 57.5%;
+  top: 0%;
+}
+
 .today_forecast {
   position: absolute;
   width: 42.5%;

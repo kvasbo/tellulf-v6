@@ -42,6 +42,14 @@ $second-column-width: 17.5%;
     top: 0;
 }
 
+.weather_graph_container {
+    position: absolute;
+    width: 100% - $first-column-width - $second-column-width;
+    height: 40%;
+    left: $first-column-width + $second-column-width;
+    top: 0%;
+}
+
 .today_forecast {
     position: absolute;
     width: 100% - $first-column-width - $second-column-width;

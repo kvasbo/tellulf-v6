@@ -17,9 +17,7 @@
         {% include("current_weather.html") %}
     </div>
 
-    <div class="block today_forecast">
-        {% include("detailed_forecast.html") with {"hourly": hourly_weather} %}
-    </div>
+    <div class="block weathergraph">{% include("weather_graph.html") %}</div>
 
     <div class="block power">{% include("power.html") %}</div>
 

@@ -57,9 +57,7 @@ class Calendar
             // We are inside the event
             $start .= "»";
           }
-
-          echo $start_date . " " . $end_date;
-
+          
           $tmp = array(
               'time' => $start,
               'title' => $e->summary,
