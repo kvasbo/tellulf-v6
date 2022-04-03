@@ -38,12 +38,12 @@ h5 {
 
 .current_weather {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     .current_weather_temp_and_icon {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
         justify-content: center;
         .current_temperature {
@@ -52,6 +52,8 @@ h5 {
         }
     }
 }
+
+.weather_graph_svg {}
 
 .today_forecast {
     display: flex;
@@ -77,7 +79,7 @@ h5 {
     .day {
         display: flex;
         flex-direction: column;
-        margin: 0 15px 15px 15px;
+        margin: 0 15px 2px 15px;
         .date {
             font-size: $text_subheader;
             font-weight: bold;

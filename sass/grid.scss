@@ -36,18 +36,21 @@ $second-column-width: 17.5%;
 
 .current_weather {
     position: absolute;
-    width: $second-column-width;
-    height: 40%;
+    width: 100% - $first-column-width;
+    height: 15%;
     left: $first-column-width;
     top: 0;
 }
 
-.weather_graph_container {
+.weather_graph {
     position: absolute;
-    width: 100% - $first-column-width - $second-column-width;
+    width: 100% - $first-column-width;
     height: 40%;
-    left: $first-column-width + $second-column-width;
-    top: 0%;
+    left: $first-column-width;
+    top: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .today_forecast {
@@ -69,7 +72,7 @@ $second-column-width: 17.5%;
 .coming_days {
     position: absolute;
     width: 100% - $first-column-width;
-    height: 55%;
+    height: 45%;
     left: $first-column-width;
-    top: 45%;
+    top: 55%;
 }
