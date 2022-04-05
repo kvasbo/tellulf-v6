@@ -19,7 +19,40 @@ h5 {
     margin-bottom: calc($margin * 0.66);
 }
 
+$first-column-width: 40%;
+$second-column-width: 17.5%;
+.grid {
+    margin: 0;
+    background-color: white;
+    font-family: "Montserrat", sans-serif;
+    font-size: 20px;
+    height: 1200px;
+    width: 1600px;
+    padding: 0;
+    overflow: hidden;
+    display: block;
+}
+
+.block {
+    padding: 2rem;
+    overflow: hidden;
+    background-color: #ffffff;
+    opacity: 1;
+}
+
+.battery {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px 15px;
+}
+
 .time_and_date {
+    position: absolute;
+    width: $first-column-width;
+    height: 33%;
+    left: 0;
+    top: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -36,7 +69,41 @@ h5 {
     }
 }
 
+.calendar {
+    position: absolute;
+    width: $first-column-width;
+    height: 100% - 33% - 10%;
+    left: 0;
+    top: 33%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    .calendar_day {
+        .date {
+            margin-top: 0.5rem;
+            margin-bottom: 0.25rem;
+            border-bottom: 1px solid $gray;
+        }
+        .event {
+            display: flex;
+            flex-direction: row;
+            .event-time {
+                color: $gray;
+                display: flex;
+                width: 60px;
+                margin-right: 10px;
+                justify-content: flex-end;
+            }
+        }
+    }
+}
+
 .current_weather {
+    position: absolute;
+    width: 100% - $first-column-width;
+    height: 23%;
+    left: $first-column-width;
+    top: 0;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -53,17 +120,24 @@ h5 {
     }
 }
 
-.weather_graph_svg {}
-
-.today_forecast {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
+.weather_graph {
+    position: absolute;
+    width: 100% - $first-column-width;
+    height: 55%;
+    left: $first-column-width;
+    top: 15%;
+    .weather_graph_svg {
+        width: 100%;
+        margin-top: -25px;
+    }
 }
 
 .power {
+    position: absolute;
+    width: $first-column-width;
+    height: 10%;
+    left: 0;
+    top: 90%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -71,6 +145,11 @@ h5 {
 }
 
 .coming_days {
+    position: absolute;
+    width: 100% - $first-column-width;
+    height: 45%;
+    left: $first-column-width;
+    top: 55%;
     flex-direction: row;
     flex-wrap: wrap;
     display: flex;
@@ -85,6 +164,14 @@ h5 {
             font-weight: bold;
         }
     }
+}
+
+.today_forecast {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 }
 
 .weather {
@@ -104,37 +191,6 @@ h5 {
             .weather_icon {
                 width: $text_large;
                 height: $text_large;
-            }
-        }
-    }
-}
-
-.battery {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 10px 15px;
-}
-
-.calendar {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    .calendar_day {
-        .date {
-            margin-top: 0.5rem;
-            margin-bottom: 0.25rem;
-            border-bottom: 1px solid $gray;
-        }
-        .event {
-            display: flex;
-            flex-direction: row;
-            .event-time {
-                color: $gray;
-                display: flex;
-                width: 60px;
-                margin-right: 10px;
-                justify-content: flex-end;
             }
         }
     }

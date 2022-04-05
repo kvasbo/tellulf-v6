@@ -11,7 +11,38 @@ h5 {
   margin-bottom: 6.6px;
 }
 
+.grid {
+  margin: 0;
+  background-color: white;
+  font-family: "Montserrat", sans-serif;
+  font-size: 20px;
+  height: 1200px;
+  width: 1600px;
+  padding: 0;
+  overflow: hidden;
+  display: block;
+}
+
+.block {
+  padding: 2rem;
+  overflow: hidden;
+  background-color: #ffffff;
+  opacity: 1;
+}
+
+.battery {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px 15px;
+}
+
 .time_and_date {
+  position: absolute;
+  width: 40%;
+  height: 33%;
+  left: 0;
+  top: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,7 +59,39 @@ h5 {
   margin-top: 0.5em;
 }
 
+.calendar {
+  position: absolute;
+  width: 40%;
+  height: 57%;
+  left: 0;
+  top: 33%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.calendar .calendar_day .date {
+  margin-top: 0.5rem;
+  margin-bottom: 0.25rem;
+  border-bottom: 1px solid #888888;
+}
+.calendar .calendar_day .event {
+  display: flex;
+  flex-direction: row;
+}
+.calendar .calendar_day .event .event-time {
+  color: #888888;
+  display: flex;
+  width: 60px;
+  margin-right: 10px;
+  justify-content: flex-end;
+}
+
 .current_weather {
+  position: absolute;
+  width: 60%;
+  height: 23%;
+  left: 40%;
+  top: 0;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -45,15 +108,24 @@ h5 {
   font-weight: 600;
 }
 
-.today_forecast {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
+.weather_graph {
+  position: absolute;
+  width: 60%;
+  height: 55%;
+  left: 40%;
+  top: 15%;
+}
+.weather_graph .weather_graph_svg {
+  width: 100%;
+  margin-top: -25px;
 }
 
 .power {
+  position: absolute;
+  width: 40%;
+  height: 10%;
+  left: 0;
+  top: 90%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -61,6 +133,11 @@ h5 {
 }
 
 .coming_days {
+  position: absolute;
+  width: 60%;
+  height: 45%;
+  left: 40%;
+  top: 55%;
   flex-direction: row;
   flex-wrap: wrap;
   display: flex;
@@ -75,6 +152,14 @@ h5 {
 .coming_days .day .date {
   font-size: 25px;
   font-weight: bold;
+}
+
+.today_forecast {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }
 
 .weather {
@@ -95,35 +180,6 @@ h5 {
 .weather .forecast_point .weather_symbol .weather_icon {
   width: 75px;
   height: 75px;
-}
-
-.battery {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 10px 15px;
-}
-
-.calendar {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-.calendar .calendar_day .date {
-  margin-top: 0.5rem;
-  margin-bottom: 0.25rem;
-  border-bottom: 1px solid #888888;
-}
-.calendar .calendar_day .event {
-  display: flex;
-  flex-direction: row;
-}
-.calendar .calendar_day .event .event-time {
-  color: #888888;
-  display: flex;
-  width: 60px;
-  margin-right: 10px;
-  justify-content: flex-end;
 }
 
 /*# sourceMappingURL=tellulf.css.map */

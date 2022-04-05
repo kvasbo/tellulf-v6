@@ -6,18 +6,17 @@
     <link rel="icon" href="data:," />
     <script type="text/javascript" src="https://cdn.jsdelivr.net/combine/npm/jquery@3"></script>
     <script src="js/tellulf.js"></script>
-    <link rel="stylesheet" href="css/grid.css" />
     <link rel="stylesheet" href="css/tellulf.css" />
 </head>
 
 <body class="grid">
     <div class="block time_and_date">{% include("clock.html") %}</div>
 
+    <div class="block weather_graph">{% include("weather_graph.html") %}</div>
+
     <div class="block current_weather">
         {% include("current_weather.html") %}
     </div>
-
-    <div class="block weather_graph">{% include("weather_graph.html") %}</div>
 
     <div class="block power">{% include("power.html") %}</div>
 
