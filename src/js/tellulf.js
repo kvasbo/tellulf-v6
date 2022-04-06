@@ -4,6 +4,7 @@ $(function () {
     updatePowerUsage();
     updateHomey();
     setReload();
+    updateWeatherGraphEveryTenMinutes();
     window.setInterval(function () {
         updateTime();
     }, 10000);
@@ -44,6 +45,17 @@ function updateBattery() {
         }
     }
     catch (e) { }
+}
+function updateWeatherGraphEveryTenMinutes() {
+    const interval = 600000;
+    setTimeout(() => {
+        const img = $("#weather_graph_svg");
+        if (img) {
+            const date = new Date();
+            img.attr("src", img.attr("src").split("?")[0] + "?" + date.getTime());
+        }
+        updateWeatherGraphEveryTenMinutes();
+    }, interval);
 }
 function setReload() {
     const now = new Date();
