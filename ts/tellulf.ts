@@ -25,18 +25,12 @@ interface HomeySet {
   time?: number;
 }
 
+// Run every minute, plus once when starting up
 $(function () {
-  // Init time update
-
-  updateBattery();
-  setReload();
-
-  // New
   runUpdateLoop(true);
   window.setInterval(function () {
     runUpdateLoop();
   }, 60000);
-  // End new
 });
 
 // Run the update loop
@@ -48,9 +42,10 @@ async function runUpdateLoop(force = false) {
     jQuery.get("/homey"),
   ];
 
+  // Wait for all of them to return
   const data = await Promise.all(calls);
 
-  // Unwrap the returned data
+  // Unwrap the returned data (this is why the order is important)
   const timeData: TimeData = data[0];
   const powerData: PowerInfoSet = data[1];
   const homey: HomeySet = data[2];

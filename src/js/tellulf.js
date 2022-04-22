@@ -35,8 +35,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 $(function () {
-    updateBattery();
-    setReload();
     runUpdateLoop(true);
     window.setInterval(function () {
         runUpdateLoop();
