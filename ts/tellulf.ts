@@ -27,49 +27,63 @@ interface HomeySet {
 
 $(function () {
   // Init time update
-  updateTime();
+
   updateBattery();
-  updatePowerUsage();
-  updateHomey();
   setReload();
-  updateWeatherGraphEveryTenMinutes();
+
+  // New
+  runUpdateLoop(true);
   window.setInterval(function () {
-    updateTime();
-  }, 10000);
-  window.setInterval(function () {
-    updatePowerUsage();
-    updateHomey();
+    runUpdateLoop();
   }, 60000);
+  // End new
 });
 
-// Update time from the server
-function updateTime() {
-  jQuery.get("/time").then((timeData: TimeData) => {
-    $("#now_time").html(timeData.time);
-    $("#now_date").html(timeData.date);
-    $("#now_week").html(`Uke ${timeData.week}`);
-  });
-}
+// Run the update loop
+async function runUpdateLoop(force = false) {
+  // Run the Ajax calls concurrently (note: the order is important)
+  const calls = [
+    jQuery.get("/time"),
+    jQuery.get("/tibber"),
+    jQuery.get("/homey"),
+  ];
 
-/**
- * Live update power usage.
- */
-function updatePowerUsage() {
-  jQuery.get("/tibber").then((d: PowerInfoSet) => {
-    $(".powerUsageTodayHome").html(Math.round(d.home.usageToday).toString());
-    $(".powerUsageTodayCabin").html(Math.round(d.cabin.usageToday).toString());
-    $(".powerCostTodayHome").html(Math.round(d.home.costToday).toString());
-    $(".powerCostTodayCabin").html(Math.round(d.cabin.costToday).toString());
-  });
-}
+  const data = await Promise.all(calls);
 
-function updateHomey() {
-  jQuery.get("/homey").then((d: HomeySet) => {
-    if (d.tempOut && d.age && d.age < 60) {
-      const t = Number(d.tempOut).toFixed(1);
-      $(".current_temperature").html(`${t}&deg;`);
-    }
-  });
+  // Unwrap the returned data
+  const timeData: TimeData = data[0];
+  const powerData: PowerInfoSet = data[1];
+  const homey: HomeySet = data[2];
+
+  // Only every ten minutes or on force
+  const minutes = new Date().getMinutes();
+  if (minutes % 10 === 0 || force) {
+    updateWeatherGraph();
+    updateBattery();
+  }
+
+  // Update all the interfaces at once
+  $("#now_time").html(timeData.time);
+  $("#now_date").html(timeData.date);
+  $("#now_week").html(`Uke ${timeData.week}`);
+  $(".powerUsageTodayHome").html(
+    Math.round(powerData.home.usageToday).toString()
+  );
+  $(".powerUsageTodayCabin").html(
+    Math.round(powerData.cabin.usageToday).toString()
+  );
+  $(".powerCostTodayHome").html(
+    Math.round(powerData.home.costToday).toString()
+  );
+  $(".powerCostTodayCabin").html(
+    Math.round(powerData.cabin.costToday).toString()
+  );
+  if (homey.tempOut && homey.age && homey.age < 60) {
+    const t = Number(homey.tempOut).toFixed(1);
+    $(".current_temperature").html(`${t}&deg;`);
+  } else {
+    $(".current_temperature").html(`?`);
+  }
 }
 
 function updateBattery() {
@@ -85,16 +99,12 @@ function updateBattery() {
 /**
  * Reload weather_graph_svg image every ten minutes
  */
-function updateWeatherGraphEveryTenMinutes() {
-  const interval = 600000;
-  setTimeout(() => {
-    const img = $("#weather_graph_svg");
-    if (img) {
-      const date = new Date();
-      img.attr("src", img.attr("src").split("?")[0] + "?" + date.getTime());
-    }
-    updateWeatherGraphEveryTenMinutes();
-  }, interval);
+function updateWeatherGraph() {
+  const img = $("#weather_graph_svg");
+  if (img) {
+    const date = new Date();
+    img.attr("src", img.attr("src").split("?")[0] + "?" + date.getTime());
+  }
 }
 
 /**
