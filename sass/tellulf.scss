@@ -108,8 +108,12 @@ $second-column-width: 17.5%;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    .current_weather_temp_and_icon {
+    .current_weather_block {
+        &.aux-weather-info {
+            flex-direction: column;
+        }
         display: flex;
+        flex: 1;
         flex-direction: row;
         align-items: center;
         justify-content: center;

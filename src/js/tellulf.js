@@ -43,7 +43,7 @@ $(function () {
 function runUpdateLoop(force) {
     if (force === void 0) { force = false; }
     return __awaiter(this, void 0, void 0, function () {
-        var calls, data, timeData, powerData, homey, minutes, t;
+        var calls, data, timeData, powerData, homey, minutes, t, p, p;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -67,15 +67,23 @@ function runUpdateLoop(force) {
                     $("#now_date").html(timeData.date);
                     $("#now_week").html("Uke " + timeData.week);
                     $(".powerUsageTodayHome").html(Math.round(powerData.home.usageToday).toString());
-                    $(".powerUsageTodayCabin").html(Math.round(powerData.cabin.usageToday).toString());
                     $(".powerCostTodayHome").html(Math.round(powerData.home.costToday).toString());
-                    $(".powerCostTodayCabin").html(Math.round(powerData.cabin.costToday).toString());
-                    if (homey.tempOut && homey.age && homey.age < 60) {
-                        t = Number(homey.tempOut).toFixed(1);
-                        $(".current_temperature").html(t + "&deg;");
-                    }
-                    else {
-                        $(".current_temperature").html("?");
+                    if (homey.age && homey.age < 600) {
+                        if (homey.tempOut) {
+                            t = Number(homey.tempOut).toFixed(1);
+                            $(".current_temperature").html(t + "&deg;");
+                        }
+                        else {
+                            $(".current_temperature").html("?");
+                        }
+                        if (homey.pressure) {
+                            p = Number(homey.pressure).toFixed(0);
+                            $(".current_pressure").html(p + " hPa");
+                        }
+                        if (homey.humOut) {
+                            p = Number(homey.humOut).toFixed(0);
+                            $(".current_humidity").html(p + " % hum");
+                        }
                     }
                     return [2];
             }

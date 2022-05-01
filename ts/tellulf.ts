@@ -64,20 +64,24 @@ async function runUpdateLoop(force = false) {
   $(".powerUsageTodayHome").html(
     Math.round(powerData.home.usageToday).toString()
   );
-  $(".powerUsageTodayCabin").html(
-    Math.round(powerData.cabin.usageToday).toString()
-  );
   $(".powerCostTodayHome").html(
     Math.round(powerData.home.costToday).toString()
   );
-  $(".powerCostTodayCabin").html(
-    Math.round(powerData.cabin.costToday).toString()
-  );
-  if (homey.tempOut && homey.age && homey.age < 60) {
-    const t = Number(homey.tempOut).toFixed(1);
-    $(".current_temperature").html(`${t}&deg;`);
-  } else {
-    $(".current_temperature").html(`?`);
+  if (homey.age && homey.age < 600) {
+    if (homey.tempOut) {
+      const t = Number(homey.tempOut).toFixed(1);
+      $(".current_temperature").html(`${t}&deg;`);
+    } else {
+      $(".current_temperature").html(`?`);
+    }
+    if (homey.pressure) {
+      const p = Number(homey.pressure).toFixed(0);
+      $(".current_pressure").html(`${p} hPa`);
+    }
+    if (homey.humOut) {
+      const p = Number(homey.humOut).toFixed(0);
+      $(".current_humidity").html(`${p} % hum`);
+    }
   }
 }
 

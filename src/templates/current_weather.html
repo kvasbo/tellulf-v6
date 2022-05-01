@@ -1,6 +1,13 @@
-<div class="current_weather_temp_and_icon">
+<div class="current_weather_block">
     <div class="current_weather_symbol">
         <img class="weather_icon" src="weathericon/png/{{ current_weather_icon }}.png" />
     </div>
     <div class="current_temperature">{{ current_temperature|round }}&deg;</div>
+</div>
+<div class="current_weather_block aux-weather-info">
+    <div class="day_info_sun">
+        <img src="assets/sunrise.png" width="22px" />&nbsp;{{ today.sunrise }}&nbsp;&nbsp; <img src="assets/sunset.png" width="22px" />&nbsp;{{ today.sunset }}
+    </div>
+    <div class="current_pressure"></div>
+    <div class="current_humidity"></div>
 </div>
