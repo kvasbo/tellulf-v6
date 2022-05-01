@@ -31,6 +31,11 @@ class Calendar
 
         foreach ($events as $e) {
 
+          // Bypass if ended
+          if ($e->dtend_array[2] < time()) {
+            continue;
+          };
+
           $duration = $e->dtend_array[2] - $e->dtstart_array[2];
           $startHour = substr($e->dtstart_tz, 9, 2);
 
@@ -42,6 +47,9 @@ class Calendar
           if ( $duration % 86400 == 0 && ($startHour == "00" || $startHour == "01" || $startHour == "02") ) {
             $fullDay = true;
           }
+
+          // Bypass stuff that has ended
+          print_r($e->dtend_array);
 
           // Handle events that starts before the date
           $start_date = date("Y-m-d", $e->dtstart_array[2]);
