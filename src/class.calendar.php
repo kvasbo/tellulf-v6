@@ -48,9 +48,6 @@ class Calendar
             $fullDay = true;
           }
 
-          // Bypass stuff that has ended
-          print_r($e->dtend_array);
-
           // Handle events that starts before the date
           $start_date = date("Y-m-d", $e->dtstart_array[2]);
           $end_date = date("Y-m-d", $e->dtend_array[2]);
