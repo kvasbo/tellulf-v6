@@ -24,6 +24,10 @@ interface HomeySet {
   tempOut?: string;
   time?: number;
 }
+interface EnturTur {
+  time: string;
+  destination: string;
+}
 
 // Run every minute, plus once when starting up
 $(function () {
@@ -40,6 +44,7 @@ async function runUpdateLoop(force = false) {
     jQuery.get("/time"),
     jQuery.get("/tibber"),
     jQuery.get("/homey"),
+    jQuery.get("/entur"),
   ];
 
   // Wait for all of them to return
@@ -49,6 +54,7 @@ async function runUpdateLoop(force = false) {
   const timeData: TimeData = data[0];
   const powerData: PowerInfoSet = data[1];
   const homey: HomeySet = data[2];
+  const entur: EnturTur[] = data[3];
 
   // Only every ten minutes or on force
   const minutes = new Date().getMinutes();
@@ -57,10 +63,26 @@ async function runUpdateLoop(force = false) {
     updateBattery();
   }
 
+  // Parse Entur
+  entur.forEach((tur) => {
+    const time = new Date(tur.time);
+  });
+
   // Update all the interfaces at once
   $("#now_time").html(timeData.time);
   $("#now_date").html(timeData.date);
   $("#now_week").html(`Uke ${timeData.week}`);
+
+  // Entur
+  let enturHtml = "Neste to baner: ";
+  for (let i = 0; i < Math.min(entur.length, 2); i++) {
+    const time = new Date(entur[i].time);
+    const timeString = time.getHours() + ":" + time.getMinutes();
+    enturHtml += `<span class="entur_item">${timeString}</span>`;
+  }
+
+  $(".bane").html(enturHtml);
+
   $(".powerUsageTodayHome").html(
     Math.round(powerData.home.usageToday).toString()
   );

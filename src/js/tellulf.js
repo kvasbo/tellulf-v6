@@ -43,7 +43,7 @@ $(function () {
 function runUpdateLoop(force) {
     if (force === void 0) { force = false; }
     return __awaiter(this, void 0, void 0, function () {
-        var calls, data, timeData, powerData, homey, minutes, t, p, p;
+        var calls, data, timeData, powerData, homey, entur, minutes, enturHtml, i, time, timeString, t, p, p;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -51,6 +51,7 @@ function runUpdateLoop(force) {
                         jQuery.get("/time"),
                         jQuery.get("/tibber"),
                         jQuery.get("/homey"),
+                        jQuery.get("/entur"),
                     ];
                     return [4, Promise.all(calls)];
                 case 1:
@@ -58,14 +59,25 @@ function runUpdateLoop(force) {
                     timeData = data[0];
                     powerData = data[1];
                     homey = data[2];
+                    entur = data[3];
                     minutes = new Date().getMinutes();
                     if (minutes % 10 === 0 || force) {
                         updateWeatherGraph();
                         updateBattery();
                     }
+                    entur.forEach(function (tur) {
+                        var time = new Date(tur.time);
+                    });
                     $("#now_time").html(timeData.time);
                     $("#now_date").html(timeData.date);
                     $("#now_week").html("Uke " + timeData.week);
+                    enturHtml = "Neste to baner: ";
+                    for (i = 0; i < Math.min(entur.length, 2); i++) {
+                        time = new Date(entur[i].time);
+                        timeString = time.getHours() + ":" + time.getMinutes();
+                        enturHtml += "<span class=\"entur_item\">" + timeString + "</span>";
+                    }
+                    $(".bane").html(enturHtml);
                     $(".powerUsageTodayHome").html(Math.round(powerData.home.usageToday).toString());
                     $(".powerCostTodayHome").html(Math.round(powerData.home.costToday).toString());
                     if (homey.age && homey.age < 600) {

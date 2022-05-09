@@ -27,6 +27,7 @@ $errorMiddleware = $app->addErrorMiddleware(true, true, true);
 require_once "./class.tellulf.php";
 require_once "./class.clock.php";
 require_once "./class.homey.php";
+require_once "./class.entur.php";
 
 // Load Twig
 $twig_loader = new \Twig\Loader\FilesystemLoader("./templates");
@@ -96,7 +97,7 @@ $app->get("/tibber", function (Request $request, Response $response, $args) {
   return $response->withHeader('Content-Type', 'application/json');
 });
 
-// Receive data from Homey
+// Return data from Homey
 $app->get("/homey", function (Request $request, Response $response, $args) {
   $payload = Homey::Get_Latest_Data();
   $response->getBody()->write(json_encode($payload));
@@ -113,7 +114,12 @@ $app->get("/homey_put", function (Request $request, Response $response, $args) {
   return $response;
 });
 
-
+// Return data from Entur
+$app->get("/entur", function (Request $request, Response $response, $args) {
+  $payload = Entur::Get();
+  $response->getBody()->write(json_encode($payload));
+  return $response->withHeader('Content-Type', 'application/json');
+});
 
 // Run app
 $app->run();

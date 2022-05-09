@@ -126,9 +126,21 @@ h5 {
 
 .power {
   position: absolute;
-  width: 40%;
+  width: 20%;
   height: 10%;
   left: 0;
+  top: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.bane {
+  position: absolute;
+  width: 20%;
+  height: 10%;
+  left: 20%;
   top: 90%;
   display: flex;
   flex-direction: column;

@@ -138,9 +138,21 @@ $second-column-width: 17.5%;
 
 .power {
     position: absolute;
-    width: $first-column-width;
+    width: $first-column-width / 2;
     height: 10%;
     left: 0;
+    top: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.bane {
+    position: absolute;
+    width: $first-column-width / 2;
+    height: 10%;
+    left: $first-column-width / 2;
     top: 90%;
     display: flex;
     flex-direction: column;

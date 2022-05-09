@@ -4,7 +4,6 @@ namespace kvasbo\tellulf;
 
 use GraphQL\Client;
 use GraphQL\Exception\QueryError;
-use GraphQL\Query;
 
 define("TIBBER_QUERY", "{
   viewer {
