@@ -43,7 +43,7 @@ $(function () {
 function runUpdateLoop(force) {
     if (force === void 0) { force = false; }
     return __awaiter(this, void 0, void 0, function () {
-        var calls, data, timeData, powerData, homey, entur, minutes, enturHtml, i, time, timeString, t, p, p;
+        var calls, data, timeData, powerData, homey, entur, minutes, enturHtml, i, t, p, p;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -73,9 +73,7 @@ function runUpdateLoop(force) {
                     $("#now_week").html("Uke " + timeData.week);
                     enturHtml = "Neste to baner: ";
                     for (i = 0; i < Math.min(entur.length, 2); i++) {
-                        time = new Date(entur[i].time);
-                        timeString = time.getHours() + ":" + time.getMinutes();
-                        enturHtml += "<span class=\"entur_item\">" + timeString + "</span>";
+                        enturHtml += "<span class=\"entur_item\">" + entur[i].time.substring(11, 16) + "</span>";
                     }
                     $(".bane").html(enturHtml);
                     $(".powerUsageTodayHome").html(Math.round(powerData.home.usageToday).toString());

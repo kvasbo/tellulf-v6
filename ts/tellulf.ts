@@ -76,9 +76,10 @@ async function runUpdateLoop(force = false) {
   // Entur
   let enturHtml = "Neste to baner: ";
   for (let i = 0; i < Math.min(entur.length, 2); i++) {
-    const time = new Date(entur[i].time);
-    const timeString = time.getHours() + ":" + time.getMinutes();
-    enturHtml += `<span class="entur_item">${timeString}</span>`;
+    enturHtml += `<span class="entur_item">${entur[i].time.substring(
+      11,
+      16
+    )}</span>`;
   }
 
   $(".bane").html(enturHtml);
