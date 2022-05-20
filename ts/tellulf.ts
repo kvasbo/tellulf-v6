@@ -31,6 +31,7 @@ interface EnturTur {
 
 // Run every minute, plus once when starting up
 $(function () {
+  setReload(1);
   runUpdateLoop(true);
   window.setInterval(function () {
     runUpdateLoop();
@@ -132,10 +133,10 @@ function updateWeatherGraph() {
 /**
  * Reload at the start of the hour.
  */
-function setReload() {
+function setReload(inHours: number) {
   const now = new Date();
   const startOfNextHour = new Date();
-  startOfNextHour.setUTCHours(now.getUTCHours() + 1, 0, 1, 0);
+  startOfNextHour.setUTCHours(now.getUTCHours() + inHours, 0, 1, 0);
   const diff = startOfNextHour.getTime() - now.getTime();
   setTimeout(() => window.location.reload(), diff);
 }

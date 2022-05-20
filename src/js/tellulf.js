@@ -35,6 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 $(function () {
+    setReload(1);
     runUpdateLoop(true);
     window.setInterval(function () {
         runUpdateLoop();
@@ -117,10 +118,10 @@ function updateWeatherGraph() {
         img.attr("src", img.attr("src").split("?")[0] + "?" + date.getTime());
     }
 }
-function setReload() {
+function setReload(inHours) {
     var now = new Date();
     var startOfNextHour = new Date();
-    startOfNextHour.setUTCHours(now.getUTCHours() + 1, 0, 1, 0);
+    startOfNextHour.setUTCHours(now.getUTCHours() + inHours, 0, 1, 0);
     var diff = startOfNextHour.getTime() - now.getTime();
     setTimeout(function () { return window.location.reload(); }, diff);
 }
