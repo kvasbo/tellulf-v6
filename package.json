@@ -7,6 +7,17 @@
         "@types/jquery": "^3.5",
         "eslint": "^8.0",
         "sass": "^1.43",
-        "typescript": "^4"
-    }
+        "typescript": "^4",
+        "webpack": "^5.72.1",
+        "webpack-cli": "^4.9.2"
+    },
+    "dependencies": {},
+    "name": "tellulf-v6",
+    "version": "1.0.0",
+    "description": "A private info screen",
+    "main": "index.js",
+    "repository": "https://github.com/kvasbo/tellulf-v6.git",
+    "author": "Audun Kvasbø <audun@kvasbo.no>",
+    "license": "MIT",
+    "private": true
 }

@@ -3,7 +3,6 @@
 namespace kvasbo\tellulf;
 
 use GraphQL\Client;
-use GraphQL\Exception\QueryError;
 
 define("TIBBER_QUERY", "{
   viewer {
@@ -47,7 +46,11 @@ class Power {
    * @return array
    */
   static public function Get_Consumption(): array {
-    return static::Get_From_Tibber();
+    try {
+      return static::Get_From_Tibber();
+    } catch (\Throwable $e) {
+      return [];
+    }
   }
   
   /**
@@ -63,13 +66,15 @@ class Power {
 
     // Run query to get results
     try {
+      
       $results = $client->runRawQuery($query);
+
       $data = $results->getData()->viewer->homes;
 
       return static::Parse_Tibber($data);
 
     }
-    catch (QueryError $exception) {
+    catch (\Throwable $exception) {
       // Catch query error and desplay error details
       return [];
     }

@@ -84,12 +84,12 @@ $app->get("/tibber", function (Request $request, Response $response, $args) {
   $power = Power::Get_Consumption();
   $data = array(
       'cabin' => array(
-        'usageToday' => $power['hytta']['used'],
-        'costToday' => $power['hytta']['cost']
+        'usageToday' => $power['hytta']['used'] ? $power['hytta']['used'] : 0,
+        'costToday' => $power['hytta']['cost'] ? $power['hytta']['cost'] : 0,
         ),
       'home' => array(
-        'usageToday' => $power['hjemme']['used'],
-        'costToday' => $power['hjemme']['cost']
+        'usageToday' => $power['hjemme']['used'] ? $power['hjemme']['used'] : 0,
+        'costToday' => $power['hjemme']['cost'] ? $power['hjemme']['cost'] : 0,
       )
     );
   $payload = json_encode($data);
