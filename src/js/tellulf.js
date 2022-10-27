@@ -105,14 +105,6 @@ function runUpdateLoop(force) {
     });
 }
 function updateBattery() {
-    try {
-        if (okular && okular.DevicesStatus) {
-            var status_1 = okular.DevicesStatus();
-            var battery = status_1["28003d00-0f47-3830-3933-303600000000"]["Battery"];
-            $(".battery").html("".concat(battery, "%"));
-        }
-    }
-    catch (e) { }
 }
 function updateWeatherGraph() {
     var img = $("#weather_graph_svg");

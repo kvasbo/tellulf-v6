@@ -108,6 +108,7 @@ async function runUpdateLoop(force = false) {
 }
 
 function updateBattery() {
+  /*
   try {
     if (okular && okular.DevicesStatus) {
       const status = okular.DevicesStatus();
@@ -115,6 +116,7 @@ function updateBattery() {
       $(".battery").html(`${battery}%`);
     }
   } catch (e) {}
+  */
 }
 
 /**
