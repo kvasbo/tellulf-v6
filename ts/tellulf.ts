@@ -6,11 +6,6 @@ interface TimeData {
   week: string;
 }
 
-interface PowerData {
-  usageToday: number;
-  costToday: number;
-}
-
 interface HomeySet {
   age?: number;
   humOut?: string;
@@ -25,7 +20,7 @@ interface EnturTur {
   destination: string;
 }
 
-// Run every minute, plus once when starting up
+// Run every fifteen seconds, plus once when starting up
 $(function () {
   setReload(1);
   runUpdateLoop(true);
