@@ -78,25 +78,6 @@ $app->get("/time", function (Request $request, Response $response, $args) {
   return $response->withHeader('Content-Type', 'application/json');
 });
 
-// Tibber
-$app->get("/tibber", function (Request $request, Response $response, $args) {
-  require_once "./class.power.php";
-  $power = Power::Get_Consumption();
-  $data = array(
-      'cabin' => array(
-        'usageToday' => $power['hytta']['used'] ? $power['hytta']['used'] : 0,
-        'costToday' => $power['hytta']['cost'] ? $power['hytta']['cost'] : 0,
-        ),
-      'home' => array(
-        'usageToday' => $power['hjemme']['used'] ? $power['hjemme']['used'] : 0,
-        'costToday' => $power['hjemme']['cost'] ? $power['hjemme']['cost'] : 0,
-      )
-    );
-  $payload = json_encode($data);
-  $response->getBody()->write($payload);
-  return $response->withHeader('Content-Type', 'application/json');
-});
-
 // Return data from Homey
 $app->get("/homey", function (Request $request, Response $response, $args) {
   $payload = Homey::Get_Latest_Data();

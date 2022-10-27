@@ -11,17 +11,13 @@ interface PowerData {
   costToday: number;
 }
 
-interface PowerInfoSet {
-  cabin: PowerData;
-  home: PowerData;
-}
-
 interface HomeySet {
   age?: number;
   humOut?: string;
   power?: string;
   pressure?: string;
   tempOut?: string;
+  powerUsedToday?: string;
   time?: number;
 }
 interface EnturTur {
@@ -35,7 +31,7 @@ $(function () {
   runUpdateLoop(true);
   window.setInterval(function () {
     runUpdateLoop();
-  }, 60000);
+  }, 15000);
 });
 
 // Run the update loop
@@ -43,7 +39,6 @@ async function runUpdateLoop(force = false) {
   // Run the Ajax calls concurrently (note: the order is important)
   const calls = [
     jQuery.get("/time"),
-    jQuery.get("/tibber"),
     jQuery.get("/homey"),
     jQuery.get("/entur"),
   ];
@@ -53,9 +48,8 @@ async function runUpdateLoop(force = false) {
 
   // Unwrap the returned data (this is why the order is important)
   const timeData: TimeData = data[0];
-  const powerData: PowerInfoSet = data[1];
-  const homey: HomeySet = data[2];
-  const entur: EnturTur[] = data[3];
+  const homey: HomeySet = data[1];
+  const entur: EnturTur[] = data[2];
 
   // Only every ten minutes or on force
   const minutes = new Date().getMinutes();
@@ -85,13 +79,7 @@ async function runUpdateLoop(force = false) {
 
   $(".bane").html(enturHtml);
 
-  $(".powerUsageTodayHome").html(
-    Math.round(powerData.home.usageToday).toString()
-  );
-  $(".powerCostTodayHome").html(
-    Math.round(powerData.home.costToday).toString()
-  );
-  if (homey.age && homey.age < 600) {
+  if (true || homey.age && homey.age < 600) {
     if (homey.tempOut) {
       const t = Number(homey.tempOut).toFixed(1);
       $(".current_temperature").html(`${t}&deg;`);
@@ -105,6 +93,16 @@ async function runUpdateLoop(force = false) {
     if (homey.humOut) {
       const p = Number(homey.humOut).toFixed(0);
       $(".current_humidity").html(`${p} % hum`);
+    }
+    
+    if (homey.power) {
+      const p = Math.round(Number(homey.power)/100)/10;
+      $(".current_power").html(`${p} kW`);
+    }
+    if (homey.powerUsedToday) {
+      $(".powerUsageTodayHome").html(
+        Math.round(Number(homey.powerUsedToday)).toString()
+      );
     }
   }
 }

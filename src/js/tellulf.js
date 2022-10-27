@@ -39,18 +39,17 @@ $(function () {
     runUpdateLoop(true);
     window.setInterval(function () {
         runUpdateLoop();
-    }, 60000);
+    }, 15000);
 });
 function runUpdateLoop(force) {
     if (force === void 0) { force = false; }
     return __awaiter(this, void 0, void 0, function () {
-        var calls, data, timeData, powerData, homey, entur, minutes, enturHtml, i, t, p, p;
+        var calls, data, timeData, homey, entur, minutes, enturHtml, i, t, p, p, p;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     calls = [
                         jQuery.get("/time"),
-                        jQuery.get("/tibber"),
                         jQuery.get("/homey"),
                         jQuery.get("/entur"),
                     ];
@@ -58,9 +57,8 @@ function runUpdateLoop(force) {
                 case 1:
                     data = _a.sent();
                     timeData = data[0];
-                    powerData = data[1];
-                    homey = data[2];
-                    entur = data[3];
+                    homey = data[1];
+                    entur = data[2];
                     minutes = new Date().getMinutes();
                     if (minutes % 10 === 0 || force) {
                         updateWeatherGraph();
@@ -71,29 +69,34 @@ function runUpdateLoop(force) {
                     });
                     $("#now_time").html(timeData.time);
                     $("#now_date").html(timeData.date);
-                    $("#now_week").html("Uke " + timeData.week);
+                    $("#now_week").html("Uke ".concat(timeData.week));
                     enturHtml = "Neste to baner: ";
                     for (i = 0; i < Math.min(entur.length, 2); i++) {
-                        enturHtml += "<span class=\"entur_item\">" + entur[i].time.substring(11, 16) + "</span>";
+                        enturHtml += "<span class=\"entur_item\">".concat(entur[i].time.substring(11, 16), "</span>");
                     }
                     $(".bane").html(enturHtml);
-                    $(".powerUsageTodayHome").html(Math.round(powerData.home.usageToday).toString());
-                    $(".powerCostTodayHome").html(Math.round(powerData.home.costToday).toString());
-                    if (homey.age && homey.age < 600) {
+                    if (true || homey.age && homey.age < 600) {
                         if (homey.tempOut) {
                             t = Number(homey.tempOut).toFixed(1);
-                            $(".current_temperature").html(t + "&deg;");
+                            $(".current_temperature").html("".concat(t, "&deg;"));
                         }
                         else {
                             $(".current_temperature").html("?");
                         }
                         if (homey.pressure) {
                             p = Number(homey.pressure).toFixed(0);
-                            $(".current_pressure").html(p + " hPa");
+                            $(".current_pressure").html("".concat(p, " hPa"));
                         }
                         if (homey.humOut) {
                             p = Number(homey.humOut).toFixed(0);
-                            $(".current_humidity").html(p + " % hum");
+                            $(".current_humidity").html("".concat(p, " % hum"));
+                        }
+                        if (homey.power) {
+                            p = Math.round(Number(homey.power) / 100) / 10;
+                            $(".current_power").html("".concat(p, " kW"));
+                        }
+                        if (homey.powerUsedToday) {
+                            $(".powerUsageTodayHome").html(Math.round(Number(homey.powerUsedToday)).toString());
                         }
                     }
                     return [2];
@@ -106,7 +109,7 @@ function updateBattery() {
         if (okular && okular.DevicesStatus) {
             var status_1 = okular.DevicesStatus();
             var battery = status_1["28003d00-0f47-3830-3933-303600000000"]["Battery"];
-            $(".battery").html(battery + "%");
+            $(".battery").html("".concat(battery, "%"));
         }
     }
     catch (e) { }
