@@ -102,5 +102,21 @@ $app->get("/entur", function (Request $request, Response $response, $args) {
   return $response->withHeader('Content-Type', 'application/json');
 });
 
+// Return power prices
+$app->get("/powerprices", function (Request $request, Response $response, $args) {
+  try {
+    $year = date("Y", time());
+    $month = date("m", time());
+    $day = date("d", time());
+    $hour = date("G", time());
+    $payload = json_decode(file_get_contents("https://www.hvakosterstrommen.no/api/v1/prices/$year/$month-".$day."_NO1.json"));
+    $payload['now'] = $payload[$hour];
+  } catch (\Exception $e) {
+    $payload =[];
+  }
+  $response->getBody()->write(json_encode($payload));
+  return $response->withHeader('Content-Type', 'application/json');
+});
+
 // Run app
 $app->run();

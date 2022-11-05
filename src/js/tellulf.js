@@ -63,6 +63,7 @@ function runUpdateLoop(force) {
                     if (minutes % 10 === 0 || force) {
                         updateWeatherGraph();
                         updateBattery();
+                        updatePowerprices();
                     }
                     entur.forEach(function (tur) {
                         var time = new Date(tur.time);
@@ -105,6 +106,28 @@ function runUpdateLoop(force) {
     });
 }
 function updateBattery() {
+}
+function updatePowerprices() {
+    return __awaiter(this, void 0, void 0, function () {
+        var now, hours, minutes, prices, price;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    now = new Date();
+                    hours = now.getHours();
+                    minutes = now.getMinutes();
+                    return [4, jQuery.get("/powerprices")];
+                case 1:
+                    prices = _a.sent();
+                    if (prices.now) {
+                        price = prices.now;
+                        $(".current_price").html("".concat(price.NOK_per_kWh.toFixed(2), " kr/kWh"));
+                    }
+                    ;
+                    return [2];
+            }
+        });
+    });
 }
 function updateWeatherGraph() {
     var img = $("#weather_graph_svg");

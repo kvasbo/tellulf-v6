@@ -20,6 +20,19 @@ interface EnturTur {
   destination: string;
 }
 
+interface PowerPrice {
+  EUR_per_kWh: number;
+  NOK_per_kWh: number;
+  EXR: number;
+  time_start: string;
+  time_end: string;
+}
+
+interface PowerPriceSet {
+  'now'?: PowerPrice;
+  [key: number]: PowerPrice;
+}
+
 // Run every fifteen seconds, plus once when starting up
 $(function () {
   setReload(1);
@@ -51,6 +64,7 @@ async function runUpdateLoop(force = false) {
   if (minutes % 10 === 0 || force) {
     updateWeatherGraph();
     updateBattery();
+    updatePowerprices();
   }
 
   // Parse Entur
@@ -112,6 +126,21 @@ function updateBattery() {
     }
   } catch (e) {}
   */
+}
+
+async function updatePowerprices() {
+  const now = new Date();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+
+  const prices = await jQuery.get("/powerprices");
+ 
+  if(prices.now) {
+    const price = prices.now;
+    $(".current_price").html(
+      `${price.NOK_per_kWh.toFixed(2)} kr/kWh`
+    );
+  };
 }
 
 /**
