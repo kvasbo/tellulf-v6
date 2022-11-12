@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tellulf-deployment
+spec:
+  selector:
+    matchLabels:
+      app: tellulf
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: tellulf
+    spec:
+      containers:
+      - name: tellulf
+        image: kvabo/tellulf:latest
+        ports:
+        - containerPort: 80
