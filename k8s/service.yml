@@ -4,7 +4,6 @@ metadata:
   name: tellulf
 spec:
   externalTrafficPolicy: Cluster
-  type: ClusterIP
   selector:
     app: tellulf
   ports:
