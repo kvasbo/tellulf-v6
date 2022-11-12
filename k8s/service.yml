@@ -3,10 +3,11 @@ kind: Service
 metadata:
   name: tellulf
 spec:
+  type: ClusterIP
   selector:
     app: tellulf
   ports:
   - name: http
-    port: 80
+    port: 8080
     targetPort: 80
     protocol: TCP
