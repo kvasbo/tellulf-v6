@@ -20,3 +20,8 @@ spec:
         ports:
         - containerPort: 80
           name: http
+        env:
+          - name: YR_URL_FORECAST
+            value: https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=59.9508&lon=10.6852
+          - name: YR_URL_NOWCAST
+            value: https://api.met.no/weatherapi/nowcast/2.0/complete?lat=59.9508&lon=10.6852
