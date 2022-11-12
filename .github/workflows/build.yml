@@ -50,7 +50,7 @@ jobs:
       - name: Deploy to DigitalOcean
         run: doctl apps create-deployment ${{ secrets.DIGITALOCEAN_APP_ID }}
   do-k8n:
-    name: Deploy to DigitalOcean k8n
+    name: Deploy to DigitalOcean k8s
     needs: build-container
     runs-on: ubuntu-latest
     steps:
@@ -62,10 +62,10 @@ jobs:
       - name: Checkout the repo (to get applicaton.yml)
         uses: actions/checkout@v3
       - name: Deploy application to Kubernetes
-        run: kubectl apply -f ./k8n/application.yml
+        run: kubectl apply -f ./k8s/application.yml
       - name: Deploy load balancer to Kubernetes
-        run: kubectl apply -f ./k8n/loadbalancer.yml
+        run: kubectl apply -f ./k8s/loadbalancer.yml
       - name: Setup ingress
-        run: kubectl apply -f ./k8n/ingress.yml
+        run: kubectl apply -f ./k8s/ingress.yml
       - name: Setup service
-        run: kubectl apply -f ./k8n/service.yml
+        run: kubectl apply -f ./k8s/service.yml
