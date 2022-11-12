@@ -42,7 +42,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: k8n-config
-          path: application.yml
+          path: ./k8n
   do-apps:
     name: Deploy to DigitalOcean apps
     needs: build-container
@@ -70,5 +70,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: k8n-config
-      - name: Deploy to Kubernetes
-        run: kubectl apply -f application.yml
+      - name: Deploy application to Kubernetes
+        run: kubectl apply -f ./k8n/application.yml
+      - name: Deploy load balancer to Kubernetes
+        run: kubectl apply -f ./k8n/loadbalancer.yml
