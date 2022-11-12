@@ -3,7 +3,6 @@ kind: Service
 metadata:
   name: tellulf
 spec:
-  externalTrafficPolicy: Cluster
   selector:
     app: tellulf
   ports:
