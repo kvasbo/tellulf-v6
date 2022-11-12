@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: tellulf
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: tellulf
   ports:
