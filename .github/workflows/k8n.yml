@@ -3,10 +3,11 @@ name: Build, push to Dockerhub and deploy to DigitalOcean
 on:
   push:
     branches:
-      - maina
+      - main
 
 jobs:
-  build_and_push:
+  build-container:
+    name: Build docker container
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repo
@@ -18,10 +19,6 @@ jobs:
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-
-      - name: Install doctl
-        uses: digitalocean/action-doctl@v2
-        with:
-          token: ${{ secrets.DIGITALOCEAN_TOKEN }}
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
@@ -41,5 +38,26 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tellulf:latest
+  do-apps:
+    name: Deploy to DigitalOcean apps
+    needs: build-container
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_TOKEN }}
       - name: Deploy to DigitalOcean
         run: doctl apps create-deployment ${{ secrets.DIGITALOCEAN_APP_ID }}
+  do-k8n:
+    name: Deploy to DigitalOcean k8n
+    needs: build-container
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Digitalocean Kubernetes
+        uses: matootie/dokube@v1.4.0
+        with:
+          personalAccessToken: ${{ secrets.DIGITALOCEAN_TOKEN }}
+          clusterName: kvasbo-clusterfuck
+      - name: Deploy to Kubernetes
+        run: kubectl apply -f application.yml
