@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: tellulf-service
-spec:
+  name: tellulf
+spec: 
+  type: ClusterIP
   selector:
-    app: tellulf-app
-    role: web
+    app: tellulf
   ports:
   - name: http
     port: 80
