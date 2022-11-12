@@ -71,6 +71,6 @@ jobs:
         with:
           name: k8n-config
       - name: Deploy application to Kubernetes
-        run: kubectl apply -f ./k8n/application.yml
+        run: kubectl apply -f ./k8n-config/application.yml
       - name: Deploy load balancer to Kubernetes
-        run: kubectl apply -f ./k8n/loadbalancer.yml
+        run: kubectl apply -f ./k8n-config/loadbalancer.yml
