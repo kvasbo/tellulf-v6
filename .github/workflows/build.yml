@@ -67,3 +67,5 @@ jobs:
         run: kubectl apply -f ./k8n/loadbalancer.yml
       - name: Setup ingress
         run: kubectl apply -f ./k8n/ingress.yml
+      - name: Setup service
+        run: kubectl apply -f ./k8n/service.yml
