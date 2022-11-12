@@ -3,16 +3,16 @@ kind: Deployment
 metadata:
   name: tellulf-app
   labels:
-    app: tellulf
+    app: tellulf-app
 spec:
   selector:
     matchLabels:
-      app: tellulf
+      app: tellulf-app
   minReadySeconds: 5
   template:
     metadata:
       labels:
-        app: tellulf
+        app: tellulf-app
     spec:
       containers:
       - name: tellulf
