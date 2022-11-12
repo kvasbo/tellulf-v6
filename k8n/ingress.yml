@@ -7,7 +7,7 @@ spec:
   - http:
       paths:
       - pathType: Prefix
-        path: /*
+        path: /tellulf
         backend:
           service:
             name: tellulf-service
