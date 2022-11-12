@@ -38,6 +38,11 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tellulf:latest
+      - name: 'Upload application config'
+        uses: actions/upload-artifact@v3
+        with:
+          name: k8n-config
+          path: application.yml
   do-apps:
     name: Deploy to DigitalOcean apps
     needs: build-container
@@ -59,7 +64,11 @@ jobs:
         with:
           personalAccessToken: ${{ secrets.DIGITALOCEAN_TOKEN }}
           clusterName: kvasbo-clusterfuck
-      - name: Checkout the repo (to get applicaton.yml)
-        uses: actions/checkout@v2
+      # - name: Checkout the repo (to get applicaton.yml)
+      #   uses: actions/checkout@v2
+      - name: Download config
+        uses: actions/download-artifact@v3
+        with:
+          name: k8n-config
       - name: Deploy to Kubernetes
         run: kubectl apply -f application.yml
