@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tellulf-deployment
+  name: tellulf-app
 spec:
   selector:
     matchLabels:
