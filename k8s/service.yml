@@ -6,6 +6,7 @@ spec:
   type: NodePort
   selector:
     app: tellulf
+    role: web
   ports:
   - name: http
     port: 80
