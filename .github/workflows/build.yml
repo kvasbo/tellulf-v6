@@ -58,7 +58,14 @@ jobs:
         uses: matootie/dokube@v1.4.0
         with:
           personalAccessToken: ${{ secrets.DIGITALOCEAN_TOKEN }}
-          clusterName: kvasbo-clusterfuck
+          clusterName: ${{ secrets.K8S_CLUSTER }}
+      - name: Setup secrets # Should run before anything else on k8s!
+        run: |
+          kubectl create secret generic tellulf-secrets \
+            --from-literal=YR_URL_FORECAST='${{ secrets.YR_URL_FORECAST }}'
+            --from-literal=YR_URL_NOWCAST='${{ secrets.YR_URL_NOWCAST }}'
+            --from-literal=CAL_FELLES='${{ secrets.CAL_FELLES }}'
+            --from-literal=CAL_BIRTHDAYS='${{ secrets.CAL_BIRTHDAYS }}'
       - name: Checkout the repo (to get applicaton.yml)
         uses: actions/checkout@v3
       - name: Deploy application to Kubernetes
@@ -69,7 +76,3 @@ jobs:
         run: kubectl apply -f ./k8s/ingress.yml
       - name: Setup service
         run: kubectl apply -f ./k8s/service.yml
-      - name: Setup secrets
-        run: |
-          kubectl create secret generic tellulf-secrets \
-            --from-literal=YR_URL_FORECAST='${{ secrets.YR_URL_FORECAST }}'
