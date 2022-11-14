@@ -59,9 +59,10 @@ jobs:
         with:
           personalAccessToken: ${{ secrets.DIGITALOCEAN_TOKEN }}
           clusterName: ${{ secrets.K8S_CLUSTER }}
-      - name: Setup secrets # Should run before anything else on k8s!
+      - name: Delete old secrets
+        run: kubectl delete secret tellulf-secrets --ignore-not-found
+      - name: Setup secrets # Should run before any applications are deployed on on k8s
         run: |
-          kubectl delete secret tellulf-secrets --ignore-not-found \
           kubectl create secret generic tellulf-secrets \
             --from-literal=YR_URL_FORECAST='${{ secrets.YR_URL_FORECAST }}'
             --from-literal=YR_URL_NOWCAST='${{ secrets.YR_URL_NOWCAST }}'
