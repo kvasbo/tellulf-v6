@@ -69,3 +69,7 @@ jobs:
         run: kubectl apply -f ./k8s/ingress.yml
       - name: Setup service
         run: kubectl apply -f ./k8s/service.yml
+      - name: Setup secrets
+        run: |
+          kubectl create secret generic tellulf-secrets \
+            --from-literal=YR_URL_FORECAST='${{ secrets.YR_URL_FORECAST }}'
