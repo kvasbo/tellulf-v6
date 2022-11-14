@@ -38,17 +38,6 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tellulf:latest
-  do-apps:
-    name: Deploy to DigitalOcean apps
-    needs: build-container
-    runs-on: ubuntu-latest
-    steps:
-      - name: Install doctl
-        uses: digitalocean/action-doctl@v2
-        with:
-          token: ${{ secrets.DIGITALOCEAN_TOKEN }}
-      - name: Deploy to DigitalOcean
-        run: doctl apps create-deployment ${{ secrets.DIGITALOCEAN_APP_ID }}
   do-k8n:
     name: Deploy to DigitalOcean k8s
     needs: build-container
