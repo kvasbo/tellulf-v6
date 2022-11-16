@@ -2,7 +2,8 @@ name: Define Kubernetes services
 
 on: workflow_dispatch
 
-do-k8n:
+jobs:
+  do-k8n:
     name: Deploy to DigitalOcean k8s
     needs: build-container
     runs-on: ubuntu-latest
