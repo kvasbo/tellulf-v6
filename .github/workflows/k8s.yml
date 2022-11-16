@@ -5,7 +5,6 @@ on: workflow_dispatch
 jobs:
   do-k8n:
     name: Deploy to DigitalOcean k8s
-    needs: build-container
     runs-on: ubuntu-latest
     steps:
       - name: Install Digitalocean Kubernetes
