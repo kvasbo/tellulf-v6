@@ -55,5 +55,5 @@ jobs:
           personalAccessToken: ${{ secrets.DIGITALOCEAN_TOKEN }}
           clusterName: ${{ secrets.K8S_CLUSTER }}
       - name: Set image
-        run: kubectl set image deployment tellulf tellulf=${{ fromJSON(steps.meta.outputs.json).tags[0] }}
+        run: kubectl set image deployment tellulf tellulf=${{ fromJSON(steps.meta.outputs.json).tags[2] }}
         
