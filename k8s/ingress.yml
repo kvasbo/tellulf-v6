@@ -16,8 +16,3 @@ spec:
             name: tellulf
             port:
               number: 80
-  defaultBackend:
-    service:
-      name: tellulf
-      port:
-        number: 80
