@@ -6,7 +6,8 @@ metadata:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-  - http:
+  - host: "tellulf.kvasbo.no"
+    http:
       paths:
       - pathType: Prefix
         path: "/"
@@ -15,15 +16,6 @@ spec:
             name: tellulf
             port:
               number: 80
-      - pathType: Prefix
-        path: /tellulf
-        backend:
-          service:
-            name: tellulf
-            port:
-              number: 80
-              #https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nginx-ingress-on-digitalocean-kubernetes-using-helm
-              #TODO: Teste porter
   defaultBackend:
     service:
       name: tellulf
