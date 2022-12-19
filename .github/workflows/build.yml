@@ -49,11 +49,4 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-      - name: Install Digitalocean Kubernetes
-        uses: matootie/dokube@v1.4.0
-        with:
-          personalAccessToken: ${{ secrets.DIGITALOCEAN_TOKEN }}
-          clusterName: ${{ secrets.K8S_CLUSTER }}
-      - name: Set image
-        run: kubectl set image deployment tellulf tellulf=${{ fromJSON(steps.meta.outputs.json).tags[2] }}
         
