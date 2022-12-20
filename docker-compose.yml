@@ -6,3 +6,9 @@ services:
     restart: unless-stopped
     ports:
       - "1337:80"
+    environment:
+      - YR_URL_FORECAST=${YR_URL_FORECAST}
+      - YR_URL_NOWCAST=${YR_URL_NOWCAST}
+      - CAL_FELLES=${CAL_FELLES}
+      - CAL_BIRTHDAYS=${CAL_BIRTHDAYS}
+      - TIBBER_KEY=${TIBBER_KEY}
