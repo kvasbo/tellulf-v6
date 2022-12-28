@@ -82,3 +82,4 @@ composer.phar
 vendor/
 src/twig-cache
 src/homey.json
+docker-compose-with-secrets.yml
