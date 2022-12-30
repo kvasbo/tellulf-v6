@@ -66,7 +66,6 @@ async function runUpdateLoop(force = false) {
   // Only every ten minutes or on force
   const minutes = new Date().getMinutes();
   if (minutes % 10 === 0 || force) {
-    updateWeatherGraph();
     updatePowerprices();
   }
 
@@ -126,17 +125,6 @@ async function updatePowerprices() {
       `${price.NOK_per_kWh.toFixed(2)} kr/kWh`
     );
   };
-}
-
-/**
- * Reload weather_graph_svg image every ten minutes
- */
-function updateWeatherGraph() {
-  const img = $("#weather_graph_svg");
-  if (img) {
-    const date = new Date();
-    img.attr("src", img.attr("src").split("?")[0] + "?" + date.getTime());
-  }
 }
 
 /**

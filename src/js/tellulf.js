@@ -63,7 +63,6 @@ function runUpdateLoop(force) {
                     updateEnturInfo(entur);
                     minutes = new Date().getMinutes();
                     if (minutes % 10 === 0 || force) {
-                        updateWeatherGraph();
                         updatePowerprices();
                     }
                     if (homey.age && homey.age < 600) {
@@ -124,13 +123,6 @@ function updatePowerprices() {
             }
         });
     });
-}
-function updateWeatherGraph() {
-    var img = $("#weather_graph_svg");
-    if (img) {
-        var date = new Date();
-        img.attr("src", img.attr("src").split("?")[0] + "?" + date.getTime());
-    }
 }
 function setReload(inHours) {
     var now = new Date();

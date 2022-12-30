@@ -26,7 +26,6 @@ h5 {
 .block {
   padding: 2rem;
   overflow: hidden;
-  background-color: #ffffff;
   opacity: 1;
 }
 
@@ -112,16 +111,15 @@ h5 {
   font-weight: 600;
 }
 
-.weather_graph {
+.weather_nowcast {
   position: absolute;
   width: 60%;
-  height: 55%;
+  height: 40%;
   left: 40%;
   top: 15%;
-}
-.weather_graph .weather_graph_svg {
-  width: 100%;
-  margin-top: -25px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 }
 
 .power {

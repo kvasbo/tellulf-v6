@@ -2,7 +2,8 @@
     "scripts": {
         "sass-watch": "npx sass --watch sass:src/css",
         "sass": "npx sass sass:src/css",
-        "tsc-watch": "npx tsc --watch"
+        "tsc-watch": "npx tsc --watch",
+        "dev": "docker compose --file docker-compose-dev.yml up"
     },
     "devDependencies": {
         "@types/jquery": "^3.5",

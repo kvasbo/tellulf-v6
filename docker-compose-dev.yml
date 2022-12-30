@@ -9,6 +9,6 @@ services:
     env_file:
       - ./.env
     ports:
-      - "80:80"
+      - "1337:80"
     volumes:
       - ./src:/var/www/html
