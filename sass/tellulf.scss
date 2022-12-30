@@ -1,6 +1,9 @@
 @use 'sass:math';
+@use '_weather.scss' as weather;
+@use '_grid.scss' as grid;
 
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800");
+
 $text_huge: 200px;
 $text_xlarge: 100px;
 $text_large: 75px;
@@ -9,6 +12,7 @@ $text_size: 20px;
 $text_small: 12px;
 $margin: 10px;
 $gray: #888888;
+
 * {
     box-sizing: border-box;
 }

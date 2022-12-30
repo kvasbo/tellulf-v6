@@ -1,4 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800");
+#grid {
+  display: grid;
+  gap: 5px;
+  grid-template-columns: repeat(100, 1fr);
+  grid-template-rows: repeat(100, 1fr);
+}
+
 * {
   box-sizing: border-box;
 }
