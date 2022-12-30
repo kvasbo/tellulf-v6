@@ -51,7 +51,7 @@ class Tellulf
     {
         $date = $datetime->format('Y-m-d');
 
-        $forecast = $this->weather->Get_Six_Hour_Forecasts();
+        $forecast = $this->weather->getSixHourForecasts();
 
         $sun = \date_sun_info(time(), 59.9508301, 10.685248);
 

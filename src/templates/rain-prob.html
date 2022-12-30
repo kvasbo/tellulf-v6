@@ -1,1 +1,1 @@
-{% if weather.details.probability_of_precipitation|round != 0 %} {{ weather.details.probability_of_precipitation|round }}% {% else %} &nbsp; {% endif %}
+{% if weather.details.probability_of_precipitation|round != 0 %} {{ weather.details.probability_of_precipitation|round }}% / {{ weather.details.precipitation_amount }}mm {% else %} &nbsp; {% endif %}
