@@ -56,8 +56,12 @@ async function runUpdateLoop(force = false) {
 
   // Unwrap the returned data (this is why the order is important)
   const timeData: TimeData = data[0];
+  updateTimeInfo(timeData);
+
   const homey: HomeySet = data[1];
+
   const entur: EnturTur[] = data[2];
+  updateEnturInfo(entur);
 
   // Only every ten minutes or on force
   const minutes = new Date().getMinutes();
@@ -65,22 +69,6 @@ async function runUpdateLoop(force = false) {
     updateWeatherGraph();
     updatePowerprices();
   }
-
-  // Update all the interfaces at once
-  $("#now_time").html(timeData.time);
-  $("#now_date").html(timeData.date);
-  $("#now_week").html(`Uke ${timeData.week}`);
-
-  // Entur
-  let enturHtml = "Neste to baner: ";
-  for (let i = 0; i < Math.min(entur.length, 2); i++) {
-    enturHtml += `<span class="entur_item">${entur[i].time.substring(
-      11,
-      16
-    )}</span>`;
-  }
-
-  $(".bane").html(enturHtml);
 
   if (homey.age && homey.age < 600) {
     if (homey.tempOut) {
@@ -108,6 +96,25 @@ async function runUpdateLoop(force = false) {
       );
     }
   }
+}
+
+function updateTimeInfo(timeData: TimeData) {
+  // Update all the interfaces at once
+  $("#now_time").html(timeData.time);
+  $("#now_date").html(timeData.date);
+  $("#now_week").html(`Uke ${timeData.week}`);
+}
+
+function updateEnturInfo(entur: EnturTur[]) {
+  let enturHtml = "Neste to baner: ";
+  for (let i = 0; i < Math.min(entur.length, 2); i++) {
+    enturHtml += `<span class="entur_item">${entur[i].time.substring(
+      11,
+      16
+    )}</span>`;
+  }
+
+  $(".bane").html(enturHtml);
 }
 
 async function updatePowerprices() {

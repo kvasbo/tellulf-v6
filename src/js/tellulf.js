@@ -44,7 +44,7 @@ $(function () {
 function runUpdateLoop(force) {
     if (force === void 0) { force = false; }
     return __awaiter(this, void 0, void 0, function () {
-        var calls, data, timeData, homey, entur, minutes, enturHtml, i, t, p, p, p;
+        var calls, data, timeData, homey, entur, minutes, t, p, p, p;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -57,21 +57,15 @@ function runUpdateLoop(force) {
                 case 1:
                     data = _a.sent();
                     timeData = data[0];
+                    updateTimeInfo(timeData);
                     homey = data[1];
                     entur = data[2];
+                    updateEnturInfo(entur);
                     minutes = new Date().getMinutes();
                     if (minutes % 10 === 0 || force) {
                         updateWeatherGraph();
                         updatePowerprices();
                     }
-                    $("#now_time").html(timeData.time);
-                    $("#now_date").html(timeData.date);
-                    $("#now_week").html("Uke ".concat(timeData.week));
-                    enturHtml = "Neste to baner: ";
-                    for (i = 0; i < Math.min(entur.length, 2); i++) {
-                        enturHtml += "<span class=\"entur_item\">".concat(entur[i].time.substring(11, 16), "</span>");
-                    }
-                    $(".bane").html(enturHtml);
                     if (homey.age && homey.age < 600) {
                         if (homey.tempOut) {
                             t = Number(homey.tempOut).toFixed(1);
@@ -100,6 +94,18 @@ function runUpdateLoop(force) {
             }
         });
     });
+}
+function updateTimeInfo(timeData) {
+    $("#now_time").html(timeData.time);
+    $("#now_date").html(timeData.date);
+    $("#now_week").html("Uke ".concat(timeData.week));
+}
+function updateEnturInfo(entur) {
+    var enturHtml = "Neste to baner: ";
+    for (var i = 0; i < Math.min(entur.length, 2); i++) {
+        enturHtml += "<span class=\"entur_item\">".concat(entur[i].time.substring(11, 16), "</span>");
+    }
+    $(".bane").html(enturHtml);
 }
 function updatePowerprices() {
     return __awaiter(this, void 0, void 0, function () {
