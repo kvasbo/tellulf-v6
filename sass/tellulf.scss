@@ -38,7 +38,7 @@ $second-column-width: 17.5%;
 .block {
     padding: 2rem;
     overflow: hidden;
-    background-color: #ffffff;
+    // background-color: #ffffff;
     opacity: 1;
 }
 
@@ -126,16 +126,15 @@ $second-column-width: 17.5%;
     }
 }
 
-.weather_graph {
+.weather_nowcast {
     position: absolute;
     width: 100% - $first-column-width;
-    height: 55%;
+    height: 40%;
     left: $first-column-width;
     top: 15%;
-    .weather_graph_svg {
-        width: 100%;
-        margin-top: -25px;
-    }
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
 
 .power {
