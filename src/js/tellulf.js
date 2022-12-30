@@ -13,7 +13,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -62,12 +62,8 @@ function runUpdateLoop(force) {
                     minutes = new Date().getMinutes();
                     if (minutes % 10 === 0 || force) {
                         updateWeatherGraph();
-                        updateBattery();
                         updatePowerprices();
                     }
-                    entur.forEach(function (tur) {
-                        var time = new Date(tur.time);
-                    });
                     $("#now_time").html(timeData.time);
                     $("#now_date").html(timeData.date);
                     $("#now_week").html("Uke ".concat(timeData.week));
@@ -76,7 +72,7 @@ function runUpdateLoop(force) {
                         enturHtml += "<span class=\"entur_item\">".concat(entur[i].time.substring(11, 16), "</span>");
                     }
                     $(".bane").html(enturHtml);
-                    if (true || homey.age && homey.age < 600) {
+                    if (homey.age && homey.age < 600) {
                         if (homey.tempOut) {
                             t = Number(homey.tempOut).toFixed(1);
                             $(".current_temperature").html("".concat(t, "&deg;"));
@@ -105,18 +101,12 @@ function runUpdateLoop(force) {
         });
     });
 }
-function updateBattery() {
-}
 function updatePowerprices() {
     return __awaiter(this, void 0, void 0, function () {
-        var now, hours, minutes, prices, price;
+        var prices, price;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0:
-                    now = new Date();
-                    hours = now.getHours();
-                    minutes = now.getMinutes();
-                    return [4, jQuery.get("/powerprices")];
+                case 0: return [4, jQuery.get("/powerprices")];
                 case 1:
                     prices = _a.sent();
                     if (prices.now) {

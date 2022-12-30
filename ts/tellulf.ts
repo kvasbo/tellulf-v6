@@ -63,14 +63,8 @@ async function runUpdateLoop(force = false) {
   const minutes = new Date().getMinutes();
   if (minutes % 10 === 0 || force) {
     updateWeatherGraph();
-    updateBattery();
     updatePowerprices();
   }
-
-  // Parse Entur
-  entur.forEach((tur) => {
-    const time = new Date(tur.time);
-  });
 
   // Update all the interfaces at once
   $("#now_time").html(timeData.time);
@@ -88,7 +82,7 @@ async function runUpdateLoop(force = false) {
 
   $(".bane").html(enturHtml);
 
-  if (true || homey.age && homey.age < 600) {
+  if (homey.age && homey.age < 600) {
     if (homey.tempOut) {
       const t = Number(homey.tempOut).toFixed(1);
       $(".current_temperature").html(`${t}&deg;`);
@@ -116,23 +110,7 @@ async function runUpdateLoop(force = false) {
   }
 }
 
-function updateBattery() {
-  /*
-  try {
-    if (okular && okular.DevicesStatus) {
-      const status = okular.DevicesStatus();
-      const battery = status["28003d00-0f47-3830-3933-303600000000"]["Battery"];
-      $(".battery").html(`${battery}%`);
-    }
-  } catch (e) {}
-  */
-}
-
 async function updatePowerprices() {
-  const now = new Date();
-  const hours = now.getHours();
-  const minutes = now.getMinutes();
-
   const prices = await jQuery.get("/powerprices");
  
   if(prices.now) {

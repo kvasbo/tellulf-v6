@@ -1,11 +1,11 @@
 {
     "scripts": {
         "sass-watch": "npx sass --watch sass:src/css",
-        "sass": "npx sass sass:src/css"
+        "sass": "npx sass sass:src/css",
+        "tsc-watch": "npx tsc --watch"
     },
     "devDependencies": {
         "@types/jquery": "^3.5",
-        "eslint": "^8.0",
         "sass": "^1.43",
         "typescript": "^4"
     },
