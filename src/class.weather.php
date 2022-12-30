@@ -51,12 +51,12 @@ class Weather
                 );
             } else {
                 break;
-            }
-        }
-        return $out;
+                }
+      }
+      return $out;
     }
 
-    public function Get_Six_Hour_Forecasts()
+    public function getSixHourForecasts()
     {
         $return = [];
         foreach ($this->forecast as $series) {

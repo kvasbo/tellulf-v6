@@ -6,7 +6,7 @@ $text_xlarge: 100px;
 $text_large: 75px;
 $text_subheader: 25px;
 $text_size: 20px;
-$text_small: 14px;
+$text_small: 12px;
 $margin: 10px;
 $gray: #888888;
 * {
@@ -166,7 +166,7 @@ $second-column-width: 17.5%;
     width: 100% - $first-column-width;
     height: 45%;
     left: $first-column-width;
-    top: 55%;
+    top: 50%;
     flex-direction: row;
     flex-wrap: wrap;
     display: flex;
@@ -203,6 +203,7 @@ $second-column-width: 17.5%;
         justify-content: center;
         .forecast_prob {
             color: $gray;
+            font-size: $text_small;
         }
         .weather_symbol {
             .weather_icon {

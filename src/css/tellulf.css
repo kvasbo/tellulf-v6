@@ -151,7 +151,7 @@ h5 {
   width: 60%;
   height: 45%;
   left: 40%;
-  top: 55%;
+  top: 50%;
   flex-direction: row;
   flex-wrap: wrap;
   display: flex;
@@ -190,6 +190,7 @@ h5 {
 }
 .weather .forecast_point .forecast_prob {
   color: #888888;
+  font-size: 12px;
 }
 .weather .forecast_point .weather_symbol .weather_icon {
   width: 75px;
