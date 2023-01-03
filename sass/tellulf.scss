@@ -9,9 +9,9 @@ $text_xlarge: 100px;
 $text_large: 75px;
 $text_subheader: 25px;
 $text_size: 20px;
-$text_small: 12px;
+$text_small: 14px;
 $margin: 10px;
-$gray: #888888;
+$gray: #444444;
 
 * {
     box-sizing: border-box;
@@ -208,6 +208,7 @@ $first-column-width: 40%;
         .forecast_prob {
             color: $gray;
             font-size: $text_small;
+            text-align: center;
         }
         .weather_symbol {
             .weather_icon {

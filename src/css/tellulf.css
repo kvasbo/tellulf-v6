@@ -78,14 +78,14 @@ h5 {
 .calendar .calendar_day .date {
   margin-top: 0.5rem;
   margin-bottom: 0.25rem;
-  border-bottom: 1px solid #888888;
+  border-bottom: 1px solid #444444;
 }
 .calendar .calendar_day .event {
   display: flex;
   flex-direction: row;
 }
 .calendar .calendar_day .event .event-time {
-  color: #888888;
+  color: #444444;
   display: flex;
   width: 60px;
   margin-right: 10px;
@@ -196,8 +196,9 @@ h5 {
   justify-content: center;
 }
 .weather .forecast_point .forecast_prob {
-  color: #888888;
-  font-size: 12px;
+  color: #444444;
+  font-size: 14px;
+  text-align: center;
 }
 .weather .forecast_point .weather_symbol .weather_icon {
   width: 75px;
