@@ -1,10 +1,11 @@
 @use 'sass:math';
 @use '_weather.scss' as weather;
 
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800");
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&display=swap');
 
-$font_weight: 300;
-$bold_weight: 500;
+$font_weight: 400;
+$bold_weight: 600;
 $text_huge: 170px;
 $text_xlarge: 100px;
 $text_large: 75px;
@@ -31,7 +32,7 @@ $first-column-width: 40%;
 .grid {
     margin: 0;
     background-color: white;
-    font-family: "Open Sans", sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-weight: $font_weight;
     font-size: 20px;
     height: 1200px;

@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800");
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&display=swap");
 * {
   box-sizing: border-box;
@@ -14,8 +15,8 @@ h5 {
 .grid {
   margin: 0;
   background-color: white;
-  font-family: "Open Sans", sans-serif;
-  font-weight: 300;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
   font-size: 20px;
   height: 1200px;
   width: 1600px;
@@ -50,7 +51,7 @@ h5 {
 }
 .time_and_date .now_time {
   font-size: 170px;
-  font-weight: 500;
+  font-weight: 600;
 }
 .time_and_date .now_date {
   font-size: 75px;
@@ -109,7 +110,7 @@ h5 {
 }
 .current_weather .current_weather_block .current_temperature {
   font-size: 100px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .weather_nowcast {
@@ -166,7 +167,7 @@ h5 {
 }
 .coming_days .day .date {
   font-size: 25px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .today_forecast {
