@@ -10,25 +10,26 @@
 </head>
 
 <body class="grid">
+  
+  <div id="grid">
     <div class="block time_and_date">{% include("clock.html") %}</div>
+      <div class="block calendar" id="calendar">
+          {% for day in days|slice(0, 7) %} {{ include('calendar_day.html') }} {% endfor %}
+      </div>
+      <div id="power_and_bane">
+        <div class="block power">{% include("power.html") %}</div>
+        <div class="block bane"></div>
+      </div>
 
-    <div class="block weather_nowcast">{% include("detailed_forecast.html") %}</div>
-
-    <div class="block current_weather">
+      <div class="block current_weather">
         {% include("current_weather.html") %}
-    </div>
-
-    <div class="block power">{% include("power.html") %}</div>
-    <div class="block bane"></div>
-
-    <div class="block coming_days" id="coming_days">
+      </div>
+      <div class="block weather_nowcast">{% include("detailed_forecast.html") %}</div>
+      <div class="block coming_days" id="coming_days">
         {% for day in days|slice(1, 6) %} {{ include('weather_day.html') }} {% endfor %}
     </div>
+  </div>
 
-    <div class="block calendar" id="calendar">
-        {% for day in days|slice(0, 7) %} {{ include('calendar_day.html') }} {% endfor %}
-    </div>
-    
 </body>
 
 </html>
