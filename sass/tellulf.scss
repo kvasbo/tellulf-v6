@@ -1,10 +1,11 @@
 @use 'sass:math';
 @use '_weather.scss' as weather;
-@use '_grid.scss' as grid;
 
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800");
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&display=swap');
 
-$text_huge: 200px;
+$font_weight: 300;
+$bold_weight: 500;
+$text_huge: 170px;
 $text_xlarge: 100px;
 $text_large: 75px;
 $text_subheader: 25px;
@@ -30,7 +31,8 @@ $first-column-width: 40%;
 .grid {
     margin: 0;
     background-color: white;
-    font-family: "Montserrat", sans-serif;
+    font-family: "Open Sans", sans-serif;
+    font-weight: $font_weight;
     font-size: 20px;
     height: 1200px;
     width: 1600px;
@@ -65,7 +67,7 @@ $first-column-width: 40%;
     justify-content: center;
     .now_time {
         font-size: $text_huge;
-        font-weight: 600;
+        font-weight: $bold_weight;
     }
     .now_date {
         font-size: $text_large;
@@ -125,7 +127,7 @@ $first-column-width: 40%;
         justify-content: center;
         .current_temperature {
             font-size: $text_xlarge;
-            font-weight: 600;
+            font-weight: $bold_weight;
         }
     }
 }
@@ -182,7 +184,7 @@ $first-column-width: 40%;
         margin: 0 15px 2px 15px;
         .date {
             font-size: $text_subheader;
-            font-weight: bold;
+            font-weight: $bold_weight;
         }
     }
 }
@@ -202,7 +204,7 @@ $first-column-width: 40%;
     .forecast_point {
         display: flex;
         flex-direction: column;
-        margin: $margin;
+        margin: 0 $margin 0 $margin;
         align-items: center;
         justify-content: center;
         .forecast_prob {
