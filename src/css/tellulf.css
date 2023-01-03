@@ -1,11 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800");
-#grid {
-  display: grid;
-  gap: 5px;
-  grid-template-columns: repeat(100, 1fr);
-  grid-template-rows: repeat(100, 1fr);
-}
-
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&display=swap");
 * {
   box-sizing: border-box;
 }
@@ -21,7 +14,8 @@ h5 {
 .grid {
   margin: 0;
   background-color: white;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
   font-size: 20px;
   height: 1200px;
   width: 1600px;
@@ -55,8 +49,8 @@ h5 {
   justify-content: center;
 }
 .time_and_date .now_time {
-  font-size: 200px;
-  font-weight: 600;
+  font-size: 170px;
+  font-weight: 500;
 }
 .time_and_date .now_date {
   font-size: 75px;
@@ -115,7 +109,7 @@ h5 {
 }
 .current_weather .current_weather_block .current_temperature {
   font-size: 100px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .weather_nowcast {
@@ -172,7 +166,7 @@ h5 {
 }
 .coming_days .day .date {
   font-size: 25px;
-  font-weight: bold;
+  font-weight: 500;
 }
 
 .today_forecast {
@@ -191,7 +185,7 @@ h5 {
 .weather .forecast_point {
   display: flex;
   flex-direction: column;
-  margin: 10px;
+  margin: 0 10px 0 10px;
   align-items: center;
   justify-content: center;
 }
