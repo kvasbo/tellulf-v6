@@ -14,6 +14,12 @@ interface HomeySet {
   tempOut?: string;
   powerUsedToday?: string;
   time?: number;
+  co2in?: string;
+  powerCostNow?: string;
+  hourlyCostNow: string;
+  tempIn?: string;
+  humIn?: string;
+  costToday?: string;
 }
 interface EnturTur {
   time: string;
@@ -63,12 +69,6 @@ async function runUpdateLoop(force = false) {
   const entur: EnturTur[] = data[2];
   updateEnturInfo(entur);
 
-  // Only every ten minutes or on force
-  const minutes = new Date().getMinutes();
-  if (minutes % 10 === 0 || force) {
-    updatePowerprices();
-  }
-
   if (homey.age && homey.age < 600) {
     if (homey.tempOut) {
       const t = Number(homey.tempOut).toFixed(1);
@@ -94,6 +94,12 @@ async function runUpdateLoop(force = false) {
         Math.round(Number(homey.powerUsedToday)).toString()
       );
     }
+    if (homey.powerCostNow) {
+      const currentPowePrice = +homey.powerCostNow;
+      $(".current_price").html(
+        `${currentPowePrice.toFixed(2)} kr/kWh`
+      );
+    }
   }
 }
 
@@ -114,17 +120,6 @@ function updateEnturInfo(entur: EnturTur[]) {
   }
 
   $(".bane").html(enturHtml);
-}
-
-async function updatePowerprices() {
-  const prices = await jQuery.get("/powerprices");
- 
-  if(prices.now) {
-    const price = prices.now;
-    $(".current_price").html(
-      `${price.NOK_per_kWh.toFixed(2)} kr/kWh`
-    );
-  };
 }
 
 /**

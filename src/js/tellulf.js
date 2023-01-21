@@ -44,7 +44,7 @@ $(function () {
 function runUpdateLoop(force) {
     if (force === void 0) { force = false; }
     return __awaiter(this, void 0, void 0, function () {
-        var calls, data, timeData, homey, entur, minutes, t, p, p, p;
+        var calls, data, timeData, homey, entur, t, p, p, p, currentPowePrice;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -61,10 +61,6 @@ function runUpdateLoop(force) {
                     homey = data[1];
                     entur = data[2];
                     updateEnturInfo(entur);
-                    minutes = new Date().getMinutes();
-                    if (minutes % 10 === 0 || force) {
-                        updatePowerprices();
-                    }
                     if (homey.age && homey.age < 600) {
                         if (homey.tempOut) {
                             t = Number(homey.tempOut).toFixed(1);
@@ -88,6 +84,10 @@ function runUpdateLoop(force) {
                         if (homey.powerUsedToday) {
                             $(".powerUsageTodayHome").html(Math.round(Number(homey.powerUsedToday)).toString());
                         }
+                        if (homey.powerCostNow) {
+                            currentPowePrice = +homey.powerCostNow;
+                            $(".current_price").html("".concat(currentPowePrice.toFixed(2), " kr/kWh"));
+                        }
                     }
                     return [2];
             }
@@ -105,24 +105,6 @@ function updateEnturInfo(entur) {
         enturHtml += "<span class=\"entur_item\">".concat(entur[i].time.substring(11, 16), "</span>");
     }
     $(".bane").html(enturHtml);
-}
-function updatePowerprices() {
-    return __awaiter(this, void 0, void 0, function () {
-        var prices, price;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4, jQuery.get("/powerprices")];
-                case 1:
-                    prices = _a.sent();
-                    if (prices.now) {
-                        price = prices.now;
-                        $(".current_price").html("".concat(price.NOK_per_kWh.toFixed(2), " kr/kWh"));
-                    }
-                    ;
-                    return [2];
-            }
-        });
-    });
 }
 function setReload(inHours) {
     var now = new Date();
