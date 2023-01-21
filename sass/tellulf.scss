@@ -147,9 +147,9 @@ $first-column-width: 40%;
 .power {
     position: absolute;
     width: math.div($first-column-width, 2);
-    height: 10%;
+    height: 13%;
     left: 0;
-    top: 90%;
+    top: 87%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -159,9 +159,9 @@ $first-column-width: 40%;
 .bane {
     position: absolute;
     width: math.div($first-column-width, 2);
-    height: 10%;
+    height: 13%;
     left: math.div($first-column-width, 2);
-    top: 90%;
+    top: 87%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

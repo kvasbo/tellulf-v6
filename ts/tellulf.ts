@@ -100,6 +100,12 @@ async function runUpdateLoop(force = false) {
         `${currentPowePrice.toFixed(2)} kr/kWh`
       );
     }
+    if (homey.costToday) {
+      const costToday = +homey.costToday;
+      $(".powerCostTodayHome").html(
+        `${costToday.toFixed(2)}`
+      );
+    }
   }
 }
 

@@ -44,7 +44,7 @@ $(function () {
 function runUpdateLoop(force) {
     if (force === void 0) { force = false; }
     return __awaiter(this, void 0, void 0, function () {
-        var calls, data, timeData, homey, entur, t, p, p, p, currentPowePrice;
+        var calls, data, timeData, homey, entur, t, p, p, p, currentPowePrice, costToday;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -87,6 +87,10 @@ function runUpdateLoop(force) {
                         if (homey.powerCostNow) {
                             currentPowePrice = +homey.powerCostNow;
                             $(".current_price").html("".concat(currentPowePrice.toFixed(2), " kr/kWh"));
+                        }
+                        if (homey.costToday) {
+                            costToday = +homey.costToday;
+                            $(".powerCostTodayHome").html("".concat(costToday.toFixed(2)));
                         }
                     }
                     return [2];
