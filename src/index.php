@@ -7,6 +7,8 @@
 
 namespace kvasbo\tellulf;
 
+error_reporting(E_ERROR | E_PARSE);
+
 define("HOMEY_FILE", "./homey.json");
 
  // Auto loader
