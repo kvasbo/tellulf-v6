@@ -7,7 +7,16 @@
 
 namespace kvasbo\tellulf;
 
+require __DIR__ . '/vendor/autoload.php';
+
+use \Sentry;
+
+// Sentry
+\Sentry\init(['dsn' => 'https://259d70b15a1e48b6baee56762b88ce36@o240723.ingest.sentry.io/4504548387061760' ]);
+
 error_reporting(E_ERROR | E_PARSE);
+
+\Sentry\captureLastError();
 
 define("HOMEY_FILE", "./homey.json");
 
