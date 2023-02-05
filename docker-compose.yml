@@ -12,3 +12,8 @@ services:
       - CAL_FELLES=${CAL_FELLES}
       - CAL_BIRTHDAYS=${CAL_BIRTHDAYS}
       - TIBBER_KEY=${TIBBER_KEY}
+    volumes:
+      - tellulf-lager:/tellulf-lager
+
+volumes:
+  tellulf-lager:
