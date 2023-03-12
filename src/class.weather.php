@@ -56,6 +56,46 @@ class Weather
       return $out;
     }
 
+    public function Get_Daily_Forecasts()
+    {
+        $return = [];
+        $today = date("Y-m-d");
+        foreach ($this->forecast as $series) {
+            // Get time and date
+            //TODO: Skip today!
+            $time = strtotime($series->time);
+            $date = date("Y-m-d", $time);
+
+            if ($date === $today) {
+                continue;
+            }
+
+            // Init array
+            if (!$return[$date]) {
+                $return[$date] = [];
+            }
+
+            // Get max
+            
+            if ($series->data->instant->details->air_temperature) {
+                $t = $series->data->instant->details->air_temperature * 1;
+                if (!$return[$date]['maxTemp'] || $return[$date]['maxTemp'] < $t) {
+                    $return[$date]['maxTemp'] = $t;
+                }
+                if (!$return[$date]['minTemp'] || $return[$date]['minTemp'] > $t) {
+                    $return[$date]['minTemp'] = $t;
+                }
+            } 
+
+            // Get symbol from 0600 to 1800
+            if(strpos($series->time, "T06:00:00") !== false) {
+                $return[$date]['symbol'] = $series->data->next_12_hours->summary->symbol_code;
+            }
+
+        }
+        return $return;
+    }
+
     public function getSixHourForecasts()
     {
         $return = [];

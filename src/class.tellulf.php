@@ -52,12 +52,15 @@ class Tellulf
         $date = $datetime->format('Y-m-d');
 
         $forecast = $this->weather->getSixHourForecasts();
+        $daily = $this->weather->Get_Daily_Forecasts();
 
         $sun = \date_sun_info(time(), 59.9508301, 10.685248);
 
         return array(
             'date' => static::Create_Nice_Date($datetime),
+            'weekday' => static::Create_Nice_Date($datetime, false),
             'forecast' => !empty($forecast[$date]) ? $forecast[$date] : [],
+            'daily_forecast' => !empty($daily[$date]) ? $daily[$date] : [],
             'events' => $this->calendar->Get_Events($date),
             'birthdays' => $this->calendar->Get_Birthdays($date),
             'sunrise' => Clock::getTime($sun['sunrise']),
@@ -71,11 +74,15 @@ class Tellulf
      * @param  mixed $datetime
      * @return void
      */
-    private static function Create_Nice_Date(\Datetime $datetime)
+    private static function Create_Nice_Date(\Datetime $datetime, $showDate = true)
     {
         $dager = ['søndag', 'mandag', 'tirsdag', 'onsdag', 'torsdag', 'fredag', 'lørdag'];
         $weekday = $datetime->format("w");
-        return $dager[$weekday] . " " . $datetime->format('j.');
+        $out = $dager[$weekday];
+        if ($showDate) {
+            $out .= " " . $datetime->format('j.');
+        }
+        return $out;
     }
 
 }
