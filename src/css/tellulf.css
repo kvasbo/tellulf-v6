@@ -42,7 +42,7 @@ h5 {
   position: absolute;
   width: 60%;
   height: 33%;
-  left: 40%;
+  left: 0;
   top: 0;
   display: flex;
   flex-direction: column;
@@ -64,10 +64,11 @@ h5 {
   position: absolute;
   width: 40%;
   height: 100%;
-  left: 0;
+  left: 60%;
   top: 0%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   overflow: hidden;
 }
 .calendar .calendar_day .dateHeader {
@@ -108,7 +109,7 @@ h5 {
   position: absolute;
   width: 60%;
   height: 23%;
-  left: 40%;
+  left: 0;
   top: 29%;
   display: flex;
   flex-direction: row;
@@ -134,7 +135,7 @@ h5 {
   position: absolute;
   width: 60%;
   height: 40%;
-  left: 40%;
+  left: 0;
   top: 45%;
   justify-content: center;
   align-items: center;
@@ -145,7 +146,7 @@ h5 {
   position: absolute;
   width: 30%;
   height: 13%;
-  left: 42%;
+  left: 0;
   top: 85%;
   display: flex;
   flex-direction: column;
@@ -157,38 +158,12 @@ h5 {
   position: absolute;
   width: 20%;
   height: 13%;
-  left: 72%;
+  left: 20%;
   top: 85%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-}
-
-.coming_days {
-  position: absolute;
-  width: 35%;
-  height: 45%;
-  left: 65%;
-  top: 50%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-}
-.coming_days .upcoming_weather_day {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  font-size: 25px;
-  margin: 0 15px 2px 15px;
-}
-.coming_days .upcoming_weather_day .date {
-  width: 125px;
-}
-.coming_days .upcoming_weather_day .temps {
-  margin-left: 20px;
-  width: 125px;
 }
 
 .today_forecast {

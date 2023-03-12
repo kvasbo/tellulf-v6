@@ -60,7 +60,7 @@ $first-column-width: 40%;
     position: absolute;
     width: 100% - $first-column-width;
     height: 33%;
-    left: $first-column-width;
+    left: 0;
     top: 0;
     display: flex;
     flex-direction: column;
@@ -82,10 +82,11 @@ $first-column-width: 40%;
     position: absolute;
     width: $first-column-width;
     height: 100%;
-    left: 0;
+    left: 100 - $first-column-width;
     top: 0%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     overflow: hidden;
     .calendar_day {
         .dateHeader {
@@ -128,7 +129,7 @@ $first-column-width: 40%;
     position: absolute;
     width: 100% - $first-column-width;
     height: 23%;
-    left: $first-column-width;
+    left: 0;
     top: 29%;
     display: flex;
     flex-direction: row;
@@ -154,7 +155,7 @@ $first-column-width: 40%;
     position: absolute;
     width: 100% - $first-column-width;
     height: 40%;
-    left: $first-column-width;
+    left: 0;
     top: 45%;
     justify-content: center;
     align-items: center;
@@ -165,7 +166,7 @@ $first-column-width: 40%;
     position: absolute;
     width: math.div((100 - $first-column-width), 2);
     height: 13%;
-    left: 42%;
+    left: 0;
     top: 85%;
     display: flex;
     flex-direction: column;
@@ -177,38 +178,12 @@ $first-column-width: 40%;
     position: absolute;
     width: math.div($first-column-width, 2);
     height: 13%;
-    left: 72%;
+    left: $first-column-width / 2;
     top: 85%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-}
-
-.coming_days {
-    position: absolute;
-    width: 75% - $first-column-width;
-    height: 45%;
-    left: $first-column-width + 25%;
-    top: 50%;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    .upcoming_weather_day {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        font-size: $text_subheader;
-        margin: 0 15px 2px 15px;
-        .date {
-            width: 125px;
-        }
-        .temps {
-            margin-left: 20px;
-            width: 125px;
-        }
-    }
 }
 
 .today_forecast {
