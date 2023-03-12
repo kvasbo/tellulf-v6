@@ -407,16 +407,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "2.4.4",
+            "version": "2.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "3cf1b6d4f0c820a2cf8bcaec39fc698f3443b5cf"
+                "reference": "67c26b443f348a51926030c83481b85718457d3d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/3cf1b6d4f0c820a2cf8bcaec39fc698f3443b5cf",
-                "reference": "3cf1b6d4f0c820a2cf8bcaec39fc698f3443b5cf",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/67c26b443f348a51926030c83481b85718457d3d",
+                "reference": "67c26b443f348a51926030c83481b85718457d3d",
                 "shasum": ""
             },
             "require": {
@@ -506,7 +506,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.4.4"
+                "source": "https://github.com/guzzle/psr7/tree/2.4.3"
             },
             "funding": [
                 {
@@ -522,7 +522,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-03-09T13:19:02+00:00"
+            "time": "2022-10-26T14:07:24+00:00"
         },
         {
             "name": "http-interop/http-factory-guzzle",
@@ -1624,16 +1624,16 @@
         },
         {
             "name": "sentry/sentry",
-            "version": "3.14.0",
+            "version": "3.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-php.git",
-                "reference": "60dd3f74ab21cc2bf53f39bf7c342798bc185c23"
+                "reference": "71c86fe4699a7f1a40c7d985f3dc7667045152f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/60dd3f74ab21cc2bf53f39bf7c342798bc185c23",
-                "reference": "60dd3f74ab21cc2bf53f39bf7c342798bc185c23",
+                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/71c86fe4699a7f1a40c7d985f3dc7667045152f0",
+                "reference": "71c86fe4699a7f1a40c7d985f3dc7667045152f0",
                 "shasum": ""
             },
             "require": {
@@ -1691,7 +1691,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "MIT"
+                "BSD-3-Clause"
             ],
             "authors": [
                 {
@@ -1712,7 +1712,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-php/issues",
-                "source": "https://github.com/getsentry/sentry-php/tree/3.14.0"
+                "source": "https://github.com/getsentry/sentry-php/tree/3.13.1"
             },
             "funding": [
                 {
@@ -1724,7 +1724,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2023-03-05T21:31:25+00:00"
+            "time": "2023-02-10T10:17:57+00:00"
         },
         {
             "name": "slim/psr7",
