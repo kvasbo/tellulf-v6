@@ -17,7 +17,7 @@
 
     <div class="block time_and_date">{% include("clock.html") %}</div>
       <div class="block calendar" id="calendar">
-          {% for day in days|slice(0, 7) %} {{ include('calendar_day.html') }} {% endfor %}
+          {% for day in days|slice(0, 10) %} {{ include('calendar_day.html') }} {% endfor %}
       </div>
 
       <div class="block power">{% include("power.html") %}</div>
