@@ -52,12 +52,14 @@ class Tellulf
         $date = $datetime->format('Y-m-d');
 
         $forecast = $this->weather->getSixHourForecasts();
+        $daily = $this->weather->Get_Daily_Forecasts();
 
         $sun = \date_sun_info(time(), 59.9508301, 10.685248);
 
         return array(
             'date' => static::Create_Nice_Date($datetime),
             'forecast' => !empty($forecast[$date]) ? $forecast[$date] : [],
+            'daily_forecast' => !empty($daily[$date]) ? $daily[$date] : [],
             'events' => $this->calendar->Get_Events($date),
             'birthdays' => $this->calendar->Get_Birthdays($date),
             'sunrise' => Clock::getTime($sun['sunrise']),
