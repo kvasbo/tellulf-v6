@@ -81,17 +81,34 @@ $first-column-width: 40%;
 .calendar {
     position: absolute;
     width: $first-column-width;
-    height: 100% - 33% - 10%;
+    height: 70%;
     left: 0;
-    top: 33%;
+    top: 30%;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     .calendar_day {
-        .date {
+        .dateHeader {
             margin-top: 0.5rem;
             margin-bottom: 0.25rem;
             border-bottom: 1px solid $gray;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+            display: flex;
+            flex-direction: row;
+            font-size: $text_subheader;
+            .headerWeather {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                .headerWeatherIcon {
+                  width: $text_subheader * 1.75;
+                  height: $text_subheader * 1.75;
+                  margin-bottom: 6px;
+                  margin-left: 10px;
+              }
+            }
         }
         .event {
             display: flex;
@@ -146,10 +163,10 @@ $first-column-width: 40%;
 
 .power {
     position: absolute;
-    width: math.div($first-column-width, 2);
+    width: math.div((100 - $first-column-width), 2);
     height: 13%;
-    left: 0;
-    top: 87%;
+    left: 42%;
+    top: 53%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -160,8 +177,8 @@ $first-column-width: 40%;
     position: absolute;
     width: math.div($first-column-width, 2);
     height: 13%;
-    left: math.div($first-column-width, 2);
-    top: 87%;
+    left: 42%;
+    top: 65%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -170,22 +187,26 @@ $first-column-width: 40%;
 
 .coming_days {
     position: absolute;
-    width: 100% - $first-column-width;
+    width: 75% - $first-column-width;
     height: 45%;
-    left: $first-column-width;
+    left: $first-column-width + 25%;
     top: 50%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    .day {
+    display: flex;
+    .upcoming_weather_day {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        align-items: center;
+        font-size: $text_subheader;
         margin: 0 15px 2px 15px;
         .date {
-            font-size: $text_subheader;
-            font-weight: $bold_weight;
+            width: 125px;
+        }
+        .temps {
+            margin-left: 20px;
+            width: 125px;
         }
     }
 }
@@ -213,11 +234,11 @@ $first-column-width: 40%;
             font-size: $text_small;
             text-align: center;
         }
-        .weather_symbol {
-            .weather_icon {
-                width: $text_large;
-                height: $text_large;
-            }
-        }
     }
+}
+
+
+.weather_icon {
+    width: $text_large;
+    height: $text_large;
 }

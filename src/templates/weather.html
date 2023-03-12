@@ -1,9 +1,0 @@
-<div class="weather">
-    <!--{% for weather in day.forecast %} {{ include('forecast_point.html') }} {% endfor %} -->
-    <div class="forecast_point">
-      <div class="weather_symbol">
-        <img class="weather_icon" src="weathericon/png/{{ day.daily_forecast.symbol }}.png" />
-        {{ day.daily_forecast.minTemp }}&deg; / {{ day.daily_forecast.maxTemp }}&deg;
-      </div>
-    </div>
-</div>

@@ -58,6 +58,7 @@ class Tellulf
 
         return array(
             'date' => static::Create_Nice_Date($datetime),
+            'weekday' => static::Create_Nice_Date($datetime, false),
             'forecast' => !empty($forecast[$date]) ? $forecast[$date] : [],
             'daily_forecast' => !empty($daily[$date]) ? $daily[$date] : [],
             'events' => $this->calendar->Get_Events($date),
@@ -73,11 +74,15 @@ class Tellulf
      * @param  mixed $datetime
      * @return void
      */
-    private static function Create_Nice_Date(\Datetime $datetime)
+    private static function Create_Nice_Date(\Datetime $datetime, $showDate = true)
     {
         $dager = ['søndag', 'mandag', 'tirsdag', 'onsdag', 'torsdag', 'fredag', 'lørdag'];
         $weekday = $datetime->format("w");
-        return $dager[$weekday] . " " . $datetime->format('j.');
+        $out = $dager[$weekday];
+        if ($showDate) {
+            $out .= " " . $datetime->format('j.');
+        }
+        return $out;
     }
 
 }
