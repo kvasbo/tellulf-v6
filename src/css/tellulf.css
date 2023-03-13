@@ -90,6 +90,7 @@ h5 {
 .calendar .calendar_day .dateHeader .headerWeather .headerWeatherTempIcon {
   width: 25px;
   height: 25px;
+  opacity: 0.4;
 }
 .calendar .calendar_day .dateHeader .headerWeather .headerWeatherIcon {
   width: 43.75px;
