@@ -87,6 +87,10 @@ h5 {
   flex-direction: row;
   align-items: center;
 }
+.calendar .calendar_day .dateHeader .headerWeather .headerWeatherTempIcon {
+  width: 25px;
+  height: 25px;
+}
 .calendar .calendar_day .dateHeader .headerWeather .headerWeatherIcon {
   width: 43.75px;
   height: 43.75px;
