@@ -3,13 +3,19 @@
 <div class="calendar_day">
     <div class="dateHeader">{{ day.date }}
       <div class="headerWeather">
-        {% if day.daily_forecast is not empty %}  {{ day.daily_forecast.minTemp|round }}&deg; {{ day.daily_forecast.maxTemp|round }}&deg; 
+        {% if day.daily_forecast is not empty %}  
+        <img class="headerWeatherTempIcon" src="assets/low-temperature.png" />
+        {{ day.daily_forecast.minTemp|round }}&deg;
+        <img class="headerWeatherTempIcon" src="assets/high-temperature.png" />
+        {{ day.daily_forecast.maxTemp|round }}&deg; 
         <img class="headerWeatherIcon" src="weathericon/png/{{ day.daily_forecast.symbol }}.png" /> 
         {% endif %} 
       </div>
     </div>
     <div class="birthdays">
-        {% for birthday in day.birthdays %} {{ include('birthday.html') }} {% endfor %}
+      {% for birthday in day.birthdays %} 
+        <div class="birthday">{{ birthday }}</div>
+      {% endfor %}
     </div>
     <div class="events">
         {% for event in day.events %} {{ include('event.html') }} {% endfor %}

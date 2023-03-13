@@ -103,6 +103,10 @@ $first-column-width: 40%;
                 display: flex;
                 flex-direction: row;
                 align-items: center;
+                .headerWeatherTempIcon {
+                  width: $text_subheader;
+                  height: $text_subheader;
+                }
                 .headerWeatherIcon {
                   width: $text_subheader * 1.75;
                   height: $text_subheader * 1.75;
