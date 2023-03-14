@@ -12,6 +12,7 @@ $text_subheader: 25px;
 $text_size: 20px;
 $text_small: 14px;
 $margin: 10px;
+$first-column-width: 40%;
 $gray: #444444;
 
 * {
@@ -26,19 +27,17 @@ h5 {
     margin-bottom: calc($margin * 0.66);
 }
 
-$first-column-width: 40%;
-
-.grid {
-    margin: 0;
-    background-color: white;
-    font-family: "Montserrat", sans-serif;
-    font-weight: $font_weight;
-    font-size: 20px;
-    height: 1200px;
-    width: 1600px;
-    padding: 0;
-    overflow: hidden;
-    display: block;
+body {
+  margin: 0;
+  background-color: white;
+  font-family: "Montserrat", sans-serif;
+  font-weight: $font_weight;
+  font-size: $text_size;
+  height: 1200px;
+  width: 1600px;
+  padding: 0;
+  overflow: hidden;
+  display: block;
 }
 
 .block {
