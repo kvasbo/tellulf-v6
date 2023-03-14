@@ -33,8 +33,8 @@ body {
   font-family: "Montserrat", sans-serif;
   font-weight: $font_weight;
   font-size: $text_size;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
   padding: 0;
   margin: 0;
 }
@@ -42,15 +42,6 @@ body {
 .block {
     padding: 2rem;
     overflow: hidden;
-    // background-color: #ffffff;
-    opacity: 1;
-}
-
-.battery {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 10px 15px;
 }
 
 .time_and_date {
