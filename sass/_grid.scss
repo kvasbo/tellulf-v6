@@ -1,8 +1,0 @@
-$gap: 5px;
-
-#grid {
-  display: grid;
-  gap: $gap;
-  grid-template-columns: repeat(100, 1fr);
-  grid-template-rows: repeat(100, 1fr);
-}
