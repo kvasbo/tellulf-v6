@@ -77,7 +77,7 @@ class Tellulf
     private static function Create_Nice_Date(\Datetime $datetime, $showDate = true, $relative = false)
     {
         if ($relative) {
-            $diff = $datetime->diff(new \DateTime());
+            $diff = $datetime->diff(new \DateTime("today"));
             if ($diff->days == 0) {
                 return "i dag";
             } elseif ($diff->days == 1) {
