@@ -125,6 +125,7 @@ body {
 .current_weather .current_weather_block .current_temperature {
   font-size: 100px;
   font-weight: 600;
+  margin-left: 25px;
 }
 
 .weather_nowcast {
