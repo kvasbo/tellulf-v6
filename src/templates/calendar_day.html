@@ -1,7 +1,7 @@
 {% if day.birthdays is not empty or day.events is not empty or day.daily_forecast is not empty %}
 
 <div class="calendar_day">
-    <div class="dateHeader">{{ day.date }}
+    <div class="dateHeader">{{ day.weekday }}
       <div class="headerWeather">
         {% if day.daily_forecast is not empty %}  
         <img class="headerWeatherTempIcon" src="assets/low-temperature.png" />
