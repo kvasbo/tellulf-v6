@@ -1,5 +1,4 @@
 @use 'sass:math';
-@use '_weather.scss' as weather;
 
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800");
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&display=swap');
@@ -13,6 +12,7 @@ $text_subheader: 25px;
 $text_size: 20px;
 $text_small: 14px;
 $margin: 10px;
+$first-column-width: 40%;
 $gray: #444444;
 
 * {
@@ -27,33 +27,20 @@ h5 {
     margin-bottom: calc($margin * 0.66);
 }
 
-$first-column-width: 40%;
-
-.grid {
-    margin: 0;
-    background-color: white;
-    font-family: "Montserrat", sans-serif;
-    font-weight: $font_weight;
-    font-size: 20px;
-    height: 1200px;
-    width: 1600px;
-    padding: 0;
-    overflow: hidden;
-    display: block;
+body {
+  background-color: white;
+  font-family: "Montserrat", sans-serif;
+  font-weight: $font_weight;
+  font-size: $text_size;
+  height: 100vh;
+  width: 100vw;
+  padding: 0;
+  margin: 0;
 }
 
 .block {
     padding: 2rem;
     overflow: hidden;
-    // background-color: #ffffff;
-    opacity: 1;
-}
-
-.battery {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 10px 15px;
 }
 
 .time_and_date {
@@ -152,6 +139,7 @@ $first-column-width: 40%;
         .current_temperature {
             font-size: $text_xlarge;
             font-weight: $bold_weight;
+            margin-left: 25px;
         }
     }
 }
