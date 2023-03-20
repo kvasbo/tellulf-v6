@@ -7,7 +7,8 @@
 
 namespace kvasbo\tellulf;
 
-require __DIR__ . '/vendor/autoload.php';
+ // Auto loader
+require_once __DIR__ . '/vendor/autoload.php';
 
 use \Sentry;
 
@@ -19,9 +20,6 @@ error_reporting(E_ERROR | E_PARSE);
 \Sentry\captureLastError();
 
 define("HOMEY_FILE", "./homey.json");
-
- // Auto loader
-require_once __DIR__ . "/vendor/autoload.php";
 
 use \Psr\Http\Message\ResponseInterface as Response;
 use \Psr\Http\Message\ServerRequestInterface as Request;
