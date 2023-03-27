@@ -84,3 +84,4 @@ src/twig-cache
 src/homey.json
 docker-compose-with-secrets.yml
 .DS_Store
+src/js
