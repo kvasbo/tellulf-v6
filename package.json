@@ -2,7 +2,8 @@
     "scripts": {
         "sass-watch": "npx sass --watch sass:src/css",
         "sass": "npx sass sass:src/css",
-        "tsc-watch": "npx tsc --watch",
+        "tsc-watch-server": "npx tsc --watch  --project tsconfig.server.json",
+        "tsc-watch-client": "npx tsc --watch  --project tsconfig.client.json",
         "node-run": "node src/js/server.js",
         "dev": "docker compose --file docker-compose-dev.yml up --build",
         "push": "docker build . && docker tag kvasbo/tellulf:latest kvasbo/tellulf:latest && docker push kvasbo/tellulf:latest"

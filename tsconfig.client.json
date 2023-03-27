@@ -11,5 +11,5 @@
     "removeComments": true,
     "skipLibCheck": true
   },
-  "include": ["ts/*.ts"]
+  "include": ["ts/client/*"]
 }
