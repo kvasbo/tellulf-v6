@@ -4,7 +4,7 @@
         "sass": "npx sass sass:src/css",
         "tsc-watch-server": "npx tsc --watch  --project tsconfig.server.json",
         "tsc-watch-client": "npx tsc --watch  --project tsconfig.client.json",
-        "node-run": "node src/js/server.js",
+        "node-run": "node build/server.js",
         "dev": "docker compose --file docker-compose-dev.yml up --build",
         "push": "docker build . && docker tag kvasbo/tellulf:latest kvasbo/tellulf:latest && docker push kvasbo/tellulf:latest"
     },
