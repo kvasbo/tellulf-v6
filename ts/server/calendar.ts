@@ -70,8 +70,9 @@ export class Calendar {
     const start = new Date();
     const end = new Date();
     const fullDay = true;
-    console.log(event);
-    return { title, start, end, fullDay };
+    const e = { title, start, end, fullDay };
+    console.log(e);
+    return e;
   }
 
 
