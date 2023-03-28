@@ -1,10 +1,9 @@
 import express from 'express';
 import path from 'path';
-import { Calendar } from './Calendar';
+import { Days } from './Days';
 import { Clock } from './Clock';
 import { Entur } from './Entur';
 import { Homey, HomeyData } from './Homey';
-import { Weather } from './Weather';
 import Twig from 'twig';
 
 require('dotenv').config();
@@ -20,19 +19,31 @@ app.use('/assets', express.static(path.join(__dirname, '../assets')));
 
 const port = process.env.TELLULF_PORT ? process.env.TELLULF_PORT : 3000;
 
-const weather = new Weather();
+const days = new Days();
 
 app.get('/', (req, res) => {
-  res.render('index.twig', {});
+
+  const data = {
+    "current_temperature": days.weather.getCurrentWeather().temperature,
+    "current_weather_icon": days.weather.getCurrentWeather().symbol,
+    "days": days.generateComingDays(),
+    "today": days.GenerateToday(),
+  };
+
+  console.log(data);
+
+  res.render('index.twig', data);
 })
 
 app.get('/time', (req, res) => {
   res.send(Clock.getTime());
 });
 
+/*
 app.get('/calendar', (req, res) => {
   res.send(Calendar.getEvents());
 });
+*/
 
 app.get('/entur', async (req, res) => {
   const data = await Entur.Get();
