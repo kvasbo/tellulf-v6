@@ -6,7 +6,8 @@ interface HomeyData {
 
 const fs = require('fs')
 
-const HOMEY_FILE = '/home/tellulf/homey.json';
+// Get the Google key from the environment variable
+const HOMEY_FILE = process.env.HOMEY_FILE ? process.env.HOMEY_FILE : 'homey_notdefined.json';
 
 class Homey {
   static Get_Latest_Data(): HomeyData {
