@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import { Calendar } from './Calendar';
 import { Clock } from './Clock';
+import { Entur } from './Entur';
 import { Homey, HomeyData } from './Homey';
 import Twig from 'twig';
 
@@ -22,12 +23,17 @@ app.get('/', (req, res) => {
   res.render('index.twig', {});
 })
 
-app.get('/clock', (req, res) => {
+app.get('/time', (req, res) => {
   res.send(Clock.getTime());
 });
 
 app.get('/calendar', (req, res) => {
   res.send(Calendar.getEvents());
+});
+
+app.get('/entur', async (req, res) => {
+  const data = await Entur.Get();
+  res.send(data);
 });
 
 // Get latest Homey data

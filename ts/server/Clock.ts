@@ -1,9 +1,20 @@
+export interface TimeData {
+  time: string;
+  date: string;
+  week: string;
+}
+
 export class Clock {
 
-  public static getTime(time: number | null = null): string {
-    if (time === null) time = Date.now() / 1000;
-    const date = new Date(time * 1000);
-    return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+  public static getTime(time: number | null = null): TimeData {
+
+      return {
+        time: new Date().getHours() + ':' + new Date().getMinutes(),
+        date: this.getDateFormatted(),
+        week: this.getWeek(time),
+      }
+
+
   }
 
   public static getDateFormatted(): string {

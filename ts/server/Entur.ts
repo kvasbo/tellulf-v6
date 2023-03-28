@@ -63,7 +63,6 @@ export class Entur {
           destination: train.destinationDisplay.frontText,
         };
       });
-
       return trainsFormatted;
     } catch (error) {
       console.error(error);

@@ -4,7 +4,6 @@
 <head>
   <title>Tellulf</title>
   <link rel="icon" href="data:," />
-  <script src="https://js.sentry-cdn.com/ab9aa32b39ab4fc88b0500959309d66a.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/combine/npm/jquery@3"></script>
   <script src="/assets/js/tellulf.js"></script>
   <link rel="stylesheet" href="/assets/css/tellulf.css" />
@@ -28,9 +27,9 @@
           {% if day.daily_forecast is not empty %}
           <img class="headerWeatherTempIcon" src="assets/low-temperature.png" />
           {{ day.daily_forecast.minTemp|round }}&deg;
-          <img class="headerWeatherTempIcon" src="assets/high-temperature.png" />
+          <img class="headerWeatherTempIcon" src="/assets/high-temperature.png" />
           {{ day.daily_forecast.maxTemp|round }}&deg;
-          <img class="headerWeatherIcon" src="weathericon/png/{{ day.daily_forecast.symbol }}.png" />
+          <img class="headerWeatherIcon" src="assets/weathericon/png/{{ day.daily_forecast.symbol }}.png" />
           {% endif %}
         </div>
       </div>
@@ -69,7 +68,7 @@
 
   <div class="block current_weather">
     <div class="current_weather_block">
-      <img class="current_weather_symbol" src="weathericon/png/{{ current_weather_icon }}.png" />
+      <img class="current_weather_symbol" src="/assets/weathericon/png/{{ current_weather_icon }}.png" />
       <div class="current_temperature">{{ current_temperature|round }}&deg;</div>
     </div>
     <div class="current_weather_block aux-weather-info">

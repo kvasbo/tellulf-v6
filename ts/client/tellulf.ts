@@ -117,7 +117,9 @@ function updateTimeInfo(timeData: TimeData) {
 }
 
 function updateEnturInfo(entur: EnturTur[]) {
+  
   let enturHtml = "Neste to baner: ";
+  
   for (let i = 0; i < Math.min(entur.length, 2); i++) {
     enturHtml += `<span class="entur_item">${entur[i].time.substring(
       11,
