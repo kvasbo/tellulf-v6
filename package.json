@@ -4,7 +4,7 @@
         "sass": "npx sass sass:src/css",
         "tsc-watch-server": "npx tsc --watch  --project tsconfig.server.json",
         "tsc-watch-client": "npx tsc --watch  --project tsconfig.client.json",
-        "node-run": "node build/server.js",
+        "node-run": "node build/Server.js",
         "dev": "docker compose --file docker-compose-dev.yml up --build",
         "push": "docker build . && docker tag kvasbo/tellulf:latest kvasbo/tellulf:latest && docker push kvasbo/tellulf:latest"
     },
@@ -28,7 +28,7 @@
     "name": "tellulf-v6",
     "version": "1.0.0",
     "description": "A private info screen",
-    "main": "src/js/server.js",
+    "main": "build/Server.js",
     "repository": "https://github.com/kvasbo/tellulf-v6.git",
     "author": "Audun Kvasbø <audun@kvasbo.no>",
     "license": "MIT",
