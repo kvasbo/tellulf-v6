@@ -62,6 +62,7 @@ export class Calendar {
         }
       }
     });
+    return [];
   }
 
   private static parseEvent(event: calendar_v3.Schema$Events): Event {
