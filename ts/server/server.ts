@@ -4,6 +4,7 @@ import { Calendar } from './Calendar';
 import { Clock } from './Clock';
 import { Entur } from './Entur';
 import { Homey, HomeyData } from './Homey';
+import { Weather } from './Weather';
 import Twig from 'twig';
 
 require('dotenv').config();
@@ -18,6 +19,8 @@ app.use(express.static('public')); // Static routes
 app.use('/assets', express.static(path.join(__dirname, '../assets')));
 
 const port = process.env.TELLULF_PORT ? process.env.TELLULF_PORT : 3000;
+
+const weather = new Weather();
 
 app.get('/', (req, res) => {
   res.render('index.twig', {});
