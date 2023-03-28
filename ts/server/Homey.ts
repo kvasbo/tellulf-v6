@@ -55,7 +55,7 @@ export class Homey {
 
     data.time = Math.round(Date.now() / 1000); // Set time
 
-    console.log("Setting Homey data", data);
+    console.log("Setting Homey data");
     const json = JSON.stringify(data);
     fs.writeFileSync(HOMEY_PATH, json);
   }

@@ -2,6 +2,7 @@ import { Weather } from './Weather';
 import { Calendar } from './Calendar';
 import { Clock } from './Clock';
 import { getSunrise, getSunset } from 'sunrise-sunset-js';
+import { DateTime } from 'luxon';
 
 export class Days {
 
@@ -26,7 +27,7 @@ export class Days {
     return this.getDataForDate();
   }
 
-  private getDataForDate(datetime: Date = new Date()): {
+  private getDataForDate(jsDate: Date = new Date()): {
     date: string;
     weekday: string;
     forecast: any;
@@ -36,23 +37,26 @@ export class Days {
     sunrise: string;
     sunset: string;
 } {
-    const date = datetime.toISOString().slice(0, 10);
+    // Create a Luxon DateTime object
+    const dt = DateTime.fromJSDate(jsDate).setLocale('nb');
 
-    const sunRise = getSunrise(59.9139, 10.7522);
-    const sunSet = getSunset(59.9139, 10.7522);
+    const date = dt.toISODate();
+
+    const sunRiseDate = getSunrise(59.9139, 10.7522, jsDate);
+    const sunSetDate = getSunset(59.9139, 10.7522, jsDate);
 
     const forecast = null; // this.weather.getSixHourForecasts();
     const daily = null; // this.weather.getDailyForecasts();
 
     return {
-        date: Days.createNiceDate(datetime),
-        weekday: Days.createNiceDate(datetime, true, true),
+        date: Days.createNiceDate(jsDate),
+        weekday: Days.createNiceDate(jsDate, true),
         forecast: [], //forecast[date] ? forecast[date] : {},
         daily_forecast: [], // daily[date] ? daily[date] : {},
         events: [], // this.calendar.getEvents(date),
         birthdays: [],// this.calendar.getBirthdays(date),
-        sunrise: sunRise.toTimeString(),
-        sunset: sunSet.toTimeString(), 
+        sunrise: DateTime.fromJSDate(sunRiseDate).setLocale("nb").toFormat("HH:mm"),
+        sunset: DateTime.fromJSDate(sunSetDate).setLocale("nb").toFormat("HH:mm"), 
     };
 }
 
@@ -61,24 +65,19 @@ export class Days {
    * Nicely format a date
    * To be switched to using Luxon 
    */
-  private static createNiceDate(datetime: Date, showDate = true, relative = false): string {
+  private static createNiceDate(jsDate: Date, relative = false): string {
+    const dt = DateTime.fromJSDate(jsDate).setLocale('nb');
     if (relative) {
-        const diffInMilliseconds = datetime.getTime() - new Date().setHours(0, 0, 0, 0);
-        const diffInDays = diffInMilliseconds / (1000 * 3600 * 24);
-        if (diffInDays === 0) {
+        const today = DateTime.now().setLocale('nb').startOf("day");
+        const tomorrow = today.plus({ days: 1 });
+        if (dt === today) {
             return "i dag";
-        } else if (diffInDays === 1) {
+        } else if (dt === tomorrow) {
             return "i morgen";
         }
     }
-    const days = ['søndag', 'mandag', 'tirsdag', 'onsdag', 'torsdag', 'fredag', 'lørdag'];
-    const weekday = datetime.getUTCDay();
-    let out = days[weekday];
-    if (showDate) {
-        out += " " + datetime.getUTCDate() + ".";
-    }
-    return out;
-}
+    return dt.toFormat("cccc d.");
+  }
 
 
 }
