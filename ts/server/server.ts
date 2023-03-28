@@ -1,12 +1,19 @@
 import express from 'express';
+import path from 'path';
 import { Calendar } from './Calendar';
 import { Clock } from './Clock';
+import Twig from 'twig';
 
 const app = express();
+
+// Express settings
+
+app.set('views', path.join(__dirname, '../views'));
+app.set('view engine', 'twig');
 const port = 3000;
 
 app.get('/', (req, res) => {
-  res.send('Hello World 2!')
+  res.render('index.twig', {});
 })
 
 app.get('/clock', (req, res) => {
