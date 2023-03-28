@@ -15,18 +15,59 @@ export interface Event {
   fullDay?: boolean;
 }
 
+interface GoogleEvent {
+  summary: string;
+  start: {
+    dateTime?: string;
+    date?: string;
+    timeZone: string;
+  };
+  end: {
+    dateTime?: string;
+    date?: string;
+    timeZone: string;
+  };
+}
+
 export class Calendar {
 
-    public static getEvents() {
+    private events: Event[] = [];
+    private birthdays: Event[] = [];
+
+    constructor() { 
+      this.refreshEvents();
+      this.refreshBirthdays();
+      setInterval(() => {
+        this.refreshEvents();
+        this.refreshBirthdays();
+      }, 600000);
+    }
+
+    public getEvents(date: String): Event[] {
+      return [];
+    }
+
+    public getBirthdays(date: String): Event[] {
+      return [];
+    }
+
+    private async refreshEvents(): Promise<void> {
       const id = process.env.CAL_ID_FELLES ? process.env.CAL_ID_FELLES : '';
-      const calendarData = this.getCalendarData(id);
+      this.events = await Calendar.getCalendarData(id);
+      console.log("eve", this.events);
+    }
+
+    private async refreshBirthdays(): Promise<void> {
+      const id = process.env.CAL_ID_BURSDAG ? process.env.CAL_ID_BURSDAG : '';
+      this.birthdays = await Calendar.getCalendarData(id);
+      console.log("bir", this.birthdays);
     }
 
     /**
      * Get the content of a calendar
      * @param calendarId 
      */
-    private static getCalendarData(calendarId: string): Event[] {
+    private static async getCalendarData(calendarId: string): Promise<Event[]> {
 
     const jwtClient = new google.auth.JWT(
       GOOGLE_KEY.client_email,
@@ -39,41 +80,52 @@ export class Calendar {
         version: 'v3',
         auth: jwtClient
     });
-
-    const out: string[] = [];
     
-    calendar.events.list({
+    const out: Event[] = [];
+
+    const result = await calendar.events.list({
       calendarId: calendarId,
       timeMin: DateTime.now().toISO(),
       timeMax: DateTime.now().plus({weeks: 2}).toISO(),
       maxResults: 2000,
       singleEvents: true,
       orderBy: 'startTime',
-    }, (error, result) => {
-      if (error) {
-        console.error(error.message)
-      } else {
-        if (result?.data?.items?.length) {
-          return result.data.items.map((event: calendar_v3.Schema$Events) => {
-            return this.parseEvent(event);
-          });
-        } else {
-          console.log(JSON.stringify({ message: 'No upcoming events found.' }));
-        }
-      }
     });
-    return [];
+
+    if (result?.data?.items?.length) {
+      result.data.items.forEach((event: calendar_v3.Schema$Events) => {
+        const e = Calendar.parseEvent(event);
+        out.push(e);
+      });
+    } else {
+      console.log(JSON.stringify({ message: 'No upcoming events found.' }));
+    }
+    return out;
   }
 
   private static parseEvent(event: calendar_v3.Schema$Events): Event {
-    const title = event.summary ? event.summary : '';
-    const start = new Date();
-    const end = new Date();
-    const fullDay = true;
-    const e = { title, start, end, fullDay };
-    console.log(e);
-    return e;
-  }
+    const ev = event as GoogleEvent;
 
+    const title = event.summary ? event.summary : '';
+    
+    if (ev.start.date && ev.end.date) {
+      // Fullday!
+      const dtStart = DateTime.fromISO(ev.start.date);
+      const dtEnd = DateTime.fromISO(ev.end.date);
+      const start = dtStart.toJSDate();
+      const end = dtEnd.toJSDate();
+      const fullDay = true;
+      return { title, start, end, fullDay }
+    } else if (ev.start.dateTime && ev.end.dateTime) {
+      const dtStart = DateTime.fromISO(ev.start.dateTime);
+      const dtEnd = DateTime.fromISO(ev.end.dateTime);
+      const start = dtStart.toJSDate();
+      const end = dtEnd.toJSDate();
+      const fullDay = false;
+      return { title, start, end, fullDay }
+    } else {
+      throw new Error('Invalid event');
+    }
+  }
 
 }

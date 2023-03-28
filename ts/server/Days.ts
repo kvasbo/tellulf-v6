@@ -56,7 +56,7 @@ export class Days {
         weekday: Days.createNiceDate(jsDate, true),
         forecast: [], //forecast[date] ? forecast[date] : {},
         daily_forecast: [], // daily[date] ? daily[date] : {},
-        events: [], // this.calendar.getEvents(date),
+        events: this.calendar.getEvents(date),
         birthdays: [],// this.calendar.getBirthdays(date),
         sunrise: DateTime.fromJSDate(sunRiseDate).setLocale("nb").toFormat("HH:mm"),
         sunset: DateTime.fromJSDate(sunSetDate).setLocale("nb").toFormat("HH:mm"), 
