@@ -10,6 +10,8 @@ const app = express();
 
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'twig');
+app.use(express.static('public')); // Static routes
+app.use('/assets', express.static(path.join(__dirname, '../assets')));
 const port = 3000;
 
 app.get('/', (req, res) => {

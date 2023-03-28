@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./src/js",
+    "outDir": "./assets/js",
     "lib": ["ES2018", "DOM"],
     "noImplicitAny": true,
     "module": "CommonJS",
