@@ -2,7 +2,6 @@ export interface TimeData {
   time: string;
   date: string;
   week: string;
-  dateRelative: string;
 }
 
 import { DateTime } from 'luxon';
@@ -16,8 +15,7 @@ export class Clock {
       return {
         time: dt.toLocaleString(DateTime.TIME_SIMPLE),
         date: dt.toFormat("cccc dd."),
-        week: dt.toFormat("W"),
-        dateRelative: dt.toRelative(), 
+        week: dt.toFormat("W")
       }
   }
 
