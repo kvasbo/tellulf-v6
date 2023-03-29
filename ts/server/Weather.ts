@@ -5,6 +5,13 @@ import axios from 'axios';
 const yrUrlForecast: string = process.env.YR_URL_FORECAST ? process.env.YR_URL_FORECAST.toString() : "";
 const yrUrlNowcast: string = process.env.YR_URL_NOWCAST ? process.env.YR_URL_NOWCAST.toString() : "";
 
+export interface HourlyForecast {
+  symbol: string;
+  details: any;
+  instant: any;
+  hour: string;
+}
+
 type TimeSeries = {
   time: string;
   data: {
@@ -89,28 +96,27 @@ export class Weather {
             out[date].symbol = series.data.next_12_hours?.summary.symbol_code;
         }
     }
-    console.log(out);
     return out;
 }
 
-public getHourlyForecasts(): Record<string, { symbol: string; details: any; instant: any; hour: number }> {
-  const out: Record<string, { symbol: string; details: any; instant: any; hour: number }> = {};
-  for (const series of this.forecast) {
-      if (series.data.next_1_hours.details) {
+public getHourlyForecasts(): HourlyForecast[] {
+  
+  const out: HourlyForecast[] = [];
+
+  this.forecast.forEach((series) => {    
+      if (series.data?.next_1_hours?.details) {
           const time = new Date(series.time).getTime();
-          const date = new Date(time).toISOString().slice(0, 13).replace('T', '-');
           const date_data = new Date(time);
 
-          out[date] = {
+          out.push({
               symbol: series.data.next_1_hours.summary?.symbol_code,
               details: series.data.next_1_hours.details,
               instant: series.data.instant.details,
-              hour: date_data.getUTCHours(),
-          };
-      } else {
-          break;
+              hour: date_data.getHours().toString(),
+          });
       }
-  }
+      
+  });
   return out;
 }
 

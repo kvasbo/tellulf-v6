@@ -31,6 +31,7 @@ app.get('/', (req, res) => {
     "current_weather_icon": days.weather.getCurrentWeather().symbol,
     "days": days.generateComingDays(),
     "today": days.GenerateToday(),
+    "hourly_weather": days.weather.getHourlyForecasts(),
   };
 
   // TODO: Keep regenerating today and coming days
