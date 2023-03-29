@@ -9,7 +9,4 @@ services:
     env_file:
       - ./.env
     ports:
-      - "1337:80"
-    volumes:
-      - ./src:/var/www/html
-      - ./tellulf-lager:/tellulf-lager
+      - "1337:3000"
