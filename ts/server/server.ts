@@ -5,6 +5,11 @@ import { Clock } from './Clock';
 import { Entur } from './Entur';
 import { Homey, HomeyData } from './Homey';
 import Twig from 'twig';
+import { Settings } from "luxon";
+
+// Configure the time zone
+Settings.defaultZone = "Europe/Oslo";
+
 
 require('dotenv').config();
 

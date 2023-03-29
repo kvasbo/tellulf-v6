@@ -1,6 +1,10 @@
 require('dotenv').config();
 
 import axios from 'axios';
+import { DateTime, Settings } from "luxon";
+
+// Configure the time zone
+Settings.defaultZone = "Europe/Oslo";
 
 const yrUrlForecast: string = process.env.YR_URL_FORECAST ? process.env.YR_URL_FORECAST.toString() : "";
 const yrUrlNowcast: string = process.env.YR_URL_NOWCAST ? process.env.YR_URL_NOWCAST.toString() : "";
@@ -37,6 +41,13 @@ export class Weather {
   public nowcast: TimeSeries[] = [];
 
   constructor() {
+    this.updateForecasts();
+    setInterval(() => {
+      this.updateForecasts();
+    }, 30 * 60 * 1000); // Every 30 minutes
+  }
+
+  private updateForecasts() {
     // Fetch forecast
     Weather.fetchForecastData(yrUrlForecast).then((forecast) => {
       this.forecast = forecast;
@@ -105,14 +116,14 @@ public getHourlyForecasts(): HourlyForecast[] {
 
   this.forecast.forEach((series) => {    
       if (series.data?.next_1_hours?.details) {
-          const time = new Date(series.time).getTime();
-          const date_data = new Date(time);
+
+          const dt = DateTime.fromISO(series.time);
 
           out.push({
               symbol: series.data.next_1_hours.summary?.symbol_code,
               details: series.data.next_1_hours.details,
               instant: series.data.instant.details,
-              hour: date_data.getHours().toString(),
+              hour: dt.hour.toString(),
           });
       }
       
