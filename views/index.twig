@@ -33,16 +33,16 @@
       </div>
       <div class="birthdays">
         {% for birthday in day.birthdays %}
-        <div class="birthday">{{ birthday }}</div>
+        <div class="birthday">{{ birthday.displayTitle }}</div>
         {% endfor %}
       </div>
       <div class="events">
         {% for event in day.events %}
         {% if event.fullDay == true %}
-        <div class="event">{{ event.title }}</div>
+        <div class="event">{{ event.displayTitle }}</div>
         {% else %}
         <div class="event">
-          <span class="event-time">{{ event.time }}</span>{{ event.title }}
+          <span class="event-time">{{ event.displayTime }}</span>{{ event.displayTitle }}
         </div>
         {% endif %}
         {% endfor %}

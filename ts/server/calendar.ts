@@ -8,13 +8,19 @@ const SCOPES = 'https://www.googleapis.com/auth/calendar.readonly';
 const key64 = process.env.GOOGLE_KEY_B64 ? process.env.GOOGLE_KEY_B64 : '';
 const GOOGLE_KEY = JSON.parse(Buffer.from(key64, 'base64').toString('utf8')); 
 
-export interface Event {
+export interface RawEvent {
   title: string;
   start: Date;
   end: Date;
+}
+
+export interface Event extends RawEvent {
   fullDay?: boolean;
   startsBefore?: boolean;
   endsafter?: boolean;
+  displayTitle?: string;
+  multiDay?: boolean;
+  displayTime?: string;
 }
 
 interface GoogleEvent {
@@ -46,11 +52,11 @@ export class Calendar {
     }
 
     public getEvents(jsDate: Date): Event[] {
-      return this.events.filter(e => this.checkEventForDate(e, jsDate)).map(e => this.enrichEvent(e));;
+      return this.events.filter(e => this.checkEventForDate(e, jsDate)).map(e => this.enrichEvent(e, "event"));;
     }
 
     public getBirthdays(jsDate: Date): Event[] {
-      return this.birthdays.filter(e => this.checkEventForDate(e, jsDate)).map(e => this.enrichEvent(e));
+      return this.birthdays.filter(e => this.checkEventForDate(e, jsDate)).map(e => this.enrichEvent(e, "birthday"));
     }
 
     // Filters events based on whether they exist on the given date
@@ -70,7 +76,19 @@ export class Calendar {
       return false;
     }
 
-    private enrichEvent(event: Event): Event {
+    private enrichEvent(event: Event, type: string = ""): Event {
+      event.displayTitle = event.title;
+      if (type === "birthday") {
+        let regex = /[A-Za-z0-9 ]+\s[0-9]+/i;
+        const foundYear = regex.test(event.title);
+        if (foundYear) {
+          const y = Number(event.title.slice(-4));
+          const now = DateTime.now();
+          const age = now.year - (1 * y);
+          event.displayTitle = `${event.title.substring(0, event.title.length - 5)} (${age})`;
+        }
+      }
+      event.displayTime = DateTime.fromJSDate(event.start).toFormat('HH:mm');
       return event;
     }
 
@@ -107,7 +125,7 @@ export class Calendar {
 
     const result = await calendar.events.list({
       calendarId: calendarId,
-      timeMin: DateTime.now().startOf("day").toISO(),
+      timeMin: DateTime.now().toISO(),
       timeMax: DateTime.now().plus({weeks: 2}).toISO(),
       maxResults: 2000,
       singleEvents: true,
@@ -132,8 +150,8 @@ export class Calendar {
     
     if (ev.start.date && ev.end.date) {
       // Fullday!
-      const dtStart = DateTime.fromISO(ev.start.date);
-      const dtEnd = DateTime.fromISO(ev.end.date);
+      const dtStart = DateTime.fromISO(ev.start.date).startOf("day");
+      const dtEnd = DateTime.fromISO(ev.end.date).minus({days: 1}).startOf("day");
       const start = dtStart.toJSDate();
       const end = dtEnd.toJSDate();
       const fullDay = true;
