@@ -9,11 +9,8 @@ services:
     environment:
       - YR_URL_FORECAST=${YR_URL_FORECAST}
       - YR_URL_NOWCAST=${YR_URL_NOWCAST}
-      - CAL_FELLES=${CAL_FELLES}
-      - CAL_BIRTHDAYS=${CAL_BIRTHDAYS}
+      - CAL_ID_FELLES=${CAL_ID_FELLES}
+      - CAL_ID_BURSDAG=${CAL_ID_BURSDAG}
       - TIBBER_KEY=${TIBBER_KEY}
-    volumes:
-      - tellulf-lager:/tellulf-lager
-
-volumes:
-  tellulf-lager:
+      - GOOGLE_KEY_B64=${GOOGLE_KEY_B64}
+      - HOMEY_URL=${HOMEY_URL}

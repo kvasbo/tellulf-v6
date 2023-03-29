@@ -1,23 +1,47 @@
 {
     "scripts": {
-        "sass-watch": "npx sass --watch sass:src/css",
-        "sass": "npx sass sass:src/css",
-        "tsc-watch": "npx tsc --watch",
+        "sass-watch": "npx sass --watch sass:assets/css",
+        "sass": "npx sass sass:assets/css",
+        "tsc-watch-server": "npx tsc --watch --project tsconfig.server.json",
+        "tsc-watch-client": "npx tsc --watch --project tsconfig.client.json",
+        "node-run": "npx nodemon build/Server.js",
         "dev": "docker compose --file docker-compose-dev.yml up --build",
-        "push": "docker build . && docker tag kvasbo/tellulf:latest kvasbo/tellulf:latest && docker push kvasbo/tellulf:latest"
+        "push": "docker build . && docker tag kvasbo/tellulf:latest kvasbo/tellulf:latest && docker push kvasbo/tellulf:latest",
+        "build": "npx tsc --project tsconfig.server.json && npx tsc --project tsconfig.client.json && npx sass sass:assets/css",
+        "run-server": "node build/Server.js"
     },
     "devDependencies": {
+        "@types/express": "^4.17.7",
         "@types/jquery": "^3.5",
-        "sass": "1.58.3",
-        "typescript": "^4"
+        "@types/luxon": "^3.2.0",
+        "@types/node": "^18.15.10",
+        "@types/twig": "^1.12.9",
+        "nodemon": "^2.0.22",
+        "sass": "^1.60",
+        "typescript": "^5"
     },
-    "dependencies": {},
+    "dependencies": {
+        "axios": "^1.3.4",
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2",
+        "googleapis": "^114.0.0",
+        "graphql": "16",
+        "graphql-request": "^5.2.0",
+        "luxon": "^3.3.0",
+        "sunrise-sunset-js": "^2.2.1",
+        "twig": "^1.16.0"
+    },
     "name": "tellulf-v6",
     "version": "1.0.0",
     "description": "A private info screen",
-    "main": "index.js",
+    "main": "build/Server.js",
     "repository": "https://github.com/kvasbo/tellulf-v6.git",
     "author": "Audun Kvasbø <audun@kvasbo.no>",
     "license": "MIT",
-    "private": true
+    "private": true,
+    "nodemonConfig": {
+        "ignore": [
+            "data"
+        ]
+    }
 }

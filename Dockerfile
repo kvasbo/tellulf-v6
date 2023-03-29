@@ -1,39 +1,17 @@
-FROM php:8.2-apache
-
-# install ZIP
-RUN apt-get -y update \
- && apt-get -y autoremove \
- && apt-get clean \
- && apt-get install -y zip nodejs npm \
- && rm -rf /var/lib/apt/lists/*
-
-# ADD Composer
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+FROM node:19-buster-slim
 
 # Create temp dir
-RUN mkdir /tellulf-temp
-WORKDIR /tellulf-temp
+RUN mkdir /tellulf
+WORKDIR /tellulf
 
 # Copy source to web directory
-COPY ./ /tellulf-temp
-
-# Install dependencies
-RUN composer install --no-dev
+COPY . .
 
 # Run NPM stuff
-RUN npm install --global yarn
 RUN yarn
-RUN yarn run sass
-
-# Clean target and move content
-RUN rm -rf /var/www/html/*
-RUN mv /tellulf-temp/src/* /var/www/html/
-RUN mv /tellulf-temp/src/.htaccess /var/www/html/
-
-# Add rewrite module
-RUN a2enmod rewrite
+RUN yarn run build
 
 # Set port
-EXPOSE 80
+EXPOSE 3000
 
-CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+CMD ["node", "build/Server.js"]
