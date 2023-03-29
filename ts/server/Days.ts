@@ -70,11 +70,9 @@ export class Days {
   private static createNiceDate(jsDate: Date, relative = false): string {
     const dt = DateTime.fromJSDate(jsDate).setLocale('nb').startOf("day");
     if (relative) {
-        const today = DateTime.now().setLocale('nb').startOf("day");
-        const tomorrow = today.plus({ days: 1 });
-        if (dt === today) {
+        if (dt.hasSame(DateTime.local(), "day")) {
             return "i dag";
-        } else if (dt === tomorrow) {
+        } else if (dt.hasSame(DateTime.local().plus({days: 1}), "day")) {
             return "i morgen";
         }
     }

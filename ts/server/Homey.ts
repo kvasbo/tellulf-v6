@@ -68,7 +68,7 @@ export class Homey {
     }
 
     data.time = Math.round(Date.now() / 1000); // Set time
-    data.niceTime = new Date().toLocaleString(); // Set nice time
+    data.niceTime = new Date().toISOString(); // Set nice time
 
     const json = JSON.stringify(data);
     fs.writeFileSync(HOMEY_PATH, json);
