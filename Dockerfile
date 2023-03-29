@@ -2,10 +2,11 @@ FROM node:19-buster-slim
 
 # Create temp dir
 RUN mkdir /tellulf
-WORKDIR /tellulf
 
 # Copy source to web directory
-COPY . .
+COPY . /tellulf
+
+WORKDIR /tellulf
 
 # Run NPM stuff
 RUN yarn
