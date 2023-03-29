@@ -39,10 +39,8 @@
     "license": "MIT",
     "private": true,
     "nodemonConfig": {
-        "verbose": true,
         "ignore": [
-            "data",
-            "build"
+            "data"
         ]
       }
 }
