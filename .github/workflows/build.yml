@@ -12,13 +12,6 @@ jobs:
     steps:
       - name: Checkout the repo
         uses: actions/checkout@v3
-      - name: Cache Docker layers
-        uses: actions/cache@v3
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
@@ -45,8 +38,6 @@ jobs:
           file: ./Dockerfile
           push: true
           builder: ${{ steps.buildx.outputs.name }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
         
