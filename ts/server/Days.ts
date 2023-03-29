@@ -1,5 +1,5 @@
 import { Weather } from './Weather';
-import { Calendar } from './Calendar';
+import { Calendar, Event } from './Calendar';
 import { Clock } from './Clock';
 import { getSunrise, getSunset } from 'sunrise-sunset-js';
 import { DateTime } from 'luxon';
@@ -31,10 +31,9 @@ export class Days {
     isoDate: string
     date: string;
     weekday: string;
-    forecast: any;
     daily_forecast: any;
-    events: any;
-    birthdays: any;
+    events: Event[];
+    birthdays: Event[];
     sunrise: string;
     sunset: string;
 } {
@@ -46,14 +45,12 @@ export class Days {
     const sunRiseDate = getSunrise(59.9139, 10.7522, jsDate);
     const sunSetDate = getSunset(59.9139, 10.7522, jsDate);
 
-    const forecast = []; //this.weather.getSixHourForecasts();
     const daily = this.weather.getDailyForecasts();
 
     return {
         isoDate: date,
         date: Days.createNiceDate(jsDate),
         weekday: Days.createNiceDate(jsDate, true),
-        forecast: [], //forecast[date] ? forecast[date] : {},
         daily_forecast: daily[date] ? daily[date] : {},
         events: this.calendar.getEvents(jsDate),
         birthdays: this.calendar.getBirthdays(jsDate),

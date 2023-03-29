@@ -114,37 +114,6 @@ public getHourlyForecasts(): Record<string, { symbol: string; details: any; inst
   return out;
 }
 
-  public getSixHourForecasts(): Record<string, any> {
-    const _return: Record<string, any> = {};
-    for (const series of this.forecast) {
-        const utc_hour = parseInt(series.time.slice(11, 13), 10);
-        const time = new Date(series.time).getTime();
-        const date = new Date(time).toISOString().slice(0, 10);
-        const date_data = new Date(time);
-
-        if (utc_hour % 6 === 0 && series.data?.next_6_hours?.details) {
-            if (!_return[date]) {
-                _return[date] = {};
-            }
-
-            const temps = [series.data.next_6_hours.details.air_temperature_min, series.data.next_6_hours.details.air_temperature_max];
-            const abs = temps.map((d) => Math.abs(d));
-            const maxVal = Math.max(...abs);
-            const maxKey = abs.indexOf(maxVal);
-
-            const temperature = temps[maxKey];
-
-            _return[date][date_data.getUTCHours()] = {
-                symbol: series.data.next_6_hours.summary?.symbol_code,
-                details: series.data.next_6_hours.details,
-                hour: date_data.getUTCHours(),
-                temperature: temperature,
-            };
-        }
-    }
-    return _return;
-}
-
   /**
    * Do the fetching from Met api
    * @param url 
