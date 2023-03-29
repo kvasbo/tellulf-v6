@@ -11,6 +11,8 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "noImplicitAny": true,
+    "sourceMap": true,
+    "sourceRoot": "./ts/server",
   },
   "include": ["ts/server/*"]
 }

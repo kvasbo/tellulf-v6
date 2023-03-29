@@ -14,8 +14,7 @@ const app = express();
 
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'twig');
-app.use(express.static('public')); // Static routes
-app.use('/assets', express.static(path.join(__dirname, '../assets')));
+app.use('/assets', express.static(path.join(__dirname, '../assets'))); // Static routes
 
 const port = process.env.TELLULF_PORT ? process.env.TELLULF_PORT : 3000;
 
@@ -37,6 +36,7 @@ app.get('/', (req, res) => {
   // TODO: Keep regenerating today and coming days
 
   res.render('index.twig', data);
+  console.log("Rendered index");
 })
 
 app.get('/time', (req, res) => {

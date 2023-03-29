@@ -46,8 +46,8 @@ export class Days {
     const sunRiseDate = getSunrise(59.9139, 10.7522, jsDate);
     const sunSetDate = getSunset(59.9139, 10.7522, jsDate);
 
-    const forecast = null; // this.weather.getSixHourForecasts();
-    const daily = null; // this.weather.getDailyForecasts();
+    const forecast = this.weather.getSixHourForecasts();
+    const daily = this.weather.getDailyForecasts();
 
     return {
         isoDate: date,

@@ -43,7 +43,7 @@ export class Weather {
   public getCurrentWeather(): { temperature: number; symbol: string } {
     const temp = {
         temperature: this.nowcast[0].data.instant.details.air_temperature,
-        symbol: this.nowcast[0].data.next_1_hours.summary.symbol_code,
+        symbol: this.nowcast[0].data.next_1_hours.summary?.symbol_code,
     };
 
     // Fix strange edge case
@@ -63,7 +63,7 @@ export class Weather {
             const date_data = new Date(time);
 
             out[date] = {
-                symbol: series.data.next_1_hours.summary.symbol_code,
+                symbol: series.data.next_1_hours.summary?.symbol_code,
                 details: series.data.next_1_hours.details,
                 instant: series.data.instant.details,
                 hour: date_data.getUTCHours(),
@@ -106,7 +106,7 @@ export class Weather {
         }
 
         if (series.time.includes("T06:00:00")) {
-            out[date].symbol = series.data.next_12_hours.summary.symbol_code;
+            out[date].symbol = series.data.next_12_hours.summary?.symbol_code;
         }
     }
 
@@ -121,7 +121,7 @@ export class Weather {
         const date = new Date(time).toISOString().slice(0, 10);
         const date_data = new Date(time);
 
-        if (utc_hour % 6 === 0 && series.data.next_6_hours.details) {
+        if (utc_hour % 6 === 0 && series.data?.next_6_hours?.details) {
             if (!_return[date]) {
                 _return[date] = {};
             }
@@ -134,7 +134,7 @@ export class Weather {
             const temperature = temps[maxKey];
 
             _return[date][date_data.getUTCHours()] = {
-                symbol: series.data.next_6_hours.summary.symbol_code,
+                symbol: series.data.next_6_hours.summary?.symbol_code,
                 details: series.data.next_6_hours.details,
                 hour: date_data.getUTCHours(),
                 temperature: temperature,
