@@ -33,10 +33,12 @@ export class Weather {
     // Fetch forecast
     Weather.fetchForecastData(yrUrlForecast).then((forecast) => {
       this.forecast = forecast;
+      console.log("Forecast fetched");
     });
     // Fetch nowcast
     Weather.fetchForecastData(yrUrlNowcast).then((forecast) => {
       this.nowcast = forecast;
+      console.log("Nowcast fetched");
     });
   }
 
@@ -53,27 +55,6 @@ export class Weather {
 
     return temp;
   } 
-
-  public getHourlyForecasts(): Record<string, { symbol: string; details: any; instant: any; hour: number }> {
-    const out: Record<string, { symbol: string; details: any; instant: any; hour: number }> = {};
-    for (const series of this.forecast) {
-        if (series.data.next_1_hours.details) {
-            const time = new Date(series.time).getTime();
-            const date = new Date(time).toISOString().slice(0, 13).replace('T', '-');
-            const date_data = new Date(time);
-
-            out[date] = {
-                symbol: series.data.next_1_hours.summary?.symbol_code,
-                details: series.data.next_1_hours.details,
-                instant: series.data.instant.details,
-                hour: date_data.getUTCHours(),
-            };
-        } else {
-            break;
-        }
-    }
-    return out;
-  }
 
   public getDailyForecasts(): { [key: string]: { maxTemp: number; minTemp: number; symbol?: string } } {
     const out: { [key: string]: { maxTemp: number; minTemp: number; symbol?: string } } = {};
@@ -94,9 +75,8 @@ export class Weather {
             };
         }
 
-        const t = series.data.instant.details.air_temperature ? series.data.instant.details.air_temperature : -9999;
-
-        if (t) {
+        if (series.data.instant?.details?.air_temperature) {
+            const t = series.data.instant.details.air_temperature;
             if (out[date].maxTemp < t) {
                 out[date].maxTemp = t;
             }
@@ -106,11 +86,32 @@ export class Weather {
         }
 
         if (series.time.includes("T06:00:00")) {
-            out[date].symbol = series.data.next_12_hours.summary?.symbol_code;
+            out[date].symbol = series.data.next_12_hours?.summary.symbol_code;
         }
     }
-
+    console.log(out);
     return out;
+}
+
+public getHourlyForecasts(): Record<string, { symbol: string; details: any; instant: any; hour: number }> {
+  const out: Record<string, { symbol: string; details: any; instant: any; hour: number }> = {};
+  for (const series of this.forecast) {
+      if (series.data.next_1_hours.details) {
+          const time = new Date(series.time).getTime();
+          const date = new Date(time).toISOString().slice(0, 13).replace('T', '-');
+          const date_data = new Date(time);
+
+          out[date] = {
+              symbol: series.data.next_1_hours.summary?.symbol_code,
+              details: series.data.next_1_hours.details,
+              instant: series.data.instant.details,
+              hour: date_data.getUTCHours(),
+          };
+      } else {
+          break;
+      }
+  }
+  return out;
 }
 
   public getSixHourForecasts(): Record<string, any> {
@@ -159,7 +160,6 @@ export class Weather {
         },
     });
     const forecast =response.data;
-
     return forecast?.properties?.timeseries;
   }
 }
