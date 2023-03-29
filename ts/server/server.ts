@@ -20,6 +20,7 @@ app.use('/assets', express.static(path.join(__dirname, '../assets')));
 const port = process.env.TELLULF_PORT ? process.env.TELLULF_PORT : 3000;
 
 const days = new Days();
+const comingDays = days.generateComingDays();
 
 app.get('/', (req, res) => {
 
@@ -27,10 +28,10 @@ app.get('/', (req, res) => {
     "current_temperature": days.weather.getCurrentWeather().temperature,
     "current_weather_icon": days.weather.getCurrentWeather().symbol,
     "days": days.generateComingDays(),
-    "today": days.GenerateToday(),
+    // "today": days.GenerateToday(),
   };
 
-  console.log(data);
+  // TODO: Keep regenerating today and coming days
 
   res.render('index.twig', data);
 })
@@ -38,12 +39,6 @@ app.get('/', (req, res) => {
 app.get('/time', (req, res) => {
   res.send(Clock.getTime());
 });
-
-/*
-app.get('/calendar', (req, res) => {
-  res.send(Calendar.getEvents());
-});
-*/
 
 app.get('/entur', async (req, res) => {
   const data = await Entur.Get();

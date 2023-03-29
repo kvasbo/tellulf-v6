@@ -13,6 +13,8 @@ export interface Event {
   start: Date;
   end: Date;
   fullDay?: boolean;
+  startsBefore?: boolean;
+  endsafter?: boolean;
 }
 
 interface GoogleEvent {
@@ -43,24 +45,44 @@ export class Calendar {
       }, 600000);
     }
 
-    public getEvents(date: String): Event[] {
-      return [];
+    public getEvents(jsDate: Date): Event[] {
+      return this.events.filter(e => this.checkEventForDate(e, jsDate)).map(e => this.enrichEvent(e));;
     }
 
-    public getBirthdays(date: String): Event[] {
-      return [];
+    public getBirthdays(jsDate: Date): Event[] {
+      return this.birthdays.filter(e => this.checkEventForDate(e, jsDate)).map(e => this.enrichEvent(e));
     }
+
+    // Filters events based on whether they exist on the given date
+    private checkEventForDate(event: Event, jsDate: Date): boolean {
+
+      // Find start of day for all of the fuckers
+      const dt = DateTime.fromJSDate(jsDate).startOf('day');
+      const eventStart = DateTime.fromJSDate(event.start).startOf('day');
+      const eventEnd = DateTime.fromJSDate(event.end).startOf('day');
+
+      // It starts before or ends after!
+      if (eventStart.toMillis() <= dt.toMillis() && eventEnd.toMillis() >= dt.toMillis()) {
+        return true;
+      }
+
+      // Nothing to see here
+      return false;
+    }
+
+    private enrichEvent(event: Event): Event {
+      return event;
+    }
+
 
     private async refreshEvents(): Promise<void> {
       const id = process.env.CAL_ID_FELLES ? process.env.CAL_ID_FELLES : '';
       this.events = await Calendar.getCalendarData(id);
-      console.log("eve", this.events);
     }
 
     private async refreshBirthdays(): Promise<void> {
       const id = process.env.CAL_ID_BURSDAG ? process.env.CAL_ID_BURSDAG : '';
       this.birthdays = await Calendar.getCalendarData(id);
-      console.log("bir", this.birthdays);
     }
 
     /**
@@ -85,7 +107,7 @@ export class Calendar {
 
     const result = await calendar.events.list({
       calendarId: calendarId,
-      timeMin: DateTime.now().toISO(),
+      timeMin: DateTime.now().startOf("day").toISO(),
       timeMax: DateTime.now().plus({weeks: 2}).toISO(),
       maxResults: 2000,
       singleEvents: true,

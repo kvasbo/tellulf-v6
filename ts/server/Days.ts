@@ -20,7 +20,6 @@ export class Days {
       const dt = DateTime.now().plus({ days: i });
       days.push(this.getDataForDate(new Date(new Date().setDate(new Date().getDate() + i))));
     }
-    console.log(days);
     return days;
   }
 
@@ -56,8 +55,8 @@ export class Days {
         weekday: Days.createNiceDate(jsDate, true),
         forecast: [], //forecast[date] ? forecast[date] : {},
         daily_forecast: [], // daily[date] ? daily[date] : {},
-        events: this.calendar.getEvents(date),
-        birthdays: [],// this.calendar.getBirthdays(date),
+        events: this.calendar.getEvents(jsDate),
+        birthdays: this.calendar.getBirthdays(jsDate),
         sunrise: DateTime.fromJSDate(sunRiseDate).setLocale("nb").toFormat("HH:mm"),
         sunset: DateTime.fromJSDate(sunSetDate).setLocale("nb").toFormat("HH:mm"), 
     };
