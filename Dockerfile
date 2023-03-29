@@ -15,4 +15,4 @@ RUN yarn run build
 # Set port
 EXPOSE 3000
 
-CMD ["node", "build/Server.js"]
+CMD ["node", "/tellulf/build/Server.js"]

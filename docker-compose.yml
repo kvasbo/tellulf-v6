@@ -5,7 +5,7 @@ services:
     image: kvasbo/tellulf:latest
     restart: unless-stopped
     ports:
-      - 1337:80
+      - 1337:3000
     environment:
       - YR_URL_FORECAST=${YR_URL_FORECAST}
       - YR_URL_NOWCAST=${YR_URL_NOWCAST}
