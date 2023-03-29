@@ -4,9 +4,13 @@ export interface HomeyData {
   [key: string]: any;
 }
 
+import axios from 'axios';
 const fs = require('fs')
+require('dotenv').config();
 
 // Get the Google key from the environment variable
+const HOMEY_URL = process.env.HOMEY_URL ? process.env.HOMEY_URL : '';
+
 const HOMEY_FILE = 'homey.json';
 const HOMEY_DIR = './data';
 const HOMEY_PATH = HOMEY_DIR + '/' + HOMEY_FILE;
@@ -40,6 +44,16 @@ export class Homey {
     return payload;
   }
 
+  static Update_Data_From_Homey() {
+    axios.get(HOMEY_URL)
+      .then(function (response) {
+        Homey.Set_Data(response.data.data);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }
+
   // Store the dataset
   static Set_Data(data: HomeyData) {
 
@@ -55,7 +69,6 @@ export class Homey {
 
     data.time = Math.round(Date.now() / 1000); // Set time
 
-    console.log("Setting Homey data");
     const json = JSON.stringify(data);
     fs.writeFileSync(HOMEY_PATH, json);
   }

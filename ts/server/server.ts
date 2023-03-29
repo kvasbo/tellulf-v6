@@ -21,6 +21,10 @@ const port = process.env.TELLULF_PORT ? process.env.TELLULF_PORT : 3000;
 
 const days = new Days();
 
+// Start update loops
+Homey.Update_Data_From_Homey();
+setInterval(() => { Homey.Update_Data_From_Homey() }, 15000);
+
 app.get('/', (req, res) => {
 
   const data = {
@@ -47,13 +51,6 @@ app.get('/entur', async (req, res) => {
 // Get latest Homey data
 app.get("/homey", (req, res) => {
   res.send(Homey.Get_Latest_Data());
-});
-
-// Store changes from Homey
-app.get("/homey_put", (req, res) => {
-  const data = req.query as HomeyData;
-  Homey.Set_Data(data);
-  res.status(200).send('OK');
 });
 
 app.listen(port, () => {

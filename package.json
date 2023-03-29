@@ -37,5 +37,12 @@
     "repository": "https://github.com/kvasbo/tellulf-v6.git",
     "author": "Audun Kvasbø <audun@kvasbo.no>",
     "license": "MIT",
-    "private": true
+    "private": true,
+    "nodemonConfig": {
+        "verbose": true,
+        "ignore": [
+            "data",
+            "build"
+        ]
+      }
 }
