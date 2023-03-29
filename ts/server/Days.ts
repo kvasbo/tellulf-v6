@@ -1,6 +1,5 @@
 import { Weather } from './Weather';
 import { Calendar, Event } from './Calendar';
-import { Clock } from './Clock';
 import { getSunrise, getSunset } from 'sunrise-sunset-js';
 import { DateTime } from 'luxon';
 
