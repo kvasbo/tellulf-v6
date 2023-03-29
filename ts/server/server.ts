@@ -16,7 +16,7 @@ app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'twig');
 app.use('/assets', express.static(path.join(__dirname, '../assets'))); // Static routes
 
-const port = process.env.TELLULF_PORT ? process.env.TELLULF_PORT : 3000;
+const port = 3000;
 
 const days = new Days();
 
