@@ -40,8 +40,6 @@ app.get('/', (req, res) => {
     "hourly_weather": days.weather.getHourlyForecasts(),
   };
 
-  // TODO: Keep regenerating today and coming days
-
   res.render('index.twig', data);
   console.log("Rendered index");
 })
