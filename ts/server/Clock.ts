@@ -14,7 +14,7 @@ export class Clock {
       const dt = DateTime.fromMillis(time).setLocale('nb');
       return {
         time: dt.toLocaleString(DateTime.TIME_SIMPLE),
-        date: dt.toFormat("cccc dd."),
+        date: dt.toFormat("cccc d."),
         week: dt.toFormat("W")
       }
   }
