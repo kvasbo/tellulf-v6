@@ -24,6 +24,7 @@ app.use('/assets', express.static(path.join(__dirname, '../assets'))); // Static
 const port = 3000;
 
 const days = new Days();
+const entur = new Entur();
 
 // Start update loops
 Homey.Update_Data_From_Homey();
@@ -50,7 +51,7 @@ app.get('/time', (req, res) => {
 });
 
 app.get('/entur', async (req, res) => {
-  const data = await Entur.Get();
+  const data = entur.Get();
   res.send(data);
 });
 

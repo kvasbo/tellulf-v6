@@ -41,7 +41,19 @@ interface Train {
 }
 
 export class Entur {
-  static async Get(): Promise<Train[]> {
+
+  private trains: Train[] = [];
+
+  public constructor() {
+    this.Update();
+    setInterval(() => { this.Update() }, 60000);
+  }
+
+  public Get(): Train[] {
+    return this.trains;
+  }
+
+  async Update(): Promise<void> {
     const client = new GraphQLClient('https://api.entur.io/journey-planner/v2/graphql', {
       headers: {
         'ET-Client-Name': 'kvasbo-tellulf',
@@ -63,10 +75,10 @@ export class Entur {
           destination: train.destinationDisplay.frontText,
         };
       });
-      return trainsFormatted;
+      this.trains = trainsFormatted;
     } catch (error) {
       console.error(error);
-      return [];
+      this.trains = [];
     }
   }
 }
