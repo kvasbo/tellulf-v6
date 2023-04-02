@@ -8,6 +8,11 @@ interface EnturData {
     };
 }
 
+export interface Train {
+    time: string;
+    destination: string;
+}
+
 interface EnturCall {
     realtime: boolean;
     aimedArrivalTime: string;
@@ -58,11 +63,6 @@ const ENTUR_QUERY = `
     }
   }
 }`;
-
-interface Train {
-    time: string;
-    destination: string;
-}
 
 export class Entur {
     private trains: Train[] = [];

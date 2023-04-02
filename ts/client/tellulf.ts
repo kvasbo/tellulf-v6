@@ -1,43 +1,6 @@
-declare const okular: any;
-
-interface TimeData {
-    time: string;
-    date: string;
-    week: string;
-}
-
-interface HomeySet {
-    age?: number;
-    humOut?: string;
-    power?: string;
-    pressure?: string;
-    tempOut?: string;
-    powerUsedToday?: string;
-    time?: number;
-    co2in?: string;
-    powerCostNow?: string;
-    hourlyCostNow: string;
-    tempIn?: string;
-    humIn?: string;
-    costToday?: string;
-}
-interface EnturTur {
-    time: string;
-    destination: string;
-}
-
-interface PowerPrice {
-    EUR_per_kWh: number;
-    NOK_per_kWh: number;
-    EXR: number;
-    time_start: string;
-    time_end: string;
-}
-
-interface PowerPriceSet {
-    now?: PowerPrice;
-    [key: number]: PowerPrice;
-}
+import { HomeyData } from '../server/Homey';
+import { TimeData } from '../server/Clock';
+import { Train } from '../server/Entur';
 
 // Run every fifteen seconds, plus once when starting up
 $(function () {
@@ -64,9 +27,9 @@ async function runUpdateLoop(force = false) {
     const timeData: TimeData = data[0];
     updateTimeInfo(timeData);
 
-    const homey: HomeySet = data[1];
+    const homey: HomeyData = data[1];
 
-    const entur: EnturTur[] = data[2];
+    const entur: Train[] = data[2];
     updateEnturInfo(entur);
 
     if (homey.age && homey.age < 600) {
@@ -112,7 +75,7 @@ function updateTimeInfo(timeData: TimeData) {
     $('#now_week').html(`Uke ${timeData.week}`);
 }
 
-function updateEnturInfo(entur: EnturTur[]) {
+function updateEnturInfo(entur: Train[]) {
     let enturHtml = 'Neste to baner: ';
 
     for (let i = 0; i < Math.min(entur.length, 2); i++) {
