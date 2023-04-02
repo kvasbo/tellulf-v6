@@ -27,10 +27,10 @@ async function runUpdateLoop(force = false) {
     const timeData: TimeData = data[0];
     updateTimeInfo(timeData);
 
-    const homey: HomeyData = data[1];
-
     const entur: Train[] = data[2];
     updateEnturInfo(entur);
+
+    const homey: HomeyData = data[1];
 
     if (homey.age && homey.age < 600) {
         if (homey.tempOut) {
