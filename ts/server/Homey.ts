@@ -75,10 +75,23 @@ export class Homey {
             fs.mkdirSync(HOMEY_DIR);
         }
 
-        // Cast to numbers if possible.
-        for (const [key, value] of Object.entries(data)) {
-            data[key] = +value; // Map to numeric values
-        }
+        // Cast to numeric values
+        data['age'] = +data['age'];
+        data['time'] = +data['time'];
+        data['tempOut'] = data['tempOut'] ? +data['tempOut'] : undefined;
+        data['humOut'] = data['humOut'] ? +data['humOut'] : undefined;
+        data['power'] = data['power'] ? +data['power'] : undefined;
+        data['pressure'] = data['pressure'] ? +data['pressure'] : undefined;
+        data['powerUsedToday'] = data['powerUsedToday']
+            ? +data['powerUsedToday']
+            : undefined;
+        data['costToday'] = data['costToday'] ? +data['costToday'] : undefined;
+        data['powerCostNow'] = data['powerCostNow']
+            ? +data['powerCostNow']
+            : undefined;
+        data['tempIn'] = data['tempIn'] ? +data['tempIn'] : undefined;
+        data['humIn'] = data['humIn'] ? +data['humIn'] : undefined;
+        data['co2in'] = data['co2in'] ? +data['co2in'] : undefined;
 
         data.time = Math.round(Date.now() / 1000); // Set time
         data.niceTime = new Date().toISOString(); // Set nice time

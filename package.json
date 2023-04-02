@@ -86,6 +86,7 @@
         "rules": {
             "no-console": 0,
             "no-unused-vars": 1,
+            "no-undef": 1,
             "prettier/prettier": 2
         }
     }
