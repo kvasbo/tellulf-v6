@@ -1,6 +1,6 @@
 @use 'sass:math';
 
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800');
 
 $font_weight: 400;
 $bold_weight: 600;
@@ -18,23 +18,15 @@ $gray: #444444;
     box-sizing: border-box;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5 {
-    margin-bottom: calc($margin * 0.66);
-}
-
 body {
-  background-color: white;
-  font-family: "Montserrat", sans-serif;
-  font-weight: $font_weight;
-  font-size: $text_size;
-  height: 100vh;
-  width: 100vw;
-  padding: 0;
-  margin: 0;
+    background-color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: $font_weight;
+    font-size: $text_size;
+    height: 100vh;
+    width: 100vw;
+    padding: 0;
+    margin: 0;
 }
 
 .block {
@@ -90,16 +82,16 @@ body {
                 flex-direction: row;
                 align-items: center;
                 .headerWeatherTempIcon {
-                  width: $text_subheader;
-                  height: $text_subheader;
-                  opacity: 0.4;
+                    width: $text_subheader;
+                    height: $text_subheader;
+                    opacity: 0.4;
                 }
                 .headerWeatherIcon {
-                  width: $text_subheader * 1.75;
-                  height: $text_subheader * 1.75;
-                  margin-bottom: 6px;
-                  margin-left: 10px;
-              }
+                    width: $text_subheader * 1.75;
+                    height: $text_subheader * 1.75;
+                    margin-bottom: 6px;
+                    margin-left: 10px;
+                }
             }
         }
         .event {
@@ -178,14 +170,6 @@ body {
     align-items: flex-start;
 }
 
-.today_forecast {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-}
-
 .weather {
     display: flex;
     flex-direction: row;
@@ -203,7 +187,6 @@ body {
         }
     }
 }
-
 
 .weather_icon {
     width: $text_large;
