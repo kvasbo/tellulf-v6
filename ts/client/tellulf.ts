@@ -71,7 +71,7 @@ async function runUpdateLoop(force = false) {
 
     if (homey.age && homey.age < 600) {
         if (homey.tempOut) {
-            const t = Number(homey.tempOut).toFixed(1);
+            const t = Number(homey.tempOut).toFixed(0);
             $('.current_temperature').html(`${t}&deg;`);
         } else {
             $('.current_temperature').html(`?`);
