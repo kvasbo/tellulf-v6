@@ -13,7 +13,7 @@ export class Days {
     this.calendar = new Calendar();
   }
 
-  public generateComingDays(numberOfDays: number = 10) {
+  public generateComingDays(numberOfDays = 10) {
     const days: any = [];
     for (let i = 0; i < numberOfDays; i++) {
       const dt = DateTime.now().plus({ days: i });

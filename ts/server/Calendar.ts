@@ -52,7 +52,7 @@ export class Calendar {
     }
 
     public getEvents(jsDate: Date): Event[] {
-      return this.events.filter(e => this.checkEventForDate(e, jsDate)).map(e => this.enrichEvent(e, "event"));;
+      return this.events.filter(e => this.checkEventForDate(e, jsDate)).map(e => this.enrichEvent(e, "event"));
     }
 
     public getBirthdays(jsDate: Date): Event[] {
@@ -76,10 +76,10 @@ export class Calendar {
       return false;
     }
 
-    private enrichEvent(event: Event, type: string = ""): Event {
+    private enrichEvent(event: Event, type = ""): Event {
       event.displayTitle = event.title;
       if (type === "birthday") {
-        let regex = /[A-Za-z0-9 ]+\s[0-9]+/i;
+        const regex = /[A-Za-z0-9 ]+\s[0-9]+/i;
         const foundYear = regex.test(event.title);
         if (foundYear) {
           const y = Number(event.title.slice(-4));

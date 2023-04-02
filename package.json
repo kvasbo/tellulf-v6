@@ -8,7 +8,8 @@
         "dev": "docker compose --file docker-compose-dev.yml up --build",
         "push": "docker build . && docker tag kvasbo/tellulf:latest kvasbo/tellulf:latest && docker push kvasbo/tellulf:latest",
         "build": "npx tsc --project tsconfig.server.json && npx tsc --project tsconfig.client.json && npx sass sass:assets/css",
-        "run-server": "node build/Server.js"
+        "run-server": "node build/Server.js",
+        "lint": "npx eslint ./ts/server/"
     },
     "devDependencies": {
         "@types/express": "^4.17.7",
@@ -16,9 +17,12 @@
         "@types/luxon": "^3.2.0",
         "@types/node": "^18.15.10",
         "@types/twig": "^1.12.9",
+        "@typescript-eslint/eslint-plugin": "^5.57.0",
+        "@typescript-eslint/parser": "^5.57.0",
+        "eslint": "^8.37.0",
         "nodemon": "^2.0.22",
         "sass": "^1.60",
-        "typescript": "^5"
+        "typescript": "^5.0.3"
     },
     "dependencies": {
         "axios": "^1.3.4",
@@ -43,5 +47,26 @@
         "ignore": [
             "data"
         ]
+    },
+    "eslintConfig": {
+        "ignorePatterns": ["ts/client/*.ts"],
+        "extends": [
+            "plugin:@typescript-eslint/recommended",
+            "plugin:@typescript-eslint/recommended-requiring-type-checking"
+        ],
+        "parserOptions": {
+          "ecmaVersion": 2022,
+          "project": ["tsconfig.server.json"] ,
+          "sourceType": "module"
+        },
+        "env": {
+            "node": true,
+            "es6": true,
+            "es2022": true
+        },
+        "rules": {
+            "no-console": 0,
+            "no-unused-vars": 1
+        }
     }
 }
