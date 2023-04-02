@@ -1,6 +1,7 @@
 import * as dotenv from 'dotenv';
 import axios from 'axios';
 import { DateTime, Settings } from 'luxon';
+import { TimeSeries, next_1_hours, instant } from './types.met';
 
 dotenv.config();
 
@@ -16,29 +17,25 @@ const yrUrlNowcast: string = process.env.YR_URL_NOWCAST
 
 export interface HourlyForecast {
     symbol: string;
-    details: any;
-    instant: any;
+    details: next_1_hours['details'];
+    instant: instant['details'];
     hour: string;
 }
 
-type TimeSeries = {
-    time: string;
-    data: {
-        instant: { details: { air_temperature: number } };
-        next_1_hours: {
-            summary: { symbol_code: string };
-            details?: any;
-        };
-        next_6_hours: {
-            summary: { symbol_code: string };
-            details: {
-                air_temperature_min: number;
-                air_temperature_max: number;
-            };
-        };
-        next_12_hours: { summary: { symbol_code: string } };
-    };
-};
+export interface DailyForecast {
+    maxTemp: number;
+    minTemp: number;
+    symbol?: string;
+}
+
+export interface DailyForecasts {
+    [key: string]: DailyForecast;
+}
+
+export interface CurrentWeather {
+    symbol: string;
+    temperature: number;
+}
 
 /**
  * Weather data from Yr
@@ -54,7 +51,7 @@ export class Weather {
         }, 30 * 60 * 1000); // Every 30 minutes
     }
 
-    private updateForecasts() {
+    private updateForecasts(): void {
         // Fetch forecast
         Weather.fetchForecastData(yrUrlForecast).then((forecast) => {
             this.forecast = forecast;
@@ -67,7 +64,7 @@ export class Weather {
         });
     }
 
-    public getCurrentWeather(): { temperature: number; symbol: string } {
+    public getCurrentWeather(): CurrentWeather {
         const temp = {
             temperature: this.nowcast[0].data.instant.details.air_temperature,
             symbol: this.nowcast[0].data.next_1_hours.summary?.symbol_code,
@@ -81,16 +78,8 @@ export class Weather {
         return temp;
     }
 
-    public getDailyForecasts(): {
-        [key: string]: { maxTemp: number; minTemp: number; symbol?: string };
-    } {
-        const out: {
-            [key: string]: {
-                maxTemp: number;
-                minTemp: number;
-                symbol?: string;
-            };
-        } = {};
+    public getDailyForecasts(): DailyForecasts {
+        const out: DailyForecasts = {};
         const today = new Date().toISOString().slice(0, 10);
 
         for (const series of this.forecast) {
@@ -126,6 +115,10 @@ export class Weather {
         return out;
     }
 
+    /**
+     * Get the hourly forecasts
+     * @returns HourlyForecast[]
+     */
     public getHourlyForecasts(): HourlyForecast[] {
         const out: HourlyForecast[] = [];
 

@@ -1,19 +1,30 @@
-import { Weather } from './Weather';
+import { Weather, DailyForecast } from './Weather';
 import { Calendar, Event } from './Calendar';
 import { getSunrise, getSunset } from 'sunrise-sunset-js';
 import { DateTime } from 'luxon';
 
+export interface DayInfo {
+    isoDate: string;
+    date: string;
+    weekday: string;
+    daily_forecast: DailyForecast;
+    events: Event[];
+    birthdays: Event[];
+    sunrise: string;
+    sunset: string;
+}
+
 export class Days {
-    public weather;
-    private calendar;
+    public weather: Weather;
+    private calendar: Calendar;
 
     constructor() {
         this.weather = new Weather();
         this.calendar = new Calendar();
     }
 
-    public generateComingDays(numberOfDays = 10) {
-        const days: any = [];
+    public generateComingDays(numberOfDays = 10): DayInfo[] {
+        const days: DayInfo[] = [];
         for (let i = 0; i < numberOfDays; i++) {
             const dt = DateTime.now().plus({ days: i });
             days.push(this.getDataForDate(dt.toJSDate()));
@@ -21,20 +32,11 @@ export class Days {
         return days;
     }
 
-    public GenerateToday(): any {
+    public GenerateToday(): DayInfo {
         return this.getDataForDate(DateTime.now().toJSDate());
     }
 
-    private getDataForDate(jsDate: Date): {
-        isoDate: string;
-        date: string;
-        weekday: string;
-        daily_forecast: any;
-        events: Event[];
-        birthdays: Event[];
-        sunrise: string;
-        sunset: string;
-    } {
+    private getDataForDate(jsDate: Date): DayInfo {
         // Create a Luxon DateTime object
         const dt = DateTime.fromJSDate(jsDate).setLocale('nb');
 
@@ -49,7 +51,7 @@ export class Days {
             isoDate: date,
             date: Days.createNiceDate(jsDate),
             weekday: Days.createNiceDate(jsDate, true),
-            daily_forecast: daily[date] ? daily[date] : {},
+            daily_forecast: daily[date],
             events: this.calendar.getEvents(jsDate),
             birthdays: this.calendar.getBirthdays(jsDate),
             sunrise: DateTime.fromJSDate(sunRiseDate)

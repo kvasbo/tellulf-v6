@@ -3,9 +3,19 @@ import * as fs from 'fs';
 import axios from 'axios';
 
 export interface HomeyData {
-    time: number;
     age: number;
-    [key: string]: any;
+    time: number;
+    tempOut?: number;
+    humOut?: number;
+    power?: number;
+    pressure?: number;
+    powerUsedToday?: number;
+    costToday?: number;
+    powerCostNow?: number;
+    tempIn?: number;
+    humIn?: number;
+    co2in?: number;
+    niceTime?: string;
 }
 
 dotenv.config();

@@ -1,5 +1,29 @@
 import { GraphQLClient } from 'graphql-request';
 
+interface EnturData {
+    stopPlace: {
+        id: string;
+        name: string;
+        estimatedCalls: EnturCall[];
+    };
+}
+
+interface EnturCall {
+    realtime: boolean;
+    aimedArrivalTime: string;
+    aimedDepartureTime: string;
+    expectedArrivalTime: string;
+    expectedDepartureTime: string;
+    actualArrivalTime: string | null;
+    actualDepartureTime: string | null;
+    date: string;
+    forBoarding: boolean;
+    forAlighting: boolean;
+    destinationDisplay: { frontText: string };
+    quay: { id: string };
+    // There is more data here, but we don't need it
+}
+
 const ENTUR_QUERY = `
 {
   stopPlace(id: "NSR:StopPlace:58268") {
@@ -67,10 +91,10 @@ export class Entur {
         );
 
         try {
-            const data: any = await client.request(ENTUR_QUERY);
+            const data: EnturData = await client.request(ENTUR_QUERY);
 
             const trainsFiltered = data.stopPlace.estimatedCalls.filter(
-                (call: any) => {
+                (call) => {
                     return (
                         call.quay.id === 'NSR:Quay:11518' &&
                         call.forBoarding === true
@@ -78,14 +102,12 @@ export class Entur {
                 }
             );
 
-            const trainsFormatted: Train[] = trainsFiltered.map(
-                (train: any) => {
-                    return {
-                        time: train.expectedArrivalTime,
-                        destination: train.destinationDisplay.frontText,
-                    };
-                }
-            );
+            const trainsFormatted: Train[] = trainsFiltered.map((train) => {
+                return {
+                    time: train.expectedArrivalTime,
+                    destination: train.destinationDisplay.frontText,
+                };
+            });
             this.trains = trainsFormatted;
         } catch (error) {
             console.error(error);

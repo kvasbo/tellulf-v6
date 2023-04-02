@@ -10,6 +10,7 @@ WORKDIR /tellulf
 
 # Run NPM stuff
 RUN yarn
+RUN yarn run lint
 RUN yarn run build
 
 # Set port
