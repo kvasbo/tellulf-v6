@@ -21,6 +21,7 @@
         "@typescript-eslint/parser": "^5.57.0",
         "eslint": "^8.37.0",
         "nodemon": "^2.0.22",
+        "prettier": "^2.8.7",
         "sass": "^1.60",
         "typescript": "^5.0.3"
     },
@@ -48,16 +49,26 @@
             "data"
         ]
     },
+    "prettier": {
+        "trailingComma": "es5",
+        "tabWidth": 4,
+        "semi": true,
+        "singleQuote": true
+    },
     "eslintConfig": {
-        "ignorePatterns": ["ts/client/*.ts"],
+        "ignorePatterns": [
+            "ts/client/*.ts"
+        ],
         "extends": [
             "plugin:@typescript-eslint/recommended",
             "plugin:@typescript-eslint/recommended-requiring-type-checking"
         ],
         "parserOptions": {
-          "ecmaVersion": 2022,
-          "project": ["tsconfig.server.json"] ,
-          "sourceType": "module"
+            "ecmaVersion": 2022,
+            "project": [
+                "tsconfig.server.json"
+            ],
+            "sourceType": "module"
         },
         "env": {
             "node": true,

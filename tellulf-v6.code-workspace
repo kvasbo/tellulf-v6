@@ -4,5 +4,8 @@
 			"path": "."
 		}
   ],
-  "settings": {}
+  "settings": {
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true
+  }
 }

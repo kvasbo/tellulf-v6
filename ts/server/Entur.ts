@@ -36,49 +36,60 @@ const ENTUR_QUERY = `
 }`;
 
 interface Train {
-  time: string;
-  destination: string;
+    time: string;
+    destination: string;
 }
 
 export class Entur {
+    private trains: Train[] = [];
 
-  private trains: Train[] = [];
-
-  public constructor() {
-    this.Update();
-    setInterval(() => { this.Update() }, 60000);
-  }
-
-  public Get(): Train[] {
-    return this.trains;
-  }
-
-  async Update(): Promise<void> {
-    const client = new GraphQLClient('https://api.entur.io/journey-planner/v2/graphql', {
-      headers: {
-        'ET-Client-Name': 'kvasbo-tellulf',
-        'Content-Type': 'application/json',
-      },
-      timeout: 1000,
-    });
-
-    try {
-      const data: any = await client.request(ENTUR_QUERY);
-
-      const trainsFiltered = data.stopPlace.estimatedCalls.filter((call: any) => {
-        return call.quay.id === 'NSR:Quay:11518' && call.forBoarding === true;
-      });
-
-      const trainsFormatted: Train[] = trainsFiltered.map((train: any) => {
-        return {
-          time: train.expectedArrivalTime,
-          destination: train.destinationDisplay.frontText,
-        };
-      });
-      this.trains = trainsFormatted;
-    } catch (error) {
-      console.error(error);
-      this.trains = [];
+    public constructor() {
+        this.Update();
+        setInterval(() => {
+            this.Update();
+        }, 60000);
     }
-  }
+
+    public Get(): Train[] {
+        return this.trains;
+    }
+
+    async Update(): Promise<void> {
+        const client = new GraphQLClient(
+            'https://api.entur.io/journey-planner/v2/graphql',
+            {
+                headers: {
+                    'ET-Client-Name': 'kvasbo-tellulf',
+                    'Content-Type': 'application/json',
+                },
+                timeout: 1000,
+            }
+        );
+
+        try {
+            const data: any = await client.request(ENTUR_QUERY);
+
+            const trainsFiltered = data.stopPlace.estimatedCalls.filter(
+                (call: any) => {
+                    return (
+                        call.quay.id === 'NSR:Quay:11518' &&
+                        call.forBoarding === true
+                    );
+                }
+            );
+
+            const trainsFormatted: Train[] = trainsFiltered.map(
+                (train: any) => {
+                    return {
+                        time: train.expectedArrivalTime,
+                        destination: train.destinationDisplay.frontText,
+                    };
+                }
+            );
+            this.trains = trainsFormatted;
+        } catch (error) {
+            console.error(error);
+            this.trains = [];
+        }
+    }
 }

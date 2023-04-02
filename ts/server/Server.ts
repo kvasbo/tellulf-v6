@@ -5,11 +5,10 @@ import { Clock } from './Clock';
 import { Entur } from './Entur';
 import { Homey, HomeyData } from './Homey';
 import Twig from 'twig';
-import { Settings } from "luxon";
+import { Settings } from 'luxon';
 
 // Configure the time zone
-Settings.defaultZone = "Europe/Oslo";
-
+Settings.defaultZone = 'Europe/Oslo';
 
 require('dotenv').config();
 
@@ -28,36 +27,37 @@ const entur = new Entur();
 
 // Start update loops
 Homey.Update_Data_From_Homey();
-setInterval(() => { Homey.Update_Data_From_Homey() }, 15000);
+setInterval(() => {
+    Homey.Update_Data_From_Homey();
+}, 15000);
 
 app.get('/', (req, res) => {
+    const data = {
+        current_temperature: days.weather.getCurrentWeather().temperature,
+        current_weather_icon: days.weather.getCurrentWeather().symbol,
+        days: days.generateComingDays(),
+        today: days.GenerateToday(),
+        hourly_weather: days.weather.getHourlyForecasts(),
+    };
 
-  const data = {
-    "current_temperature": days.weather.getCurrentWeather().temperature,
-    "current_weather_icon": days.weather.getCurrentWeather().symbol,
-    "days": days.generateComingDays(),
-    "today": days.GenerateToday(),
-    "hourly_weather": days.weather.getHourlyForecasts(),
-  };
-
-  res.render('index.twig', data);
-  console.log("Rendered index");
-})
+    res.render('index.twig', data);
+    console.log('Rendered index');
+});
 
 app.get('/time', (req, res) => {
-  res.send(Clock.getTime());
+    res.send(Clock.getTime());
 });
 
 app.get('/entur', async (req, res) => {
-  const data = entur.Get();
-  res.send(data);
+    const data = entur.Get();
+    res.send(data);
 });
 
 // Get latest Homey data
-app.get("/homey", (req, res) => {
-  res.send(Homey.Get_Latest_Data());
+app.get('/homey', (req, res) => {
+    res.send(Homey.Get_Latest_Data());
 });
 
 app.listen(port, () => {
-  console.log(`Tellulf listening on port ${port}`);
-})
+    console.log(`Tellulf listening on port ${port}`);
+});
