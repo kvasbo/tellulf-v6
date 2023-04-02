@@ -1,12 +1,14 @@
+import * as dotenv from 'dotenv';
+import * as fs from 'fs';
+import axios from 'axios';
+
 export interface HomeyData {
     time: number;
     age: number;
     [key: string]: any;
 }
 
-import axios from 'axios';
-const fs = require('fs');
-require('dotenv').config();
+dotenv.config();
 
 // Get the Google key from the environment variable
 const HOMEY_URL = process.env.HOMEY_URL ? process.env.HOMEY_URL : '';

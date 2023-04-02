@@ -1,4 +1,4 @@
-import { GraphQLClient, request } from 'graphql-request';
+import { GraphQLClient } from 'graphql-request';
 
 const ENTUR_QUERY = `
 {

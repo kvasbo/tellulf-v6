@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import * as dotenv from 'dotenv';
 import { Days } from './Days';
 import { Clock } from './Clock';
 import { Entur } from './Entur';
@@ -9,7 +10,7 @@ import { Settings } from 'luxon';
 // Configure the time zone
 Settings.defaultZone = 'Europe/Oslo';
 
-require('dotenv').config();
+dotenv.config();
 
 const app = express();
 

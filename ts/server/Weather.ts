@@ -1,7 +1,8 @@
-require('dotenv').config();
-
+import * as dotenv from 'dotenv';
 import axios from 'axios';
 import { DateTime, Settings } from 'luxon';
+
+dotenv.config();
 
 // Configure the time zone
 Settings.defaultZone = 'Europe/Oslo';

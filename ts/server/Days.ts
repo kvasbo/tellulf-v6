@@ -16,20 +16,16 @@ export class Days {
         const days: any = [];
         for (let i = 0; i < numberOfDays; i++) {
             const dt = DateTime.now().plus({ days: i });
-            days.push(
-                this.getDataForDate(
-                    new Date(new Date().setDate(new Date().getDate() + i))
-                )
-            );
+            days.push(this.getDataForDate(dt.toJSDate()));
         }
         return days;
     }
 
     public GenerateToday(): any {
-        return this.getDataForDate();
+        return this.getDataForDate(DateTime.now().toJSDate());
     }
 
-    private getDataForDate(jsDate: Date = new Date()): {
+    private getDataForDate(jsDate: Date): {
         isoDate: string;
         date: string;
         weekday: string;
