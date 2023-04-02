@@ -1,18 +1,18 @@
 {
-  "compilerOptions": {
-    "outDir": "./build",
-    "lib": ["es2020", "dom"],
-    "module": "CommonJS",
-    "target": "es2020",
-    "allowJs": false,
-    "moduleResolution": "node",
-    "removeComments": true,
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "noImplicitAny": true,
-    "sourceMap": true,
-    "sourceRoot": "./ts/server",
-  },
-  "include": ["ts/server/*"]
+    "compilerOptions": {
+        "outDir": "./build",
+        "lib": ["es2020", "dom"],
+        "module": "CommonJS",
+        "target": "es2020",
+        "allowJs": false,
+        "moduleResolution": "node",
+        "removeComments": true,
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "noImplicitAny": true,
+        "sourceMap": true,
+        "sourceRoot": "./ts/server"
+    },
+    "include": ["ts/server/*"]
 }

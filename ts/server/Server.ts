@@ -3,8 +3,7 @@ import path from 'path';
 import { Days } from './Days';
 import { Clock } from './Clock';
 import { Entur } from './Entur';
-import { Homey, HomeyData } from './Homey';
-import Twig from 'twig';
+import { Homey } from './Homey';
 import { Settings } from 'luxon';
 
 // Configure the time zone
