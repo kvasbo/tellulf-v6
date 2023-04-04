@@ -64,7 +64,7 @@ export class Homey {
                 Homey.Set_Data(response.data.data);
             })
             .catch(function (error) {
-                console.error(error);
+                console.error('Homey error: ', error.message);
             });
     }
 

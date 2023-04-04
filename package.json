@@ -4,7 +4,7 @@
         "sass": "npx sass sass:assets/css",
         "tsc-watch-server": "npx tsc --watch --project tsconfig.server.json",
         "tsc-watch-client": "npx tsc --watch --project tsconfig.client.json",
-        "node-run": "npx nodemon build/Server.js",
+        "node-watch": "npx nodemon build/Server.js",
         "dev": "docker compose --file docker-compose-dev.yml up --build",
         "push": "docker build . && docker tag kvasbo/tellulf:latest kvasbo/tellulf:latest && docker push kvasbo/tellulf:latest",
         "build": "npx tsc --project tsconfig.server.json && npx tsc --project tsconfig.client.json && npx sass sass:assets/css",
