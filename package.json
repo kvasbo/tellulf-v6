@@ -36,7 +36,8 @@
         "graphql-request": "^5.2.0",
         "luxon": "^3.3.0",
         "sunrise-sunset-js": "^2.2.1",
-        "twig": "^1.16.0"
+        "twig": "^1.16.0",
+        "zod": "^3.21.4"
     },
     "name": "tellulf-v6",
     "version": "1.0.0",
