@@ -69,23 +69,21 @@ export class Weather {
     }
 
     public getCurrentWeather(): CurrentWeather {
-        const temp = {
-            temperature: this.forecast[0].data.instant.details.air_temperature,
+        const temp: CurrentWeather = {
+            temperature: this.forecast[0].data.instant.details.air_temperature
+                ? this.forecast[0].data.instant.details.air_temperature
+                : 999,
             symbol: this.forecast[0].data.next_1_hours?.summary?.symbol_code
                 ? this.forecast[0].data.next_1_hours.summary.symbol_code
                 : 'unknown',
         };
 
         // Fix strange edge case
-        if (
-            temp.temperature !== undefined &&
-            temp.temperature > -1 &&
-            temp.temperature < 1
-        ) {
+        if (temp.temperature > -1 && temp.temperature < 1) {
             temp.temperature = 0;
         }
 
-        return temp as CurrentWeather;
+        return temp;
     }
 
     public getDailyForecasts(): DailyForecasts {
