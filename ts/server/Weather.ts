@@ -1,4 +1,5 @@
 import * as dotenv from 'dotenv';
+import * as z from 'zod';
 import axios from 'axios';
 import { DateTime, Settings } from 'luxon';
 import { TimeSeries, next_1_hours, instant } from './types.met';
@@ -15,6 +16,18 @@ const yrUrlNowcast: string = process.env.YR_URL_NOWCAST
     ? process.env.YR_URL_NOWCAST.toString()
     : '';
 
+// 1 - Skjema definisjon
+const CurrentWeatherSchema = z.object({
+    symbol: z.string(),
+    temperature: z.number(),
+});
+
+const DailyForecastSchema = z.object({
+    maxTemp: z.number(),
+    minTemp: z.number(),
+    symbol: z.string().optional(),
+});
+
 export interface HourlyForecast {
     symbol: string;
     details: next_1_hours['details'];
@@ -22,20 +35,13 @@ export interface HourlyForecast {
     hour: string;
 }
 
-export interface DailyForecast {
-    maxTemp: number;
-    minTemp: number;
-    symbol?: string;
-}
+export type DailyForecast = z.infer<typeof DailyForecastSchema>;
 
 export interface DailyForecasts {
     [key: string]: DailyForecast;
 }
 
-export interface CurrentWeather {
-    symbol: string;
-    temperature: number;
-}
+export type CurrentWeather = z.infer<typeof CurrentWeatherSchema>;
 
 /**
  * Weather data from Yr

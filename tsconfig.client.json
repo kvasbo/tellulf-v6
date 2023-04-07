@@ -13,5 +13,5 @@
         "sourceMap": true,
         "sourceRoot": "./ts/client"
     },
-    "include": ["ts/client/*"]
+    "include": ["ts/client/*.ts"]
 }

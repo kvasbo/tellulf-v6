@@ -1,4 +1,40 @@
 import { GraphQLClient } from 'graphql-request';
+import * as z from 'zod';
+
+// Define API schema
+const EnturCallSchema = z.object({
+    stopPlace: z.object({
+        id: z.string(),
+        name: z.string(),
+        estimatedCalls: z.array(
+            z.object({
+                realtime: z.boolean(),
+                aimedArrivalTime: z.string(),
+                aimedDepartureTime: z.string(),
+                expectedArrivalTime: z.string(),
+                expectedDepartureTime: z.string(),
+                actualArrivalTime: z.string().nullable(),
+                actualDepartureTime: z.string().nullable(),
+                date: z.string(),
+                forBoarding: z.boolean(),
+                forAlighting: z.boolean(),
+                destinationDisplay: z.object({
+                    frontText: z.string(),
+                }),
+                quay: z.object({ id: z.string() }),
+                serviceJourney: z.object({
+                    journeyPattern: z.object({
+                        line: z.object({
+                            id: z.string(),
+                            name: z.string(),
+                            transportMode: z.string(),
+                        }),
+                    }),
+                }),
+            })
+        ),
+    }),
+});
 
 interface EnturData {
     stopPlace: {
@@ -13,21 +49,7 @@ export interface Train {
     destination: string;
 }
 
-interface EnturCall {
-    realtime: boolean;
-    aimedArrivalTime: string;
-    aimedDepartureTime: string;
-    expectedArrivalTime: string;
-    expectedDepartureTime: string;
-    actualArrivalTime: string | null;
-    actualDepartureTime: string | null;
-    date: string;
-    forBoarding: boolean;
-    forAlighting: boolean;
-    destinationDisplay: { frontText: string };
-    quay: { id: string };
-    // There is more data here, but we don't need it
-}
+type EnturCall = z.infer<typeof EnturCallSchema>;
 
 const ENTUR_QUERY = `
 {
@@ -93,7 +115,16 @@ export class Entur {
         try {
             const data: EnturData = await client.request(ENTUR_QUERY);
 
-            const trainsFiltered = data.stopPlace.estimatedCalls.filter(
+            // Safely parse data
+            const res = EnturCallSchema.safeParse(data);
+
+            if (!res.success) {
+                // console.error(res.error.message);
+                this.trains = [];
+                return;
+            }
+
+            const trainsFiltered = res.data.stopPlace.estimatedCalls.filter(
                 (call) => {
                     return (
                         call.quay.id === 'NSR:Quay:11518' &&
