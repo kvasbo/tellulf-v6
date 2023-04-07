@@ -1,5 +1,4 @@
 import * as dotenv from 'dotenv';
-import * as z from 'zod';
 import axios from 'axios';
 import { DateTime, Settings } from 'luxon';
 import {
@@ -18,32 +17,27 @@ const yrUrlForecast: string = process.env.YR_URL_FORECAST
     ? process.env.YR_URL_FORECAST.toString()
     : '';
 
-// 1 - Skjema definisjon
-const CurrentWeatherSchema = z.object({
-    symbol: z.string(),
-    temperature: z.number(),
-});
-
-const DailyForecastSchema = z.object({
-    maxTemp: z.number(),
-    minTemp: z.number(),
-    symbol: z.string().optional(),
-});
-
-export interface HourlyForecast {
+interface HourlyForecast {
     symbol: string;
     details: next_1_hours['details'];
     instant: instant['details'];
     hour: string;
 }
 
-export type DailyForecast = z.infer<typeof DailyForecastSchema>;
+export type DailyForecast = {
+    maxTemp: number;
+    minTemp: number;
+    symbol?: string;
+};
 
-export interface DailyForecasts {
+interface DailyForecasts {
     [key: string]: DailyForecast;
 }
 
-export type CurrentWeather = z.infer<typeof CurrentWeatherSchema>;
+type CurrentWeather = {
+    symbol: string;
+    temperature: number;
+};
 
 /**
  * Weather data from Yr
@@ -58,14 +52,9 @@ export class Weather {
         }, 30 * 60 * 1000); // Every 30 minutes
     }
 
-    private updateForecasts(): void {
+    private async updateForecasts(): Promise<void> {
         // Fetch forecast
-        Weather.fetchForecastData(yrUrlForecast, YrCompleteResponseSchema).then(
-            (forecast) => {
-                this.forecast = forecast;
-                console.log('Forecast fetched');
-            }
-        );
+        this.forecast = await Weather.fetchForecastData(yrUrlForecast);
     }
 
     public getCurrentWeather(): CurrentWeather {
@@ -150,10 +139,7 @@ export class Weather {
      * @param url
      * @returns
      */
-    private static async fetchForecastData(
-        url: string,
-        testSchema: z.ZodSchema
-    ): Promise<TimeSeries[]> {
+    private static async fetchForecastData(url: string): Promise<TimeSeries[]> {
         // Fetch and decode JSON
         const response = await axios.get(url, {
             method: 'GET',
@@ -164,14 +150,17 @@ export class Weather {
         const forecast = response.data;
 
         // Validate the response
-        const forecastValidated = testSchema.safeParse(forecast);
+        const forecastValidated = YrCompleteResponseSchema.safeParse(forecast);
 
         if (forecastValidated.success) {
+            console.log("Forecast validated, let's go!");
             return forecastValidated.data.properties.timeseries as TimeSeries[];
         } else {
-            console.log('Could not validate forecast');
+            console.log(
+                'Could not validate forecast due to the following issues:'
+            );
             console.log(forecastValidated.error.issues);
-            return forecast.properties.timeseries as TimeSeries[];
+            return [] as TimeSeries[];
         }
     }
 }
