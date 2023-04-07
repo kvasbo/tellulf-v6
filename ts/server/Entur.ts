@@ -36,14 +36,6 @@ const EnturCallSchema = z.object({
     }),
 });
 
-interface EnturData {
-    stopPlace: {
-        id: string;
-        name: string;
-        estimatedCalls: EnturCall[];
-    };
-}
-
 export interface Train {
     time: string;
     destination: string;
@@ -108,18 +100,17 @@ export class Entur {
                     'ET-Client-Name': 'kvasbo-tellulf',
                     'Content-Type': 'application/json',
                 },
-                timeout: 1000,
+                timeout: 3000,
             }
         );
 
         try {
-            const data: EnturData = await client.request(ENTUR_QUERY);
+            const data: EnturCall = await client.request(ENTUR_QUERY);
 
             // Safely parse data
             const res = EnturCallSchema.safeParse(data);
 
             if (!res.success) {
-                // console.error(res.error.message);
                 this.trains = [];
                 return;
             }
