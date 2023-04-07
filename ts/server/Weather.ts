@@ -2,7 +2,12 @@ import * as dotenv from 'dotenv';
 import * as z from 'zod';
 import axios from 'axios';
 import { DateTime, Settings } from 'luxon';
-import { TimeSeries, next_1_hours, instant } from './types.met';
+import {
+    TimeSeries,
+    next_1_hours,
+    instant,
+    YrCompleteResponseSchema,
+} from './types.met';
 
 dotenv.config();
 
@@ -11,9 +16,6 @@ Settings.defaultZone = 'Europe/Oslo';
 
 const yrUrlForecast: string = process.env.YR_URL_FORECAST
     ? process.env.YR_URL_FORECAST.toString()
-    : '';
-const yrUrlNowcast: string = process.env.YR_URL_NOWCAST
-    ? process.env.YR_URL_NOWCAST.toString()
     : '';
 
 // 1 - Skjema definisjon
@@ -48,7 +50,6 @@ export type CurrentWeather = z.infer<typeof CurrentWeatherSchema>;
  */
 export class Weather {
     public forecast: TimeSeries[] = [];
-    public nowcast: TimeSeries[] = [];
 
     constructor() {
         this.updateForecasts();
@@ -59,29 +60,32 @@ export class Weather {
 
     private updateForecasts(): void {
         // Fetch forecast
-        Weather.fetchForecastData(yrUrlForecast).then((forecast) => {
-            this.forecast = forecast;
-            console.log('Forecast fetched');
-        });
-        // Fetch nowcast
-        Weather.fetchForecastData(yrUrlNowcast).then((forecast) => {
-            this.nowcast = forecast;
-            console.log('Nowcast fetched');
-        });
+        Weather.fetchForecastData(yrUrlForecast, YrCompleteResponseSchema).then(
+            (forecast) => {
+                this.forecast = forecast;
+                console.log('Forecast fetched');
+            }
+        );
     }
 
     public getCurrentWeather(): CurrentWeather {
         const temp = {
-            temperature: this.nowcast[0].data.instant.details.air_temperature,
-            symbol: this.nowcast[0].data.next_1_hours.summary?.symbol_code,
+            temperature: this.forecast[0].data.instant.details.air_temperature,
+            symbol: this.forecast[0].data.next_1_hours?.summary?.symbol_code
+                ? this.forecast[0].data.next_1_hours.summary.symbol_code
+                : 'unknown',
         };
 
         // Fix strange edge case
-        if (temp.temperature > -1 && temp.temperature < 1) {
+        if (
+            temp.temperature !== undefined &&
+            temp.temperature > -1 &&
+            temp.temperature < 1
+        ) {
             temp.temperature = 0;
         }
 
-        return temp;
+        return temp as CurrentWeather;
     }
 
     public getDailyForecasts(): DailyForecasts {
@@ -148,7 +152,10 @@ export class Weather {
      * @param url
      * @returns
      */
-    private static async fetchForecastData(url: string): Promise<TimeSeries[]> {
+    private static async fetchForecastData(
+        url: string,
+        testSchema: z.ZodSchema
+    ): Promise<TimeSeries[]> {
         // Fetch and decode JSON
         const response = await axios.get(url, {
             method: 'GET',
@@ -157,6 +164,16 @@ export class Weather {
             },
         });
         const forecast = response.data;
-        return forecast?.properties?.timeseries;
+
+        // Validate the response
+        const forecastValidated = testSchema.safeParse(forecast);
+
+        if (forecastValidated.success) {
+            return forecastValidated.data.properties.timeseries as TimeSeries[];
+        } else {
+            console.log('Could not validate forecast');
+            console.log(forecastValidated.error.issues);
+            return forecast.properties.timeseries as TimeSeries[];
+        }
     }
 }

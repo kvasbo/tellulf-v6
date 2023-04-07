@@ -1,68 +1,116 @@
-export interface TimeSeries {
-    time: string;
-    data: {
-        instant: instant;
-        next_1_hours: next_1_hours;
-        next_6_hours: next_6_hours;
-        next_12_hours: next_12_hours;
-    };
-}
+import * as z from 'zod';
 
-export interface next_6_hours {
-    summary: {
-        symbol_code: string;
-    };
-    details: {
-        air_temperature_max: number;
-        air_temperature_min: number;
-        precipitation_amount: number;
-        precipitation_amount_max: number;
-        precipitation_amount_min: number;
-        probability_of_precipitation: number;
-    };
-}
+export const InstantSchema = z.object({
+    details: z.object({
+        air_pressure_at_sea_level: z.number().optional(),
+        air_temperature: z.number().optional(),
+        air_temperature_percentile_10: z.number().optional(),
+        air_temperature_percentile_90: z.number().optional(),
+        cloud_area_fraction: z.number().optional(),
+        cloud_area_fraction_high: z.number().optional(),
+        cloud_area_fraction_low: z.number().optional(),
+        cloud_area_fraction_medium: z.number().optional(),
+        dew_point_temperature: z.number().optional(),
+        fog_area_fraction: z.number().optional(),
+        relative_humidity: z.number().optional(),
+        ultraviolet_index_clear_sky: z.number().optional(),
+        wind_from_direction: z.number().optional(),
+        wind_speed: z.number().optional(),
+        wind_speed_of_gust: z.number().optional(),
+        wind_speed_percentile_10: z.number().optional(),
+        wind_speed_percentile_90: z.number().optional(),
+    }),
+});
 
-export interface next_12_hours {
-    summary: {
-        symbol_code: string;
-        symbol_confidence: string;
-    };
-    details: {
-        probability_of_precipitation: number;
-    };
-}
+export const Next1HourSchema = z.object({
+    summary: z.object({
+        symbol_code: z.string(),
+    }),
+    details: z.object({
+        precipitation_amount: z.number(),
+        precipitation_amount_max: z.number(),
+        precipitation_amount_min: z.number(),
+        probability_of_precipitation: z.number(),
+        probability_of_thunder: z.number(),
+    }),
+});
 
-export interface instant {
-    details: {
-        air_pressure_at_sea_level: number;
-        air_temperature: number;
-        air_temperature_percentile_10: number;
-        air_temperature_percentile_90: number;
-        cloud_area_fraction: number;
-        cloud_area_fraction_high: number;
-        cloud_area_fraction_low: number;
-        cloud_area_fraction_medium: number;
-        dew_point_temperature: number;
-        fog_area_fraction: number;
-        relative_humidity: number;
-        ultraviolet_index_clear_sky: number;
-        wind_from_direction: number;
-        wind_speed: number;
-        wind_speed_of_gust: number;
-        wind_speed_percentile_10: number;
-        wind_speed_percentile_90: number;
-    };
-}
+export const Next6HoursSchema = z.object({
+    summary: z.object({
+        symbol_code: z.string(),
+    }),
+    details: z.object({
+        air_temperature_max: z.number(),
+        air_temperature_min: z.number(),
+        precipitation_amount: z.number(),
+        precipitation_amount_max: z.number(),
+        precipitation_amount_min: z.number(),
+        probability_of_precipitation: z.number(),
+    }),
+});
 
-export interface next_1_hours {
-    summary: {
-        symbol_code: string;
-    };
-    details: {
-        precipitation_amount: number;
-        precipitation_amount_max: number;
-        precipitation_amount_min: number;
-        probability_of_precipitation: number;
-        probability_of_thunder: number;
-    };
-}
+export const Next12HoursSchema = z.object({
+    summary: z.object({
+        symbol_code: z.string(),
+        symbol_confidence: z.string(),
+    }),
+    details: z.object({
+        probability_of_precipitation: z.number(),
+    }),
+});
+
+export const TimeSeriesSchema = z.object({
+    time: z.string().datetime({ offset: true }),
+    data: z.object({
+        instant: InstantSchema,
+        next_1_hours: Next1HourSchema.optional(),
+        next_6_hours: Next6HoursSchema.optional(),
+        next_12_hours: Next12HoursSchema.optional(),
+    }),
+});
+
+export const YrCompleteResponseSchema = z.object({
+    type: z.string(),
+    geometry: z.object({
+        type: z.string(),
+        coordinates: z.array(z.number()),
+    }),
+    properties: z.object({
+        meta: z.object({
+            updated_at: z.string(),
+            units: z.object({
+                air_pressure_at_sea_level: z.string().optional(),
+                air_temperature: z.string().optional(),
+                air_temperature_max: z.string().optional(),
+                air_temperature_min: z.string().optional(),
+                air_temperature_percentile_10: z.string().optional(),
+                air_temperature_percentile_90: z.string().optional(),
+                cloud_area_fraction: z.string().optional(),
+                cloud_area_fraction_high: z.string().optional(),
+                cloud_area_fraction_low: z.string().optional(),
+                cloud_area_fraction_medium: z.string().optional(),
+                dew_point_temperature: z.string().optional(),
+                fog_area_fraction: z.string().optional(),
+                precipitation_amount: z.string().optional(),
+                precipitation_amount_max: z.string().optional(),
+                precipitation_amount_min: z.string().optional(),
+                probability_of_precipitation: z.string().optional(),
+                probability_of_thunder: z.string().optional(),
+                relative_humidity: z.string().optional(),
+                ultraviolet_index_clear_sky: z.string().optional(),
+                wind_from_direction: z.string().optional(),
+                wind_speed: z.string().optional(),
+                wind_speed_of_gust: z.string().optional(),
+                wind_speed_percentile_10: z.string().optional(),
+                wind_speed_percentile_90: z.string().optional(),
+            }),
+        }),
+        timeseries: z.array(TimeSeriesSchema),
+    }),
+});
+
+export type TimeSeries = z.infer<typeof TimeSeriesSchema>;
+export type instant = z.infer<typeof InstantSchema>;
+export type next_1_hours = z.infer<typeof Next1HourSchema>;
+export type next_6_hours = z.infer<typeof Next6HoursSchema>;
+export type next_12_hours = z.infer<typeof Next12HoursSchema>;
