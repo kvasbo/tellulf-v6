@@ -1,18 +1,19 @@
 import express from 'express';
 import path from 'path';
-import * as dotenv from 'dotenv';
 import { Days } from './Days';
 import { Clock } from './Clock';
 import { Entur } from './Entur';
-import { Homey } from './Homey';
 import { Settings } from 'luxon';
+import { Smarthouse } from './Smarthouse';
 
 // Configure the time zone
 Settings.defaultZone = 'Europe/Oslo';
 
-dotenv.config();
-
 const app = express();
+
+// Create smarthouse connector
+const smart = new Smarthouse();
+smart.Connect();
 
 // Express settings
 
@@ -24,12 +25,6 @@ const port = 3000;
 
 const days = new Days();
 const entur = new Entur();
-
-// Start update loops
-Homey.Update_Data_From_Homey();
-setInterval(() => {
-    Homey.Update_Data_From_Homey();
-}, 15000);
 
 app.get('/', (req, res) => {
     const data = {
@@ -55,7 +50,7 @@ app.get('/entur', async (req, res) => {
 
 // Get latest Homey data
 app.get('/homey', (req, res) => {
-    res.send(Homey.Get_Latest_Data());
+    res.send(smart.getData());
 });
 
 app.listen(port, () => {

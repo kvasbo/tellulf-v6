@@ -55,39 +55,37 @@ async function runUpdateLoop(force = false) {
 
     const homey: HomeyData = data[1];
 
-    if (homey.age && homey.age < 600) {
-        if (homey.tempOut) {
-            const t = Number(homey.tempOut).toFixed(0);
-            $('.current_temperature').html(`${t}&deg;`);
-        } else {
-            $('.current_temperature').html(`?`);
-        }
-        if (homey.pressure) {
-            const p = Number(homey.pressure).toFixed(0);
-            $('.current_pressure').html(`${p} hPa`);
-        }
-        if (homey.humOut) {
-            const p = Number(homey.humOut).toFixed(0);
-            $('.current_humidity').html(`${p} % hum`);
-        }
+    if (homey.tempOut) {
+        const t = Number(homey.tempOut).toFixed(0);
+        $('.current_temperature').html(`${t}&deg;`);
+    } else {
+        $('.current_temperature').html(`?`);
+    }
+    if (homey.pressure) {
+        const p = Number(homey.pressure).toFixed(0);
+        $('.current_pressure').html(`${p} hPa`);
+    }
+    if (homey.humOut) {
+        const p = Number(homey.humOut).toFixed(0);
+        $('.current_humidity').html(`${p} % hum`);
+    }
 
-        if (homey.power) {
-            const p = Math.round(Number(homey.power) / 100) / 10;
-            $('.current_power').html(`${p} kW`);
-        }
-        if (homey.powerUsedToday) {
-            $('.powerUsageTodayHome').html(
-                Math.round(Number(homey.powerUsedToday)).toString()
-            );
-        }
-        if (homey.powerCostNow) {
-            const currentPowePrice = +homey.powerCostNow;
-            $('.current_price').html(`${currentPowePrice.toFixed(2)} kr/kWh`);
-        }
-        if (homey.costToday) {
-            const costToday = +homey.costToday;
-            $('.powerCostTodayHome').html(`${costToday.toFixed(2)}`);
-        }
+    if (homey.power) {
+        const p = Math.round(Number(homey.power) / 100) / 10;
+        $('.current_power').html(`${p} kW`);
+    }
+    if (homey.powerUsedToday) {
+        $('.powerUsageTodayHome').html(
+            Math.round(Number(homey.powerUsedToday)).toString()
+        );
+    }
+    if (homey.powerCostNow) {
+        const currentPowePrice = +homey.powerCostNow;
+        $('.current_price').html(`${currentPowePrice.toFixed(2)} kr/kWh`);
+    }
+    if (homey.costToday) {
+        const costToday = +homey.costToday;
+        $('.powerCostTodayHome').html(`${costToday.toFixed(2)}`);
     }
 }
 
