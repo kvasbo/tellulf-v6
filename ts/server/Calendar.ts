@@ -103,13 +103,23 @@ export class Calendar {
     }
 
     private async refreshEvents(): Promise<void> {
-        const id = process.env.CAL_ID_FELLES ? process.env.CAL_ID_FELLES : '';
-        this.events = await Calendar.getCalendarData(id);
+        if (process.env.CAL_ID_FELLES) {
+            this.events = await Calendar.getCalendarData(
+                process.env.CAL_ID_FELLES
+            );
+        } else {
+            this.events = [];
+        }
     }
 
     private async refreshBirthdays(): Promise<void> {
-        const id = process.env.CAL_ID_BURSDAG ? process.env.CAL_ID_BURSDAG : '';
-        this.birthdays = await Calendar.getCalendarData(id);
+        if (process.env.CAL_ID_BURSDAG) {
+            this.birthdays = await Calendar.getCalendarData(
+                process.env.CAL_ID_BURSDAG
+            );
+        } else {
+            this.birthdays = [];
+        }
     }
 
     /**
