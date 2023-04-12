@@ -1,6 +1,29 @@
-import { HomeyData } from '../server/Homey';
-import { TimeData } from '../server/Clock';
-import { Train } from '../server/Entur';
+interface Train {
+    time: string;
+    destination: string;
+}
+
+interface HomeyData {
+    age: number;
+    time: number;
+    tempOut?: number;
+    humOut?: number;
+    power?: number;
+    pressure?: number;
+    powerUsedToday?: number;
+    costToday?: number;
+    powerCostNow?: number;
+    tempIn?: number;
+    humIn?: number;
+    co2in?: number;
+    niceTime?: string;
+}
+
+interface TimeData {
+    time: string;
+    date: string;
+    week: string;
+}
 
 // Run every fifteen seconds, plus once when starting up
 $(function () {

@@ -7,7 +7,6 @@
         "allowJs": false,
         "moduleResolution": "node",
         "removeComments": true,
-        "strict": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
         "noImplicitAny": true,

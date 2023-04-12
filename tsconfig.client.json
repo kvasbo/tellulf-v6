@@ -2,16 +2,15 @@
     "compilerOptions": {
         "outDir": "./assets/js",
         "lib": ["ES2018", "DOM"],
-        "noImplicitAny": true,
-        "module": "CommonJS",
         "target": "es5",
         "allowJs": false,
-        "moduleResolution": "node",
         "esModuleInterop": true,
+        "strict": false,
         "removeComments": true,
         "skipLibCheck": true,
+        "noImplicitAny": true,
         "sourceMap": true,
         "sourceRoot": "./ts/client"
     },
-    "include": ["ts/client/*.ts"]
+    "include": ["ts/client/*"]
 }

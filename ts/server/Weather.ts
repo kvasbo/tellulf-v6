@@ -156,10 +156,7 @@ export class Weather {
             console.log("Forecast validated, let's go!");
             return forecastValidated.data.properties.timeseries as TimeSeries[];
         } else {
-            console.log(
-                'Could not validate forecast due to the following issues:'
-            );
-            console.log(forecastValidated.error.issues);
+            console.log('Could not validate forecast');
             return [] as TimeSeries[];
         }
     }
