@@ -3,7 +3,7 @@
         "outDir": "./assets/js",
         "lib": ["ES2018", "DOM"],
         "module": "umd",
-        "target": "es6",
+        "target": "es5",
         "allowJs": false,
         "esModuleInterop": true,
         "strict": false,
