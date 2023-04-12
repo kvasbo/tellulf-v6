@@ -83,10 +83,6 @@ export class Weather {
             const time = new Date(series.time);
             const date = time.toISOString().slice(0, 10);
 
-            if (date === today) {
-                continue;
-            }
-
             if (!out[date]) {
                 out[date] = {
                     maxTemp: -9999,
@@ -104,7 +100,11 @@ export class Weather {
                 }
             }
 
-            if (series.time.includes('T06:00:00')) {
+            // Either 0600 or empty and today (to handle running after the 0600 one is gone)
+            if (
+                series.time.includes('T06:00:00') ||
+                (!out[date].symbol && date === today)
+            ) {
                 out[date].symbol =
                     series.data.next_12_hours?.summary.symbol_code;
             }
