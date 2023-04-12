@@ -74,7 +74,7 @@ async function runUpdateLoop(force = false) {
         const p = Math.round(Number(homey.power) / 100) / 10;
         $('.current_power').html(`${p} kW`);
     }
-    if (false && homey.powerUsedToday) {
+    if (homey.powerUsedToday) {
         $('.powerUsageTodayHome').html(
             Math.round(Number(homey.powerUsedToday)).toString()
         );
