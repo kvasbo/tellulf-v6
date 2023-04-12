@@ -20,7 +20,7 @@ export class Smarthouse {
     public getData() {
         return {
             tempOut: this.temp,
-            humIn: this.hum,
+            humOut: this.hum,
             pressure: this.pressure,
             powerCostNow: this.powerPrice,
             powerUsedToday: this.powerUsed,
