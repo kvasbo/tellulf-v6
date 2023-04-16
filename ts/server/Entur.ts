@@ -100,7 +100,6 @@ export class Entur {
                     'ET-Client-Name': 'kvasbo-tellulf',
                     'Content-Type': 'application/json',
                 },
-                timeout: 3000,
             }
         );
 
