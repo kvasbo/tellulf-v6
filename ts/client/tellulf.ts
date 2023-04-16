@@ -25,6 +25,8 @@ interface TimeData {
     week: string;
 }
 
+let lastUpdatedPower = new Date();
+
 // Run every fifteen seconds, plus once when starting up
 $(function () {
     setReload(1);
@@ -71,7 +73,8 @@ async function runUpdateLoop(force = false) {
     }
 
     if (homey.power) {
-        const p = Math.round(Number(homey.power) / 100) / 10;
+        setLastUpdatedPowerTime();
+        const p = Math.round(Number(homey.power) / 1000);
         $('.current_power').html(`${p} kW`);
     }
     if (homey.powerUsedToday) {
@@ -85,7 +88,27 @@ async function runUpdateLoop(force = false) {
     }
     if (homey.costToday) {
         const costToday = +homey.costToday;
-        $('.powerCostTodayHome').html(`${costToday.toFixed(2)}`);
+        $('.powerCostTodayHome').html(`${costToday.toFixed(0)}`);
+    }
+
+    // Remove power data if not updated lately
+    checkLastUpdatedPowerTime();
+}
+
+function setLastUpdatedPowerTime() {
+    lastUpdatedPower = new Date();
+}
+
+function checkLastUpdatedPowerTime() {
+    const now = new Date();
+    const diff = now.getTime() - lastUpdatedPower.getTime();
+    const diffMinutes = Math.round(diff / 1000 / 60);
+
+    if (diffMinutes > 1) {
+        $('.current_power').html(`?`);
+        $('.current_price').html(`?`);
+        $('.powerUsageTodayHome').html(`?`);
+        $('.powerCostTodayHome').html(`?`);
     }
 }
 
@@ -94,6 +117,12 @@ function updateTimeInfo(timeData: TimeData) {
     $('#now_time').html(timeData.time);
     $('#now_date').html(timeData.date);
     $('#now_week').html(`Uke ${timeData.week}`);
+}
+
+function setLastUpdateTime() {
+    const now = new Date();
+    const time = now.toLocaleTimeString();
+    $('#last_update_time').html(`Sist oppdatert: ${time}`);
 }
 
 function updateEnturInfo(entur: Train[]) {
