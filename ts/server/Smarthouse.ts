@@ -1,5 +1,6 @@
 import mqtt from 'mqtt';
 import * as dotenv from 'dotenv';
+import { PowerPrices } from './PowerPrices';
 
 dotenv.config();
 
@@ -22,7 +23,10 @@ export class Smarthouse {
             tempOut: this.temp,
             humOut: this.hum,
             pressure: this.pressure,
-            powerCostNow: this.powerPrice,
+            powerCostNow: PowerPrices.getCurrentPrice(
+                this.powerPrice,
+                new Date()
+            ),
             powerUsedToday: this.powerUsed,
             power: this.powerEffect,
             costToday: this.powerCost,
