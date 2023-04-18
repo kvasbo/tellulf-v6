@@ -104,7 +104,6 @@ export class Tibber {
     public constructor() {
         tibberFeedHome.on('data', (data) => {
             this.parseData(data, 'home');
-            console.log(this.powerData.cabin);
         });
         tibberFeedCabin.on('data', (data) => {
             this.parseData(data, 'cabin');
