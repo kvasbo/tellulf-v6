@@ -69,6 +69,8 @@ const tibberFeedHome = new TibberFeed(tibberQueryHome, 5000);
 const tibberFeedCabin = new TibberFeed(tibberQueryCabin, 5000);
 
 export class Tibber {
+    private powerData: { home?: TibberData; cabin?: TibberData } = {};
+
     public constructor() {
         console.log('Tibber init');
         tibberFeedHome.on('data', (data) => {
@@ -82,8 +84,10 @@ export class Tibber {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    public parseData(data: any, where: string): void {
+    public parseData(data: any, where: 'home' | 'cabin'): void {
         const tibberValidated = TibberSubscriptionSchema.safeParse(data);
-        console.log(tibberValidated, where);
+        if (tibberValidated.success) {
+            this.powerData[where] = tibberValidated.data;
+        }
     }
 }
