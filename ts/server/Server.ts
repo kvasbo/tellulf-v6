@@ -5,7 +5,6 @@ import { Clock } from './Clock';
 import { Entur } from './Entur';
 import { Settings } from 'luxon';
 import { Smarthouse } from './Smarthouse';
-import { Tibber } from './Tibber';
 
 // Configure the time zone
 Settings.defaultZone = 'Europe/Oslo';
@@ -15,8 +14,6 @@ const app = express();
 // Create smarthouse connector
 const smart = new Smarthouse();
 smart.Connect();
-
-const tibber = new Tibber();
 
 // Express settings
 

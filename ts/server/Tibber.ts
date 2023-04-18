@@ -71,16 +71,20 @@ const tibberFeedCabin = new TibberFeed(tibberQueryCabin, 5000);
 export class Tibber {
     private powerData: { home?: TibberData; cabin?: TibberData } = {};
 
+    // Create Tibber instances and start subscriptions
     public constructor() {
-        console.log('Tibber init');
         tibberFeedHome.on('data', (data) => {
             this.parseData(data, 'home');
         });
         tibberFeedCabin.on('data', (data) => {
             this.parseData(data, 'cabin');
         });
-        tibberFeedCabin.connect();
-        tibberFeedHome.connect();
+        tibberFeedCabin.connect().then(() => {
+            console.log('Tibber cabin initiated');
+        });
+        tibberFeedHome.connect().then(() => {
+            console.log('Tibber home initiated');
+        });
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -1,6 +1,7 @@
 import mqtt from 'mqtt';
 import * as dotenv from 'dotenv';
 import { PowerPrices } from './PowerPrices';
+import { Tibber } from './Tibber';
 
 dotenv.config();
 
@@ -8,6 +9,9 @@ const MQTT_URL = process.env.MQTT_URL ? process.env.MQTT_URL : '';
 
 export class Smarthouse {
     static client: mqtt.MqttClient;
+
+    // Tibber realtime subscription
+    private tibberSubscription: Tibber = new Tibber();
 
     private temp = -9999;
     private hum = -9999;
