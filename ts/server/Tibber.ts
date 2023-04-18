@@ -88,6 +88,8 @@ export class Tibber {
         const tibberValidated = TibberSubscriptionSchema.safeParse(data);
         if (tibberValidated.success) {
             this.powerData[where] = tibberValidated.data;
+        } else {
+            console.log('Tibber data not valid');
         }
     }
 }
