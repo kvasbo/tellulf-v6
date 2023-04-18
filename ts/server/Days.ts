@@ -40,7 +40,7 @@ export class Days {
         // Create a Luxon DateTime object
         const dt = DateTime.fromJSDate(jsDate).setLocale('nb');
 
-        const date = dt.toISODate();
+        const date = dt.toISODate()?.toString() as string;
 
         const sunRiseDate = getSunrise(59.9139, 10.7522, jsDate);
         const sunSetDate = getSunset(59.9139, 10.7522, jsDate);
