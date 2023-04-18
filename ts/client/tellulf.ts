@@ -60,8 +60,6 @@ async function runUpdateLoop(force = false) {
 
     const homey: HomeyData = data[1];
 
-    console.log(homey);
-
     if (homey.tempOut) {
         const t = Number(homey.tempOut).toFixed(0);
         $('.current_temperature').html(`${t}&deg;`);

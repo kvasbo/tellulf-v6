@@ -121,7 +121,12 @@ export class Tibber {
     public parseData(data: any, where: 'home' | 'cabin'): void {
         const tibberValidated = TibberSubscriptionSchema.safeParse(data);
         if (tibberValidated.success) {
+            // Overwrite but keep power production as it tends to be null
+            const oldData = this.powerData[where];
             this.powerData[where] = tibberValidated.data;
+            if (!tibberValidated.data.powerProduction) {
+                this.powerData[where].powerProduction = oldData.powerProduction;
+            }
         } else {
             console.log('Tibber data not valid');
         }
