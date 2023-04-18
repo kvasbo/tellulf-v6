@@ -17,6 +17,9 @@ interface HomeyData {
     humIn?: number;
     co2in?: number;
     niceTime?: string;
+    powerUsedTodayCabin?: number;
+    powerCabin?: number;
+    costTodayCabin?: number;
 }
 
 interface TimeData {
@@ -57,6 +60,8 @@ async function runUpdateLoop(force = false) {
 
     const homey: HomeyData = data[1];
 
+    console.log(homey);
+
     if (homey.tempOut) {
         const t = Number(homey.tempOut).toFixed(0);
         $('.current_temperature').html(`${t}&deg;`);
@@ -90,7 +95,19 @@ async function runUpdateLoop(force = false) {
         const costToday = +homey.costToday;
         $('.powerCostTodayHome').html(`${costToday.toFixed(0)}`);
     }
-
+    if (homey.powerUsedTodayCabin) {
+        $('.powerUsageTodayCabin').html(
+            Math.round(Number(homey.powerUsedTodayCabin)).toString()
+        );
+    }
+    if (homey.powerCabin !== undefined) {
+        const p = Math.round(Number(homey.powerCabin) / 1000);
+        $('.currentPowerCabin').html(`${p} kW`);
+    }
+    if (homey.costTodayCabin !== undefined) {
+        const costToday = +homey.costTodayCabin;
+        $('.powerCostTodayCabin').html(`${costToday.toFixed(0)}`);
+    }
     // Remove power data if not updated lately
     checkLastUpdatedPowerTime();
 }
@@ -126,7 +143,7 @@ function setLastUpdateTime() {
 }
 
 function updateEnturInfo(entur: Train[]) {
-    let enturHtml = 'Neste to baner: ';
+    let enturHtml = '<strong>Neste to baner:</strong>';
 
     for (let i = 0; i < Math.min(entur.length, 2); i++) {
         enturHtml += `<span class="entur_item">${entur[i].time.substring(

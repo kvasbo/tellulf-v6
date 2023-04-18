@@ -23,6 +23,25 @@ export class Smarthouse {
     private powerCost = -1;
 
     public getData() {
+        let currentConsumptionCabin =
+            this.tibberSubscription.powerData.cabin.power;
+        if (
+            currentConsumptionCabin === 0 &&
+            this.tibberSubscription.powerData.cabin.powerProduction
+        ) {
+            currentConsumptionCabin =
+                this.tibberSubscription.powerData.cabin.powerProduction * -1;
+        }
+        const usedTodayCabin =
+            this.tibberSubscription.powerData.cabin.accumulatedConsumption -
+            this.tibberSubscription.powerData.cabin.accumulatedProduction;
+
+        const costTodayCabin = this.tibberSubscription.powerData.cabin
+            .accumulatedReward
+            ? this.tibberSubscription.powerData.cabin.accumulatedCost -
+              this.tibberSubscription.powerData.cabin.accumulatedReward
+            : this.tibberSubscription.powerData.cabin.accumulatedCost;
+
         return {
             tempOut: this.temp,
             humOut: this.hum,
@@ -35,6 +54,9 @@ export class Smarthouse {
                 this.tibberSubscription.powerData.home.accumulatedConsumption,
             power: this.tibberSubscription.powerData.home.power,
             costToday: this.tibberSubscription.powerData.home.accumulatedCost,
+            powerCabin: currentConsumptionCabin,
+            powerUsedTodayCabin: usedTodayCabin,
+            costTodayCabin: costTodayCabin,
         };
     }
 
