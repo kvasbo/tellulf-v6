@@ -31,9 +31,10 @@ export class Smarthouse {
                 this.powerPrice,
                 new Date()
             ),
-            powerUsedToday: this.powerUsed,
-            power: this.powerEffect,
-            costToday: this.powerCost,
+            powerUsedToday:
+                this.tibberSubscription.powerData.home.accumulatedConsumption,
+            power: this.tibberSubscription.powerData.home.power,
+            costToday: this.tibberSubscription.powerData.home.accumulatedCost,
         };
     }
 

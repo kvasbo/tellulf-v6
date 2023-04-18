@@ -69,7 +69,36 @@ const tibberFeedHome = new TibberFeed(tibberQueryHome, 5000);
 const tibberFeedCabin = new TibberFeed(tibberQueryCabin, 5000);
 
 export class Tibber {
-    private powerData: { home?: TibberData; cabin?: TibberData } = {};
+    public powerData: { home: TibberData; cabin: TibberData } = {
+        home: {
+            timestamp: '',
+            power: 0,
+            accumulatedConsumption: 0,
+            accumulatedProduction: 0,
+            accumulatedCost: 0,
+            minPower: 0,
+            averagePower: 0,
+            maxPower: 0,
+            accumulatedReward: 0,
+            powerProduction: 0,
+            minPowerProduction: 0,
+            maxPowerProduction: 0,
+        },
+        cabin: {
+            timestamp: '',
+            power: 0,
+            accumulatedConsumption: 0,
+            accumulatedProduction: 0,
+            accumulatedCost: 0,
+            minPower: 0,
+            averagePower: 0,
+            maxPower: 0,
+            accumulatedReward: 0,
+            powerProduction: 0,
+            minPowerProduction: 0,
+            maxPowerProduction: 0,
+        },
+    };
 
     // Create Tibber instances and start subscriptions
     public constructor() {
