@@ -1,16 +1,15 @@
-version: "3.9"
+version: '3.9'
 
 services:
-  tellulf-app:
-    image: kvasbo/tellulf:latest
-    restart: unless-stopped
-    ports:
-      - 1337:3000
-    environment:
-      - YR_URL_FORECAST=${YR_URL_FORECAST}
-      - YR_URL_NOWCAST=${YR_URL_NOWCAST}
-      - CAL_ID_FELLES=${CAL_ID_FELLES}
-      - CAL_ID_BURSDAG=${CAL_ID_BURSDAG}
-      - TIBBER_KEY=${TIBBER_KEY}
-      - GOOGLE_KEY_B64=${GOOGLE_KEY_B64}
-      - HOMEY_URL=${HOMEY_URL}
+    tellulf-app:
+        image: kvasbo/tellulf:latest
+        restart: unless-stopped
+        ports:
+            - 1337:3000
+        environment:
+            - YR_URL_FORECAST=${YR_URL_FORECAST}
+            - YR_URL_NOWCAST=${YR_URL_NOWCAST}
+            - CAL_ID_FELLES=${CAL_ID_FELLES}
+            - CAL_ID_BURSDAG=${CAL_ID_BURSDAG}
+            - TIBBER_KEY=${TIBBER_KEY}
+            - GOOGLE_KEY_B64=${GOOGLE_KEY_B64}
