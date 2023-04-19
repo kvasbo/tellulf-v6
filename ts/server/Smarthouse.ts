@@ -128,7 +128,5 @@ export class Smarthouse {
                     break;
             }
         });
-
-        // Initialize
     }
 }
