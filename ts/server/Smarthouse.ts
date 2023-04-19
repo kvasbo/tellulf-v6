@@ -7,12 +7,6 @@ dotenv.config();
 
 const MQTT_URL = process.env.MQTT_URL ? process.env.MQTT_URL : '';
 
-const MQTT_OPTIONS = {
-    username: process.env.MQTT_USERNAME,
-    password: process.env.MQTT_PASSWORD,
-    client_id: process.env.MQTT_CLIENT_ID,
-};
-
 export class Smarthouse {
     static client: mqtt.MqttClient;
 
@@ -72,7 +66,7 @@ export class Smarthouse {
     }
 
     Connect() {
-        Smarthouse.client = mqtt.connect(MQTT_URL, MQTT_OPTIONS);
+        Smarthouse.client = mqtt.connect(MQTT_URL);
 
         Smarthouse.client.on('connect', () => {
             Smarthouse.client.subscribe('tellulf/#');
