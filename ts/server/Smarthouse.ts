@@ -5,7 +5,19 @@ import { Tibber } from './Tibber';
 
 dotenv.config();
 
-const MQTT_URL = process.env.MQTT_URL ? process.env.MQTT_URL : '';
+const MQTT_URL = process.env.MQTT_URL as string;
+const MQTT_PORT = process.env.MQTT_PORT as string;
+const MQTT_USER = process.env.MQTT_USER as string;
+const MQTT_PASS = process.env.MQTT_PASS as string;
+
+const options: mqtt.IClientOptions = {
+    host: MQTT_URL,
+    port: Number(MQTT_PORT),
+    protocol: 'mqtts',
+    username: MQTT_USER,
+    password: MQTT_PASS,
+    clientId: 'tellulf' + Math.random().toString(16).substr(2, 8),
+};
 
 export class Smarthouse {
     static client: mqtt.MqttClient;
@@ -66,10 +78,15 @@ export class Smarthouse {
     }
 
     Connect() {
-        Smarthouse.client = mqtt.connect(MQTT_URL);
+        Smarthouse.client = mqtt.connect(options);
 
         Smarthouse.client.on('connect', () => {
+            console.log('Connected to MQTT broker');
             Smarthouse.client.subscribe('tellulf/#');
+            Smarthouse.client.publish(
+                'tellulf/poll',
+                'Tellulf is online and polling'
+            );
         });
 
         Smarthouse.client.on('message', (topic, message) => {
@@ -113,6 +130,5 @@ export class Smarthouse {
         });
 
         // Initialize
-        Smarthouse.client.publish('tellulf/poll', 'poll');
     }
 }
