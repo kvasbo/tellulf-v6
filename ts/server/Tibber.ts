@@ -1,6 +1,7 @@
 import { TibberFeed, TibberQuery, IConfig } from 'tibber-api';
 import * as z from 'zod';
 import * as dotenv from 'dotenv';
+import { MqttClient } from './MQTT';
 
 dotenv.config();
 
@@ -69,6 +70,7 @@ const tibberFeedHome = new TibberFeed(tibberQueryHome, 5000);
 const tibberFeedCabin = new TibberFeed(tibberQueryCabin, 5000);
 
 export class Tibber {
+    private mqttClient: MqttClient;
     public powerData: { home: TibberData; cabin: TibberData } = {
         home: {
             timestamp: '',
@@ -101,7 +103,8 @@ export class Tibber {
     };
 
     // Create Tibber instances and start subscriptions
-    public constructor() {
+    public constructor(mqttClient: MqttClient) {
+        this.mqttClient = mqttClient;
         tibberFeedHome.on('data', (data) => {
             this.parseData(data, 'home');
         });
@@ -126,6 +129,13 @@ export class Tibber {
             if (!tibberValidated.data.powerProduction) {
                 this.powerData[where].powerProduction = oldData.powerProduction;
             }
+
+            // Publish to MQTT
+            const mqttTopic = `tellulf/tibber/${where}`;
+            this.mqttClient.publish(
+                mqttTopic,
+                JSON.stringify(this.powerData[where])
+            );
         } else {
             console.log('Tibber data not valid');
         }

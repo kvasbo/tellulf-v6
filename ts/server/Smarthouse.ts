@@ -4,13 +4,12 @@ import { MqttClient } from './MQTT';
 
 export class Smarthouse {
     private mqttClient;
+    private tibberSubscription;
 
     constructor(mqttClient: MqttClient) {
         this.mqttClient = mqttClient;
+        this.tibberSubscription = new Tibber(this.mqttClient);
     }
-
-    // Tibber realtime subscription
-    private tibberSubscription: Tibber = new Tibber();
 
     private temp = -9999;
     private hum = -9999;
