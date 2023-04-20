@@ -20,13 +20,11 @@ const options: mqtt.IClientOptions = {
 export class MqttClient {
     public client: mqtt.MqttClient;
 
+    // Connect to MQTT broker
     constructor() {
         this.client = mqtt.connect(options);
         this.client.on('connect', () => {
-            console.log(
-                'Tellulf Connected to MQTT broker with client ID ' +
-                    options.clientId
-            );
+            this.log(`${options.clientId} connected to ${options.host}`);
             this.client.subscribe('tellulf/#');
             this.client.publish(
                 'tellulf/poll',
@@ -35,11 +33,21 @@ export class MqttClient {
         });
     }
 
+    /**
+     * Publish a message to the MQTT broker
+     * @param topic
+     * @param message
+     */
     public publish(topic: string, message: string) {
         this.client.publish(topic, message);
     }
 
-    public log(message: string, value: number | string) {
+    /**
+     * Just a central place to log MQTT messages
+     * @param message
+     * @param value
+     */
+    public log(message: string, value: number | string | undefined = '') {
         const d = new Date();
         console.log(d.toISOString(), 'MQTT ' + message, value);
     }
