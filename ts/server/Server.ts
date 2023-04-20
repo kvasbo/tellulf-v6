@@ -5,15 +5,19 @@ import { Clock } from './Clock';
 import { Entur } from './Entur';
 import { Settings } from 'luxon';
 import { Smarthouse } from './Smarthouse';
+import { MqttClient } from './MQTT';
 
 // Configure the time zone
 Settings.defaultZone = 'Europe/Oslo';
 
 const app = express();
 
+const mqttClient = new MqttClient();
+
 // Create smarthouse connector
-const smart = new Smarthouse();
-smart.Connect();
+const smart = new Smarthouse(mqttClient);
+// smart.Connect();
+smart.startMqtt();
 
 // Express settings
 
