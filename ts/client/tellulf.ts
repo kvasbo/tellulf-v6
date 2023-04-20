@@ -77,7 +77,7 @@ async function runUpdateLoop(force = false) {
 
     if (homey.power) {
         setLastUpdatedPowerTime();
-        const p = Math.round(Number(homey.power) / 1000);
+        const p = Math.round(Number(homey.power) / 100) / 10;
         $('.current_power').html(`${p} kW`);
     }
     if (homey.powerUsedToday) {
@@ -99,7 +99,7 @@ async function runUpdateLoop(force = false) {
         );
     }
     if (homey.powerCabin !== undefined) {
-        const p = Math.round(Number(homey.powerCabin) / 1000);
+        const p = Math.round(Number(homey.powerCabin) / 100) / 10;
         $('.currentPowerCabin').html(`${p} kW`);
     }
     if (homey.costTodayCabin !== undefined) {
