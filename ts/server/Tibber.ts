@@ -71,36 +71,7 @@ const tibberFeedCabin = new TibberFeed(tibberQueryCabin, 5000);
 
 export class Tibber {
     private mqttClient: MqttClient;
-    public powerData: { home: TibberData; cabin: TibberData } = {
-        home: {
-            timestamp: '',
-            power: 0,
-            accumulatedConsumption: 0,
-            accumulatedProduction: 0,
-            accumulatedCost: 0,
-            minPower: 0,
-            averagePower: 0,
-            maxPower: 0,
-            accumulatedReward: 0,
-            powerProduction: 0,
-            minPowerProduction: 0,
-            maxPowerProduction: 0,
-        },
-        cabin: {
-            timestamp: '',
-            power: 0,
-            accumulatedConsumption: 0,
-            accumulatedProduction: 0,
-            accumulatedCost: 0,
-            minPower: 0,
-            averagePower: 0,
-            maxPower: 0,
-            accumulatedReward: 0,
-            powerProduction: 0,
-            minPowerProduction: 0,
-            maxPowerProduction: 0,
-        },
-    };
+    private lastCabinPower = 0; // Hack to remember last power value
 
     // Create Tibber instances and start subscriptions
     public constructor(mqttClient: MqttClient) {
@@ -117,25 +88,88 @@ export class Tibber {
         tibberFeedHome.connect().then(() => {
             console.log('Tibber home initiated');
         });
+        // Start power price loop
+        this.updatePowerprices();
+    }
+
+    private updatePowerprices() {
+        tibberQueryHome.getCurrentEnergyPrice(homeId).then((data) => {
+            // Publish to MQTT
+            this.mqttClient.publish('tellulf/tibber/price/total', data.total);
+            this.mqttClient.publish('tellulf/tibber/price/energy', data.energy);
+            this.mqttClient.publish('tellulf/tibber/price/tax', data.tax);
+            this.mqttClient.publish('tellulf/tibber/price/level', data.level);
+        });
+        setTimeout(() => {
+            this.updatePowerprices();
+        }, 60000);
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    public parseData(data: any, where: 'home' | 'cabin'): void {
+    public parseData(data: TibberData, where: 'home' | 'cabin'): void {
         const tibberValidated = TibberSubscriptionSchema.safeParse(data);
         if (tibberValidated.success) {
-            // Overwrite but keep power production as it tends to be null
-            const oldData = this.powerData[where];
-            this.powerData[where] = tibberValidated.data;
-            if (!tibberValidated.data.powerProduction) {
-                this.powerData[where].powerProduction = oldData.powerProduction;
-            }
+            const accumulatedConsumption =
+                tibberValidated.data.accumulatedConsumption -
+                tibberValidated.data.accumulatedProduction;
 
+            const accumulatedCost =
+                tibberValidated.data.accumulatedReward === null
+                    ? tibberValidated.data.accumulatedCost
+                    : tibberValidated.data.accumulatedCost -
+                      tibberValidated.data.accumulatedReward;
+
+            // Subtract production from power usage
+            let power = tibberValidated.data.power;
+            if (where === 'cabin') {
+                // Hack to remember last power value
+                if (
+                    tibberValidated.data.power === 0 &&
+                    tibberValidated.data.powerProduction !== null
+                ) {
+                    power = tibberValidated.data.powerProduction * -1;
+                    this.lastCabinPower = power;
+                } else if (
+                    tibberValidated.data.power === 0 &&
+                    tibberValidated.data.powerProduction === null
+                ) {
+                    power = this.lastCabinPower;
+                }
+            }
             // Publish to MQTT
-            const mqttTopic = `tellulf/tibber/${where}`;
+            const mqttTopicBase = `tellulf/tibber/${where}/`;
+
+            this.mqttClient.publish(mqttTopicBase + 'power', power);
             this.mqttClient.publish(
-                mqttTopic,
-                JSON.stringify(this.powerData[where])
+                mqttTopicBase + 'accumulatedConsumption',
+                accumulatedConsumption
             );
+            this.mqttClient.publish(
+                mqttTopicBase + 'accumulatedCost',
+                accumulatedCost
+            );
+            this.mqttClient.publish(
+                mqttTopicBase + 'powerProduction',
+                tibberValidated.data.powerProduction
+            );
+            this.mqttClient.publish(
+                mqttTopicBase + 'averagePower',
+                tibberValidated.data.averagePower
+            );
+            this.mqttClient.publish(
+                mqttTopicBase + 'maxPower',
+                tibberValidated.data.maxPower
+            );
+            this.mqttClient.publish(
+                mqttTopicBase + 'minPower',
+                tibberValidated.data.minPower
+            );
+            if (tibberValidated.data.powerProduction) {
+                this.mqttClient.publish(
+                    mqttTopicBase + 'production',
+                    tibberValidated.data.powerProduction
+                );
+            }
         } else {
             console.log('Tibber data not valid');
         }

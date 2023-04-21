@@ -1,45 +1,52 @@
 import { PowerPrices } from './PowerPrices';
-import { Tibber } from './Tibber';
+import { TibberData } from './Tibber';
 import { MqttClient } from './MQTT';
 
 export class Smarthouse {
     private mqttClient;
-    private tibberSubscription;
 
     constructor(mqttClient: MqttClient) {
         this.mqttClient = mqttClient;
-        this.tibberSubscription = new Tibber(this.mqttClient);
     }
+
+    private powerData: { home: TibberData; cabin: TibberData } = {
+        home: {
+            timestamp: '',
+            power: 0,
+            accumulatedConsumption: 0,
+            accumulatedProduction: 0,
+            accumulatedCost: 0,
+            minPower: 0,
+            averagePower: 0,
+            maxPower: 0,
+            accumulatedReward: 0,
+            powerProduction: 0,
+            minPowerProduction: 0,
+            maxPowerProduction: 0,
+        },
+        cabin: {
+            timestamp: '',
+            power: 0,
+            accumulatedConsumption: 0,
+            accumulatedProduction: 0,
+            accumulatedCost: 0,
+            minPower: 0,
+            averagePower: 0,
+            maxPower: 0,
+            accumulatedReward: 0,
+            powerProduction: 0,
+            minPowerProduction: 0,
+            maxPowerProduction: 0,
+        },
+    };
 
     private temp = -9999;
     private hum = -9999;
     private pressure = 0;
 
     private powerPrice = -1;
-    private powerUsed = -1;
-    private powerEffect = -1;
-    private powerCost = -1;
 
     public getData() {
-        let currentConsumptionCabin =
-            this.tibberSubscription.powerData.cabin.power;
-        if (
-            currentConsumptionCabin === 0 &&
-            this.tibberSubscription.powerData.cabin.powerProduction
-        ) {
-            currentConsumptionCabin =
-                this.tibberSubscription.powerData.cabin.powerProduction * -1;
-        }
-        const usedTodayCabin =
-            this.tibberSubscription.powerData.cabin.accumulatedConsumption -
-            this.tibberSubscription.powerData.cabin.accumulatedProduction;
-
-        const costTodayCabin = this.tibberSubscription.powerData.cabin
-            .accumulatedReward
-            ? this.tibberSubscription.powerData.cabin.accumulatedCost -
-              this.tibberSubscription.powerData.cabin.accumulatedReward
-            : this.tibberSubscription.powerData.cabin.accumulatedCost;
-
         return {
             tempOut: this.temp,
             humOut: this.hum,
@@ -48,13 +55,12 @@ export class Smarthouse {
                 this.powerPrice,
                 new Date()
             ),
-            powerUsedToday:
-                this.tibberSubscription.powerData.home.accumulatedConsumption,
-            power: this.tibberSubscription.powerData.home.power,
-            costToday: this.tibberSubscription.powerData.home.accumulatedCost,
-            powerCabin: currentConsumptionCabin,
-            powerUsedTodayCabin: usedTodayCabin,
-            costTodayCabin: costTodayCabin,
+            powerUsedToday: this.powerData.home.accumulatedConsumption,
+            power: this.powerData.home.power,
+            costToday: this.powerData.home.accumulatedCost,
+            powerCabin: this.powerData.cabin.power,
+            powerUsedTodayCabin: this.powerData.cabin.accumulatedConsumption,
+            costTodayCabin: this.powerData.cabin.accumulatedCost,
         };
     }
 
@@ -73,24 +79,59 @@ export class Smarthouse {
                     this.pressure = parseFloat(message.toString());
                     this.mqttClient.log('Pressure set to:', this.pressure);
                     break;
-                case 'tellulf/power/price':
+                case 'tellulf/tibber/price/total':
                     this.powerPrice = parseFloat(message.toString());
                     this.mqttClient.log('Power price set to:', this.powerPrice);
                     break;
-                case 'tellulf/power/used':
-                    this.powerUsed = parseFloat(message.toString());
-                    this.mqttClient.log('Power used set to:', this.powerUsed);
-                    break;
-                case 'tellulf/power/effect':
-                    this.powerEffect = parseFloat(message.toString());
+                case 'tellulf/tibber/home/power':
+                    this.powerData.home.power = parseFloat(message.toString());
                     this.mqttClient.log(
-                        'Power effect set to:',
-                        this.powerEffect
+                        'Power home set to:',
+                        this.powerData.home.power
                     );
                     break;
-                case 'tellulf/power/cost':
-                    this.powerCost = parseFloat(message.toString());
-                    this.mqttClient.log('Power cost set to:', this.powerCost);
+                case 'tellulf/tibber/cabin/power':
+                    this.powerData.cabin.power = parseFloat(message.toString());
+                    this.mqttClient.log(
+                        'Power cabin set to:',
+                        this.powerData.cabin.power
+                    );
+                    break;
+                case 'tellulf/tibber/home/accumulatedCost':
+                    this.powerData.home.accumulatedCost = parseFloat(
+                        message.toString()
+                    );
+                    this.mqttClient.log(
+                        'Accumulated cost home set to:',
+                        this.powerData.home.accumulatedCost
+                    );
+                    break;
+                case 'tellulf/tibber/cabin/accumulatedCost':
+                    this.powerData.cabin.accumulatedCost = parseFloat(
+                        message.toString()
+                    );
+                    this.mqttClient.log(
+                        'Accumulated cost cabin set to:',
+                        this.powerData.cabin.accumulatedCost
+                    );
+                    break;
+                case 'tellulf/tibber/home/accumulatedConsumption':
+                    this.powerData.home.accumulatedConsumption = parseFloat(
+                        message.toString()
+                    );
+                    this.mqttClient.log(
+                        'Accumulated consumption home set to:',
+                        this.powerData.home.accumulatedConsumption
+                    );
+                    break;
+                case 'tellulf/tibber/cabin/accumulatedConsumption':
+                    this.powerData.cabin.accumulatedConsumption = parseFloat(
+                        message.toString()
+                    );
+                    this.mqttClient.log(
+                        'Accumulated consumption cabin set to:',
+                        this.powerData.cabin.accumulatedConsumption
+                    );
                     break;
                 default:
                     break;

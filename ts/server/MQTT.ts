@@ -14,7 +14,7 @@ const options: mqtt.IClientOptions = {
     protocol: 'mqtts',
     username: MQTT_USER,
     password: MQTT_PASS,
-    clientId: 'tellulf-' + Math.random().toString(16).substr(2, 8),
+    clientId: 'tellulf-' + Math.random().toString(16).substring(2, 8),
 };
 
 export class MqttClient {
@@ -38,12 +38,14 @@ export class MqttClient {
      * @param topic
      * @param message
      */
-    public publish(topic: string, message: string) {
-        this.client.publish(topic, message);
+    public publish(topic: string, message: string | number | null | undefined) {
+        if (message !== null && message !== undefined) {
+            this.client.publish(topic, message.toString());
+        }
     }
 
     /**
-     * Just a central place to log MQTT messages
+     * Just a central place to log MQTT messages!
      * @param message
      * @param value
      */
