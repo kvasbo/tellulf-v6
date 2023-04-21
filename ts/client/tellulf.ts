@@ -141,9 +141,9 @@ function setLastUpdateTime() {
 }
 
 function updateEnturInfo(entur: Train[]) {
-    let enturHtml = '<strong>Neste to baner:</strong>';
+    let enturHtml = '<strong>Neste baner:</strong>';
 
-    for (let i = 0; i < Math.min(entur.length, 2); i++) {
+    for (let i = 0; i < Math.min(entur.length, 4); i++) {
         enturHtml += `<span class="entur_item">${entur[i].time.substring(
             11,
             16
