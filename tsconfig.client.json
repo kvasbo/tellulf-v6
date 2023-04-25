@@ -1,9 +1,9 @@
 {
     "compilerOptions": {
         "outDir": "./assets/js",
-        "lib": ["ES2018", "DOM"],
+        "lib": ["DOM"],
         "module": "umd",
-        "target": "es5",
+        "target": "ES2022",
         "allowJs": false,
         "esModuleInterop": true,
         "strict": false,
