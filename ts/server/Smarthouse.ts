@@ -9,6 +9,10 @@ export class Smarthouse {
         this.mqttClient = mqttClient;
     }
 
+    private garageDoorOpen: null | boolean = null;
+    private garageCarLeft: null | boolean = null;
+    private garageDistanceLeft: null | number = null;
+
     private powerData: { home: TibberData; cabin: TibberData } = {
         home: {
             timestamp: '',
@@ -61,12 +65,34 @@ export class Smarthouse {
             powerCabin: this.powerData.cabin.power,
             powerUsedTodayCabin: this.powerData.cabin.accumulatedConsumption,
             costTodayCabin: this.powerData.cabin.accumulatedCost,
+            garageIsOpen: this.garageDoorOpen,
+            garageCarLeft: this.garageCarLeft,
         };
     }
 
     public startMqtt() {
         this.mqttClient.client.on('message', (topic, message) => {
             switch (topic) {
+                case 'garage/left/OUT/JSON':
+                    this.garageCarLeft =
+                        JSON.parse(message.toString()).vehicle === 1;
+                    this.garageDoorOpen =
+                        JSON.parse(message.toString()).door === 1;
+                    this.garageDistanceLeft =
+                        JSON.parse(message.toString()).dist * 1;
+                    this.mqttClient.log(
+                        'Car in left garage space:',
+                        this.garageCarLeft.toString()
+                    );
+                    this.mqttClient.log(
+                        'Garage door open:',
+                        this.garageDoorOpen.toString()
+                    );
+                    this.mqttClient.log(
+                        'Space over left side car:',
+                        this.garageDistanceLeft.toString()
+                    );
+                    break;
                 case 'tellulf/weather/tempOut':
                     this.temp = parseFloat(message.toString());
                     this.mqttClient.log('Temperature set to:', this.temp);

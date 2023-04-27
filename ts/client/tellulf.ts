@@ -20,6 +20,8 @@ interface HomeyData {
     powerUsedTodayCabin?: number;
     powerCabin?: number;
     costTodayCabin?: number;
+    garageIsOpen: boolean | null;
+    garageCarLeft: boolean | null;
 }
 
 interface TimeData {
@@ -106,6 +108,15 @@ async function runUpdateLoop(force = false) {
         const costToday = +homey.costTodayCabin;
         $('.powerCostTodayCabin').html(`${costToday.toFixed(0)}`);
     }
+    if (homey.garageIsOpen !== null) {
+        const garageIsOpen = homey.garageIsOpen;
+        $('.garageDoorState').html(`${garageIsOpen ? 'Åpen' : 'Lukket'}`);
+    }
+    if (homey.garageCarLeft !== null) {
+        const garageCarLeft = homey.garageCarLeft;
+        $('.garageLeftCarState').html(`${garageCarLeft ? 'Opptatt' : 'Ledig'}`);
+    }
+
     // Remove power data if not updated lately
     checkLastUpdatedPowerTime();
 }
