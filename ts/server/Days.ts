@@ -12,22 +12,33 @@ export interface DayInfo {
     birthdays: Event[];
     sunrise: string;
     sunset: string;
+    displayHeight: number;
 }
 
 export class Days {
     public weather: Weather;
     private calendar: Calendar;
 
+    // Cutoff for adding more days to the calendar
+    private maxCalendarHeight = 1100;
+
     constructor() {
         this.weather = new Weather();
         this.calendar = new Calendar();
     }
 
-    public generateComingDays(numberOfDays = 10): DayInfo[] {
+    public generateComingDays(maxNumberOfDays = 10): DayInfo[] {
         const days: DayInfo[] = [];
-        for (let i = 0; i < numberOfDays; i++) {
+        let currentHeight = 0;
+        for (let i = 0; i < maxNumberOfDays; i++) {
             const dt = DateTime.now().plus({ days: i });
-            days.push(this.getDataForDate(dt.toJSDate()));
+            const day = this.getDataForDate(dt.toJSDate());
+            // Check if we are overflowing
+            if (currentHeight + day.displayHeight > this.maxCalendarHeight) {
+                break;
+            }
+            currentHeight += day.displayHeight;
+            days.push(day);
         }
         return days;
     }
@@ -47,6 +58,8 @@ export class Days {
 
         const daily = this.weather.getDailyForecasts();
 
+        const dayHeight = this.calendar.calculateDisplayHeightForDay(jsDate);
+
         return {
             isoDate: date,
             date: Days.createNiceDate(jsDate),
@@ -60,6 +73,7 @@ export class Days {
             sunset: DateTime.fromJSDate(sunSetDate)
                 .setLocale('nb')
                 .toFormat('HH:mm'),
+            displayHeight: dayHeight,
         };
     }
 

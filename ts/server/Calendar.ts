@@ -42,6 +42,12 @@ interface GoogleEvent {
 export class Calendar {
     private events: Event[] = [];
     private birthdays: Event[] = [];
+    // Display height of calendar events in pixels to ensure we don't overflow
+    private displayHeights = {
+        event: 25,
+        birthday: 25,
+        dayInfo: 51,
+    };
 
     constructor() {
         this.refreshEvents();
@@ -50,6 +56,17 @@ export class Calendar {
             this.refreshEvents();
             this.refreshBirthdays();
         }, 600000);
+    }
+
+    public calculateDisplayHeightForDay(jsDate: Date): number {
+        const eventCount = this.getEvents(jsDate).length;
+        const birthdays = this.getBirthdays(jsDate).length;
+        const height =
+            this.displayHeights.dayInfo +
+            eventCount * this.displayHeights.event +
+            birthdays * this.displayHeights.birthday;
+        console.log('Day height calculated', height);
+        return height;
     }
 
     public getEvents(jsDate: Date): Event[] {

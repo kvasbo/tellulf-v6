@@ -16,7 +16,7 @@
     <div class="now_week" id="now_week"></div>
   </div>
   <div class="block calendar" id="calendar">
-    {% for day in days|slice(0, 7) %}
+    {% for day in days %}
 
     {% if day.birthdays is not empty or day.events is not empty or day.daily_forecast is not empty %}
 
