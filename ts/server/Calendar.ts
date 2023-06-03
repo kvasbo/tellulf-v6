@@ -109,7 +109,6 @@ export class Calendar {
     private enrichEvent(event: Event, type = '', forDate: Date): Event {
         event.displayTitle = event.title;
         event.dayType = Calendar.getDayType(event, forDate);
-        console.log(event.title, event.dayType);
         if (type === 'birthday') {
             const regex = /[A-Za-z0-9 ]+\s[0-9]+/i;
             const foundYear = regex.test(event.title);
@@ -192,15 +191,19 @@ export class Calendar {
     private static getDayType(event: Event, date: Date): EventDayType {
         const dtStart = DateTime.fromJSDate(event.start);
         const dtEnd = DateTime.fromJSDate(event.end);
+        const dtDate = DateTime.fromJSDate(date);
 
         // Single day event
         if (dtStart.hasSame(dtEnd, 'day')) {
             return EventDayType.singleDay;
+        } else if (dtStart.hasSame(dtDate, 'day')) {
+            return EventDayType.firstDay;
+        } else if (dtEnd.hasSame(dtDate, 'day')) {
+            return EventDayType.lastDay;
+        } else {
+            // Neither first nor last day
+            return EventDayType.middleDay;
         }
-
-        // Base case
-        return EventDayType.singleDay;
-        // return EventDayType.unknown;
     }
 
     // Main parsing of an event.
