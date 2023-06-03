@@ -120,6 +120,11 @@ export class Calendar {
             }
         }
         event.displayTime = DateTime.fromJSDate(event.start).toFormat('HH:mm');
+        console.log(event.title, event.dayType);
+        if (event.dayType === EventDayType.middleDay) {
+            console.log('middle day');
+            event.displayTime = '...';
+        }
         return event;
     }
 
