@@ -16,10 +16,17 @@ export interface RawEvent {
     end: Date;
 }
 
+enum EventDayType {
+    firstDay = 'firstDay', // First day of multiday event
+    middleDay = 'middleDay', // Middle day of multiday event
+    lastDay = 'lastDay', // Last day of multiday event
+    singleDay = 'singleDay', // Single day event
+    unknown = 'unknown', // Unknown
+}
+
 export interface Event extends RawEvent {
     fullDay?: boolean;
-    startsBefore?: boolean;
-    endsafter?: boolean;
+    dayType?: EventDayType;
     displayTitle?: string;
     multiDay?: boolean;
     displayTime?: string;
@@ -65,20 +72,19 @@ export class Calendar {
             this.displayHeights.dayInfo +
             eventCount * this.displayHeights.event +
             birthdays * this.displayHeights.birthday;
-        console.log('Day height calculated', height);
         return height;
     }
 
     public getEvents(jsDate: Date): Event[] {
         return this.events
             .filter((e) => this.checkEventForDate(e, jsDate))
-            .map((e) => this.enrichEvent(e, 'event'));
+            .map((e) => this.enrichEvent(e, 'event', jsDate));
     }
 
     public getBirthdays(jsDate: Date): Event[] {
         return this.birthdays
             .filter((e) => this.checkEventForDate(e, jsDate))
-            .map((e) => this.enrichEvent(e, 'birthday'));
+            .map((e) => this.enrichEvent(e, 'birthday', jsDate));
     }
 
     // Filters events based on whether they exist on the given date
@@ -100,8 +106,10 @@ export class Calendar {
         return false;
     }
 
-    private enrichEvent(event: Event, type = ''): Event {
+    private enrichEvent(event: Event, type = '', forDate: Date): Event {
         event.displayTitle = event.title;
+        event.dayType = Calendar.getDayType(event, forDate);
+        console.log(event.title, event.dayType);
         if (type === 'birthday') {
             const regex = /[A-Za-z0-9 ]+\s[0-9]+/i;
             const foundYear = regex.test(event.title);
@@ -180,6 +188,22 @@ export class Calendar {
         return out;
     }
 
+    // Figure out if same date or whether it spans multiple days. For displaying purposes
+    private static getDayType(event: Event, date: Date): EventDayType {
+        const dtStart = DateTime.fromJSDate(event.start);
+        const dtEnd = DateTime.fromJSDate(event.end);
+
+        // Single day event
+        if (dtStart.hasSame(dtEnd, 'day')) {
+            return EventDayType.singleDay;
+        }
+
+        // Base case
+        return EventDayType.singleDay;
+        // return EventDayType.unknown;
+    }
+
+    // Main parsing of an event.
     private static parseEvent(event: calendar_v3.Schema$Events): Event {
         const ev = event as GoogleEvent;
 
