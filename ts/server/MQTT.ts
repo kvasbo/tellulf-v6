@@ -23,15 +23,19 @@ export class MqttClient {
     // Connect to MQTT broker
     constructor() {
         this.client = mqtt.connect(options);
-        this.client.on('connect', () => {
-            this.log(`${options.clientId} connected to ${options.host}`);
-            this.client.subscribe('tellulf/#');
-            this.client.subscribe('garage/#');
-            this.client.publish(
-                'tellulf/poll',
-                'Tellulf is online and polling'
-            );
-        });
+        this.client
+            .on('connect', () => {
+                this.log(`${options.clientId} connected to ${options.host}`);
+                this.client.subscribe('tellulf/#');
+                this.client.subscribe('garage/#');
+                this.client.publish(
+                    'tellulf/poll',
+                    'Tellulf is online and polling'
+                );
+            })
+            .on('error', (error) => {
+                this.log('MQTT Error', error.message);
+            });
     }
 
     /**

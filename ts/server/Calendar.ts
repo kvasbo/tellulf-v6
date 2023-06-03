@@ -10,25 +10,22 @@ const SCOPES = 'https://www.googleapis.com/auth/calendar.readonly';
 const key64 = process.env.GOOGLE_KEY_B64 ? process.env.GOOGLE_KEY_B64 : '';
 const GOOGLE_KEY = JSON.parse(Buffer.from(key64, 'base64').toString('utf8'));
 
+enum EventDayType {
+    firstDay = 'firstDay', // First day of multiday event
+    middleDay = 'middleDay', // Middle day of multiday event
+    lastDay = 'lastDay', // Last day of multiday event
+    singleDay = 'singleDay', // Single day event
+}
 export interface RawEvent {
     title: string;
     start: Date;
     end: Date;
 }
 
-enum EventDayType {
-    firstDay = 'firstDay', // First day of multiday event
-    middleDay = 'middleDay', // Middle day of multiday event
-    lastDay = 'lastDay', // Last day of multiday event
-    singleDay = 'singleDay', // Single day event
-    unknown = 'unknown', // Unknown
-}
-
 export interface Event extends RawEvent {
     fullDay?: boolean;
     dayType?: EventDayType;
     displayTitle?: string;
-    multiDay?: boolean;
     displayTime?: string;
 }
 
