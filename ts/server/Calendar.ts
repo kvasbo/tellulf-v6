@@ -10,25 +10,6 @@ const SCOPES = 'https://www.googleapis.com/auth/calendar.readonly';
 const key64 = process.env.GOOGLE_KEY_B64 ? process.env.GOOGLE_KEY_B64 : '';
 const GOOGLE_KEY = JSON.parse(Buffer.from(key64, 'base64').toString('utf8'));
 
-enum EventDayType {
-    firstDay = 'firstDay', // First day of multiday event
-    middleDay = 'middleDay', // Middle day of multiday event
-    lastDay = 'lastDay', // Last day of multiday event
-    singleDay = 'singleDay', // Single day event
-}
-export interface RawEvent {
-    title: string;
-    start: Date;
-    end: Date;
-}
-
-export interface Event extends RawEvent {
-    fullDay?: boolean;
-    dayType?: EventDayType;
-    displayTitle?: string;
-    displayTime?: string;
-}
-
 interface GoogleEvent {
     summary: string;
     start: {
@@ -41,6 +22,20 @@ interface GoogleEvent {
         date?: string;
         timeZone: string;
     };
+}
+export interface RawEvent {
+    title: string;
+    start: Date;
+    end: Date;
+    fullDay: boolean;
+}
+
+type DayType = 'firstDay' | 'middleDay' | 'lastDay' | 'singleDay';
+
+export interface Event extends RawEvent {
+    dayType?: DayType;
+    displayTitle?: string;
+    displayTime?: string;
 }
 
 export class Calendar {
@@ -63,8 +58,8 @@ export class Calendar {
     }
 
     public calculateDisplayHeightForDay(jsDate: Date): number {
-        const eventCount = this.getEvents(jsDate).length;
-        const birthdays = this.getBirthdays(jsDate).length;
+        const eventCount = this.getEventsForDate(jsDate).length;
+        const birthdays = this.getBirthdaysForDate(jsDate).length;
         const height =
             this.displayHeights.dayInfo +
             eventCount * this.displayHeights.event +
@@ -72,14 +67,17 @@ export class Calendar {
         return height;
     }
 
-    public getEvents(jsDate: Date): Event[] {
-        return this.events
+    // Returns a copy of the events array
+    public getEventsForDate(jsDate: Date): Event[] {
+        const events = structuredClone(this.events);
+        return events
             .filter((e) => this.checkEventForDate(e, jsDate))
             .map((e) => this.enrichEvent(e, 'event', jsDate));
     }
 
-    public getBirthdays(jsDate: Date): Event[] {
-        return this.birthdays
+    public getBirthdaysForDate(jsDate: Date): Event[] {
+        const birthdays = structuredClone(this.birthdays);
+        return birthdays
             .filter((e) => this.checkEventForDate(e, jsDate))
             .map((e) => this.enrichEvent(e, 'birthday', jsDate));
     }
@@ -119,12 +117,10 @@ export class Calendar {
                 )} (${age})`;
             }
         }
-        event.displayTime = DateTime.fromJSDate(event.start).toFormat('HH:mm');
-        console.log(event.title, event.dayType);
-        if (event.dayType === EventDayType.middleDay) {
-            console.log('middle day');
-            event.displayTime = '...';
-        }
+
+        // Not working!
+        event.displayTime = Calendar.getEventDisplayTime(event);
+
         return event;
     }
 
@@ -178,7 +174,7 @@ export class Calendar {
 
         if (result?.data?.items?.length) {
             result.data.items.forEach((event: calendar_v3.Schema$Events) => {
-                const e = Calendar.parseEvent(event);
+                const e = Calendar.parseGoogleEvent(event);
                 out.push(e);
             });
         } else {
@@ -189,27 +185,43 @@ export class Calendar {
         return out;
     }
 
+    public static getEventDisplayTime(event: Event): string {
+        if (event.dayType === 'middleDay') {
+            return '...';
+        } else if (event.dayType === 'lastDay') {
+            return '-> ' + DateTime.fromJSDate(event.end).toFormat('HH:mm');
+        } else {
+            return DateTime.fromJSDate(event.start).toFormat('HH:mm');
+        }
+    }
+
     // Figure out if same date or whether it spans multiple days. For displaying purposes
-    private static getDayType(event: Event, date: Date): EventDayType {
+    private static getDayType(event: Event, date: Date): DayType {
         const dtStart = DateTime.fromJSDate(event.start);
         const dtEnd = DateTime.fromJSDate(event.end);
         const dtDate = DateTime.fromJSDate(date);
 
+        let dayType: DayType = 'singleDay';
+
         // Single day event
         if (dtStart.hasSame(dtEnd, 'day')) {
-            return EventDayType.singleDay;
+            dayType = 'singleDay';
         } else if (dtStart.hasSame(dtDate, 'day')) {
-            return EventDayType.firstDay;
+            dayType = 'firstDay';
         } else if (dtEnd.hasSame(dtDate, 'day')) {
-            return EventDayType.lastDay;
+            dayType = 'lastDay';
         } else {
             // Neither first nor last day
-            return EventDayType.middleDay;
+            dayType = 'middleDay';
         }
+
+        return dayType;
     }
 
-    // Main parsing of an event.
-    private static parseEvent(event: calendar_v3.Schema$Events): Event {
+    // Main parsing of an event from Google
+    private static parseGoogleEvent(
+        event: calendar_v3.Schema$Events
+    ): RawEvent {
         const ev = event as GoogleEvent;
 
         const title = event.summary ? event.summary : '';
