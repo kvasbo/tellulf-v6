@@ -33,14 +33,14 @@ export interface RawEvent {
 type DayType = 'firstDay' | 'middleDay' | 'lastDay' | 'singleDay';
 
 export interface Event extends RawEvent {
-    dayType?: DayType;
-    displayTitle?: string;
-    displayTime?: string;
+    dayType: DayType;
+    displayTitle: string;
+    displayTime: string;
 }
 
 export class Calendar {
-    private events: Event[] = [];
-    private birthdays: Event[] = [];
+    private events: RawEvent[] = [];
+    private birthdays: RawEvent[] = [];
     // Display height of calendar events in pixels to ensure we don't overflow
     private displayHeights = {
         event: 25,
@@ -69,21 +69,19 @@ export class Calendar {
 
     // Returns a copy of the events array
     public getEventsForDate(jsDate: Date): Event[] {
-        const events = structuredClone(this.events);
-        return events
+        return this.events
             .filter((e) => this.checkEventForDate(e, jsDate))
             .map((e) => this.enrichEvent(e, 'event', jsDate));
     }
 
     public getBirthdaysForDate(jsDate: Date): Event[] {
-        const birthdays = structuredClone(this.birthdays);
-        return birthdays
+        return this.birthdays
             .filter((e) => this.checkEventForDate(e, jsDate))
             .map((e) => this.enrichEvent(e, 'birthday', jsDate));
     }
 
     // Filters events based on whether they exist on the given date
-    private checkEventForDate(event: Event, jsDate: Date): boolean {
+    private checkEventForDate(event: RawEvent, jsDate: Date): boolean {
         // Find start of day for all of the fuckers
         const dt = DateTime.fromJSDate(jsDate).startOf('day');
         const eventStart = DateTime.fromJSDate(event.start).startOf('day');
@@ -101,9 +99,21 @@ export class Calendar {
         return false;
     }
 
-    private enrichEvent(event: Event, type = '', forDate: Date): Event {
-        event.displayTitle = event.title;
-        event.dayType = Calendar.getDayType(event, forDate);
+    private enrichEvent(event: RawEvent, type = '', forDate: Date): Event {
+        const displayTitle = Calendar.getDisplayTitle(event, type);
+        const dayType = Calendar.getDayType(event, forDate);
+        const displayTime = Calendar.getEventDisplayTime(event, dayType);
+
+        return {
+            ...event,
+            displayTitle: displayTitle,
+            dayType: dayType,
+            displayTime: displayTime,
+        };
+    }
+
+    private static getDisplayTitle(event: RawEvent, type: string): string {
+        let title = event.title;
         if (type === 'birthday') {
             const regex = /[A-Za-z0-9 ]+\s[0-9]+/i;
             const foundYear = regex.test(event.title);
@@ -111,24 +121,21 @@ export class Calendar {
                 const y = Number(event.title.slice(-4));
                 const now = DateTime.now();
                 const age = now.year - 1 * y;
-                event.displayTitle = `${event.title.substring(
+                title = `${event.title.substring(
                     0,
                     event.title.length - 5
                 )} (${age})`;
             }
         }
-
-        // Not working!
-        event.displayTime = Calendar.getEventDisplayTime(event);
-
-        return event;
+        return title;
     }
 
     private async refreshEvents(): Promise<void> {
         if (process.env.CAL_ID_FELLES) {
-            this.events = await Calendar.getCalendarData(
+            const events = await Calendar.getCalendarData(
                 process.env.CAL_ID_FELLES
             );
+            this.events = events;
         } else {
             this.events = [];
         }
@@ -148,7 +155,9 @@ export class Calendar {
      * Get the content of a calendar
      * @param calendarId
      */
-    private static async getCalendarData(calendarId: string): Promise<Event[]> {
+    private static async getCalendarData(
+        calendarId: string
+    ): Promise<RawEvent[]> {
         const jwtClient = new google.auth.JWT(
             GOOGLE_KEY.client_email,
             undefined,
@@ -161,7 +170,7 @@ export class Calendar {
             auth: jwtClient,
         });
 
-        const out: Event[] = [];
+        const out: RawEvent[] = [];
 
         const result = await calendar.events.list({
             calendarId: calendarId,
@@ -185,10 +194,14 @@ export class Calendar {
         return out;
     }
 
-    public static getEventDisplayTime(event: Event): string {
-        if (event.dayType === 'middleDay') {
+    // Get the correct displaytime for the event
+    public static getEventDisplayTime(
+        event: RawEvent,
+        dayType: DayType
+    ): string {
+        if (dayType === 'middleDay') {
             return '...';
-        } else if (event.dayType === 'lastDay') {
+        } else if (dayType === 'lastDay') {
             return '-> ' + DateTime.fromJSDate(event.end).toFormat('HH:mm');
         } else {
             return DateTime.fromJSDate(event.start).toFormat('HH:mm');
@@ -196,7 +209,7 @@ export class Calendar {
     }
 
     // Figure out if same date or whether it spans multiple days. For displaying purposes
-    private static getDayType(event: Event, date: Date): DayType {
+    private static getDayType(event: RawEvent, date: Date): DayType {
         const dtStart = DateTime.fromJSDate(event.start);
         const dtEnd = DateTime.fromJSDate(event.end);
         const dtDate = DateTime.fromJSDate(date);
