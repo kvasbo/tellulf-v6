@@ -40,4 +40,8 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+      - name: Webhook
+          uses: joelwmale/webhook-action@448a17b
+          with:
+            url: ${{ secrets.PORTAINER_WEBHOOK }}
         
