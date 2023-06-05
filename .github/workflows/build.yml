@@ -41,6 +41,6 @@ jobs:
                   tags: ${{ steps.meta.outputs.tags }}
                   labels: ${{ steps.meta.outputs.labels }}
             - name: Webhook
-              uses: joelwmale/webhook-action@448a17b
+              uses: joelwmale/webhook-action@448a17bf857ead98546cfbdbe3b9d4cf979dda95
               with:
                   url: ${{ secrets.PORTAINER_WEBHOOK }}
