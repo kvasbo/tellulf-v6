@@ -10,6 +10,12 @@ const SCOPES = 'https://www.googleapis.com/auth/calendar.readonly';
 const key64 = process.env.GOOGLE_KEY_B64 ? process.env.GOOGLE_KEY_B64 : '';
 const GOOGLE_KEY = JSON.parse(Buffer.from(key64, 'base64').toString('utf8'));
 
+enum EventDayType {
+    firstDay = 'firstDay', // First day of multiday event
+    middleDay = 'middleDay', // Middle day of multiday event
+    lastDay = 'lastDay', // Last day of multiday event
+    singleDay = 'singleDay', // Single day event
+}
 export interface RawEvent {
     title: string;
     start: Date;
@@ -18,10 +24,8 @@ export interface RawEvent {
 
 export interface Event extends RawEvent {
     fullDay?: boolean;
-    startsBefore?: boolean;
-    endsafter?: boolean;
+    dayType?: EventDayType;
     displayTitle?: string;
-    multiDay?: boolean;
     displayTime?: string;
 }
 
@@ -65,20 +69,19 @@ export class Calendar {
             this.displayHeights.dayInfo +
             eventCount * this.displayHeights.event +
             birthdays * this.displayHeights.birthday;
-        console.log('Day height calculated', height);
         return height;
     }
 
     public getEvents(jsDate: Date): Event[] {
         return this.events
             .filter((e) => this.checkEventForDate(e, jsDate))
-            .map((e) => this.enrichEvent(e, 'event'));
+            .map((e) => this.enrichEvent(e, 'event', jsDate));
     }
 
     public getBirthdays(jsDate: Date): Event[] {
         return this.birthdays
             .filter((e) => this.checkEventForDate(e, jsDate))
-            .map((e) => this.enrichEvent(e, 'birthday'));
+            .map((e) => this.enrichEvent(e, 'birthday', jsDate));
     }
 
     // Filters events based on whether they exist on the given date
@@ -100,8 +103,9 @@ export class Calendar {
         return false;
     }
 
-    private enrichEvent(event: Event, type = ''): Event {
+    private enrichEvent(event: Event, type = '', forDate: Date): Event {
         event.displayTitle = event.title;
+        event.dayType = Calendar.getDayType(event, forDate);
         if (type === 'birthday') {
             const regex = /[A-Za-z0-9 ]+\s[0-9]+/i;
             const foundYear = regex.test(event.title);
@@ -116,6 +120,11 @@ export class Calendar {
             }
         }
         event.displayTime = DateTime.fromJSDate(event.start).toFormat('HH:mm');
+        console.log(event.title, event.dayType);
+        if (event.dayType === EventDayType.middleDay) {
+            console.log('middle day');
+            event.displayTime = '...';
+        }
         return event;
     }
 
@@ -180,6 +189,26 @@ export class Calendar {
         return out;
     }
 
+    // Figure out if same date or whether it spans multiple days. For displaying purposes
+    private static getDayType(event: Event, date: Date): EventDayType {
+        const dtStart = DateTime.fromJSDate(event.start);
+        const dtEnd = DateTime.fromJSDate(event.end);
+        const dtDate = DateTime.fromJSDate(date);
+
+        // Single day event
+        if (dtStart.hasSame(dtEnd, 'day')) {
+            return EventDayType.singleDay;
+        } else if (dtStart.hasSame(dtDate, 'day')) {
+            return EventDayType.firstDay;
+        } else if (dtEnd.hasSame(dtDate, 'day')) {
+            return EventDayType.lastDay;
+        } else {
+            // Neither first nor last day
+            return EventDayType.middleDay;
+        }
+    }
+
+    // Main parsing of an event.
     private static parseEvent(event: calendar_v3.Schema$Events): Event {
         const ev = event as GoogleEvent;
 
