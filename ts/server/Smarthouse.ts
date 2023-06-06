@@ -13,6 +13,10 @@ export class Smarthouse {
     private garageCarLeft: null | boolean = null;
     private garageDistanceLeft: null | number = null;
 
+    private coolerRoomTemp = -9999;
+    private coolerRoomHumidity = -9999;
+    private coolerRoomBattery = -9999;
+
     private powerData: { home: TibberData; cabin: TibberData } = {
         home: {
             timestamp: '',
@@ -158,6 +162,18 @@ export class Smarthouse {
                         'Accumulated consumption cabin set to:',
                         this.powerData.cabin.accumulatedConsumption
                     );
+                    break;
+                case 'kjølerom/temperature':
+                    this.coolerRoomTemp = parseFloat(message.toString());
+                    console.log(this.coolerRoomTemp);
+                    break;
+                case 'kjølerom/humidity':
+                    this.coolerRoomHumidity = parseFloat(message.toString());
+                    console.log(this.coolerRoomHumidity);
+                    break;
+                case 'kjølerom/battery':
+                    this.coolerRoomBattery = parseFloat(message.toString());
+                    console.log(this.coolerRoomBattery);
                     break;
                 default:
                     break;
