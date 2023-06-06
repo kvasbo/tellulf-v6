@@ -80,11 +80,6 @@ build
 assets/js
 assets/css
 
-composer.phar
-vendor/
 src/twig-cache
-src/homey.json
-docker-compose-with-secrets.yml
 .DS_Store
 src/js
-data/homey.json
