@@ -24,7 +24,7 @@ jobs:
               uses: docker/metadata-action@v4
               with:
                   images: |
-                      kvasbo/tellulf
+                      kvasbo/tellulf-v6
                   tags: |
                       type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
                       type=ref,event=branch
