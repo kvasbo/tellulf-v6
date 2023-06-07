@@ -69,8 +69,8 @@ export class Smarthouse {
             powerCabin: this.powerData.cabin.power,
             powerUsedTodayCabin: this.powerData.cabin.accumulatedConsumption,
             costTodayCabin: this.powerData.cabin.accumulatedCost,
-            garageIsOpen: this.garageDoorOpen,
-            garageCarLeft: this.garageCarLeft,
+            coolerRoomHumidity: this.coolerRoomHumidity,
+            coolerRoomTemp: this.coolerRoomTemp,
         };
     }
 
@@ -165,15 +165,12 @@ export class Smarthouse {
                     break;
                 case 'kjølerom/temperature':
                     this.coolerRoomTemp = parseFloat(message.toString());
-                    console.log(this.coolerRoomTemp);
                     break;
                 case 'kjølerom/humidity':
                     this.coolerRoomHumidity = parseFloat(message.toString());
-                    console.log(this.coolerRoomHumidity);
                     break;
                 case 'kjølerom/battery':
                     this.coolerRoomBattery = parseFloat(message.toString());
-                    console.log(this.coolerRoomBattery);
                     break;
                 default:
                     break;

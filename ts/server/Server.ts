@@ -26,6 +26,10 @@ new Tibber(mqttClient);
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'twig');
 app.use('/assets', express.static(path.join(__dirname, '../assets'))); // Static routes
+app.use(
+    '/favicon.ico',
+    express.static(path.join(__dirname, '../assets/favicon.ico'))
+); // Static routes
 
 const port = 3000;
 
