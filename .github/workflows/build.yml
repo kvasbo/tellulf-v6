@@ -76,14 +76,23 @@ jobs:
               uses: actions/download-artifact@v3
               with:
                   name: client
+                  path: assets/js
             - name: Download artifact server
               uses: actions/download-artifact@v3
               with:
                   name: server
+                  path: build
             - name: Download artifact client
               uses: actions/download-artifact@v3
               with:
                   name: sass
+                  path: artifacts/css
+            - name: Try to list  files
+              run: |
+                  ls -la assets/js
+                  ls -la assets/css
+                  ls -la build
+                  ls -la .
     build-and-push-image:
         runs-on: ubuntu-latest
         permissions:
