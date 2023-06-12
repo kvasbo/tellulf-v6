@@ -96,6 +96,8 @@ jobs:
               run: |
                   ls -la .
                   ls -la assets
+                  ls -la assets/js
+                  ls -la assets/css
     build-and-push-image:
         runs-on: ubuntu-latest
         permissions:

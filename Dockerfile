@@ -10,10 +10,11 @@ RUN mkdir /tellulf
 
 WORKDIR /tellulf
 
-COPY ./node_modules /tellulf/node_modules
-COPY ./build /tellulf/build
-COPY ./assets/css /tellulf/assets/css
-COPY ./assets/js /tellulf/assets/js
+COPY ./node_modules node_modules
+COPY ./build build
+COPY ./assets assets
+
+RUN ls -la /tellulf
 
 # Run Yarn stuff
 # RUN yarn install
