@@ -54,6 +54,7 @@ jobs:
               uses: actions/download-artifact@v3
               with:
                   name: built-tellulf
+                  path: artifact
             - name: Copy built stuff into clean directories
               run: |
                   rm -rf build
@@ -62,9 +63,9 @@ jobs:
                   mkdir build
                   mkdir assets/js
                   mkdir assets/css
-                  cp -r built-tellulf/build/* build
-                  cp -r built-tellulf/assets/js/* assets/js
-                  cp -r built-tellulf/assets/css/* assets/css
+                  cp -r artifact/build/* build
+                  cp -r artifact/assets/js/* assets/js
+                  cp -r artifact/assets/css/* assets/css
     build-and-push-image:
         runs-on: ubuntu-latest
         permissions:
