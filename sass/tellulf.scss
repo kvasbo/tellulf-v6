@@ -104,6 +104,18 @@ body {
                 width: 135px;
                 margin-right: 10px;
                 justify-content: flex-start;
+                span {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                }
+                .event-time-start,
+                .event-time-end {
+                    width: 60px;
+                }
+                .event-time-spacer {
+                    width: 20px;
+                }
             }
         }
     }

@@ -32,10 +32,15 @@ export interface RawEvent {
 
 type DayType = 'firstDay' | 'middleDay' | 'lastDay' | 'singleDay';
 
+interface EventDisplayTime {
+    start: string;
+    end: string;
+    spacer: string;
+}
 export interface Event extends RawEvent {
     dayType: DayType;
     displayTitle: string;
-    displayTime: string;
+    displayTime: EventDisplayTime;
 }
 
 export class Calendar {
@@ -198,20 +203,33 @@ export class Calendar {
     public static getEventDisplayTime(
         event: RawEvent,
         dayType: DayType
-    ): string {
+    ): EventDisplayTime {
         if (dayType === 'middleDay') {
-            return '...';
+            return {
+                start: '',
+                end: '',
+                spacer: '...',
+            };
         } else if (dayType === 'lastDay') {
-            return '→ ' + DateTime.fromJSDate(event.end).toFormat('HH:mm');
+            return {
+                start: '',
+                end: DateTime.fromJSDate(event.end).toFormat('HH:mm'),
+                spacer: '⇝',
+            };
+            '→ ' + DateTime.fromJSDate(event.end).toFormat('HH:mm');
         } else if (dayType === 'firstDay') {
-            return DateTime.fromJSDate(event.start).toFormat('HH:mm') + ' ⇝';
+            return {
+                start: DateTime.fromJSDate(event.start).toFormat('HH:mm'),
+                end: '',
+                spacer: '⇝',
+            };
         } else {
             //  First or only day
-            return (
-                DateTime.fromJSDate(event.start).toFormat('HH:mm') +
-                ' ⇝ ' +
-                DateTime.fromJSDate(event.end).toFormat('HH:mm')
-            );
+            return {
+                start: DateTime.fromJSDate(event.start).toFormat('HH:mm'),
+                end: DateTime.fromJSDate(event.end).toFormat('HH:mm'),
+                spacer: '⇝',
+            };
         }
     }
 
