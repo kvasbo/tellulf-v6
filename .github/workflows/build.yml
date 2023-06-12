@@ -21,7 +21,9 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@v3
               with:
-                  node-version: 20.3
+                  node-version: 20.
+            - name: Install dependencies
+              run: yarn install
             - name: Lint with ESLint
               run: yarn run lint
             - name: Log in to the Container registry
