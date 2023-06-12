@@ -124,7 +124,7 @@ export class Calendar {
                 title = `${event.title.substring(
                     0,
                     event.title.length - 5
-                )} (${age})`;
+                )} (${age} år)`;
             }
         }
         return title;
@@ -202,9 +202,16 @@ export class Calendar {
         if (dayType === 'middleDay') {
             return '...';
         } else if (dayType === 'lastDay') {
-            return '-> ' + DateTime.fromJSDate(event.end).toFormat('HH:mm');
+            return '→ ' + DateTime.fromJSDate(event.end).toFormat('HH:mm');
+        } else if (dayType === 'firstDay') {
+            return DateTime.fromJSDate(event.start).toFormat('HH:mm') + ' ⇝';
         } else {
-            return DateTime.fromJSDate(event.start).toFormat('HH:mm');
+            //  First or only day
+            return (
+                DateTime.fromJSDate(event.start).toFormat('HH:mm') +
+                ' ⇝ ' +
+                DateTime.fromJSDate(event.end).toFormat('HH:mm')
+            );
         }
     }
 
