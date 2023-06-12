@@ -1,4 +1,4 @@
-FROM node:19-buster-slim
+FROM node:20-buster-slim
 
 # Create temp dir
 RUN mkdir /tellulf

@@ -1,0 +1,10 @@
+.env
+.github
+README.md
+.vscode
+build
+node_modules
+data
+assets/js
+assets/css
+*.workspace
