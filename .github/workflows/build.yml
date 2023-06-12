@@ -29,8 +29,16 @@ jobs:
               run: npx tsc --p tsconfig.server.json
             - name: Build typescript client
               run: npx tsc --p tsconfig.client.json
-
+            - name: Archive built files
+              uses: actions/upload-artifact@v3
+              with:
+                  name: built-tellulf
+                  path: |
+                      build
+                      assets/js
+                      assets/css
     build-and-push-image:
+        needs: build-tellulf
         runs-on: ubuntu-latest
         permissions:
             contents: read
