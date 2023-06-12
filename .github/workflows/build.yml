@@ -26,11 +26,6 @@ jobs:
               run: yarn install
             - name: Lint with ESLint
               run: yarn run lint
-            - name: Compile CSS from SCSS files
-              uses: gha-utilities/sass-build@v0.5.1
-              with:
-                  source: sass
-                  destination: assets/css
             - name: Log in to the Container registry
               uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
               with:
