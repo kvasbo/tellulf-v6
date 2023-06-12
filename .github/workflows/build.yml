@@ -10,6 +10,26 @@ env:
     IMAGE_NAME: ${{ github.repository }}
 
 jobs:
+    build-tellulf:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 20.3
+            - name: Install dependencies
+              run: yarn install
+            - name: Lint with ESLint
+              run: yarn run lint
+            - name: Build sass
+              run: npx sass sass:assets/css
+            - name: Build typescript server
+              run: npx tsc --p tsconfig.server.json
+            - name: Build typescript client
+              run: npx tsc --p tsconfig.client.json
+
     build-and-push-image:
         runs-on: ubuntu-latest
         permissions:
