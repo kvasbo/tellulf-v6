@@ -8,8 +8,22 @@ on:
 env:
     REGISTRY: ghcr.io
     IMAGE_NAME: ${{ github.repository }}
+    NODE_VERSION: 20.3
 
 jobs:
+    lint:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ env.NODE_VERSION }}
+            - name: Install dependencies
+              run: yarn install
+            - name: Lint with ESLint
+              run: yarn run lint
     build-tellulf:
         runs-on: ubuntu-latest
         steps:
@@ -18,11 +32,9 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@v3
               with:
-                  node-version: 20.3
+                  node-version: ${{ env.NODE_VERSION }}
             - name: Install dependencies
               run: yarn install
-            - name: Lint with ESLint
-              run: yarn run lint
             - name: Build sass
               run: npx sass sass:assets/css
             - name: Build typescript server
@@ -38,15 +50,17 @@ jobs:
               uses: actions/upload-artifact@v3
               with:
                   name: server
-                  path: built
+                  path: build
             - name: Archive css
               uses: actions/upload-artifact@v3
               with:
                   name: sass
                   path: assets/css
 
-    upload-image:
-        needs: build-tellulf
+    upload-to-docker:
+        needs:
+            - build-tellulf
+            - lint
         runs-on: ubuntu-latest
         permissions:
             contents: read
@@ -55,7 +69,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@v3
               with:
-                  node-version: 20.3
+                  node-version: ${{ env.NODE_VERSION }}
             - name: Install dependencies
               run: yarn install --production
             - name: Download artifact client
@@ -81,7 +95,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@v3
               with:
-                  node-version: 20.3
+                  node-version: ${{ env.NODE_VERSION }}
             - name: Install dependencies
               run: yarn install
             - name: Lint with ESLint
