@@ -8,13 +8,18 @@ RUN mkdir /tellulf
 # Copy source to web directory
 # COPY . /tellulf
 
-WORKDIR /tellulf
-
-COPY node_modules node_modules
-COPY build build
-COPY assets assets
+RUN mkdir /tellulf/build
+RUN mkdir /tellulf/assets/js
+RUN mkdir /tellulf/assets/sass
 
 RUN ls -la /tellulf
+
+WORKDIR /tellulf
+
+COPY ./node_modules /tellulf/node_modules
+COPY ./build build
+COPY ./assets assets
+
 
 # Run Yarn stuff
 # RUN yarn install
