@@ -12,6 +12,7 @@ env:
 
 jobs:
     lint:
+        name: Lint with ESLint
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repository
@@ -24,7 +25,8 @@ jobs:
               run: yarn install
             - name: Lint with ESLint
               run: yarn run lint
-    build-tellulf:
+    build:
+        name: Build typescript and sass
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repository
@@ -57,9 +59,10 @@ jobs:
                   name: sass
                   path: assets/css
 
-    upload-to-docker:
+    upload:
+        name: Upload to Container Registry
         needs:
-            - build-tellulf
+            - build
             - lint
         runs-on: ubuntu-latest
         permissions:
@@ -89,9 +92,6 @@ jobs:
                   path: artifacts/css
             - name: Try to list  files
               run: |
-                  ls -la assets/js
-                  ls -la assets/css
-                  ls -la build
                   ls -la .
     build-and-push-image:
         runs-on: ubuntu-latest
