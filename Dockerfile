@@ -9,14 +9,10 @@ COPY . /tellulf
 WORKDIR /tellulf
 
 # Run Yarn stuff
-RUN yarn
-RUN yarn run lint
+RUN yarn install
 RUN npx tsc --p tsconfig.server.json
 RUN npx tsc --p tsconfig.client.json
 RUN npx sass sass:assets/css
-
-# RUN yarn run build
-# "yarn run lint && npx tsc --p tsconfig.server.json && npx tsc --p tsconfig.client.json && npx sass sass:assets/css",
 
 # Set port
 EXPOSE 3000

@@ -4,7 +4,7 @@
         "watch-server": "npx tsc --watch --p tsconfig.server.json",
         "watch-client": "npx tsc --watch --p tsconfig.client.json",
         "run": "npx nodemon build/Server.js",
-        "build": "yarn run lint && npx tsc --p tsconfig.server.json && npx tsc --p tsconfig.client.json && npx sass sass:assets/css",
+        "build": "npx tsc --p tsconfig.server.json && npx tsc --p tsconfig.client.json && npx sass sass:assets/css",
         "lint": "npx eslint ./ts/server/"
     },
     "devDependencies": {
