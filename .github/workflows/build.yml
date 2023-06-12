@@ -37,35 +37,8 @@ jobs:
                       build
                       assets/js
                       assets/css
-    upload-image:
-        needs: build-tellulf
-        runs-on: ubuntu-latest
-        permissions:
-            contents: read
-            packages: write
-        steps:
-            - name: Setup Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: 20.3
-            - name: Install dependencies
-              run: yarn install --production
-            - name: Download artifact
-              uses: actions/download-artifact@v3
-              with:
-                  name: built-tellulf
-            - name: Copy built stuff into clean directories
-              run: |
-                  rm -rf build
-                  rm -rf assets/js
-                  rm -rf assets/css
-                  mkdir build
-                  mkdir assets/js
-                  mkdir assets/css
-                  cp -r built-tellulf/build/* build
-                  cp -r built-tellulf/assets/js/* assets/js
-                  cp -r built-tellulf/assets/css/* assets/css
     build-and-push-image:
+        needs: build-tellulf
         runs-on: ubuntu-latest
         permissions:
             contents: read
