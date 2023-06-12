@@ -26,6 +26,10 @@ jobs:
               run: yarn install
             - name: Lint with ESLint
               run: yarn run lint
+            - name: Make destination directory for compiled CSS
+              run: mkdir -vp /tmp/tellulf-v6/assets/css
+            - name: Make destination directory for compiled JS
+              run: mkdir -vp /tmp/tellulf-v6/assets/js
             - name: Compile CSS from SCSS files
               uses: gha-utilities/sass-build@v0.5.1
               with:
