@@ -13,11 +13,6 @@ RUN yarn
 RUN yarn run lint
 RUN yarn run build
 
-# Switch Yarn to production mode
-RUN rm -rf node_modules
-RUN yarn cache clean
-RUN yarn install --production
-
 # Set port
 EXPOSE 3000
 
