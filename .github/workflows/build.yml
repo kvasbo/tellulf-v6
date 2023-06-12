@@ -29,14 +29,22 @@ jobs:
               run: npx tsc --p tsconfig.server.json
             - name: Build typescript client
               run: npx tsc --p tsconfig.client.json
-            - name: Archive built files
+            - name: Archive typecript client
               uses: actions/upload-artifact@v3
               with:
-                  name: built-tellulf
-                  path: |
-                      build
-                      assets/js
-                      assets/css
+                  name: client
+                  path: assets/js
+            - name: Archive typecript server
+              uses: actions/upload-artifact@v3
+              with:
+                  name: server
+                  path: built
+            - name: Archive css
+              uses: actions/upload-artifact@v3
+              with:
+                  name: sass
+                  path: assets/css
+
     upload-image:
         needs: build-tellulf
         runs-on: ubuntu-latest
@@ -50,22 +58,18 @@ jobs:
                   node-version: 20.3
             - name: Install dependencies
               run: yarn install --production
-            - name: Download artifact
+            - name: Download artifact client
               uses: actions/download-artifact@v3
               with:
-                  name: built-tellulf
-                  path: artifact
-            - name: Copy built stuff into clean directories
-              run: |
-                  rm -rf build
-                  rm -rf assets/js
-                  rm -rf assets/css
-                  mkdir build
-                  mkdir assets/js
-                  mkdir assets/css
-                  cp -r artifact/build/* build
-                  cp -r artifact/assets/js/* assets/js
-                  cp -r artifact/assets/css/* assets/css
+                  name: client
+            - name: Download artifact server
+              uses: actions/download-artifact@v3
+              with:
+                  name: server
+            - name: Download artifact client
+              uses: actions/download-artifact@v3
+              with:
+                  name: sass
     build-and-push-image:
         runs-on: ubuntu-latest
         permissions:
