@@ -21,20 +21,11 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@v3
               with:
-                  node-version: 20.
+                  node-version: 20.3
             - name: Install dependencies
               run: yarn install
             - name: Lint with ESLint
               run: yarn run lint
-            - name: Make destination directory for compiled CSS
-              run: mkdir -vp /tmp/tellulf-v6/assets/css
-            - name: Make destination directory for compiled JS
-              run: mkdir -vp /tmp/tellulf-v6/assets/js
-            - name: Compile CSS from SCSS files
-              uses: gha-utilities/sass-build@v0.5.1
-              with:
-                  source: sass/tellulf.scss
-                  destination: /tmp/tellulf-v6/assets/css/tellulf.css
             - name: Log in to the Container registry
               uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
               with:
