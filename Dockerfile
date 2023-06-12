@@ -10,9 +10,9 @@ RUN mkdir /tellulf
 
 WORKDIR /tellulf
 
-COPY node_modules node_modules
-COPY build build
-COPY assets assets
+COPY ./node_modules node_modules
+COPY ./build build
+COPY ./assets assets
 
 RUN ls -la /tellulf
 
