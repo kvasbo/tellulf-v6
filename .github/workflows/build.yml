@@ -69,8 +69,6 @@ jobs:
             contents: read
             packages: write
         steps:
-            - name: Checkout repository
-              uses: actions/checkout@v3
             - name: Setup Node.js
               uses: actions/setup-node@v3
               with:
@@ -91,11 +89,10 @@ jobs:
               uses: actions/download-artifact@v3
               with:
                   name: sass
-                  path: assets/css
+                  path: artifacts/css
             - name: Try to list  files
               run: |
                   ls -la .
-                  ls -la assets
     build-and-push-image:
         runs-on: ubuntu-latest
         permissions:
