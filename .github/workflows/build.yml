@@ -9,7 +9,8 @@ on:
 env:
     REGISTRY: ghcr.io
     IMAGE_NAME: ${{ github.repository }}
-    IMAGE_PUSH: ${{ github.ref == 'refs/heads/main' && true || false }} # Only push image if we are on the main branch
+    # IMAGE_PUSH: ${{ github.ref == 'refs/heads/main' && true || false }} # Only push image if we are on the main branch
+    IMAGE_PUSH: true # Always push image
     NODE_VERSION: 20.3
 
 jobs:
