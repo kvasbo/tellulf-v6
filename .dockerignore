@@ -8,3 +8,6 @@ data
 assets/js
 assets/css
 *.workspace
+package.json
+yarn.lock
+Dockerfile
