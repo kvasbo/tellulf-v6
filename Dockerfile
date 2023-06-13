@@ -1,4 +1,4 @@
-FROM node:20-buster-slim
+FROM node:20.3-alpine
 
 # Create temp dir
 RUN mkdir /tellulf
@@ -9,7 +9,7 @@ COPY . /tellulf
 WORKDIR /tellulf
 
 # Run NPM stuff
-RUN yarn install --production
+RUN yarn install --production --ignore-scripts
 # RUN yarn run lint
 # RUN yarn run build
 
