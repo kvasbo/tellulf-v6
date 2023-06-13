@@ -1,4 +1,4 @@
-FROM node:20-buster-slim
+FROM node:20.3-alpine
 
 # Create temp dir
 RUN mkdir /tellulf
@@ -8,10 +8,8 @@ COPY . /tellulf
 
 WORKDIR /tellulf
 
-# Run NPM stuff
-RUN yarn
-RUN yarn run lint
-RUN yarn run build
+# Install production dependencies, could probably be moved to CI but kept here for binary compatibility
+RUN yarn install --production --ignore-scripts
 
 # Set port
 EXPOSE 3000
