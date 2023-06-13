@@ -30,10 +30,86 @@ jobs:
               run: yarn install
             - name: Lint
               run: yarn run lint
+    build:
+        runs-on: ubuntu-latest
+        name: Build
+        permissions:
+            contents: read
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ env.NODE_VERSION }}
+                  cache: yarn
+            - name: Install dependencies
+              run: yarn install
+            - name: Build
+              run: yarn run build
+            - name: Upload artifact # All the stuff needed to run the app except for node_modules as we need a clean version of that
+              uses: actions/upload-artifact@v2
+              with:
+                  name: dist
+                  path: |
+                      build
+                      Dockerfile
+                      yarn.lock
+                      package.json
+                      assets
+                      views
+    create-docker-image:
+        name: Create Docker image
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            packages: write
+        steps:
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ env.NODE_VERSION }}
+                  cache: yarn
+            - name: Download artifact
+              uses: actions/download-artifact@v2
+              with:
+                  name: dist
+                  path: .
+            - name: list files
+              run: ls -la
+            - name: Install dependencies
+              run: yarn install
+            - name: Build Docker image
+              run: docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} .
+            - name: Log in to the Container registry
+              uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+              with:
+                  registry: ${{ env.REGISTRY }}
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+            - name: Push Docker image
+              run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+            - name: Log in to the Container registry
+              uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+              with:
+                  registry: ${{ env.REGISTRY }}
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+            - name: Extract metadata (tags, labels) for Docker
+              id: meta
+              uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+              with:
+                  images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+            - name: Build and push Docker image
+              uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+              with:
+                  context: .
+                  push: ${{ env.IMAGE_PUSH }}
+                  tags: ${{ steps.meta.outputs.tags }}
+                  labels: ${{ steps.meta.outputs.labels }}
     build-and-push-image:
         runs-on: ubuntu-latest
         name: Build Tellulf and push Docker image to Github Container Registry
-        needs: lint
         permissions:
             contents: read
             packages: write
