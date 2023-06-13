@@ -63,8 +63,6 @@ jobs:
                   cache: yarn
             - name: list files
               run: ls -la
-            - name: Install dependencies
-              run: yarn install
             - name: Build Docker image
               run: docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} .
             - name: Log in to the Container registry

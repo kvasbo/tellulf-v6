@@ -9,9 +9,9 @@ COPY . /tellulf
 WORKDIR /tellulf
 
 # Run NPM stuff
-RUN yarn
-RUN yarn run lint
-RUN yarn run build
+RUN yarn install --production
+# RUN yarn run lint
+# RUN yarn run build
 
 # Set port
 EXPOSE 3000
