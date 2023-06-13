@@ -9,19 +9,37 @@ on:
 env:
     REGISTRY: ghcr.io
     IMAGE_NAME: ${{ github.repository }}
-    IMAGE_PUSH: ${{ github.ref == 'refs/heads/main' && true || false }}
+    IMAGE_PUSH: ${{ github.ref == 'refs/heads/main' && true || false }} # Only push image if we are on the main branch
+    NODE_VERSION: 20.3
 
 jobs:
+    lint:
+        runs-on: ubuntu-latest
+        name: Lint
+        permissions:
+            contents: read
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ env.NODE_VERSION }}
+                  cache: yarn
+            - name: Install dependencies
+              run: yarn install
+            - name: Lint
+              run: yarn run lint
     build-and-push-image:
         runs-on: ubuntu-latest
         name: Build Tellulf and push Docker image to Github Container Registry
+        needs: lint
         permissions:
             contents: read
             packages: write
         steps:
             - name: Checkout repository
               uses: actions/checkout@v3
-
             - name: Log in to the Container registry
               uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
               with:
