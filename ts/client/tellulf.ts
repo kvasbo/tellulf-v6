@@ -33,23 +33,28 @@ interface TimeData {
 
 let lastUpdatedPower = new Date();
 
-// Run every fifteen seconds, plus once when starting up
+// Reload the page every fifteen seconds
 $(function () {
     setReload(1);
+    // Run the update loop immediately
     runUpdateLoop(true);
+    // Run the update loop every fifteen seconds
     window.setInterval(function () {
         runUpdateLoop();
     }, 15000);
+    // Stop the update loop if the user navigates away from the page
+    window.addEventListener('beforeunload', function () {
+        setReload(0);
+    });
 });
 
 // Run the update loop
 async function runUpdateLoop(force = false) {
-    // Run the Ajax calls concurrently (note: the order is important)
-    const calls = [
-        jQuery.get('/time'),
-        jQuery.get('/homey'),
-        jQuery.get('/entur'),
-    ];
+    const getTime = () => jQuery.get('/time');
+    const getHomey = () => jQuery.get('/homey');
+    const getEntur = () => jQuery.get('/entur');
+
+    const calls = [getTime(), getHomey(), getEntur()];
 
     // Wait for all of them to return
     const data = await Promise.all(calls);
@@ -63,16 +68,21 @@ async function runUpdateLoop(force = false) {
 
     const homey: HomeyData = data[1];
 
+    // Show temperature
     if (homey.tempOut) {
         const t = Number(homey.tempOut).toFixed(0);
         $('.current_temperature').html(`${t}&deg;`);
     } else {
         $('.current_temperature').html(`?`);
     }
+
+    // Show pressure
     if (homey.pressure) {
         const p = Number(homey.pressure).toFixed(0);
         $('.current_pressure').html(`${p} hPa`);
     }
+
+    // Show humidity
     if (homey.humOut) {
         const p = Number(homey.humOut).toFixed(0);
         $('.current_humidity').html(`${p} % hum`);
