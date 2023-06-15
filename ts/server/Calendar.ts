@@ -210,27 +210,30 @@ export class Calendar {
                 end: '',
                 spacer: '...',
             };
-        } else if (dayType === 'lastDay') {
+        }
+
+        if (dayType === 'lastDay') {
             return {
                 start: '',
                 end: DateTime.fromJSDate(event.end).toFormat('HH:mm'),
                 spacer: '⇝',
             };
-            '→ ' + DateTime.fromJSDate(event.end).toFormat('HH:mm');
-        } else if (dayType === 'firstDay') {
+        }
+
+        if (dayType === 'firstDay') {
             return {
                 start: DateTime.fromJSDate(event.start).toFormat('HH:mm'),
                 end: '',
                 spacer: '⇝',
             };
-        } else {
-            //  First or only day
-            return {
-                start: DateTime.fromJSDate(event.start).toFormat('HH:mm'),
-                end: DateTime.fromJSDate(event.end).toFormat('HH:mm'),
-                spacer: '⇝',
-            };
         }
+
+        //  First or only day
+        return {
+            start: DateTime.fromJSDate(event.start).toFormat('HH:mm'),
+            end: DateTime.fromJSDate(event.end).toFormat('HH:mm'),
+            spacer: '⇝',
+        };
     }
 
     // Figure out if same date or whether it spans multiple days. For displaying purposes
