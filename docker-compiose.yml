@@ -1,0 +1,14 @@
+version: '3.9'
+
+services:
+    tellulf:
+        image: ghcr.io/kvasbo/tellulf-v6:main
+        restart: unless-stopped
+        stdin_open: true
+        tty: true
+        ports:
+            - '${EXPOSE_PORT}:3000'
+networks:
+    default:
+        name: ${NETWORK_NAME}
+        external: true
