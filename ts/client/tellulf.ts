@@ -38,14 +38,10 @@ $(function () {
     setReload(1);
     // Run the update loop immediately
     runUpdateLoop(true);
-    // Run the update loop every fifteen seconds
+    // Run the update loop every ten seconds
     window.setInterval(function () {
         runUpdateLoop();
-    }, 15000);
-    // Stop the update loop if the user navigates away from the page
-    window.addEventListener('beforeunload', function () {
-        setReload(0);
-    });
+    }, 10000);
 });
 
 // Run the update loop
