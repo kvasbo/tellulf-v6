@@ -82,3 +82,8 @@ jobs:
                   push: ${{ env.IMAGE_PUSH }}
                   tags: ${{ steps.meta.outputs.tags }}
                   labels: ${{ steps.meta.outputs.labels }}
+    release:
+        name: Create Release
+        needs: create-docker-image
+        if: github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v1
