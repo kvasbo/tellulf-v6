@@ -103,8 +103,6 @@ jobs:
         if: github.ref == 'refs/heads/main'
         steps:
             - name: Send Webhook
-              uses: distributhor/webhook-action@v1
+              uses: distributhor/workflow-webhook@v1
               with:
-                  url: ${{ vars.WEBHOOK_URL }}
-                  method: POST
-                  body: '{"content": "New version of the bot has been released!"}'
+                  webhook_url: ${{ vars.WEBHOOK_URL }}
