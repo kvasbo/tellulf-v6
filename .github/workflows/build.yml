@@ -96,13 +96,3 @@ jobs:
               uses: softprops/action-gh-release@v1
               with:
                   tag_name: ${{ steps.tag.outputs.release_tag }}
-    webhook:
-        name: Send Webhook
-        needs: create-docker-image
-        runs-on: ubuntu-latest
-        if: github.ref == 'refs/heads/main'
-        steps:
-            - name: Send Webhook
-              uses: distributhor/workflow-webhook@v3
-              env:
-                  webhook_url: ${{ vars.WEBHOOK_URL }}
