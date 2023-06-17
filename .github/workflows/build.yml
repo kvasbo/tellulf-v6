@@ -103,6 +103,6 @@ jobs:
         if: github.ref == 'refs/heads/main'
         steps:
             - name: Send Webhook
-              uses: distributhor/workflow-webhook@v1
-              with:
+              uses: distributhor/workflow-webhook@v3
+              env:
                   webhook_url: ${{ vars.WEBHOOK_URL }}
