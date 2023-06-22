@@ -1,12 +1,15 @@
 import { PowerPrices } from './PowerPrices';
+import { RedisClientType } from 'redis';
 import { TibberData } from './Tibber';
 import { MqttClient } from './MQTT';
 
 export class Smarthouse {
     private mqttClient;
+    private redisClient;
 
-    constructor(mqttClient: MqttClient) {
+    constructor(mqttClient: MqttClient, redisClient: any) {
         this.mqttClient = mqttClient;
+        this.redisClient = redisClient;
     }
 
     private garageDoorOpen: null | boolean = null;
@@ -114,6 +117,7 @@ export class Smarthouse {
                     this.mqttClient.log('Power price set to:', this.powerPrice);
                     break;
                 case 'tellulf/tibber/home/power':
+                    this.redisClient.set('powerHome', parseFloat(message.toString());
                     this.powerData.home.power = parseFloat(message.toString());
                     this.mqttClient.log(
                         'Power home set to:',

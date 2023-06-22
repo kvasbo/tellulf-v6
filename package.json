@@ -12,6 +12,7 @@
         "@types/jquery": "^3.5",
         "@types/luxon": "^3.3",
         "@types/node": "^20.0",
+        "@types/redis": "^4.0.11",
         "@types/twig": "^1.12",
         "@typescript-eslint/eslint-plugin": "^5.58",
         "@typescript-eslint/parser": "^5.58",
