@@ -1,9 +1,18 @@
 import { TibberFeed, TibberQuery, IConfig } from 'tibber-api';
+
 import * as z from 'zod';
 import * as dotenv from 'dotenv';
 import { MqttClient } from './MQTT';
 
 dotenv.config();
+
+enum EnergyResolution {
+    HOURLY = 'HOURLY',
+    DAILY = 'DAILY',
+    WEEKLY = 'WEEKLY',
+    MONTHLY = 'MONTHLY',
+    ANNUAL = 'ANNUAL',
+}
 
 export const TibberSubscriptionSchema = z.object({
     timestamp: z.string(),
@@ -67,7 +76,6 @@ const tibberQueryHome = new TibberQuery(configHome);
 const tibberQueryCabin = new TibberQuery(configCabin);
 
 const tibberFeedHome = new TibberFeed(tibberQueryHome, 5000);
-const tibberFeedCabin = new TibberFeed(tibberQueryCabin, 5000);
 
 export class Tibber {
     private mqttClient: MqttClient;
@@ -79,17 +87,13 @@ export class Tibber {
         tibberFeedHome.on('data', (data) => {
             this.parseData(data, 'home');
         });
-        tibberFeedCabin.on('data', (data) => {
-            this.parseData(data, 'cabin');
-        });
-        tibberFeedCabin.connect().then(() => {
-            console.log('Tibber cabin initiated');
-        });
         tibberFeedHome.connect().then(() => {
             console.log('Tibber home initiated');
         });
         // Start power price loop
         this.updatePowerprices();
+        this.updateTodayConsumption(homeId);
+        this.updateTodayConsumption(cabinId);
     }
 
     private updatePowerprices() {
@@ -103,6 +107,14 @@ export class Tibber {
         setTimeout(() => {
             this.updatePowerprices();
         }, 60000);
+    }
+
+    private async updateTodayConsumption(homeId: string) {
+        const consumed = await tibberQueryCabin.getConsumption(
+            EnergyResolution.HOURLY,
+            24
+        );
+        console.log('cabin', consumed);
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
