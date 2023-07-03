@@ -6,7 +6,6 @@ import { Entur } from './Entur';
 import { Settings } from 'luxon';
 import { Smarthouse } from './Smarthouse';
 import { MqttClient } from './MQTT';
-import { Tibber } from './Tibber';
 
 // Configure the time zone
 Settings.defaultZone = 'Europe/Oslo';
@@ -18,8 +17,6 @@ const mqttClient = new MqttClient();
 // Create smarthouse connector
 const smart = new Smarthouse(mqttClient);
 smart.startMqtt();
-
-new Tibber(mqttClient);
 
 // Express settings
 

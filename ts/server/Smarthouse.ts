@@ -109,25 +109,25 @@ export class Smarthouse {
                     this.pressure = parseFloat(message.toString());
                     this.mqttClient.log('Pressure set to:', this.pressure);
                     break;
-                case 'tellulf/tibber/price/total':
+                case 'tibber/price/total':
                     this.powerPrice = parseFloat(message.toString());
                     this.mqttClient.log('Power price set to:', this.powerPrice);
                     break;
-                case 'tellulf/tibber/home/power':
+                case 'tibber/home/power':
                     this.powerData.home.power = parseFloat(message.toString());
                     this.mqttClient.log(
                         'Power home set to:',
                         this.powerData.home.power
                     );
                     break;
-                case 'tellulf/tibber/cabin/power':
+                case 'tibber/cabin/power':
                     this.powerData.cabin.power = parseFloat(message.toString());
                     this.mqttClient.log(
                         'Power cabin set to:',
                         this.powerData.cabin.power
                     );
                     break;
-                case 'tellulf/tibber/home/accumulatedCost':
+                case 'tibber/home/accumulatedCost':
                     this.powerData.home.accumulatedCost = parseFloat(
                         message.toString()
                     );
@@ -136,7 +136,7 @@ export class Smarthouse {
                         this.powerData.home.accumulatedCost
                     );
                     break;
-                case 'tellulf/tibber/cabin/accumulatedCost':
+                case 'tibber/cabin/accumulatedCost':
                     this.powerData.cabin.accumulatedCost = parseFloat(
                         message.toString()
                     );
@@ -145,7 +145,7 @@ export class Smarthouse {
                         this.powerData.cabin.accumulatedCost
                     );
                     break;
-                case 'tellulf/tibber/home/accumulatedConsumption':
+                case 'tibber/home/accumulatedConsumption':
                     this.powerData.home.accumulatedConsumption = parseFloat(
                         message.toString()
                     );
@@ -154,7 +154,7 @@ export class Smarthouse {
                         this.powerData.home.accumulatedConsumption
                     );
                     break;
-                case 'tellulf/tibber/cabin/accumulatedConsumption':
+                case 'tibber/cabin/accumulatedConsumption':
                     this.powerData.cabin.accumulatedConsumption = parseFloat(
                         message.toString()
                     );
