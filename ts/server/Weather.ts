@@ -47,9 +47,12 @@ export class Weather {
 
     constructor() {
         this.updateForecasts();
-        setInterval(() => {
-            this.updateForecasts();
-        }, 30 * 60 * 1000); // Every 30 minutes
+        setInterval(
+            () => {
+                this.updateForecasts();
+            },
+            30 * 60 * 1000
+        ); // Every 30 minutes
     }
 
     private async updateForecasts(): Promise<void> {
