@@ -12,7 +12,7 @@
         "@types/jquery": "*",
         "@types/luxon": "*",
         "@types/node": "*",
-        "@types/twig": "^1.12",
+        "@types/twig": "*",
         "@typescript-eslint/eslint-plugin": "^6",
         "@typescript-eslint/parser": "^6",
         "eslint": "^8.45",
