@@ -15,10 +15,10 @@
         "@types/twig": "^1.12",
         "@typescript-eslint/eslint-plugin": "^5.58",
         "@typescript-eslint/parser": "^5.58",
-        "eslint": "^8.44",
+        "eslint": "^8.45",
         "eslint-config-prettier": "^8.8",
-        "eslint-plugin-prettier": "^5.0.0-alpha.1",
-        "nodemon": "^2.0",
+        "eslint-plugin-prettier": "^5",
+        "nodemon": "^3.0",
         "prettier": "^3",
         "sass": "^1.62",
         "typescript": "^5.1"
