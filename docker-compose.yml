@@ -4,9 +4,6 @@ services:
         restart: unless-stopped
         stdin_open: true
         tty: true
-        depends_on:
-          tellulf-redis:
-            condition: service_healthy
         ports:
             - '${EXPOSE_PORT}:3000'
         environment:
@@ -22,17 +19,6 @@ services:
             - MQTT_PORT=${MQTT_PORT}
             - MQTT_USER=${MQTT_USER}
             - MQTT_PASS=${MQTT_PASS}
-    tellulf-redis:
-        image: redis:alpine
-        restart: unless-stopped
-        healthcheck:
-          test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
-        volumes:
-            - /share/Container/Volumes/tellulf/redis:/data
-        networks:
-            - default
-        ports: 
-            - 6379:6379
 networks:
     default:
         name: ${NETWORK_NAME}

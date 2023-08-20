@@ -32,7 +32,6 @@
         "graphql-request": "^6.0",
         "luxon": "^3.3",
         "mqtt": "^5.0",
-        "redis": "^4.6.7",
         "sunrise-sunset-js": "^2.2",
         "twig": "^1.16",
         "zod": "^3.21"
