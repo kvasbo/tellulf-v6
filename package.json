@@ -27,7 +27,7 @@
         "axios": "^1.4",
         "dotenv": "^16.0",
         "express": "^4.18",
-        "googleapis": "^122",
+        "googleapis": "^126",
         "graphql": "^16.7.1",
         "graphql-request": "^6.0",
         "luxon": "^3.3",
