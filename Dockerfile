@@ -1,4 +1,4 @@
-FROM node:20.3-alpine
+FROM node:20.5-alpine
 
 # Create temp dir
 RUN mkdir /tellulf
