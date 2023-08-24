@@ -1,6 +1,6 @@
 {
     "scripts": {
-        "sass": "npx sass --watch sass:assets/css",
+        "sass": "npx sass --embed-source-map  --watch sass:assets/css",
         "watch-server": "npx tsc --watch --p tsconfig.server.json",
         "watch-client": "npx tsc --watch --p tsconfig.client.json",
         "run": "npx nodemon build/Server.js",
@@ -30,6 +30,7 @@
         "googleapis": "^126",
         "graphql": "^16.7.1",
         "graphql-request": "^6.0",
+        "jquery": "^3",
         "luxon": "^3.3",
         "mqtt": "^5.0",
         "sunrise-sunset-js": "^2.2",

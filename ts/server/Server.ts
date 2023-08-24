@@ -26,7 +26,21 @@ app.use('/assets', express.static(path.join(__dirname, '../assets'))); // Static
 app.use(
     '/favicon.ico',
     express.static(path.join(__dirname, '../assets/favicon.ico'))
-); // Static routes
+);
+app.use(
+    '/jquery.js',
+    express.static(
+        path.join(__dirname, '../node_modules/jquery/dist/jquery.slim.min.js')
+    )
+);
+app.use(
+    '/client.js',
+    express.static(path.join(__dirname, '../assets/js/tellulf.js'))
+);
+app.use(
+    '/client.css',
+    express.static(path.join(__dirname, '../assets/css/tellulf.css'))
+);
 
 const port = 3000;
 

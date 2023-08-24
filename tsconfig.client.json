@@ -10,7 +10,7 @@
         "removeComments": true,
         "skipLibCheck": true,
         "noImplicitAny": true,
-        "sourceMap": true,
+        "inlineSourceMap": true,
         "sourceRoot": "./ts/client"
     },
     "include": ["ts/client/*"]

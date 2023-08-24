@@ -46,24 +46,26 @@ $(function () {
 
 // Run the update loop
 async function runUpdateLoop(force = false) {
-    const getTime = () => jQuery.get('/time');
-    const getHomey = () => jQuery.get('/homey');
-    const getEntur = () => jQuery.get('/entur');
 
-    const calls = [getTime(), getHomey(), getEntur()];
+    const getTime = fetch('/time');
+    const getHomey = fetch('/homey');
+    const getEntur = fetch('/entur');
+
+    const calls = [getTime, getHomey, getEntur];
 
     // Wait for all of them to return
     const data = await Promise.all(calls);
 
     // Unwrap the returned data (this is why the order is important)
-    const timeData: TimeData = data[0];
+    const timeData: TimeData = await data[0].json();
     updateTimeInfo(timeData);
 
-    const entur: Train[] = data[2];
+    const entur: Train[] = await data[2].json();
     updateEnturInfo(entur);
 
-    const homey: HomeyData = data[1];
+    const homey: HomeyData = await data[1].json();
 
+    
     // Show temperature
     if (homey.tempOut) {
         const t = Number(homey.tempOut).toFixed(0);

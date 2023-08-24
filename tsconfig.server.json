@@ -3,14 +3,14 @@
         "outDir": "./build",
         "lib": ["es2020", "dom"],
         "module": "CommonJS",
-        "target": "es2020",
+        "target": "es2022",
         "allowJs": false,
         "moduleResolution": "node",
         "removeComments": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
         "noImplicitAny": true,
-        "sourceMap": true,
+        "inlineSourceMap": true,
         "sourceRoot": "./ts/server"
     },
     "include": ["ts/server/*"]
