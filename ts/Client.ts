@@ -3,14 +3,12 @@
  * This file is the client side of the dashboard. It is not run on the server, but served as is to the client.
  */
 
-interface Train {
+type Train = {
     time: string;
     destination: string;
-}
+};
 
-interface HomeyData {
-    age: number;
-    time: number;
+type HomeyData = {
     tempOut?: number;
     humOut?: number;
     power?: number;
@@ -28,13 +26,13 @@ interface HomeyData {
     coolerRoomTemp: number;
     coolerRoomHumidity: number;
     coolerRoomBattery: number;
-}
+};
 
-interface TimeData {
+type TimeData = {
     time: string;
     date: string;
     week: string;
-}
+};
 
 let lastUpdatedPower = new Date();
 

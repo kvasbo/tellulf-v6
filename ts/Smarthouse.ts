@@ -54,7 +54,7 @@ export class Smarthouse {
 
     private powerPrice = -1;
 
-    public getData() {
+    public getData(): HomeyData {
         return {
             tempOut: this.temp,
             humOut: this.hum,
@@ -71,6 +71,7 @@ export class Smarthouse {
             costTodayCabin: this.powerData.cabin.accumulatedCost,
             coolerRoomHumidity: this.coolerRoomHumidity,
             coolerRoomTemp: this.coolerRoomTemp,
+            coolerRoomBattery: this.coolerRoomBattery,
         };
     }
 
