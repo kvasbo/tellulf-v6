@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /**
  * This file is the client side of the dashboard. It is not run on the server, but served as is to the client.
  */
@@ -41,7 +42,7 @@ let lastUpdatedPower = new Date();
 $(function () {
     setReloadClient(1);
     // Run the update loop immediately
-    runUpdateLoop(true);
+    runUpdateLoop();
     // Run the update loop every ten seconds
     window.setInterval(function () {
         runUpdateLoop();
@@ -49,7 +50,7 @@ $(function () {
 });
 
 // Run the update loop
-async function runUpdateLoop(force = false) {
+async function runUpdateLoop() {
     const getTime = fetch('/time');
     const getHomey = fetch('/homey');
     const getEntur = fetch('/entur');
@@ -154,12 +155,6 @@ function updateTimeInfo(timeData: TimeData) {
     $('#now_time').html(timeData.time);
     $('#now_date').html(timeData.date);
     $('#now_week').html(`Uke ${timeData.week}`);
-}
-
-function setLastUpdateTime() {
-    const now = new Date();
-    const time = now.toLocaleTimeString();
-    $('#last_update_time').html(`Sist oppdatert: ${time}`);
 }
 
 function updateEnturInfo(entur: Train[]) {

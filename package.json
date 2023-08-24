@@ -4,7 +4,7 @@
         "watch": "npx tsc --watch",
         "run": "npx nodemon build/Server.js",
         "build": "yarn run lint && npx tsc --p tsconfig.json && npx sass sass:assets/css",
-        "lint": "npx eslint ./ts/server/ --fix"
+        "lint": "npx eslint ./ts/ --fix"
     },
     "devDependencies": {
         "@types/express": "*",
@@ -70,11 +70,11 @@
             "prettier"
         ],
         "parserOptions": {
-            "ecmaVersion": 2022,
+            "ecmaVersion": 2020,
             "project": [
-                "tsconfig.server.json"
+                "tsconfig.json"
             ],
-            "sourceType": "module"
+            "sourceType": "script"
         },
         "env": {
             "node": true,
