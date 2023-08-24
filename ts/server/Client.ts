@@ -1,3 +1,7 @@
+/**
+ * This file is the client side of the dashboard. It is not run on the server, but served as is to the client.
+ */
+
 interface Train {
     time: string;
     destination: string;
@@ -35,7 +39,7 @@ let lastUpdatedPower = new Date();
 
 // Reload the page every fifteen seconds
 $(function () {
-    setReload(1);
+    setReloadClient(1);
     // Run the update loop immediately
     runUpdateLoop(true);
     // Run the update loop every ten seconds
@@ -46,7 +50,6 @@ $(function () {
 
 // Run the update loop
 async function runUpdateLoop(force = false) {
-
     const getTime = fetch('/time');
     const getHomey = fetch('/homey');
     const getEntur = fetch('/entur');
@@ -65,7 +68,6 @@ async function runUpdateLoop(force = false) {
 
     const homey: HomeyData = await data[1].json();
 
-    
     // Show temperature
     if (homey.tempOut) {
         const t = Number(homey.tempOut).toFixed(0);
@@ -176,7 +178,7 @@ function updateEnturInfo(entur: Train[]) {
 /**
  * Reload at the start of the hour.
  */
-function setReload(inHours: number) {
+function setReloadClient(inHours: number) {
     const now = new Date();
     const startOfNextHour = new Date();
     startOfNextHour.setUTCHours(now.getUTCHours() + inHours, 0, 1, 0);

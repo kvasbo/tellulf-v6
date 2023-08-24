@@ -1,10 +1,9 @@
 {
     "scripts": {
         "sass": "npx sass --embed-source-map  --watch sass:assets/css",
-        "watch-server": "npx tsc --watch --p tsconfig.server.json",
-        "watch-client": "npx tsc --watch --p tsconfig.client.json",
+        "watch": "npx tsc --watch",
         "run": "npx nodemon build/Server.js",
-        "build": "yarn run lint && npx tsc --p tsconfig.server.json && npx tsc --p tsconfig.client.json && npx sass sass:assets/css",
+        "build": "yarn run lint && npx tsc --p tsconfig.json && npx sass sass:assets/css",
         "lint": "npx eslint ./ts/server/ --fix"
     },
     "devDependencies": {

@@ -33,10 +33,7 @@ app.use(
         path.join(__dirname, '../node_modules/jquery/dist/jquery.slim.min.js')
     )
 );
-app.use(
-    '/client.js',
-    express.static(path.join(__dirname, '../assets/js/tellulf.js'))
-);
+app.use('/client.js', express.static(path.join(__dirname, '/Client.js')));
 app.use(
     '/client.css',
     express.static(path.join(__dirname, '../assets/css/tellulf.css'))
