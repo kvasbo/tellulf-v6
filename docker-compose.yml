@@ -16,6 +16,7 @@ services:
             - MQTT_PORT=${MQTT_PORT}
             - MQTT_USER=${MQTT_USER}
             - MQTT_PASS=${MQTT_PASS}
+            - BUILD_DATE=${BUILD_DATE}
 networks:
     default:
         name: ${NETWORK_NAME}
