@@ -24,7 +24,7 @@ export class MqttClient {
         this.client = mqtt.connect(MQTT_HOST, options);
         this.client
             .on('connect', () => {
-                this.log(`${options.clientId} connected to ${options.host}`);
+                this.log(`${options.clientId} connected to ${MQTT_HOST}`);
                 this.client.subscribe('#');
                 this.client.publish(
                     'tellulf/poll',

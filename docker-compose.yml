@@ -9,9 +9,6 @@ services:
         environment:
             - YR_URL_FORECAST=${YR_URL_FORECAST}
             - YR_URL_NOWCAST=${YR_URL_NOWCAST}
-            - TIBBER_KEY=${TIBBER_KEY}
-            - TIBBER_ID_HOME=${TIBBER_ID_HOME}
-            - TIBBER_ID_CABIN=${TIBBER_ID_CABIN}
             - CAL_ID_FELLES=${CAL_ID_FELLES}
             - CAL_ID_BURSDAG=${CAL_ID_BURSDAG}
             - GOOGLE_KEY_B64=${GOOGLE_KEY_B64}

@@ -1,10 +1,7 @@
-FROM node:20.5-alpine
+FROM node:20
 
 # Create temp dir
-RUN mkdir /tellulf
-
-# Set port
-EXPOSE 3000
+# RUN mkdir /tellulf
 
 # Copy source to web directory
 COPY . /tellulf
