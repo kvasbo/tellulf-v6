@@ -11,7 +11,7 @@
         "skipLibCheck": true,
         "noImplicitAny": true,
         "inlineSourceMap": true,
-        "sourceRoot": "./ts/server"
+        "sourceRoot": "./ts"
     },
-    "include": ["ts/server/*"]
+    "include": ["ts/*.ts"]
 }
