@@ -4,7 +4,8 @@
         "watch": "npx tsc --watch",
         "run": "npx nodemon build/Server.js",
         "build": "yarn run lint && npx tsc --p tsconfig.json && npx sass sass:assets/css",
-        "lint": "npx eslint ./ts/ --fix"
+        "lint": "npx eslint ./ts/ --fix",
+        "start": "node build/Server.js"
     },
     "devDependencies": {
         "@types/express": "*",
