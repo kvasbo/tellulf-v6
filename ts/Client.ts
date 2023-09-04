@@ -15,7 +15,8 @@ type HomeyData = {
     pressure?: number;
     powerUsedToday?: number;
     costToday?: number;
-    powerCostNow?: number;
+    powerCostNowHome?: number;
+    powerCostNowCabin?: number;
     tempIn?: number;
     humIn?: number;
     co2in?: number;
@@ -97,9 +98,15 @@ async function runUpdateLoop() {
             Math.round(Number(homey.powerUsedToday)).toString()
         );
     }
-    if (homey.powerCostNow) {
-        const currentPowePrice = +homey.powerCostNow;
-        $('.current_price').html(`${currentPowePrice.toFixed(2)} kr/kWh`);
+    if (homey.powerCostNowHome) {
+        const currentPowerPrice = homey.powerCostNowHome;
+        $('.currentPriceHome').html(`${currentPowerPrice.toFixed(2)} kr/kWh`);
+    }
+    if (homey.powerCostNowCabin) {
+        const currentPowePriceCabin = homey.powerCostNowCabin;
+        $('.currentPriceCabin').html(
+            `${currentPowePriceCabin.toFixed(2)} kr/kWh`
+        );
     }
     if (homey.costToday) {
         const costToday = +homey.costToday;

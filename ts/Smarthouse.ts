@@ -1,4 +1,3 @@
-import { PowerPrices } from './PowerPrices';
 import { TibberData } from './Tibber';
 import { MqttClient } from './MQTT';
 
@@ -52,17 +51,16 @@ export class Smarthouse {
     private hum = -9999;
     private pressure = 0;
 
-    private powerPrice = -1;
+    private powerPriceHome = -1;
+    private powerPriceCabin = -1;
 
     public getData(): HomeyData {
         return {
             tempOut: this.temp,
             humOut: this.hum,
             pressure: this.pressure,
-            powerCostNow: PowerPrices.getCurrentPrice(
-                this.powerPrice,
-                new Date()
-            ),
+            powerCostNowCabin: this.powerPriceCabin,
+            powerCostNowHome: this.powerPriceHome,
             powerUsedToday: this.powerData.home.accumulatedConsumption,
             power: this.powerData.home.power,
             costToday: this.powerData.home.accumulatedCost,
@@ -110,9 +108,19 @@ export class Smarthouse {
                     this.pressure = parseFloat(message.toString());
                     this.mqttClient.log('Pressure set to:', this.pressure);
                     break;
-                case 'tibber/price/total':
-                    this.powerPrice = parseFloat(message.toString());
-                    this.mqttClient.log('Power price set to:', this.powerPrice);
+                case 'tibber/home/energyIncludingFeesAndVat':
+                    this.powerPriceHome = parseFloat(message.toString());
+                    this.mqttClient.log(
+                        'Power price home set to:',
+                        this.powerPriceHome
+                    );
+                    break;
+                case 'tibber/cabin/energyIncludingFeesAndVat':
+                    this.powerPriceCabin = parseFloat(message.toString());
+                    this.mqttClient.log(
+                        'Power price cabin set to:',
+                        this.powerPriceCabin
+                    );
                     break;
                 case 'tibber/home/power':
                     this.powerData.home.power = parseFloat(message.toString());
@@ -128,7 +136,7 @@ export class Smarthouse {
                         this.powerData.cabin.power
                     );
                     break;
-                case 'tibber/home/accumulatedCost':
+                case 'tibber/home/costToday':
                     this.powerData.home.accumulatedCost = parseFloat(
                         message.toString()
                     );
@@ -137,7 +145,7 @@ export class Smarthouse {
                         this.powerData.home.accumulatedCost
                     );
                     break;
-                case 'tibber/cabin/accumulatedCost':
+                case 'tibber/cabin/costToday':
                     this.powerData.cabin.accumulatedCost = parseFloat(
                         message.toString()
                     );
