@@ -1,5 +1,6 @@
 import { TibberData } from './Tibber';
 import { MqttClient } from './MQTT';
+import { PowerStatus, PowerStatusForPlace } from './Types';
 
 export class Smarthouse {
     private mqttClient;
@@ -8,93 +9,60 @@ export class Smarthouse {
         this.mqttClient = mqttClient;
     }
 
-    private garageDoorOpen: null | boolean = null;
-    private garageCarLeft: null | boolean = null;
-    private garageDistanceLeft: null | number = null;
-
     private coolerRoomTemp = -9999;
     private coolerRoomHumidity = -9999;
     private coolerRoomBattery = -9999;
 
-    private powerData: { home: TibberData; cabin: TibberData } = {
-        home: {
-            timestamp: '',
-            power: 0,
-            accumulatedConsumption: 0,
-            accumulatedProduction: 0,
-            accumulatedCost: 0,
-            minPower: 0,
-            averagePower: 0,
-            maxPower: 0,
-            accumulatedReward: 0,
-            powerProduction: 0,
-            minPowerProduction: 0,
-            maxPowerProduction: 0,
-        },
-        cabin: {
-            timestamp: '',
-            power: 0,
-            accumulatedConsumption: 0,
-            accumulatedProduction: 0,
-            accumulatedCost: 0,
-            minPower: 0,
-            averagePower: 0,
-            maxPower: 0,
-            accumulatedReward: 0,
-            powerProduction: 0,
-            minPowerProduction: 0,
-            maxPowerProduction: 0,
-        },
+    private status: PowerStatus = {
+        home: structuredClone(statusInitValues),
+        cabin: structuredClone(statusInitValues),
     };
 
     private temp = -9999;
     private hum = -9999;
     private pressure = 0;
 
-    private powerPriceHome = -1;
-    private powerPriceCabin = -1;
-
     public getData(): HomeyData {
-        return {
+        const hour = new Date().getHours();
+        const costHome =
+            this.status.home.prices[hour].total +
+            this.status.home.prices[hour].transportCost;
+        const costCabin =
+            this.status.cabin.prices[hour].total +
+            this.status.cabin.prices[hour].transportCost;
+        const output = {
             tempOut: this.temp,
             humOut: this.hum,
             pressure: this.pressure,
-            powerCostNowCabin: this.powerPriceCabin,
-            powerCostNowHome: this.powerPriceHome,
-            powerUsedToday: this.powerData.home.accumulatedConsumption,
-            power: this.powerData.home.power,
-            costToday: this.powerData.home.accumulatedCost,
-            powerCabin: this.powerData.cabin.power,
-            powerUsedTodayCabin: this.powerData.cabin.accumulatedConsumption,
-            costTodayCabin: this.powerData.cabin.accumulatedCost,
+            powerCostNowCabin: costCabin,
+            powerCostNowHome: costHome,
+            powerUsedToday: this.status.home.day.accumulatedConsumption,
+            power: this.status.home.power,
+            costToday: this.status.home.day.accumulatedCost,
+            powerCabin: this.status.cabin.power,
+            powerUsedTodayCabin: this.status.cabin.day.accumulatedConsumption,
+            costTodayCabin: this.status.cabin.day.accumulatedCost,
             coolerRoomHumidity: this.coolerRoomHumidity,
             coolerRoomTemp: this.coolerRoomTemp,
             coolerRoomBattery: this.coolerRoomBattery,
         };
+        return output;
+    }
+
+    private parseTibberData(message: string) {
+        // Convert to object
+        const data: PowerStatus = JSON.parse(message);
+        // Set internal status.
+        this.status = data;
     }
 
     public startMqtt() {
         this.mqttClient.client.on('message', (topic, message) => {
+            const msg = message.toString();
             switch (topic) {
-                case 'garage/left/OUT/JSON':
-                    this.garageCarLeft =
-                        JSON.parse(message.toString()).vehicle === 1;
-                    this.garageDoorOpen =
-                        JSON.parse(message.toString()).door === 1;
-                    this.garageDistanceLeft =
-                        JSON.parse(message.toString()).dist * 1;
-                    this.mqttClient.log(
-                        'Car in left garage space:',
-                        this.garageCarLeft.toString()
-                    );
-                    this.mqttClient.log(
-                        'Garage door open:',
-                        this.garageDoorOpen.toString()
-                    );
-                    this.mqttClient.log(
-                        'Space over left side car:',
-                        this.garageDistanceLeft.toString()
-                    );
+                // The big new one!
+                case 'tibber/power':
+                    this.parseTibberData(msg);
                     break;
                 case 'tellulf/weather/tempOut':
                     this.temp = parseFloat(message.toString());
@@ -107,70 +75,6 @@ export class Smarthouse {
                 case 'tellulf/weather/pressure':
                     this.pressure = parseFloat(message.toString());
                     this.mqttClient.log('Pressure set to:', this.pressure);
-                    break;
-                case 'tibber/home/energyIncludingFeesAndVat':
-                    this.powerPriceHome = parseFloat(message.toString());
-                    this.mqttClient.log(
-                        'Power price home set to:',
-                        this.powerPriceHome
-                    );
-                    break;
-                case 'tibber/cabin/energyIncludingFeesAndVat':
-                    this.powerPriceCabin = parseFloat(message.toString());
-                    this.mqttClient.log(
-                        'Power price cabin set to:',
-                        this.powerPriceCabin
-                    );
-                    break;
-                case 'tibber/home/power':
-                    this.powerData.home.power = parseFloat(message.toString());
-                    this.mqttClient.log(
-                        'Power home set to:',
-                        this.powerData.home.power
-                    );
-                    break;
-                case 'tibber/cabin/power':
-                    this.powerData.cabin.power = parseFloat(message.toString());
-                    this.mqttClient.log(
-                        'Power cabin set to:',
-                        this.powerData.cabin.power
-                    );
-                    break;
-                case 'tibber/home/costToday':
-                    this.powerData.home.accumulatedCost = parseFloat(
-                        message.toString()
-                    );
-                    this.mqttClient.log(
-                        'Accumulated cost home set to:',
-                        this.powerData.home.accumulatedCost
-                    );
-                    break;
-                case 'tibber/cabin/costToday':
-                    this.powerData.cabin.accumulatedCost = parseFloat(
-                        message.toString()
-                    );
-                    this.mqttClient.log(
-                        'Accumulated cost cabin set to:',
-                        this.powerData.cabin.accumulatedCost
-                    );
-                    break;
-                case 'tibber/home/accumulatedConsumption':
-                    this.powerData.home.accumulatedConsumption = parseFloat(
-                        message.toString()
-                    );
-                    this.mqttClient.log(
-                        'Accumulated consumption home set to:',
-                        this.powerData.home.accumulatedConsumption
-                    );
-                    break;
-                case 'tibber/cabin/accumulatedConsumption':
-                    this.powerData.cabin.accumulatedConsumption = parseFloat(
-                        message.toString()
-                    );
-                    this.mqttClient.log(
-                        'Accumulated consumption cabin set to:',
-                        this.powerData.cabin.accumulatedConsumption
-                    );
                     break;
                 case 'kjølerom/temperature':
                     this.coolerRoomTemp = parseFloat(message.toString());
@@ -187,3 +91,26 @@ export class Smarthouse {
         });
     }
 }
+
+const statusInitValues: PowerStatusForPlace = {
+    power: 0,
+    day: {
+        accumulatedConsumption: 0,
+        accumulatedProduction: 0,
+        accumulatedCost: 0,
+    },
+    month: {
+        accumulatedConsumption: 0,
+        accumulatedProduction: 0,
+        accumulatedCost: 0,
+    },
+    minPower: 0,
+    averagePower: 0,
+    maxPower: 0,
+    accumulatedReward: 0,
+    powerProduction: 0,
+    minPowerProduction: 0,
+    maxPowerProduction: 0,
+    usageForDay: {},
+    prices: {},
+};
