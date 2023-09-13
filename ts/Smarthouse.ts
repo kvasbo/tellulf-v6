@@ -1,4 +1,3 @@
-import { TibberData } from './Tibber';
 import { MqttClient } from './MQTT';
 import { PowerStatus, PowerStatusForPlace } from './Types';
 
