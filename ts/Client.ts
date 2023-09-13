@@ -122,7 +122,7 @@ async function runUpdateLoop() {
         $('.currentPowerCabin').html(`${p} kW`);
     }
     if (homey.costTodayCabin !== undefined) {
-        const costToday = +homey.costTodayCabin;
+        const costToday = homey.costTodayCabin;
         $('.powerCostTodayCabin').html(`${costToday.toFixed(0)}`);
     }
     if (homey.coolerRoomTemp !== null) {
