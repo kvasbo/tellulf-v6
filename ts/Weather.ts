@@ -1,4 +1,3 @@
-import * as dotenv from 'dotenv';
 import axios from 'axios';
 import { DateTime, Settings } from 'luxon';
 import {
@@ -8,14 +7,11 @@ import {
     YrCompleteResponseSchema,
 } from './types.met';
 
-dotenv.config();
+const YR_URL_FORECAST =
+    'https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=59.9508&lon=10.6848';
 
 // Configure the time zone
 Settings.defaultZone = 'Europe/Oslo';
-
-const yrUrlForecast: string = process.env.YR_URL_FORECAST
-    ? process.env.YR_URL_FORECAST.toString()
-    : '';
 
 interface HourlyForecast {
     symbol: string;
@@ -57,7 +53,7 @@ export class Weather {
 
     private async updateForecasts(): Promise<void> {
         // Fetch forecast
-        this.forecast = await Weather.fetchForecastData(yrUrlForecast);
+        this.forecast = await Weather.fetchForecastData(YR_URL_FORECAST);
     }
 
     public getCurrentWeather(): CurrentWeather {
@@ -143,24 +139,31 @@ export class Weather {
      * @returns
      */
     private static async fetchForecastData(url: string): Promise<TimeSeries[]> {
-        // Fetch and decode JSON
-        const response = await axios.get(url, {
-            method: 'GET',
-            headers: {
-                'User-Agent': 'tellulf v6: audun@kvasbo.no',
-            },
-        });
-        const forecast = response.data;
+        try {
+            // Fetch and decode JSON
+            console.log('Fetching forecast from yr.no', url);
+            const response = await axios.get(url, {
+                method: 'GET',
+                headers: {
+                    'User-Agent': 'tellulf v6: audun@kvasbo.no',
+                },
+            });
+            const forecast = response.data;
 
-        // Validate the response
-        const forecastValidated = YrCompleteResponseSchema.safeParse(forecast);
+            // Validate the response
+            const forecastValidated =
+                YrCompleteResponseSchema.safeParse(forecast);
 
-        if (forecastValidated.success) {
-            console.log("Forecast validated, let's go!");
-            return forecastValidated.data.properties.timeseries as TimeSeries[];
-        } else {
-            console.log('Could not validate forecast');
-            return [] as TimeSeries[];
+            if (forecastValidated.success) {
+                console.log("Forecast validated, let's go!");
+                return forecastValidated.data.properties
+                    .timeseries as TimeSeries[];
+            } else {
+                console.log('Could not validate forecast');
+                return [] as TimeSeries[];
+            }
+        } catch (error) {
+            console.error(error);
         }
     }
 }
