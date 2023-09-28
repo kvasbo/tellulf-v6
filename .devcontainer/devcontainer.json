@@ -17,7 +17,7 @@
         "aaron-bond.better-comments",
         "usernamehw.errorlens",
         "rangav.vscode-thunder-client",
-        "visualstudioexptteam",
+        "visualstudioexptteam.vscodeintellicode",
         "mhutchie.git-graph",
         "github.copilot",
         "github.copilot-chat",
@@ -26,7 +26,8 @@
         "eriklynd.json-tools",
         "esbenp.prettier-vscode",
         "yoavbls.pretty-ts-errors",
-        "vscode.json-language-features"
+        "vscode.json-language-features",
+        "bradlc.vscode-tailwindcss"
       ]
     }
   }
