@@ -34,7 +34,6 @@
         "luxon": "^3.3",
         "mqtt": "^5.0",
         "sunrise-sunset-js": "^2.2",
-        "tailwindcss": "^3.3.3",
         "twig": "^1.16",
         "zod": "^3.21"
     },
@@ -59,8 +58,7 @@
     },
     "eslintConfig": {
         "plugins": [
-            "@typescript-eslint",
-            "prettier"
+            "@typescript-eslint"
         ],
         "ignorePatterns": [
             "ts/client/*.ts"
