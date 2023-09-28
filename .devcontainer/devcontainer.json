@@ -8,7 +8,7 @@
   },
   "portsAttributes": {
     "3000": {
-      "label": "Application port"
+      "label": "Selveste Tellulf!"
     }
   },
   "customizations": {
@@ -27,7 +27,7 @@
         "esbenp.prettier-vscode",
         "yoavbls.pretty-ts-errors",
         "vscode.json-language-features",
-        "bradlc.vscode-tailwindcss"
+        "dbaeumer.vscode-eslint"
       ]
     }
   }
