@@ -19,6 +19,9 @@ export interface PowerStatusForPlace {
     maxPowerProduction: number;
     usageForDay: UsageForDay;
     prices: PowerPriceDay;
+    currentPrice: PowerPrice;
+    usageForTodayLastHourSeen: number;
+    usageForTodayUpToThisHour: number;
 }
 export interface UsageForDay {
     [key: number]: {
@@ -30,13 +33,15 @@ export interface UsageForDay {
 }
 
 export interface PowerPriceDay {
-    [key: number]: {
-        energy: number;
-        tax: number;
-        total: number;
-        transportCost: number;
-        energyAfterSupport: number;
-    };
+    [key: number]: PowerPrice;
+}
+
+export interface PowerPrice {
+    energy: number;
+    tax: number;
+    transportCost: number;
+    energyAfterSupport: number;
+    totalAfterSupport: number;
 }
 
 export interface PowerStatus {

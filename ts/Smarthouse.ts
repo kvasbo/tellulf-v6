@@ -22,13 +22,8 @@ export class Smarthouse {
     private pressure = 0;
 
     public getData(): HomeyData {
-        const hour = new Date().getHours();
-        const costHome =
-            this.status.home.prices[hour].total +
-            this.status.home.prices[hour].transportCost;
-        const costCabin =
-            this.status.cabin.prices[hour].total +
-            this.status.cabin.prices[hour].transportCost;
+        const costHome = this.status.home.currentPrice.totalAfterSupport;
+        const costCabin = this.status.cabin.currentPrice.totalAfterSupport;
         const output = {
             tempOut: this.temp,
             humOut: this.hum,
@@ -111,5 +106,14 @@ const statusInitValues: PowerStatusForPlace = {
     minPowerProduction: 0,
     maxPowerProduction: 0,
     usageForDay: {},
+    usageForTodayLastHourSeen: 0,
+    usageForTodayUpToThisHour: 0,
     prices: {},
+    currentPrice: {
+        energy: 0,
+        tax: 0,
+        transportCost: 0,
+        energyAfterSupport: 0,
+        totalAfterSupport: 0,
+    },
 };
