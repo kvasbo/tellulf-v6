@@ -33,7 +33,26 @@ export class MqttClient {
             })
             .on('error', (error) => {
                 this.log('MQTT Error', error.message);
+                MqttClient.die();
+            })
+            .on('close', () => {
+                MqttClient.die();
+            })
+            .on('offline', () => {
+                MqttClient.die();
+            })
+            .on('disconnect', () => {
+                MqttClient.die();
             });
+    }
+
+    /**
+     * Die after a slightly random period, as we'll then restart!
+     */
+    private static die() {
+        setTimeout(() => {
+            process.exit(1);
+        }, Math.random() * 60000);
     }
 
     /**
