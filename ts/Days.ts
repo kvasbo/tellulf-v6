@@ -10,6 +10,7 @@ export interface DayInfo {
     daily_forecast: DailyForecast;
     events: Event[];
     birthdays: Event[];
+    dinner: Event[];
     sunrise: string;
     sunset: string;
     displayHeight: number;
@@ -67,6 +68,7 @@ export class Days {
             daily_forecast: daily[date],
             events: this.calendar.getEventsForDate(jsDate),
             birthdays: this.calendar.getBirthdaysForDate(jsDate),
+            dinner: this.calendar.getDinnerForDate(jsDate),
             sunrise: DateTime.fromJSDate(sunRiseDate)
                 .setLocale('nb')
                 .toFormat('HH:mm'),

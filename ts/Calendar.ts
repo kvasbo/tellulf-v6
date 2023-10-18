@@ -57,9 +57,11 @@ export class Calendar {
     constructor() {
         this.refreshEvents();
         this.refreshBirthdays();
+        this.refreshDinners();
         setInterval(() => {
             this.refreshEvents();
             this.refreshBirthdays();
+            this.refreshDinners();
         }, 600000);
     }
 
@@ -84,6 +86,12 @@ export class Calendar {
         return this.birthdays
             .filter((e) => this.checkEventForDate(e, jsDate))
             .map((e) => this.enrichEvent(e, 'birthday', jsDate));
+    }
+
+    public getDinnerForDate(jsDate: Date): Event[] {
+        return this.dinners
+            .filter((e) => this.checkEventForDate(e, jsDate))
+            .map((e) => this.enrichEvent(e, 'dinner', jsDate));
     }
 
     // Filters events based on whether they exist on the given date
@@ -138,12 +146,23 @@ export class Calendar {
 
     private async refreshEvents(): Promise<void> {
         if (process.env.CAL_ID_FELLES) {
-            const events = await Calendar.getCalendarData(
+            this.events = await Calendar.getCalendarData(
                 process.env.CAL_ID_FELLES
             );
-            this.events = events;
+            console.log(this.events.length + ' events fetched.');
         } else {
             this.events = [];
+        }
+    }
+
+    private async refreshDinners(): Promise<void> {
+        if (process.env.CAL_ID_MIDDAG) {
+            this.dinners = await Calendar.getCalendarData(
+                process.env.CAL_ID_MIDDAG
+            );
+            console.log(this.dinners.length + ' dinners fetched.');
+        } else {
+            this.dinners = [];
         }
     }
 
@@ -152,6 +171,7 @@ export class Calendar {
             this.birthdays = await Calendar.getCalendarData(
                 process.env.CAL_ID_BURSDAG
             );
+            console.log(this.birthdays.length + ' birthdays fetched.');
         } else {
             this.birthdays = [];
         }
