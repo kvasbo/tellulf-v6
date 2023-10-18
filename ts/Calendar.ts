@@ -46,6 +46,7 @@ export interface Event extends RawEvent {
 export class Calendar {
     private events: RawEvent[] = [];
     private birthdays: RawEvent[] = [];
+    private dinners: RawEvent[] = [];
     // Display height of calendar events in pixels to ensure we don't overflow
     private displayHeights = {
         event: 25,
