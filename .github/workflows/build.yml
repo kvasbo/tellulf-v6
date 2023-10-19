@@ -17,61 +17,30 @@ jobs:
         permissions:
             contents: read
         steps:
-            - name: Checkout repository
-              uses: actions/checkout@v3
+            - name: Set up QEMU
+              uses: docker/setup-qemu-action@v2
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v2
+              with: # Set up multiarch build
+                  platforms: linux/amd64,linux/arm64
             - name: Setup Node.js
               uses: actions/setup-node@v3
               with:
                   node-version: ${{ env.NODE_VERSION }}
                   cache: yarn
+            - name: Extract metadata (tags, labels)
+              id: meta
+              uses: docker/metadata-action@v4
+              with:
+                  images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+            - name: Checkout repository
+              uses: actions/checkout@v3
             - name: Install dependencies
               run: yarn install
             - name: Lint
               run: yarn run lint
             - name: Build
               run: yarn run build
-            - name: Upload artifact # All the stuff needed to run the app and build the image except for node_modules as we need a production version of that
-              uses: actions/upload-artifact@v3
-              with:
-                  name: dist
-                  path: |
-                      build
-                      Dockerfile
-                      yarn.lock
-                      package.json
-                      assets
-                      views
-    create-docker-image:
-        name: Build and Push Docker Image
-        runs-on: ubuntu-latest
-        needs: build
-        permissions:
-            packages: write
-        steps:
-            - name: Set up QEMU
-              uses: docker/setup-qemu-action@v2
-            - name: Set up Docker Buildx
-              uses: docker/setup-buildx-action@v2
-              with: # Set up multiarch build
-                platforms: linux/amd64,linux/arm64
-            - name: Download build artifact
-              uses: actions/download-artifact@v3
-              with:
-                  name: dist
-                  path: .
-            - name: Setup Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: ${{ env.NODE_VERSION }}
-                  cache: 'yarn'
-            - name: Install dependencies
-              run: yarn install --production --ignore-scripts
-
-            - name: Extract metadata (tags, labels)
-              id: meta
-              uses: docker/metadata-action@v4
-              with:
-                  images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
             - name: Log in to the registry
               uses: docker/login-action@v2
               with:
@@ -82,6 +51,6 @@ jobs:
               uses: docker/build-push-action@v4
               with:
                   context: .
-                  push: true
+                  push: false
                   tags: ${{ steps.meta.outputs.tags }}
                   labels: ${{ steps.meta.outputs.labels }}
