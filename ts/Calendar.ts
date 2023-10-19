@@ -163,6 +163,7 @@ export class Calendar {
             console.log(this.dinners.length + ' dinners fetched.');
         } else {
             this.dinners = [];
+            console.log('Dinner calendar ID not found :(');
         }
     }
 
