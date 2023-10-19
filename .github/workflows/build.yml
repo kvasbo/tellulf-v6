@@ -41,6 +41,8 @@ jobs:
               run: yarn run lint
             - name: Build
               run: yarn run build
+            - name: Test
+              run: yarn run test
             - name: Log in to the registry
               uses: docker/login-action@v2
               with:
@@ -51,6 +53,6 @@ jobs:
               uses: docker/build-push-action@v4
               with:
                   context: .
-                  push: false
+                  push: true
                   tags: ${{ steps.meta.outputs.tags }}
                   labels: ${{ steps.meta.outputs.labels }}
