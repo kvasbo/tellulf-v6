@@ -11,6 +11,7 @@ services:
             - YR_URL_NOWCAST=${YR_URL_NOWCAST}
             - CAL_ID_FELLES=${CAL_ID_FELLES}
             - CAL_ID_BURSDAG=${CAL_ID_BURSDAG}
+            - CAL_ID_MIDDAG=${CAL_ID_MIDDAG}
             - GOOGLE_KEY_B64=${GOOGLE_KEY_B64}
             - MQTT_URL=${MQTT_URL}
             - MQTT_PORT=${MQTT_PORT}
