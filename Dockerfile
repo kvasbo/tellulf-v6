@@ -11,10 +11,7 @@ RUN ls -l
 RUN yarn && yarn build
 
 # Smoke test
-RUN node /app/dist/test.js
-
-# Copy source to web directory
-# COPY . /tellulf
+RUN yarn run test
 
 # Create health check
 HEALTHCHECK --interval=1m --timeout=5s \
