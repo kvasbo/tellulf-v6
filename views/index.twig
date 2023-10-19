@@ -32,9 +32,14 @@
           {% endif %}
         </div>
       </div>
+      <div class="dinner">
+        {% for dinner in day.dinner %}
+        <div class="dinner"><img class='calendaricon birthday' src="/assets/dinner.svg">{{ dinner.displayTitle }}</div>
+        {% endfor %}
+      </div>
       <div class="birthdays">
         {% for birthday in day.birthdays %}
-        <div class="birthday">{{ birthday.displayTitle }}</div>
+        <div class="birthday"><img class='calendaricon birthday' src="/assets/birthday.svg">{{ birthday.displayTitle }}</div>
         {% endfor %}
       </div>
       <div class="events">
