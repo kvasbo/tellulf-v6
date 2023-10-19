@@ -5,8 +5,10 @@ RUN mkdir -p /tellulf
 WORKDIR /tellulf
 COPY . /tellulf
 
+RUN ls -l
+
 # Install dependencies and build
-RUN yarn install && yarn build
+RUN yarn && yarn build
 
 # Smoke test
 RUN node /app/dist/test.js
