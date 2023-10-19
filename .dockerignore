@@ -5,6 +5,6 @@ README.md
 build
 data
 *.workspace
-package.json
-yarn.lock
-Dockerfile
+# package.json
+# yarn.lock
+# Dockerfile
