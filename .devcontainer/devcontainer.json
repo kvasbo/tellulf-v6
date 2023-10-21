@@ -27,7 +27,9 @@
         "esbenp.prettier-vscode",
         "yoavbls.pretty-ts-errors",
         "vscode.json-language-features",
-        "dbaeumer.vscode-eslint"
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "github.vscode-github-actions"
       ]
     }
   }
