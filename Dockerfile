@@ -8,7 +8,8 @@ COPY . /tellulf
 RUN ls -l
 
 # Install dependencies and build
-RUN yarn && yarn build
+RUN yarn
+RUN yarn run build
 
 # Smoke test
 RUN yarn run test
