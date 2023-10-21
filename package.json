@@ -43,11 +43,6 @@
     "author": "Audun Kvasbø <audun@kvasbo.no>",
     "license": "MIT",
     "private": true,
-    "nodemonConfig": {
-        "ignore": [
-            "data"
-        ]
-    },
     "prettier": {
         "trailingComma": "es5",
         "tabWidth": 4,
