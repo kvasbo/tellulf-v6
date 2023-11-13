@@ -215,7 +215,9 @@ export class Calendar {
             });
         } else {
             console.log(
-                JSON.stringify({ message: 'No upcoming events found.' })
+                JSON.stringify({
+                    message: `No upcoming events found for ${calendarId}`,
+                })
             );
         }
         return out;
