@@ -58,10 +58,11 @@ export class Weather {
 
     public getCurrentWeather(): CurrentWeather {
         const temp: CurrentWeather = {
-            temperature: this.forecast[0].data.instant.details.air_temperature
-                ? this.forecast[0].data.instant.details.air_temperature
+            temperature: this.forecast[0]?.data?.instant?.details
+                ?.air_temperature
+                ? this.forecast[0]?.data.instant.details.air_temperature
                 : 999,
-            symbol: this.forecast[0].data.next_1_hours?.summary?.symbol_code
+            symbol: this.forecast[0]?.data?.next_1_hours?.summary?.symbol_code
                 ? this.forecast[0].data.next_1_hours.summary.symbol_code
                 : 'unknown',
         };
