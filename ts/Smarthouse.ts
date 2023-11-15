@@ -21,7 +21,7 @@ export class Smarthouse {
     private hum = -9999;
     private pressure = 0;
 
-    public getData(): HomeyData {
+    public getData() {
         const costHome = this.status.home.currentPrice.totalAfterSupport;
         const costCabin = this.status.cabin.currentPrice.totalAfterSupport;
         const output = {
