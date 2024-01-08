@@ -1,6 +1,6 @@
-@use 'sass:math';
+@use "sass:math";
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800");
 
 $font_weight: 400;
 $bold_weight: 600;
@@ -15,214 +15,214 @@ $first-column-width: 40%;
 $gray: #444444;
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    background-color: white;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: $font_weight;
-    font-size: $text_size;
-    height: 1200px;
-    width: 1600px;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    grid-template-columns: 15% 15% 15% 15% auto;
-    grid-template-rows: auto 18% 36% 16%;
+  background-color: white;
+  font-family: "Montserrat", sans-serif;
+  font-weight: $font_weight;
+  font-size: $text_size;
+  height: 1200px;
+  width: 1600px;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 15% 15% 15% 15% auto;
+  grid-template-rows: auto 18% 36% 16%;
 }
 
 .block {
-    padding: 2rem;
-    overflow: hidden;
+  padding: 2rem;
+  overflow: hidden;
 }
 
 .time_and_date {
-    grid-row: 1 / 2;
-    grid-column: 1 / 5;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    .now_time {
-        font-size: $text_huge;
-        font-weight: $bold_weight;
-    }
-    .now_date {
-        font-size: $text_large;
-    }
-    .now_week {
-        margin-top: 0.5em;
-    }
+  grid-row: 1 / 2;
+  grid-column: 1 / 5;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .now_time {
+    font-size: $text_huge;
+    font-weight: $bold_weight;
+  }
+  .now_date {
+    font-size: $text_large;
+  }
+  .now_week {
+    margin-top: 0.5em;
+  }
 }
 
 .calendar {
-    grid-row: 1 / 5;
-    grid-column: 5 / 6;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    overflow: hidden;
-    .calendar_day {
-        .dateHeader {
-            margin-top: 0.5rem;
-            margin-bottom: 0.25rem;
-            border-bottom: 1px solid $gray;
-            width: 100%;
-            justify-content: space-between;
-            align-items: center;
-            display: flex;
-            flex-direction: row;
-            font-size: $text_subheader;
-            .headerWeather {
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                .headerWeatherTempIcon {
-                    width: $text_subheader;
-                    height: $text_subheader;
-                    opacity: 0.4;
-                }
-                .headerWeatherIcon {
-                    width: $text_subheader * 1.75;
-                    height: $text_subheader * 1.75;
-                    margin-bottom: 6px;
-                    margin-left: 10px;
-                }
-            }
+  grid-row: 1 / 5;
+  grid-column: 5 / 6;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  .calendar_day {
+    .dateHeader {
+      margin-top: 0.5rem;
+      margin-bottom: 0.25rem;
+      border-bottom: 1px solid $gray;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      font-size: $text_subheader;
+      .headerWeather {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        .headerWeatherTempIcon {
+          width: $text_subheader;
+          height: $text_subheader;
+          opacity: 0.4;
         }
-        .event {
-            display: flex;
-            flex-direction: row;
-            .event-time {
-                color: $gray;
-                display: flex;
-                width: 135px;
-                margin-right: 10px;
-                justify-content: flex-start;
-                span {
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                }
-                .event-time-start,
-                .event-time-end {
-                    width: 60px;
-                }
-                .event-time-spacer {
-                    width: 20px;
-                }
-            }
+        .headerWeatherIcon {
+          width: $text_subheader * 1.75;
+          height: $text_subheader * 1.75;
+          margin-bottom: 6px;
+          margin-left: 10px;
         }
+      }
     }
+    .event {
+      display: flex;
+      flex-direction: row;
+      .event-time {
+        color: $gray;
+        display: flex;
+        width: 135px;
+        margin-right: 10px;
+        justify-content: flex-start;
+        span {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+        .event-time-start,
+        .event-time-end {
+          width: 60px;
+        }
+        .event-time-spacer {
+          width: 20px;
+        }
+      }
+    }
+  }
 }
 
 .current_weather {
-    grid-row: 2 / 3;
-    grid-column: 1 / 5;
-    width: 100%;
-    height: 100%;
+  grid-row: 2 / 3;
+  grid-column: 1 / 5;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  .current_weather_block {
+    &.aux-weather-info {
+      flex-direction: column;
+    }
     display: flex;
+    flex: 1;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    .current_weather_block {
-        &.aux-weather-info {
-            flex-direction: column;
-        }
-        display: flex;
-        flex: 1;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        .current_temperature {
-            font-size: $text_xlarge;
-            font-weight: $bold_weight;
-            margin-left: 25px;
-        }
+    .current_temperature {
+      font-size: $text_xlarge;
+      font-weight: $bold_weight;
+      margin-left: 25px;
     }
+  }
 }
 
 .weather_nowcast {
-    grid-row: 3 / 4;
-    grid-column: 1 / 5;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  grid-row: 3 / 4;
+  grid-column: 1 / 5;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .power-home {
-    grid-row: 4 / 5;
-    grid-column: 1 / 2;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
+  grid-row: 4 / 5;
+  grid-column: 1 / 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .power-cabin {
-    grid-row: 4 / 5;
-    grid-column: 2 / 3;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
+  grid-row: 4 / 5;
+  grid-column: 2 / 3;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .bane {
-    grid-column: 3 / 4;
-    grid-row: 4 / 5;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+  grid-column: 3 / 4;
+  grid-row: 4 / 5;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .garage {
-    grid-column: 4 / 5;
-    grid-row: 4 / 5;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+  grid-column: 4 / 5;
+  grid-row: 4 / 5;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .weather {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  .forecast_point {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    .forecast_point {
-        display: flex;
-        flex: 1;
-        flex-direction: column;
-        margin: $margin $margin 0 $margin;
-        align-items: center;
-        justify-content: center;
-        .forecast_prob {
-            color: $gray;
-            font-size: $text_small;
-            text-align: center;
-        }
+    flex: 1;
+    flex-direction: column;
+    margin: $margin $margin 0 $margin;
+    align-items: center;
+    justify-content: center;
+    .forecast_prob {
+      color: $gray;
+      font-size: $text_small;
+      text-align: center;
     }
+  }
 }
 
 .weather_icon {
-    width: $text_large;
-    height: $text_large;
+  width: $text_large;
+  height: $text_large;
 }
 
 .calendaricon {
-    width: $text_small;
-    height: $text_small;
-    margin-right: 0.3em;
+  width: $text_small;
+  height: $text_small;
+  margin-right: 0.3em;
 }

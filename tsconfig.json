@@ -1,17 +1,22 @@
 {
-    "compilerOptions": {
-        "outDir": "./build",
-        "lib": ["es2020", "dom"],
-        "module": "CommonJS",
-        "target": "es2020",
-        "allowJs": false,
-        "moduleResolution": "node",
-        "removeComments": true,
-        "esModuleInterop": true,
-        "skipLibCheck": true,
-        "noImplicitAny": true,
-        "inlineSourceMap": true,
-        "sourceRoot": "./ts"
-    },
-    "include": ["ts/*.ts"]
+  "compilerOptions": {
+    "outDir": "./build",
+    "lib": [
+      "es2020",
+      "dom"
+    ],
+    "module": "CommonJS",
+    "target": "es2020",
+    "allowJs": false,
+    "moduleResolution": "node",
+    "removeComments": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+    "inlineSourceMap": true,
+    "sourceRoot": "./ts"
+  },
+  "include": [
+    "ts/*.ts"
+  ]
 }
