@@ -33,6 +33,7 @@
     "mqtt": "^5.0",
     "sunrise-sunset-js": "^2.2",
     "twig": "^1.16",
+    "ws": "^8.16.0",
     "zod": "^3.21"
   },
   "name": "tellulf-v6",
