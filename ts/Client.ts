@@ -42,11 +42,32 @@ $(function () {
   setReloadClient(1);
   // Run the update loop immediately
   runUpdateLoop();
+
   // Run the update loop every ten seconds
   window.setInterval(function () {
     runUpdateLoop();
   }, 10000);
 });
+
+async function subcribe() {
+  const ws = new WebSocket("ws://localhost:8090");
+  ws.onopen = function () {
+    ws.send("Hello, from Tellulf!");
+  };
+  ws.onmessage = function (evt) {
+    try {
+      const data = JSON.parse(evt.data);
+      if (data.time) {
+        updateTimeInfo(data.time);
+      }
+      // console.log(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
+
+subcribe();
 
 // Run the update loop
 async function runUpdateLoop() {
@@ -61,7 +82,7 @@ async function runUpdateLoop() {
 
   // Unwrap the returned data (this is why the order is important)
   const timeData: TimeData = await data[0].json();
-  updateTimeInfo(timeData);
+  // updateTimeInfo(timeData);
 
   const entur: Train[] = await data[2].json();
   updateEnturInfo(entur);
