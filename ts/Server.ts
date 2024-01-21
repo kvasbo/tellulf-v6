@@ -12,14 +12,20 @@ import { MqttClient } from "./MQTT";
 Settings.defaultZone = "Europe/Oslo";
 
 const app = express();
-const wss = new WebSocket.Server({ port: 8080 });
+const wss = new WebSocket.Server({ port: 8090 });
 
 wss.on("connection", function connection(ws) {
   ws.on("message", function incoming(message) {
     console.log("received: %s", message);
+    ws.send("Response from server");
   });
 
-  ws.send("Message from server");
+  setInterval(() => {
+    const out = {
+      time: new Date().getTime(),
+    };
+    ws.send(JSON.stringify(out));
+  }, 1000);
 });
 
 const mqttClient = new MqttClient();
