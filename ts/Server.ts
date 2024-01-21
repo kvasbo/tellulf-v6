@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import WebSocket from "ws";
 import { Days } from "./Days";
 import { Clock } from "./Clock";
 import { Entur } from "./Entur";
@@ -11,6 +12,21 @@ import { MqttClient } from "./MQTT";
 Settings.defaultZone = "Europe/Oslo";
 
 const app = express();
+const wss = new WebSocket.Server({ port: 8090 });
+
+wss.on("connection", function connection(ws) {
+  ws.on("message", function incoming(message) {
+    console.log("received: %s", message);
+    ws.send(JSON.stringify({ message: "Hello, from Tellulf!" }));
+  });
+
+  setInterval(() => {
+    const out = {
+      time: Clock.getTime(),
+    };
+    ws.send(JSON.stringify(out));
+  }, 1000);
+});
 
 const mqttClient = new MqttClient();
 

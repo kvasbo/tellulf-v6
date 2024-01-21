@@ -6,6 +6,7 @@ services:
     tty: true
     ports:
       - "${EXPOSE_PORT}:3000"
+      - "8090:3000"
     environment:
       - YR_URL_FORECAST=${YR_URL_FORECAST}
       - YR_URL_NOWCAST=${YR_URL_NOWCAST}
