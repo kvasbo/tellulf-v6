@@ -82,7 +82,7 @@ async function runUpdateLoop() {
   const data = await Promise.all(calls);
 
   // Unwrap the returned data (this is why the order is important)
-  const timeData: TimeData = await data[0].json();
+  //const timeData: TimeData = await data[0].json();
   // updateTimeInfo(timeData);
 
   const entur: Train[] = await data[2].json();
