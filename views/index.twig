@@ -6,24 +6,6 @@
   <script src="/jquery.js"></script>
   <script src="/client.js"></script>
   <link rel="stylesheet" href="/client.css" />
-  <script>
-    var ws = new WebSocket('ws://127.0.0.1:8080');
-
-    console.log("Running");
-
-    ws.onopen = function() {
-      console.log('Connected to the server');
-      ws.send('Message from client');
-    };
-
-    ws.onmessage = function(evt) {
-      console.log('Message from server:', evt.data);
-    };
-
-    ws.onerror = function(err) {
-      console.error('WebSocket error:', err);
-    };
-  </script>
 </head>
 
  
