@@ -2,7 +2,7 @@
   "image": "mcr.microsoft.com/devcontainers/typescript-node",
   "forwardPorts": [
     3000,
-    8080
+    8090
   ],
   "features": {
     "ghcr.io/shyim/devcontainers-features/bun:0": {}
@@ -11,7 +11,7 @@
     "3000": {
       "label": "Selveste Tellulf!"
     },
-    "8080": {
+    "8090": {
       "label": "Selveste Socket"
     }
   },
