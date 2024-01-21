@@ -49,8 +49,9 @@ $(function () {
   }, 10000);
 });
 
-async function subcribe() {
-  const ws = new WebSocket("ws://localhost:8090");
+async function subscribe() {
+  const ws = new WebSocket("ws://" + window.location.hostname + ":" + "8090");
+
   ws.onopen = function () {
     ws.send("Hello, from Tellulf!");
   };
@@ -67,7 +68,7 @@ async function subcribe() {
   };
 }
 
-subcribe();
+subscribe();
 
 // Run the update loop
 async function runUpdateLoop() {
