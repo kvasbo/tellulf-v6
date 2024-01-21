@@ -22,7 +22,7 @@ wss.on("connection", function connection(ws) {
 
   setInterval(() => {
     const out = {
-      time: new Date().getTime(),
+      time: Clock.getTime(),
     };
     ws.send(JSON.stringify(out));
   }, 1000);
