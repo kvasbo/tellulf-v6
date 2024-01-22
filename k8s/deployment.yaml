@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tellulf
+spec:
+  replicas: 2
+  template:
+    spec:
+      containers:
+        - name: tellulf-app
+          image: ghcr.io/kvasbo/tellulf-v6:main
+          env:
+            - name: ENV_VAR_NAME_1
+              value: "value1"
+            - name: ENV_VAR_NAME_2
+              value: "value2"
