@@ -49,12 +49,25 @@ $(function () {
   }, 10000);
 });
 
-async function subscribe() {
+async function connectWebSocket() {
   const ws = new WebSocket("ws://" + window.location.hostname + ":" + "8090");
 
   ws.onopen = function () {
     ws.send("Hello, from Tellulf!");
   };
+
+  ws.onclose = function () {
+    // Connection has been closed, attempt to reconnect
+    setTimeout(function () {
+      connectWebSocket();
+    }, 5000); // Try to reconnect after 2 seconds
+  };
+
+  ws.onerror = function (error) {
+    // Handle errors
+    console.log("WebSocket error:", error);
+  };
+
   ws.onmessage = function (evt) {
     try {
       const data = JSON.parse(evt.data);
@@ -68,7 +81,7 @@ async function subscribe() {
   };
 }
 
-subscribe();
+connectWebSocket();
 
 // Run the update loop
 async function runUpdateLoop() {
