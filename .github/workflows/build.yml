@@ -37,7 +37,7 @@ jobs:
               with:
                   images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
                   tags: |
-                    type=ref
+                    type=ref, event=branch
                     type=sha
             - name: Install dependencies
               run: yarn install
