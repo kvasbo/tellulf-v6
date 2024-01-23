@@ -3,14 +3,19 @@ kind: Deployment
 metadata:
   name: tellulf
 spec:
-  replicas: 2
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tellulf
   template:
+    metadata:
+      labels:
+        app: tellulf
     spec:
       containers:
         - name: tellulf-app
           image: ghcr.io/kvasbo/tellulf-v6:main
-          env:
-            - name: ENV_VAR_NAME_1
-              value: "value1"
-            - name: ENV_VAR_NAME_2
-              value: "value2"
+          imagePullPolicy: Always
+          envFrom:
+          - secretRef:
+              name: tellulfconfig
