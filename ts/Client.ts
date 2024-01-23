@@ -49,6 +49,7 @@ $(function () {
   }, 10000);
 });
 
+/*
 async function connectWebSocket() {
   const ws = new WebSocket("ws://" + window.location.hostname + ":" + "8090");
 
@@ -80,6 +81,7 @@ async function connectWebSocket() {
     }
   };
 }
+*/
 
 // connectWebSocket();
 
