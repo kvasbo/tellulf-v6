@@ -49,9 +49,10 @@ $(function () {
   }, 10000);
 });
 
-/*
 async function connectWebSocket() {
-  const ws = new WebSocket("ws://" + window.location.hostname + ":" + "8090");
+  const ws = new WebSocket(
+    "ws://" + window.location.hostname + ":" + window.location.port,
+  );
 
   ws.onopen = function () {
     ws.send("Hello, from Tellulf!");
@@ -81,29 +82,25 @@ async function connectWebSocket() {
     }
   };
 }
-*/
 
-// connectWebSocket();
+connectWebSocket();
 
 // Run the update loop
 async function runUpdateLoop() {
-  const getTime = fetch("/time");
   const getHomey = fetch("/homey");
   const getEntur = fetch("/entur");
 
-  const calls = [getTime, getHomey, getEntur];
+  const calls = [getHomey, getEntur];
 
   // Wait for all of them to return
   const data = await Promise.all(calls);
 
   // Unwrap the returned data (this is why the order is important)
-  const timeData: TimeData = await data[0].json();
-  updateTimeInfo(timeData);
 
-  const entur: Train[] = await data[2].json();
+  const entur: Train[] = await data[1].json();
   updateEnturInfo(entur);
 
-  const homey: HomeyData = await data[1].json();
+  const homey: HomeyData = await data[0].json();
 
   // Show temperature
   if (homey.tempOut) {
