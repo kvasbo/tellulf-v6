@@ -73,10 +73,13 @@ const server = http.createServer(app);
 
 const wss = new WebSocket.Server({ server });
 
+const clients: WebSocket[] = [];
+
 wss.on("connection", function connection(ws) {
+
   ws.on("message", function incoming(message) {
     console.log("received: %s", message);
-    ws.send(JSON.stringify({ message: "Hello, from Tellulf!" }));
+    ws.send(JSON.stringify({ message: "Hello, from Tellulf Server!" }));
   });
 
   setInterval(() => {
@@ -85,8 +88,48 @@ wss.on("connection", function connection(ws) {
     };
     ws.send(JSON.stringify(out));
   }, 1000);
+
+  ws.on("close", () => {
+    console.log("Client disconnecting", clients.length);
+    clients.splice(clients.indexOf(ws), 1);
+    console.log("Client disconnected", clients.length);
+  });
+
+  clients.push(ws);
+  console.log("Client connected", clients.length);
+
+  // Run the update loop immediately (for all clients, but hey, it's just a clock)
+  updateClocks(false);
 });
 
 server.listen(port, () => {
   console.log(`Tellulf listening on port ${port} for both WS and HTTP`);
 });
+
+// Run the update loop for the clock
+function updateClocks(queueNext: boolean = true) {
+  console.log(
+    `Sending time (${new Date().toLocaleTimeString()}) to ${
+      clients.length
+    } clients", `,
+  );
+
+  // Recalculate the delay until the start of the next minute
+  const now = new Date();
+  const delay = 60000 - (now.getSeconds() * 1000 + now.getMilliseconds());
+
+  const timePayload = JSON.stringify({
+    time: Clock.getTime(),
+  });
+
+  clients.forEach((client) => {
+    client.send(timePayload);
+  });
+
+  // Set a timeout for the next execution
+  if (queueNext) {
+    setTimeout(updateClocks, delay);
+  }
+}
+
+updateClocks();

@@ -55,7 +55,14 @@ async function connectWebSocket() {
   );
 
   ws.onopen = function () {
-    ws.send("Hello, from Tellulf!");
+    // Web Socket is connected, identify ourselves
+    ws.send(
+      JSON.stringify({
+        message: "Hello, from Tellulf!",
+        type: "identify",
+        id: crypto.randomUUID(),
+      }),
+    );
   };
 
   ws.onclose = function () {
