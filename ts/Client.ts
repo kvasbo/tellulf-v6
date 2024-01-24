@@ -66,6 +66,8 @@ async function connectWebSocket() {
   };
 
   ws.onclose = function () {
+    $("#now_time").html(`Frakoblet`);
+    $("#now_date").html(`(╯°□°)╯︵ ┻━┻`);
     // Connection has been closed, attempt to reconnect
     setTimeout(function () {
       connectWebSocket();
