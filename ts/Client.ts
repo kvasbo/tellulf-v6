@@ -60,7 +60,7 @@ async function connectWebSocket() {
       JSON.stringify({
         message: "Hello, from Tellulf!",
         type: "identify",
-        id: crypto.randomUUID(),
+        id: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
       }),
     );
   };
