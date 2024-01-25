@@ -21,7 +21,6 @@ const smart = new Smarthouse(mqttClient);
 smart.startMqtt();
 
 // Express settings
-
 app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "twig");
 app.use("/assets", express.static(path.join(__dirname, "../assets"))); // Static routes
@@ -59,24 +58,11 @@ app.get("/", (req, res) => {
   console.log("Rendered index");
 });
 
-app.get("/entur", async (req, res) => {
-  const data = entur.Get();
-  res.send(data);
-});
-
-// Get latest Homey data
-app.get("/homey", (req, res) => {
-  res.send(smart.getData());
-});
-
 const server = http.createServer(app);
-
 const wss = new WebSocket.Server({ server });
-
 const clients: WebSocket[] = [];
 
 wss.on("connection", function connection(ws) {
-
   ws.on("message", function incoming(message) {
     console.log("received: %s", message);
     ws.send(JSON.stringify({ message: "Hello, from Tellulf Server!" }));
@@ -100,13 +86,26 @@ wss.on("connection", function connection(ws) {
 
   // Run the update loop immediately (for all clients, but hey, it's just a clock)
   updateClocks(false);
+  pushDataToClients();
 });
 
 server.listen(port, () => {
   console.log(`Tellulf listening on port ${port} for both WS and HTTP`);
 });
 
-// Run the update loop for the clock
+/**
+ * Push data to all connected clients
+ */
+function pushDataToClients() {
+  console.log("Pushing updated data to connected clients");
+  const homey = smart.getData();
+  const enturData = entur.Get();
+  clients.forEach((client) => {
+    client.send(JSON.stringify({ homey, entur: enturData }));
+  });
+}
+
+// Run the update loop for the clock once per minute
 function updateClocks(queueNext: boolean = true) {
   console.log(
     `Sending time (${new Date().toLocaleTimeString()}) to ${
@@ -133,3 +132,5 @@ function updateClocks(queueNext: boolean = true) {
 }
 
 updateClocks();
+pushDataToClients();
+setInterval(pushDataToClients, 10000);

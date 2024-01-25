@@ -40,13 +40,6 @@ let lastUpdatedPower = new Date();
 // Reload the page every fifteen seconds
 $(function () {
   setReloadClient(1);
-  // Run the update loop immediately
-  runUpdateLoop();
-
-  // Run the update loop every ten seconds
-  window.setInterval(function () {
-    runUpdateLoop();
-  }, 10000);
 });
 
 async function connectWebSocket() {
@@ -85,7 +78,12 @@ async function connectWebSocket() {
       if (data.time) {
         updateTimeInfo(data.time);
       }
-      // console.log(data);
+      if (data.homey) {
+        updateHomeyInfo(data.homey);
+      }
+      if (data.entur) {
+        updateEnturInfo(data.entur);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -94,22 +92,11 @@ async function connectWebSocket() {
 
 connectWebSocket();
 
-// Run the update loop
-async function runUpdateLoop() {
-  const getHomey = fetch("/homey");
-  const getEntur = fetch("/entur");
-
-  const calls = [getHomey, getEntur];
-
-  // Wait for all of them to return
-  const data = await Promise.all(calls);
-
-  // Unwrap the returned data (this is why the order is important)
-
-  const entur: Train[] = await data[1].json();
-  updateEnturInfo(entur);
-
-  const homey: HomeyData = await data[0].json();
+/**
+ * Update the UX with homey data.
+ * @param homey 
+ */
+function updateHomeyInfo(homey: HomeyData) {
 
   // Show temperature
   if (homey.tempOut) {
@@ -178,6 +165,7 @@ async function runUpdateLoop() {
   // Remove power data if not updated lately
   checkLastUpdatedPowerTime();
 }
+
 
 function setLastUpdatedPowerTime() {
   lastUpdatedPower = new Date();
