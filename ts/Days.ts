@@ -1,4 +1,5 @@
-import { Weather, DailyForecast } from "./Weather";
+import { Weather } from "./Weather";
+import { DailyForecast } from "./types.met";
 import { Calendar, Event } from "./Calendar";
 import { getSunrise, getSunset } from "sunrise-sunset-js";
 import { DateTime } from "luxon";

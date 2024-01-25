@@ -1,45 +1,37 @@
-import axios from "axios";
 import { DateTime, Settings } from "luxon";
 import {
   TimeSeries,
-  next_1_hours,
-  instant,
   YrCompleteResponseSchema,
+  LongTermForecastSchema,
+  LongTermForecastDay,
+  CurrentWeather,
+  DailyForecasts,
+  DailyForecast,
+  HourlyForecast,
 } from "./types.met";
+
+// Common options for fetch
+const fetchOptions = {
+  method: "GET",
+  headers: {
+    "User-Agent": "tellulf v6: audun@kvasbo.no",
+  },
+};
 
 const YR_URL_FORECAST =
   "https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=59.9508&lon=10.6848";
+const YR_URL_FORECAST_LONG =
+  "https://api.met.no/weatherapi/subseasonal/1.0/complete?lat=59.9508&lon=10.6852";
 
 // Configure the time zone
 Settings.defaultZone = "Europe/Oslo";
-
-interface HourlyForecast {
-  symbol: string;
-  details: next_1_hours["details"];
-  instant: instant["details"];
-  hour: string;
-}
-
-export type DailyForecast = {
-  maxTemp: number;
-  minTemp: number;
-  symbol?: string;
-};
-
-interface DailyForecasts {
-  [key: string]: DailyForecast;
-}
-
-type CurrentWeather = {
-  symbol: string;
-  temperature: number;
-};
 
 /**
  * Weather data from Yr
  */
 export class Weather {
   public forecast: TimeSeries[] = [];
+  public longTermForecast: LongTermForecastDay[] = [];
 
   constructor() {
     this.updateForecasts();
@@ -54,6 +46,7 @@ export class Weather {
   private async updateForecasts(): Promise<void> {
     // Fetch forecast
     this.forecast = await Weather.fetchForecastData(YR_URL_FORECAST);
+    this.fetchLongTermForecast();
   }
 
   public getCurrentWeather(): CurrentWeather {
@@ -74,40 +67,43 @@ export class Weather {
     return temp;
   }
 
+  /**
+   * Get the daily forecasts
+   * @returns DailyForecasts
+   */
   public getDailyForecasts(): DailyForecasts {
-    const out: DailyForecasts = {};
-    const today = new Date().toISOString().slice(0, 10);
-
-    for (const series of this.forecast) {
+    const dayForecasts: DailyForecasts = {};
+    for (const series of this.longTermForecast) {
       const time = new Date(series.time);
       const date = time.toISOString().slice(0, 10);
-
-      if (!out[date]) {
-        out[date] = {
-          maxTemp: -9999,
-          minTemp: 9999,
-        };
-      }
-
-      if (series.data.instant?.details?.air_temperature) {
-        const t = series.data.instant.details.air_temperature;
-        if (out[date].maxTemp < t) {
-          out[date].maxTemp = t;
-        }
-        if (out[date].minTemp > t) {
-          out[date].minTemp = t;
-        }
-      }
-
-      // Either 0600 or empty and today (to handle running after the 0600 one is gone)
+      let symbol = "blank";
+      // Define the symbol based on the data for precipitation
       if (
-        series.time.includes("T06:00:00") ||
-        (!out[date].symbol && date === today)
+        series.data.next_24_hours.details.probability_of_heavy_precipitation >
+        50
       ) {
-        out[date].symbol = series.data.next_12_hours?.summary.symbol_code;
+        symbol =
+          series.data.next_24_hours.details.probability_of_frost > 50
+            ? "heavysnow"
+            : "heavyrain";
+      } else if (
+        series.data.next_24_hours.details.probability_of_precipitation > 50
+      ) {
+        symbol =
+          series.data.next_24_hours.details.probability_of_frost > 50
+            ? "snow"
+            : "rain";
       }
+
+      dayForecasts[date] = {
+        minTemp: series.data.next_24_hours.details.air_temperature_min,
+        maxTemp: series.data.next_24_hours.details.air_temperature_max,
+        meanTemp: series.data.next_24_hours.details.air_temperature_mean,
+        symbol,
+      } as DailyForecast;
     }
-    return out;
+
+    return dayForecasts;
   }
 
   /**
@@ -133,6 +129,26 @@ export class Weather {
   }
 
   /**
+   * Fetch the long term forecast
+   * @returns LongTermForecast
+   */
+  public async fetchLongTermForecast(): Promise<void> {
+    const forecast = await fetch(YR_URL_FORECAST_LONG, fetchOptions);
+
+    if (forecast.ok) {
+      const forecastJson = await forecast.json();
+      const forecastValidated = LongTermForecastSchema.safeParse(forecastJson);
+      if (forecastValidated.success) {
+        console.log("Long term forecast validated, let's go!");
+        this.longTermForecast = forecastValidated.data.properties
+          .timeseries as LongTermForecastDay[];
+      } else {
+        console.log("Could not validate long term forecast");
+      }
+    }
+  }
+
+  /**
    * Do the fetching from Met api
    * @param url
    * @returns
@@ -141,13 +157,14 @@ export class Weather {
     try {
       // Fetch and decode JSON
       console.log("Fetching forecast from yr.no", url);
-      const response = await axios.get(url, {
-        method: "GET",
-        headers: {
-          "User-Agent": "tellulf v6: audun@kvasbo.no",
-        },
-      });
-      const forecast = response.data;
+      const fetchResponse = await fetch(url, fetchOptions);
+
+      if (!fetchResponse.ok) {
+        console.error("Could not fetch forecast from yr.no");
+        return [] as TimeSeries[];
+      }
+
+      const forecast = await fetchResponse.json();
 
       // Validate the response
       const forecastValidated = YrCompleteResponseSchema.safeParse(forecast);

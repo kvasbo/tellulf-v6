@@ -109,6 +109,76 @@ export const YrCompleteResponseSchema = z.object({
   }),
 });
 
+// Define types
+const LongTermForecastDayDetailsSchema = z.object({
+  air_temperature_max: z.number(),
+  air_temperature_max_percentile_10: z.number(),
+  air_temperature_max_percentile_90: z.number(),
+  air_temperature_mean: z.number(),
+  air_temperature_mean_percentile_10: z.number(),
+  air_temperature_mean_percentile_90: z.number(),
+  air_temperature_min: z.number(),
+  air_temperature_min_percentile_10: z.number(),
+  air_temperature_min_percentile_90: z.number(),
+  precipitation_amount: z.number(),
+  precipitation_amount_percentile_10: z.number(),
+  precipitation_amount_percentile_90: z.number(),
+  probability_of_frost: z.number(),
+  probability_of_heavy_precipitation: z.number(),
+  probability_of_precipitation: z.number(),
+});
+
+const LongTermForecastDay7DaysDetailsSchema = z.object({
+  precipitation_amount: z.number(),
+  precipitation_amount_percentile_10: z.number(),
+  precipitation_amount_percentile_90: z.number(),
+  probability_of_frost: z.number(),
+});
+
+const LongTermForecastDaySchema = z.object({
+  time: z.string(),
+  data: z.object({
+    next_24_hours: z.object({
+      details: LongTermForecastDayDetailsSchema,
+    }),
+    next_7_days: z.object({
+      details: LongTermForecastDay7DaysDetailsSchema,
+    }).optional(),
+  }),
+});
+
+export const LongTermForecastSchema = z.object({
+  properties: z.object({
+    timeseries: z.array(LongTermForecastDaySchema),
+  }),
+});
+
+export interface HourlyForecast {
+  symbol: string;
+  details: next_1_hours["details"];
+  instant: instant["details"];
+  hour: string;
+}
+
+export type DailyForecast = {
+  maxTemp: number;
+  minTemp: number;
+  meanTemp: number;
+  symbol?: string;
+};
+
+export interface DailyForecasts {
+  [key: string]: DailyForecast;
+}
+
+export type CurrentWeather = {
+  symbol: string;
+  temperature: number;
+};
+
+export type LongTermForecast = z.infer<typeof LongTermForecastSchema>;
+export type LongTermForecastDay = z.infer<typeof LongTermForecastDaySchema>;
+
 export type TimeSeries = z.infer<typeof TimeSeriesSchema>;
 export type instant = z.infer<typeof InstantSchema>;
 export type next_1_hours = z.infer<typeof Next1HourSchema>;
