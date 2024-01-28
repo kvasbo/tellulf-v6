@@ -50,21 +50,22 @@ export class Weather {
   }
 
   public getCurrentWeather(): CurrentWeather {
-    const temp: CurrentWeather = {
-      temperature: this.forecast[0]?.data?.instant?.details?.air_temperature
-        ? this.forecast[0]?.data.instant.details.air_temperature
-        : 999,
-      symbol: this.forecast[0]?.data?.next_1_hours?.summary?.symbol_code
-        ? this.forecast[0].data.next_1_hours.summary.symbol_code
-        : "unknown",
+    
+    const out = {
+      temperature: 999,
+      symbol: "blank",
     };
 
-    // Fix strange edge case
-    if (temp.temperature > -1 && temp.temperature < 1) {
-      temp.temperature = 0;
+    if (this.forecast[0]) {
+      out.temperature = this.forecast[0]?.data?.instant?.details?.air_temperature
+      ? this.forecast[0]?.data.instant.details.air_temperature
+      : 999;
+      out.symbol = this.forecast[0]?.data?.next_1_hours?.summary?.symbol_code
+      ? this.forecast[0].data.next_1_hours.summary.symbol_code
+      : "blank";
     }
 
-    return temp;
+    return out;
   }
 
   /**
