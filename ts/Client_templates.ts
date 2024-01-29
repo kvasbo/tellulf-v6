@@ -2,6 +2,9 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+declare const Twig: any;
+
 const hourlyWeatherTemplate = Twig.twig({
   data: `
   <div class="weather">
