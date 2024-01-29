@@ -34,35 +34,37 @@ export class Weather {
   public longTermForecast: LongTermForecastDay[] = [];
 
   constructor() {
-    this.updateForecasts();
+    setTimeout(() => {
+      this.updateForecasts();
+    }, 1000 * 10);
     setInterval(
       () => {
         this.updateForecasts();
       },
-      5 * 60 * 1000,
+      30 * 60 * 1000,
     ); // Every 30 minutes
   }
 
   private async updateForecasts(): Promise<void> {
     // Fetch forecast
-    this.forecast = await Weather.fetchForecastData(YR_URL_FORECAST);
+    this.fetchForecastData();
     this.fetchLongTermForecast();
   }
 
   public getCurrentWeather(): CurrentWeather {
-    
     const out = {
       temperature: 999,
       symbol: "blank",
     };
 
     if (this.forecast[0]) {
-      out.temperature = this.forecast[0]?.data?.instant?.details?.air_temperature
-      ? this.forecast[0]?.data.instant.details.air_temperature
-      : 999;
+      out.temperature = this.forecast[0]?.data?.instant?.details
+        ?.air_temperature
+        ? this.forecast[0]?.data.instant.details.air_temperature
+        : 999;
       out.symbol = this.forecast[0]?.data?.next_1_hours?.summary?.symbol_code
-      ? this.forecast[0].data.next_1_hours.summary.symbol_code
-      : "blank";
+        ? this.forecast[0].data.next_1_hours.summary.symbol_code
+        : "blank";
     }
 
     return out;
@@ -141,6 +143,10 @@ export class Weather {
       const forecastValidated = LongTermForecastSchema.safeParse(forecastJson);
       if (forecastValidated.success) {
         console.log("Long term forecast validated, let's go!");
+        console.log(
+          "Number of long term days",
+          forecastValidated.data.properties.timeseries.length,
+        );
         this.longTermForecast = forecastValidated.data.properties
           .timeseries as LongTermForecastDay[];
       } else {
@@ -154,15 +160,20 @@ export class Weather {
    * @param url
    * @returns
    */
-  private static async fetchForecastData(url: string): Promise<TimeSeries[]> {
+  private async fetchForecastData(): Promise<void> {
     try {
       // Fetch and decode JSON
-      console.log("Fetching forecast from yr.no", url);
-      const fetchResponse = await fetch(url, fetchOptions);
+      console.log("Fetching forecast from yr.no", YR_URL_FORECAST);
+      const fetchResponse = await fetch(YR_URL_FORECAST, fetchOptions);
 
       if (!fetchResponse.ok) {
+        // Log the fetch error message
+        console.log(fetchResponse.statusText);
         console.error("Could not fetch forecast from yr.no");
-        return [] as TimeSeries[];
+        setTimeout(() => {
+          this.fetchForecastData();
+        }, 1000 * 10);
+        return;
       }
 
       const forecast = await fetchResponse.json();
@@ -172,15 +183,25 @@ export class Weather {
 
       if (forecastValidated.success) {
         console.log("Forecast validated, let's go!");
-        console.log("Number of forecasts", forecastValidated.data.properties.timeseries.length);
-        return forecastValidated.data.properties.timeseries as TimeSeries[];
+        console.log(
+          "Number of forecasts",
+          forecastValidated.data.properties.timeseries.length,
+        );
+        this.forecast = forecastValidated.data.properties.timeseries;
+        return;
       } else {
         console.log("Could not validate forecast");
-        return [] as TimeSeries[];
+        console.log(forecastValidated);
+        setTimeout(() => {
+          this.fetchForecastData();
+        }, 1000 * 10);
       }
     } catch (error) {
       console.error(error);
-      return [] as TimeSeries[];
+      setTimeout(() => {
+        this.fetchForecastData();
+      }, 1000 * 10);
+      return;
     }
   }
 }
