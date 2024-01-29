@@ -21,7 +21,7 @@ const fetchOptions = {
 const YR_URL_FORECAST =
   "https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=59.9508&lon=10.6848";
 const YR_URL_FORECAST_LONG =
-  "https://api.met.no/weatherapi/subseasonal/1.0/complete?lat=59.9508&lon=10.6852";
+  "https://api.met.no/weatherapi/subseasonal/1.0/complete?lat=59.9508&lon=10.6848";
 
 // Configure the time zone
 Settings.defaultZone = "Europe/Oslo";
@@ -39,7 +39,7 @@ export class Weather {
       () => {
         this.updateForecasts();
       },
-      30 * 60 * 1000,
+      5 * 60 * 1000,
     ); // Every 30 minutes
   }
 
@@ -172,6 +172,7 @@ export class Weather {
 
       if (forecastValidated.success) {
         console.log("Forecast validated, let's go!");
+        console.log("Number of forecasts", forecastValidated.data.properties.timeseries.length);
         return forecastValidated.data.properties.timeseries as TimeSeries[];
       } else {
         console.log("Could not validate forecast");
