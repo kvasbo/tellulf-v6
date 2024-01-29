@@ -53,7 +53,9 @@ async function connectWebSocket() {
       JSON.stringify({
         message: "Hello, from Tellulf!",
         type: "identify",
-        id: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+        id:
+          Math.random().toString(36).substring(2, 15) +
+          Math.random().toString(36).substring(2, 15),
       }),
     );
   };
@@ -84,6 +86,9 @@ async function connectWebSocket() {
       if (data.entur) {
         updateEnturInfo(data.entur);
       }
+      if (data.hourlyForecast) {
+        updateHourlyForecast(data.hourlyForecast);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -93,11 +98,27 @@ async function connectWebSocket() {
 connectWebSocket();
 
 /**
+ * Update the hourly forecast
+ */
+function updateHourlyForecast(forecast: unknown) {
+  if (Array.isArray(forecast) && forecast.length > 0) {
+    const template = hourlyWeatherTemplate.render({
+      hourly_weather: forecast,
+    });
+    const current = $(".weather_nowcast").html;
+    if (current !== template) {
+      $(".weather_nowcast").html(template);
+    } else {
+      console.log("Not updating hourly forecast, no changes");
+    }
+  }
+}
+
+/**
  * Update the UX with homey data.
- * @param homey 
+ * @param homey
  */
 function updateHomeyInfo(homey: HomeyData) {
-
   // Show temperature
   if (homey.tempOut) {
     const t = Number(homey.tempOut).toFixed(0);
@@ -165,7 +186,6 @@ function updateHomeyInfo(homey: HomeyData) {
   // Remove power data if not updated lately
   checkLastUpdatedPowerTime();
 }
-
 
 function setLastUpdatedPowerTime() {
   lastUpdatedPower = new Date();
