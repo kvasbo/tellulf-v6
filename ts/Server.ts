@@ -134,3 +134,13 @@ function updateClocks(queueNext: boolean = true) {
 updateClocks();
 pushDataToClients();
 setInterval(pushDataToClients, 10000);
+
+// Handle sigterm
+process.on("SIGTERM", () => {
+  console.info("SIGTERM signal received.");
+  console.log("Closing http server.");
+  server.close(() => {
+    console.log("Http server closed.");
+    process.exit(0);
+  });
+});
