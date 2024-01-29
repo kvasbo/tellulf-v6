@@ -5,6 +5,7 @@ import http from "http";
 import { Days } from "./Days";
 import { Clock } from "./Clock";
 import { Entur } from "./Entur";
+import { Weather } from "./Weather";
 import { Settings } from "luxon";
 import { Smarthouse } from "./Smarthouse";
 import { MqttClient } from "./MQTT";
@@ -34,6 +35,11 @@ app.use(
     path.join(__dirname, "../node_modules/jquery/dist/jquery.slim.min.js"),
   ),
 );
+app.use(
+  "/twig.js",
+  express.static(path.join(__dirname, "../node_modules/twig/twig.min.js")),
+);
+app.use("/client_templates.js", express.static(path.join(__dirname, "/Client_templates.js")));
 app.use("/client.js", express.static(path.join(__dirname, "/Client.js")));
 app.use(
   "/client.css",
@@ -44,6 +50,7 @@ const port = 3000;
 
 const days = new Days();
 const entur = new Entur();
+const weather = new Weather();
 
 app.get("/", (req, res) => {
   const data = {
@@ -67,13 +74,6 @@ wss.on("connection", function connection(ws) {
     console.log("received: %s", message);
     ws.send(JSON.stringify({ message: "Hello, from Tellulf Server!" }));
   });
-
-  setInterval(() => {
-    const out = {
-      time: Clock.getTime(),
-    };
-    ws.send(JSON.stringify(out));
-  }, 1000);
 
   ws.on("close", () => {
     console.log("Client disconnecting", clients.length);
@@ -100,8 +100,19 @@ function pushDataToClients() {
   console.log("Pushing updated data to connected clients");
   const homey = smart.getData();
   const enturData = entur.Get();
+  const hourlyForecast = weather.getHourlyForecasts();
+  const currentWeather = weather.getCurrentWeather();
+  const longTermForecast = weather.getDailyForecasts();
   clients.forEach((client) => {
-    client.send(JSON.stringify({ homey, entur: enturData }));
+    client.send(
+      JSON.stringify({
+        homey,
+        entur: enturData,
+        hourlyForecast,
+        currentWeather,
+        longTermForecast,
+      }),
+    );
   });
 }
 

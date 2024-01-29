@@ -10,14 +10,6 @@ import {
   HourlyForecast,
 } from "./types.met";
 
-// Common options for fetch
-const fetchOptions = {
-  method: "GET",
-  headers: {
-    "User-Agent": "tellulf v6: audun@kvasbo.no",
-  },
-};
-
 const YR_URL_FORECAST =
   "https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=59.9508&lon=10.6848";
 const YR_URL_FORECAST_LONG =
@@ -32,6 +24,14 @@ Settings.defaultZone = "Europe/Oslo";
 export class Weather {
   public forecast: TimeSeries[] = [];
   public longTermForecast: LongTermForecastDay[] = [];
+
+  // Common options for fetch
+  private fetchOptions = {
+    method: "GET",
+    headers: {
+      "User-Agent": "tellulf v6: audun@kvasbo.no",
+    },
+  };
 
   constructor() {
     setTimeout(() => {
@@ -136,7 +136,7 @@ export class Weather {
    * @returns LongTermForecast
    */
   public async fetchLongTermForecast(): Promise<void> {
-    const forecast = await fetch(YR_URL_FORECAST_LONG, fetchOptions);
+    const forecast = await fetch(YR_URL_FORECAST_LONG, this.fetchOptions);
 
     if (forecast.ok) {
       const forecastJson = await forecast.json();
@@ -164,7 +164,7 @@ export class Weather {
     try {
       // Fetch and decode JSON
       console.log("Fetching forecast from yr.no", YR_URL_FORECAST);
-      const fetchResponse = await fetch(YR_URL_FORECAST, fetchOptions);
+      const fetchResponse = await fetch(YR_URL_FORECAST, this.fetchOptions);
 
       if (!fetchResponse.ok) {
         // Log the fetch error message
