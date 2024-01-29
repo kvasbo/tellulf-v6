@@ -179,6 +179,7 @@ export class Weather {
       }
     } catch (error) {
       console.error(error);
+      return [] as TimeSeries[];
     }
   }
 }
