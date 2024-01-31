@@ -52,7 +52,7 @@ jobs:
                     type=sha
             - name: Create image tag
               run: |
-                  echo  ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}
+                    echo  ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
             - name: Install dependencies
               run: yarn install
             - name: Lint
