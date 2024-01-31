@@ -30,5 +30,57 @@ const hourlyWeatherTemplate = Twig.twig({
       </div>
     </div>
     {% endfor %}
-  </div>`
+  </div>`,
+});
+
+const calendarDay = Twig.twig({
+  data: `
+  {% for day in days %}
+    {% if day.birthdays is not empty or day.events is not empty or day.daily_forecast is not empty %}
+      <div class="calendar_day">
+        <div class="dateHeader">{{ day.weekday }}
+          <div class="headerWeather">
+            {% if day.daily_forecast is not empty %}
+            <img class="headerWeatherTempIcon" src="assets/low-temperature.png" />
+            {{ day.daily_forecast.minTemp|round }}&deg;
+            <img class="headerWeatherTempIcon" src="assets/high-temperature.png" />
+            {{ day.daily_forecast.maxTemp|round }}&deg;
+            <img class="headerWeatherIcon" src="assets/weathericon/png/{{ day.daily_forecast.symbol }}.png" />
+            {% endif %}
+          </div>
+        </div>
+        <div class="dinner">
+          {% for dinner in day.dinner %}
+          <div class="dinner"><img class='calendaricon birthday' src="assets/dinner.svg">{{ dinner.displayTitle }}</div>
+          {% endfor %}
+        </div>
+        <div class="birthdays">
+          {% for birthday in day.birthdays %}
+          <div class="birthday"><img class='calendaricon birthday' src="assets/birthday.svg">{{ birthday.displayTitle }}</div>
+          {% endfor %}
+        </div>
+        <div class="events">
+          {% for event in day.events %}
+          {% if event.fullDay == true %}
+          <div class="event">{{ event.displayTitle }}</div>
+          {% else %}
+          <div class="event">
+            <span class="event-time">
+            <span class="event-time-start">
+              {{ event.displayTime.start }}
+            </span>
+            <span class="event-time-spacer">
+              {{ event.displayTime.spacer }}
+            </span>
+            <span class="event-time-start">
+              {{ event.displayTime.end }}
+            </span>
+            </span>{{ event.displayTitle }}
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}`,
 });

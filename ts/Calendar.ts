@@ -58,11 +58,14 @@ export class Calendar {
     this.refreshEvents();
     this.refreshBirthdays();
     this.refreshDinners();
-    setInterval(() => {
-      this.refreshEvents();
-      this.refreshBirthdays();
-      this.refreshDinners();
-    }, 600000);
+    setInterval(
+      () => {
+        this.refreshEvents();
+        this.refreshBirthdays();
+        this.refreshDinners();
+      },
+      15 * 60 * 1000,
+    );
   }
 
   public calculateDisplayHeightForDay(jsDate: Date): number {
