@@ -50,6 +50,9 @@ jobs:
                   tags: |
                     type=ref, event=branch
                     type=sha
+            - name: Create image tag
+              run: |
+                  echo  ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}
             - name: Install dependencies
               run: yarn install
             - name: Lint
