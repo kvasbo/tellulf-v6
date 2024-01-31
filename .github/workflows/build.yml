@@ -30,6 +30,11 @@ jobs:
             - name: Setup Kubectl
               uses: azure/setup-kubectl@v3
               id: install-kubectl
+            - name: Install kubernetes context
+              run: |
+                mkdir -p ~/.kube
+                echo "${{ secrets.KUBECTL_CONFIG }}" | base64 -d > ~/.kube/config
+                kubectl get pods
             - name: Set up Docker Buildx
               uses: docker/setup-buildx-action@v3
             - name: Setup Node.js
