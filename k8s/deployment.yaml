@@ -17,5 +17,9 @@ spec:
           image: ghcr.io/kvasbo/tellulf-v6:main
           imagePullPolicy: Always
           envFrom:
-          - secretRef:
-              name: tellulfconfig
+            - secretRef:
+                name: tellulfconfig
+          resources:
+            limits:
+              memory: 256Mi
+              cpu: 0.5
