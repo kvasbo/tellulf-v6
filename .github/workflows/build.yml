@@ -37,8 +37,16 @@ jobs:
                     type=sha
             - name: Create image tag
               run: |
-                    echo  ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-$(echo ${GITHUB_SHA::8})
                     echo ${{ fromJSON(steps.meta.outputs.json).tags[1] }}
+            - name: Fix reference in k8s deployment
+              uses: richardrigutins/replace-in-files@v2
+              with:
+                files: './k8s/deployment.yaml'
+                search-text: 'ghcr.io/kvasbo/tellulf-v6:main'
+                replacement-text: '${{ fromJSON(steps.meta.outputs.json).tags[1] }}'
+            - name: Test k8s deployment
+              run: |
+                cat ./k8s/deployment.yaml
             - name: Install dependencies
               run: yarn install
             - name: Lint
