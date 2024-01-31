@@ -35,9 +35,6 @@ jobs:
                   tags: |
                     type=ref, event=branch
                     type=sha
-            - name: Create image tag
-              run: |
-                    echo ${{ fromJSON(steps.meta.outputs.json).tags[1] }}
             - name: Fix reference in k8s deployment
               uses: richardrigutins/replace-in-files@v2
               with:
@@ -84,3 +81,6 @@ jobs:
                   tags: ${{ steps.meta.outputs.tags }}
                   labels: ${{ steps.meta.outputs.labels }}
                   platforms: linux/amd64
+            - name: Deploy to Kubernetes
+              run: |
+                kubectl apply -f ./k8s/deployment.yaml
