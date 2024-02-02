@@ -39,7 +39,10 @@ app.use(
   "/twig.js",
   express.static(path.join(__dirname, "../node_modules/twig/twig.min.js")),
 );
-app.use("/client_templates.js", express.static(path.join(__dirname, "/Client_templates.js")));
+app.use(
+  "/client_templates.js",
+  express.static(path.join(__dirname, "/Client_templates.js")),
+);
 app.use("/client.js", express.static(path.join(__dirname, "/Client.js")));
 app.use(
   "/client.css",
@@ -60,8 +63,6 @@ app.get("/", (req, res) => {
     today: days.GenerateToday(),
     hourly_weather: days.weather.getHourlyForecasts(),
   };
-
-  console.log("Current temp", data.current_temperature);
 
   res.render("index.twig", data);
   console.log("Rendered index");
