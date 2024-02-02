@@ -122,7 +122,11 @@ function updateHomeyInfo(homey: HomeyData) {
   // Show temperature
   if (homey.tempOut) {
     const t = Number(homey.tempOut).toFixed(0);
-    $(".current_temperature").html(`${t}&deg;`);
+    if (t === "-0") {
+      $(".current_temperature").html(`0&deg;`);
+    } else {  
+      $(".current_temperature").html(`${t}&deg;`);
+    }
   } else {
     $(".current_temperature").html(`?`);
   }

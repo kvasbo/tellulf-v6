@@ -61,6 +61,8 @@ app.get("/", (req, res) => {
     hourly_weather: days.weather.getHourlyForecasts(),
   };
 
+  console.log("Current temp", data.current_temperature);
+
   res.render("index.twig", data);
   console.log("Rendered index");
 });
