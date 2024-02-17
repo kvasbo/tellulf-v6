@@ -19,7 +19,7 @@
   <div class="block calendar" id="calendar">
     {% for day in days %}
 
-    {% if day.birthdays is not empty or day.events is not empty or day.daily_forecast is not empty %}
+    {% if day.birthdays is not empty or day.events is not empty or day.daily_forecast is not empty or day.dinner is not empty %}
 
     <div class="calendar_day">
       <div class="dateHeader">{{ day.weekday }}
