@@ -23,6 +23,13 @@ jobs:
       - name: Setup Kubectl
         uses: azure/setup-kubectl@v3
         id: install-kubectl
+      - name: Connect to home network with Tailscale
+        uses: tailscale/github-action@v2
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci
+          version: 1.58.2
       - name: Install Kubernetes context
         run: |
           mkdir -p ~/.kube
@@ -74,13 +81,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64
-      - name: Connect to home network with Tailscale
-        uses: tailscale/github-action@v2
-        with:
-          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-          tags: tag:ci
-          version: 1.58.2
       - name: Deploy to Kubernetes
         run: |
           kubectl apply -f ./k8s/deployment.yaml
