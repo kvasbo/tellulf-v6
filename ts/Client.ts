@@ -3,6 +3,10 @@
  * This file is the client side of the dashboard. It is not run on the server, but served as is to the client.
  */
 
+let ws:WebSocket = null;
+let wsRetryCount = 0;
+const wsId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
 type Train = {
   time: string;
   destination: string;
@@ -43,7 +47,15 @@ $(function () {
 });
 
 async function connectWebSocket() {
-  const ws = new WebSocket(
+
+  // Reload window if we have retried too many times
+  if (wsRetryCount > 10) {
+    console.log("Too many retries, giving up");
+    window.location.reload();
+  }
+  wsRetryCount++;
+
+  ws = new WebSocket(
     "ws://" + window.location.hostname + ":" + window.location.port,
   );
 
@@ -51,11 +63,9 @@ async function connectWebSocket() {
     // Web Socket is connected, identify ourselves
     ws.send(
       JSON.stringify({
-        message: "Hello, from Tellulf!",
+        message: `Hello, from ${wsId}!`,
         type: "identify",
-        id:
-          Math.random().toString(36).substring(2, 15) +
-          Math.random().toString(36).substring(2, 15),
+        id: wsId
       }),
     );
   };
@@ -66,12 +76,15 @@ async function connectWebSocket() {
     // Connection has been closed, attempt to reconnect
     setTimeout(function () {
       connectWebSocket();
-    }, 5000); // Try to reconnect after 2 seconds
+    }, 15000); // Try to reconnect after 5 seconds
   };
 
   ws.onerror = function (error) {
     // Handle errors
     console.log("WebSocket error:", error);
+    setTimeout(function () {
+      connectWebSocket();
+    }, 5000); // Try to reconnect after 5 seconds
   };
 
   ws.onmessage = function (evt) {
