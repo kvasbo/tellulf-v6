@@ -100,7 +100,7 @@ server.listen(port, () => {
  * Push data to all connected clients
  */
 function pushDataToClients() {
-  console.log("Pushing updated data to connected clients");
+  console.log(`Pushing updated data to ${clients.length} connected clients`);
   const homey = smart.getData();
   const enturData = entur.Get();
   const hourlyForecast = weather.getHourlyForecasts();
