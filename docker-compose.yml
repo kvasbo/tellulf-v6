@@ -7,7 +7,6 @@ services:
     tty: true
     ports:
       - "${EXPOSE_PORT}:3000"
-      - "${SOCKET_PORT}:8090"
     environment:
       - YR_URL_FORECAST=${YR_URL_FORECAST}
       - YR_URL_NOWCAST=${YR_URL_NOWCAST}
