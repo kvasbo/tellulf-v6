@@ -1,4 +1,4 @@
-import { calendar_v3, google } from "googleapis";
+import { google } from "googleapis";
 import { DateTime } from "luxon";
 import * as dotenv from "dotenv";
 
@@ -7,9 +7,12 @@ dotenv.config();
 const SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
 
 // Get the Google key from the environment variable
+// eslint-disable-next-line no-undef
 const key64 = process.env.GOOGLE_KEY_B64 ? process.env.GOOGLE_KEY_B64 : "";
+// eslint-disable-next-line no-undef
 const GOOGLE_KEY = JSON.parse(Buffer.from(key64, "base64").toString("utf8"));
 
+/*
 interface GoogleEvent {
   summary: string;
   start: {
@@ -41,14 +44,14 @@ export interface Event extends RawEvent {
   dayType: DayType;
   displayTitle: string;
   displayTime: EventDisplayTime;
-}
+}*/
 
 export class Calendar {
-  private events: RawEvent[] = [];
-  private birthdays: RawEvent[] = [];
-  private dinners: RawEvent[] = [];
+  events = []; // RawEvents
+  birthdays = []; // RawEvents
+  dinners = []; // RawEvents
   // Display height of calendar events in pixels to ensure we don't overflow
-  private displayHeights = {
+  displayHeights = {
     event: 25,
     birthday: 25,
     dayInfo: 51,
@@ -58,6 +61,7 @@ export class Calendar {
     this.refreshEvents();
     this.refreshBirthdays();
     this.refreshDinners();
+    // eslint-disable-next-line no-undef
     setInterval(
       () => {
         this.refreshEvents();
@@ -68,7 +72,7 @@ export class Calendar {
     );
   }
 
-  public calculateDisplayHeightForDay(jsDate: Date): number {
+  calculateDisplayHeightForDay(jsDate) {
     const eventCount = this.getEventsForDate(jsDate).length;
     const birthdays = this.getBirthdaysForDate(jsDate).length;
     const height =
@@ -79,26 +83,26 @@ export class Calendar {
   }
 
   // Returns a copy of the events array
-  public getEventsForDate(jsDate: Date): Event[] {
+  getEventsForDate(jsDate) {
     return this.events
       .filter((e) => this.checkEventForDate(e, jsDate))
       .map((e) => this.enrichEvent(e, "event", jsDate));
   }
 
-  public getBirthdaysForDate(jsDate: Date): Event[] {
+  getBirthdaysForDate(jsDate) {
     return this.birthdays
       .filter((e) => this.checkEventForDate(e, jsDate))
       .map((e) => this.enrichEvent(e, "birthday", jsDate));
   }
 
-  public getDinnerForDate(jsDate: Date): Event[] {
+  getDinnerForDate(jsDate) {
     return this.dinners
       .filter((e) => this.checkEventForDate(e, jsDate))
       .map((e) => this.enrichEvent(e, "dinner", jsDate));
   }
 
   // Filters events based on whether they exist on the given date
-  private checkEventForDate(event: RawEvent, jsDate: Date): boolean {
+  checkEventForDate(event, jsDate) {
     // Find start of day for all of the fuckers
     const dt = DateTime.fromJSDate(jsDate).startOf("day");
     const eventStart = DateTime.fromJSDate(event.start).startOf("day");
@@ -116,7 +120,7 @@ export class Calendar {
     return false;
   }
 
-  private enrichEvent(event: RawEvent, type = "", forDate: Date): Event {
+  enrichEvent(event, type = "", forDate) {
     const displayTitle = Calendar.getDisplayTitle(event, type);
     const dayType = Calendar.getDayType(event, forDate);
     const displayTime = Calendar.getEventDisplayTime(event, dayType);
@@ -129,7 +133,7 @@ export class Calendar {
     };
   }
 
-  private static getDisplayTitle(event: RawEvent, type: string): string {
+  static getDisplayTitle(event, type) {
     let title = event.title;
     if (type === "birthday") {
       const regex = /[A-Za-z0-9 ]+\s[0-9]+/i;
@@ -147,30 +151,40 @@ export class Calendar {
     return title;
   }
 
-  private async refreshEvents(): Promise<void> {
+  async refreshEvents() {
+    // eslint-disable-next-line no-undef
     if (process.env.CAL_ID_FELLES) {
+      // eslint-disable-next-line no-undef
       this.events = await Calendar.getCalendarData(process.env.CAL_ID_FELLES);
+      // eslint-disable-next-line no-undef
       console.log(this.events.length + " events fetched.");
     } else {
       this.events = [];
     }
   }
 
-  private async refreshDinners(): Promise<void> {
+  async refreshDinners() {
+    // eslint-disable-next-line no-undef
     if (process.env.CAL_ID_MIDDAG) {
+      // eslint-disable-next-line no-undef
       this.dinners = await Calendar.getCalendarData(process.env.CAL_ID_MIDDAG);
+      // eslint-disable-next-line no-undef
       console.log(this.dinners.length + " dinners fetched.");
     } else {
       this.dinners = [];
+      // eslint-disable-next-line no-undef
       console.log("Dinner calendar ID not found :(");
     }
   }
 
-  private async refreshBirthdays(): Promise<void> {
+  async refreshBirthdays() {
+    // eslint-disable-next-line no-undef
     if (process.env.CAL_ID_BURSDAG) {
       this.birthdays = await Calendar.getCalendarData(
+        // eslint-disable-next-line no-undef
         process.env.CAL_ID_BURSDAG,
       );
+      // eslint-disable-next-line no-undef
       console.log(this.birthdays.length + " birthdays fetched.");
     } else {
       this.birthdays = [];
@@ -181,9 +195,7 @@ export class Calendar {
    * Get the content of a calendar
    * @param calendarId
    */
-  private static async getCalendarData(
-    calendarId: string,
-  ): Promise<RawEvent[]> {
+  static async getCalendarData(calendarId) {
     const jwtClient = new google.auth.JWT(
       GOOGLE_KEY.client_email,
       undefined,
@@ -196,7 +208,7 @@ export class Calendar {
       auth: jwtClient,
     });
 
-    const out: RawEvent[] = [];
+    const out = []; // Rawevent
 
     const result = await calendar.events.list({
       calendarId: calendarId,
@@ -208,11 +220,12 @@ export class Calendar {
     });
 
     if (result?.data?.items?.length) {
-      result.data.items.forEach((event: calendar_v3.Schema$Events) => {
+      result.data.items.forEach((event) => {
         const e = Calendar.parseGoogleEvent(event);
         out.push(e);
       });
     } else {
+      // eslint-disable-next-line no-undef
       console.log(
         JSON.stringify({
           message: `No upcoming events found for ${calendarId}`,
@@ -223,10 +236,7 @@ export class Calendar {
   }
 
   // Get the correct displaytime for the event
-  public static getEventDisplayTime(
-    event: RawEvent,
-    dayType: DayType,
-  ): EventDisplayTime {
+  static getEventDisplayTime(event, dayType) {
     if (dayType === "middleDay") {
       return {
         start: "",
@@ -260,12 +270,12 @@ export class Calendar {
   }
 
   // Figure out if same date or whether it spans multiple days. For displaying purposes
-  private static getDayType(event: RawEvent, date: Date): DayType {
+  static getDayType(event, date) {
     const dtStart = DateTime.fromJSDate(event.start);
     const dtEnd = DateTime.fromJSDate(event.end);
     const dtDate = DateTime.fromJSDate(date);
 
-    let dayType: DayType = "singleDay";
+    let dayType = "singleDay";
 
     // Single day event
     if (dtStart.hasSame(dtEnd, "day")) {
@@ -283,8 +293,8 @@ export class Calendar {
   }
 
   // Main parsing of an event from Google
-  private static parseGoogleEvent(event: calendar_v3.Schema$Events): RawEvent {
-    const ev = event as GoogleEvent;
+  static parseGoogleEvent(event) {
+    const ev = event;
 
     const title = event.summary ? event.summary : "";
 
