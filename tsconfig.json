@@ -7,7 +7,7 @@
     ],
     "module": "CommonJS",
     "target": "es2020",
-    "allowJs": false,
+    "allowJs": true,
     "moduleResolution": "node",
     "removeComments": true,
     "esModuleInterop": true,

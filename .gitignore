@@ -86,4 +86,4 @@ src/js
 
 *.backup
 
-k8s/tellulfconfig.yaml
+docs
