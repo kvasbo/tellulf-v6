@@ -17,6 +17,5 @@
     "sourceRoot": "./ts"
   },
   "include": [
-    "ts/*.ts"
-  ]
+    "ts/*.ts", "ts/*.js"]
 }
