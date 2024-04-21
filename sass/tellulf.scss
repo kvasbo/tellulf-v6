@@ -82,16 +82,35 @@ body {
         display: flex;
         flex-direction: row;
         align-items: center;
+        .headerWeatherPrepArea {
+          display: flex;
+          flex-direction: row;
+          // margin-left: 0.5em;
+          .weatherPrep {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            color: grey;
+            .rainProb {
+              // font-size: 0.5em;
+            }
+            .headerWeatherIconPrep {
+              height: $text_subheader;
+              width: $text_subheader;
+               margin: 0 0.25em;
+              .light {
+
+              }
+              .heavy {
+
+              }
+            }
+          }
+        }
         .headerWeatherTempIcon {
           width: $text_subheader;
           height: $text_subheader;
           opacity: 0.4;
-        }
-        .headerWeatherIcon {
-          width: $text_subheader * 1.75;
-          height: $text_subheader * 1.75;
-          margin-bottom: 6px;
-          margin-left: 10px;
         }
       }
     }

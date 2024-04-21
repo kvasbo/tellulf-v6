@@ -36,7 +36,7 @@ export class Weather {
   constructor() {
     setTimeout(() => {
       this.updateForecasts();
-    }, 1000 * 10);
+    }, 1000 * 1);
     setInterval(
       () => {
         this.updateForecasts();
@@ -102,6 +102,8 @@ export class Weather {
         minTemp: series.data.next_24_hours.details.air_temperature_min,
         maxTemp: series.data.next_24_hours.details.air_temperature_max,
         meanTemp: series.data.next_24_hours.details.air_temperature_mean,
+        lightRainProbability: Math.round(series.data.next_24_hours.details.probability_of_precipitation),
+        heavyRainProbability: Math.round(series.data.next_24_hours.details.probability_of_heavy_precipitation),
         symbol,
       } as DailyForecast;
     }

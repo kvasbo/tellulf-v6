@@ -165,6 +165,8 @@ export type DailyForecast = {
   minTemp: number;
   meanTemp: number;
   symbol?: string;
+  lightRainProbability: number;
+  heavyRainProbability: number;
 };
 
 export interface DailyForecasts {
