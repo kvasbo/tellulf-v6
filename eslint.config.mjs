@@ -1,14 +1,14 @@
-import tslint from "@typescript-eslint/eslint-plugin";
 import jsdoc from "eslint-plugin-jsdoc";
-import js from "@eslint/js";
+import eslint from '@eslint/js';
+import tseslint from 'typescript-eslint';
 import globals from "globals";
 
 export default [
-  js.configs.recommended,
+  eslint.configs.recommended,
+  ...tseslint.configs.recommended,
   {
     files: ["./ts/*.ts"],
     plugins: {
-      "@typescript-eslint": tslint,
       jsdoc: jsdoc,
     },
     languageOptions: {
@@ -22,7 +22,7 @@ export default [
       },
     },
     rules: {
-      "no-console": 0,
+      "no-console": 1,
       "no-unused-vars": 1,
       "no-undef": 1,
     },

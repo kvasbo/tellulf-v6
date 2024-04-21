@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
+ 
+ 
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const Twig: any;

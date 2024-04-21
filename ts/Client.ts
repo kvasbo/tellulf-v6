@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+ 
 /**
  * This file is the client side of the dashboard. It is not run on the server, but served as is to the client.
  */
