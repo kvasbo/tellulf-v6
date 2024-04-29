@@ -72,14 +72,18 @@
         <div class="headerWeather">
           {% if day.daily_forecast is not empty %}
           <div class="headerWeatherPrepArea">
-            <div class="weatherPrep light">
-              <img class="headerWeatherIconPrep light" style="opacity: 100%" src="assets/weathericon/png/lightrain.png" />
-              <span class="rainProb">{{ day.daily_forecast.lightRainProbability }}%</span>
+            {% if day.daily_forecast.lightRainProbability > 10 %}
+              <div class="weatherPrep light">
+                <img class="headerWeatherIconPrep light" style="opacity: 100%" src="assets/weathericon/png/lightrain.png" />
+                <span class="rainProb">{{ day.daily_forecast.lightRainProbability }}%</span>
             </div>
-            <div class="weatherPrep heavy">
-             <img class="headerWeatherIconPrep heavy" style="opacity: 100%" src="assets/weathericon/png/heavyrain.png" />
-             <span class="rainProb">{{ day.daily_forecast.heavyRainProbability }}%</span>
-            </div> 
+            {% endif %}
+            {% if day.daily_forecast.heavyRainProbability > 10 %}
+              <div class="weatherPrep heavy">
+                <img class="headerWeatherIconPrep heavy" style="opacity: 100%" src="assets/weathericon/png/heavyrain.png" />
+                <span class="rainProb">{{ day.daily_forecast.heavyRainProbability }}%</span>
+              </div> 
+            {% endif %}
           </div>
           <img class="headerWeatherTempIcon" src="assets/low-temperature.png" />
           {{ day.daily_forecast.minTemp|round }}&deg;

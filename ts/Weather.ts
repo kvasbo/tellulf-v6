@@ -102,8 +102,8 @@ export class Weather {
         minTemp: series.data.next_24_hours.details.air_temperature_min,
         maxTemp: series.data.next_24_hours.details.air_temperature_max,
         meanTemp: series.data.next_24_hours.details.air_temperature_mean,
-        lightRainProbability: Math.round(series.data.next_24_hours.details.probability_of_precipitation),
-        heavyRainProbability: Math.round(series.data.next_24_hours.details.probability_of_heavy_precipitation),
+        lightRainProbability: Math.round(series.data.next_24_hours.details.probability_of_precipitation / 10) * 10,
+        heavyRainProbability: Math.round(series.data.next_24_hours.details.probability_of_heavy_precipitation / 10) * 10,
         symbol,
       } as DailyForecast;
     }
