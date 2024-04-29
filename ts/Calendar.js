@@ -46,6 +46,11 @@ export interface Event extends RawEvent {
   displayTime: EventDisplayTime;
 }*/
 
+
+/**
+ * Calendar class, with methods for fetching events, birthdays and dinners.
+ * @class
+ */
 export class Calendar {
   events = []; // RawEvents
   birthdays = []; // RawEvents
@@ -57,7 +62,12 @@ export class Calendar {
     dayInfo: 51,
   };
 
-  constructor() {
+  /**
+   * Constructor for the Calendar class, that refreshes events, birthdays and dinners every 15 minutes.
+   * @constructor
+   * @param {number} [interval=15] - Optional interval in minutes.
+   */
+  constructor(interval = 15) {
     this.refreshEvents();
     this.refreshBirthdays();
     this.refreshDinners();
@@ -68,10 +78,15 @@ export class Calendar {
         this.refreshBirthdays();
         this.refreshDinners();
       },
-      15 * 60 * 1000,
+      interval * 60 * 1000,
     );
   }
-
+  
+  /**
+   * Try to calculate the height of a day in pixels based on the number of events and birthdays.
+   * @param {Date} jsDate The date to check
+   * @returns {number} The estimated height in pixels
+   */
   calculateDisplayHeightForDay(jsDate) {
     const eventCount = this.getEventsForDate(jsDate).length;
     const birthdays = this.getBirthdaysForDate(jsDate).length;
@@ -133,6 +148,13 @@ export class Calendar {
     };
   }
 
+  /**
+   * Parse the title of an event, if it is a birthday then change it to display
+   * the age of the person if the event title ends in a string.
+   * @param {Object} event Event object 
+   * @param {string} type The type of object. Either "event" or "birthday"
+   * @returns {string} The display title
+   */
   static getDisplayTitle(event, type) {
     let title = event.title;
     if (type === "birthday") {
