@@ -9,6 +9,7 @@ import { Weather } from "./Weather";
 import { Settings } from "luxon";
 import { Smarthouse } from "./Smarthouse";
 import { MqttClient } from "./MQTT";
+import { PowerPrice } from "./PowerPrice";
 
 // Configure the time zone
 Settings.defaultZone = "Europe/Oslo";
@@ -20,6 +21,9 @@ const mqttClient = new MqttClient();
 // Create smarthouse connector
 const smart = new Smarthouse(mqttClient);
 smart.startMqtt();
+
+const powerPriceGetter = new PowerPrice();
+powerPriceGetter.getData();
 
 // Express settings
 app.set("views", path.join(__dirname, "../views"));
@@ -106,10 +110,12 @@ function pushDataToClients() {
   const hourlyForecast = weather.getHourlyForecasts();
   const currentWeather = weather.getCurrentWeather();
   const longTermForecast = weather.getDailyForecasts();
+  const powerPrice = powerPriceGetter.getPowerPrice();
   clients.forEach((client) => {
     client.send(
       JSON.stringify({
         homey,
+        powerPrice,
         entur: enturData,
         hourlyForecast,
         currentWeather,

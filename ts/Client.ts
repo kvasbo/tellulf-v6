@@ -99,6 +99,9 @@ async function connectWebSocket() {
       if (data.entur) {
         updateEnturInfo(data.entur);
       }
+      if (data.powerPrice) {
+        $(".currentPriceHome").html(`${data.powerPrice.toFixed(2)} kr/kWh`);
+      }
       if (data.hourlyForecast) {
         updateHourlyForecast(data.hourlyForecast);
       }
