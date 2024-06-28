@@ -20,6 +20,13 @@ export class PowerPrice {
     return this.powerPrice;
   }
 
+  public constructor() {
+    this.getData();
+    setInterval(() => {
+      this.getData();
+    }, 1000* 60 * 15);
+  }
+
   public async getData(): Promise<void> {
     const now = DateTime.now();
     const dateString = now.toFormat('yyyy/MM-dd');
@@ -27,11 +34,6 @@ export class PowerPrice {
     const data = await fetch(url);
     const jsonData = await data.json();
     const validated = this.prisData.parse(jsonData);
-
-    // Run the update loop for the price every hour on the hour
-    const delay = 3600000 - (now.minute * 60000 + now.second * 1000 + now.millisecond);
-    console.log(`Delay until next power price update is ${Math.round(delay/1000)} seconds`)
-    setTimeout(this.getData, delay);
     
     // Find the element in the array that contains the current time between time_start and time_end
     const currentPrice = validated.find((element) => {

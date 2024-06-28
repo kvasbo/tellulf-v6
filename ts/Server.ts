@@ -23,7 +23,6 @@ const smart = new Smarthouse(mqttClient);
 smart.startMqtt();
 
 const powerPriceGetter = new PowerPrice();
-powerPriceGetter.getData();
 
 // Express settings
 app.set("views", path.join(__dirname, "../views"));
