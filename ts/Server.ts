@@ -129,7 +129,7 @@ function updateClocks(queueNext: boolean = true) {
   console.log(
     `Sending time (${new Date().toLocaleTimeString()}) to ${
       clients.length
-    } clients", `,
+    } clients.`,
   );
 
   // Recalculate the delay until the start of the next minute

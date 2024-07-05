@@ -113,6 +113,8 @@ async function connectWebSocket() {
 
 connectWebSocket();
 
+declare const hourlyWeatherTemplate: any;
+
 /**
  * Update the hourly forecast
  */
