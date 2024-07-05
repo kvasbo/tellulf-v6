@@ -1,4 +1,4 @@
-import { GraphQLClient } from "graphql-request";
+import {  gql, request } from "graphql-request";
 import * as z from "zod";
 
 // Define API schema
@@ -41,9 +41,7 @@ export interface Train {
   destination: string;
 }
 
-type EnturCall = z.infer<typeof EnturCallSchema>;
-
-const ENTUR_QUERY = `
+const ENTUR_QUERY = gql`
 {
   stopPlace(id: "NSR:StopPlace:58268") {
     id
@@ -93,18 +91,16 @@ export class Entur {
   }
 
   async Update(): Promise<void> {
-    const client = new GraphQLClient(
-      "https://api.entur.io/journey-planner/v2/graphql",
-      {
-        headers: {
-          "ET-Client-Name": "kvasbo-tellulf",
-          "Content-Type": "application/json",
-        },
-      },
-    );
 
     try {
-      const data: EnturCall = await client.request(ENTUR_QUERY);
+      const data = await request({
+        url: 'https://api.entur.io/journey-planner/v2/graphql',
+        document: ENTUR_QUERY,
+        requestHeaders: {
+          "ET-Client-Name": "kvasbo-tellulf",
+          "Content-Type": "application/json",
+        }
+      })
 
       // Safely parse data
       const res = EnturCallSchema.safeParse(data);
@@ -126,6 +122,9 @@ export class Entur {
           destination: train.destinationDisplay.frontText,
         };
       });
+      console.group("Entur API data received");
+      console.log(trainsFormatted);
+      console.groupEnd();
       this.trains = trainsFormatted;
     } catch (error) {
       console.error(error);
