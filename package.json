@@ -36,7 +36,7 @@
   "name": "tellulf-v6",
   "version": "1.0.0",
   "description": "A private info screen",
-  "main": "build/Server.js",
+  "main": "build/Server.mjs",
   "repository": "https://github.com/kvasbo/tellulf-v6.git",
   "author": "Audun Kvasbø <audun@kvasbo.no>",
   "license": "MIT",
