@@ -1,43 +1,46 @@
- 
 /**
  * This file is the client side of the dashboard. It is not run on the server, but served as is to the client.
  */
 
-let ws:WebSocket = null;
+/** @type {WebSocket | null} */
+let ws = null;
 let wsRetryCount = 0;
 const wsId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
-type Train = {
-  time: string;
-  destination: string;
-};
+/**
+ * @typedef {Object} Train
+ * @property {string} time
+ * @property {string} destination
+ */
 
-type HomeyData = {
-  tempOut?: number;
-  humOut?: number;
-  power?: number;
-  pressure?: number;
-  powerUsedToday?: number;
-  costToday?: number;
-  powerCostNowHome?: number;
-  powerCostNowCabin?: number;
-  tempIn?: number;
-  humIn?: number;
-  co2in?: number;
-  niceTime?: string;
-  powerUsedTodayCabin?: number;
-  powerCabin?: number;
-  costTodayCabin?: number;
-  coolerRoomTemp: number;
-  coolerRoomHumidity: number;
-  coolerRoomBattery: number;
-};
+/**
+ * @typedef {Object} HomeyData
+ * @property {number} [tempOut]
+ * @property {number} [humOut]
+ * @property {number} [power]
+ * @property {number} [pressure]
+ * @property {number} [powerUsedToday]
+ * @property {number} [costToday]
+ * @property {number} [powerCostNowHome]
+ * @property {number} [powerCostNowCabin]
+ * @property {number} [tempIn]
+ * @property {number} [humIn]
+ * @property {number} [co2in]
+ * @property {string} [niceTime]
+ * @property {number} [powerUsedTodayCabin]
+ * @property {number} [powerCabin]
+ * @property {number} [costTodayCabin]
+ * @property {number} coolerRoomTemp
+ * @property {number} coolerRoomHumidity
+ * @property {number} coolerRoomBattery
+ */
 
-type TimeData = {
-  time: string;
-  date: string;
-  week: string;
-};
+/**
+ * @typedef {Object} TimeData
+ * @property {string} time
+ * @property {string} date
+ * @property {string} week
+ */
 
 let lastUpdatedPower = new Date();
 
@@ -46,8 +49,10 @@ $(function () {
   setReloadClient(1);
 });
 
+/**
+ * Connect to the WebSocket and handle reconnections and messages.
+ */
 async function connectWebSocket() {
-
   // Reload window if we have retried too many times
   if (wsRetryCount > 10) {
     console.log("Too many retries, giving up");
@@ -76,7 +81,7 @@ async function connectWebSocket() {
     // Connection has been closed, attempt to reconnect
     setTimeout(function () {
       connectWebSocket();
-    }, 15000); // Try to reconnect after 5 seconds
+    }, 15000); // Try to reconnect after 15 seconds
   };
 
   ws.onerror = function (error) {
@@ -113,12 +118,13 @@ async function connectWebSocket() {
 
 connectWebSocket();
 
-declare const hourlyWeatherTemplate: any;
+/** @type {any} */
 
 /**
- * Update the hourly forecast
+ * Update the hourly forecast.
+ * @param {unknown} forecast
  */
-function updateHourlyForecast(forecast: unknown) {
+function updateHourlyForecast(forecast) {
   if (Array.isArray(forecast) && forecast.length > 0) {
     const template = hourlyWeatherTemplate.render({
       hourly_weather: forecast,
@@ -133,16 +139,16 @@ function updateHourlyForecast(forecast: unknown) {
 }
 
 /**
- * Update the UX with homey data.
- * @param homey
+ * Update the UX with Homey data.
+ * @param {HomeyData} homey
  */
-function updateHomeyInfo(homey: HomeyData) {
+function updateHomeyInfo(homey) {
   // Show temperature
   if (homey.tempOut) {
     const t = Number(homey.tempOut).toFixed(0);
     if (t === "-0") {
       $(".current_temperature").html(`0&deg;`);
-    } else {  
+    } else {
       $(".current_temperature").html(`${t}&deg;`);
     }
   } else {
@@ -209,10 +215,16 @@ function updateHomeyInfo(homey: HomeyData) {
   checkLastUpdatedPowerTime();
 }
 
+/**
+ * Set the last updated power time to the current time.
+ */
 function setLastUpdatedPowerTime() {
   lastUpdatedPower = new Date();
 }
 
+/**
+ * Check the last updated power time and update the UI if too much time has passed.
+ */
 function checkLastUpdatedPowerTime() {
   const now = new Date();
   const diff = now.getTime() - lastUpdatedPower.getTime();
@@ -226,14 +238,22 @@ function checkLastUpdatedPowerTime() {
   }
 }
 
-function updateTimeInfo(timeData: TimeData) {
+/**
+ * Update the time information in the UI.
+ * @param {TimeData} timeData
+ */
+function updateTimeInfo(timeData) {
   // Update all the interfaces at once
   $("#now_time").html(timeData.time);
   $("#now_date").html(timeData.date);
   $("#now_week").html(`Uke ${timeData.week}`);
 }
 
-function updateEnturInfo(entur: Train[]) {
+/**
+ * Update the train information in the UI.
+ * @param {Train[]} entur
+ */
+function updateEnturInfo(entur) {
   let enturHtml = "<strong>Neste baner:</strong>";
 
   for (let i = 0; i < Math.min(entur.length, 4); i++) {
@@ -247,9 +267,10 @@ function updateEnturInfo(entur: Train[]) {
 }
 
 /**
- * Reload at the start of the hour.
+ * Reload the page at the start of the next hour.
+ * @param {number} inHours
  */
-function setReloadClient(inHours: number) {
+function setReloadClient(inHours) {
   const now = new Date();
   const startOfNextHour = new Date();
   startOfNextHour.setUTCHours(now.getUTCHours() + inHours, 0, 1, 0);
