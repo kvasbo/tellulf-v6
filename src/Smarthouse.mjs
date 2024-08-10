@@ -1,24 +1,24 @@
 export class Smarthouse {
   constructor(mqttClient) {
-    this.mqttClient = mqttClient
+    this.mqttClient = mqttClient;
   }
 
-  coolerRoomTemp = -9999
-  coolerRoomHumidity = -9999
-  coolerRoomBattery = -9999
+  coolerRoomTemp = -9999;
+  coolerRoomHumidity = -9999;
+  coolerRoomBattery = -9999;
 
   status = {
     home: structuredClone(statusInitValues),
     cabin: structuredClone(statusInitValues)
-  }
+  };
 
-  temp = -9999
-  hum = -9999
-  pressure = 0
+  temp = -9999;
+  hum = -9999;
+  pressure = 0;
 
   getData() {
-    const costHome = this.status.home.currentPrice.totalAfterSupport
-    const costCabin = this.status.cabin.currentPrice.totalAfterSupport
+    const costHome = this.status.home.currentPrice.totalAfterSupport;
+    const costCabin = this.status.cabin.currentPrice.totalAfterSupport;
     const output = {
       tempOut: this.temp,
       humOut: this.hum,
@@ -34,50 +34,50 @@ export class Smarthouse {
       coolerRoomHumidity: this.coolerRoomHumidity,
       coolerRoomTemp: this.coolerRoomTemp,
       coolerRoomBattery: this.coolerRoomBattery
-    }
-    return output
+    };
+    return output;
   }
 
   parseTibberData(message) {
     // Convert to object
-    const data = JSON.parse(message)
+    const data = JSON.parse(message);
     // Set internal status.
-    this.status = data
+    this.status = data;
   }
 
   startMqtt() {
     this.mqttClient.client.on("message", (topic, message) => {
-      const msg = message.toString()
+      const msg = message.toString();
       switch (topic) {
         // The big new one!
         case "tibber/power":
-          this.parseTibberData(msg)
-          break
+          this.parseTibberData(msg);
+          break;
         case "tellulf/weather/tempOut":
-          this.temp = parseFloat(message.toString())
-          this.mqttClient.log("Temperature set to:", this.temp)
-          break
+          this.temp = parseFloat(message.toString());
+          this.mqttClient.log("Temperature set to:", this.temp);
+          break;
         case "tellulf/weather/humidity":
-          this.hum = parseFloat(message.toString())
-          this.mqttClient.log("Humidity set to:", this.hum)
-          break
+          this.hum = parseFloat(message.toString());
+          this.mqttClient.log("Humidity set to:", this.hum);
+          break;
         case "tellulf/weather/pressure":
-          this.pressure = parseFloat(message.toString())
-          this.mqttClient.log("Pressure set to:", this.pressure)
-          break
+          this.pressure = parseFloat(message.toString());
+          this.mqttClient.log("Pressure set to:", this.pressure);
+          break;
         case "kjølerom/temperature":
-          this.coolerRoomTemp = parseFloat(message.toString())
-          break
+          this.coolerRoomTemp = parseFloat(message.toString());
+          break;
         case "kjølerom/humidity":
-          this.coolerRoomHumidity = parseFloat(message.toString())
-          break
+          this.coolerRoomHumidity = parseFloat(message.toString());
+          break;
         case "kjølerom/battery":
-          this.coolerRoomBattery = parseFloat(message.toString())
-          break
+          this.coolerRoomBattery = parseFloat(message.toString());
+          break;
         default:
-          break
+          break;
       }
-    })
+    });
   }
 }
 
@@ -111,4 +111,4 @@ const statusInitValues = {
     energyAfterSupport: 0,
     totalAfterSupport: 0
   }
-}
+};

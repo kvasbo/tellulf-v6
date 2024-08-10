@@ -1,5 +1,5 @@
-import { gql, request } from "graphql-request"
-import * as z from "zod"
+import { gql, request } from "graphql-request";
+import * as z from "zod";
 
 // Define API schema
 const EnturCallSchema = z.object({
@@ -70,20 +70,20 @@ const ENTUR_QUERY = gql`
       }
     }
   }
-`
+`;
 
 export class Entur {
-  trains = []
+  trains = [];
 
   constructor() {
-    this.Update()
+    this.Update();
     setInterval(() => {
-      this.Update()
-    }, 60000)
+      this.Update();
+    }, 60000);
   }
 
   Get() {
-    return this.trains
+    return this.trains;
   }
 
   async Update() {
@@ -95,33 +95,33 @@ export class Entur {
           "ET-Client-Name": "kvasbo-tellulf",
           "Content-Type": "application/json"
         }
-      })
+      });
 
       // Safely parse data
-      const res = EnturCallSchema.safeParse(data)
+      const res = EnturCallSchema.safeParse(data);
 
       if (!res.success) {
-        this.trains = []
-        return
+        this.trains = [];
+        return;
       }
 
       const trainsFiltered = res.data.stopPlace.estimatedCalls.filter(call => {
-        return call.quay.id === "NSR:Quay:11518" && call.forBoarding === true
-      })
+        return call.quay.id === "NSR:Quay:11518" && call.forBoarding === true;
+      });
 
       const trainsFormatted = trainsFiltered.map(train => {
         return {
           time: train.expectedArrivalTime,
           destination: train.destinationDisplay.frontText
-        }
-      })
-      console.group("Entur API data received")
-      console.log(trainsFormatted)
-      console.groupEnd()
-      this.trains = trainsFormatted
+        };
+      });
+      console.group("Entur API data received");
+      console.log(trainsFormatted);
+      console.groupEnd();
+      this.trains = trainsFormatted;
     } catch (error) {
-      console.error(error)
-      this.trains = []
+      console.error(error);
+      this.trains = [];
     }
   }
 }

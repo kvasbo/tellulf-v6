@@ -1,49 +1,49 @@
-import { Weather } from "./Weather.mjs"
-import { Calendar } from "./Calendar.mjs"
-import { getSunrise, getSunset } from "sunrise-sunset-js"
-import { DateTime } from "luxon"
+import { Weather } from "./Weather.mjs";
+import { Calendar } from "./Calendar.mjs";
+import { getSunrise, getSunset } from "sunrise-sunset-js";
+import { DateTime } from "luxon";
 
 export class Days {
   // Cutoff for adding more days to the calendar
-  maxCalendarHeight = 1100
+  maxCalendarHeight = 1100;
 
   constructor() {
-    this.weather = new Weather()
-    this.calendar = new Calendar()
+    this.weather = new Weather();
+    this.calendar = new Calendar();
   }
 
   generateComingDays(maxNumberOfDays = 10) {
-    const days = []
-    let currentHeight = 0
+    const days = [];
+    let currentHeight = 0;
     for (let i = 0; i < maxNumberOfDays; i++) {
-      const dt = DateTime.now().plus({ days: i })
-      const day = this.getDataForDate(dt.toJSDate())
+      const dt = DateTime.now().plus({ days: i });
+      const day = this.getDataForDate(dt.toJSDate());
       // Check if we are overflowing
       if (currentHeight + day.displayHeight > this.maxCalendarHeight) {
-        break
+        break;
       }
-      currentHeight += day.displayHeight
-      days.push(day)
+      currentHeight += day.displayHeight;
+      days.push(day);
     }
-    return days
+    return days;
   }
 
   GenerateToday() {
-    return this.getDataForDate(DateTime.now().toJSDate())
+    return this.getDataForDate(DateTime.now().toJSDate());
   }
 
   getDataForDate(jsDate) {
     // Create a Luxon DateTime object
-    const dt = DateTime.fromJSDate(jsDate).setLocale("nb")
+    const dt = DateTime.fromJSDate(jsDate).setLocale("nb");
 
-    const date = dt.toISODate()?.toString()
+    const date = dt.toISODate()?.toString();
 
-    const sunRiseDate = getSunrise(59.9139, 10.7522, jsDate)
-    const sunSetDate = getSunset(59.9139, 10.7522, jsDate)
+    const sunRiseDate = getSunrise(59.9139, 10.7522, jsDate);
+    const sunSetDate = getSunset(59.9139, 10.7522, jsDate);
 
-    const daily = this.weather.getDailyForecasts()
+    const daily = this.weather.getDailyForecasts();
 
-    const dayHeight = this.calendar.calculateDisplayHeightForDay(jsDate)
+    const dayHeight = this.calendar.calculateDisplayHeightForDay(jsDate);
 
     return {
       isoDate: date,
@@ -60,7 +60,7 @@ export class Days {
         .setLocale("nb")
         .toFormat("HH:mm"),
       displayHeight: dayHeight
-    }
+    };
   }
 
   /**
@@ -70,14 +70,14 @@ export class Days {
   static createNiceDate(jsDate, relative = false) {
     const dt = DateTime.fromJSDate(jsDate)
       .setLocale("nb")
-      .startOf("day")
+      .startOf("day");
     if (relative) {
       if (dt.hasSame(DateTime.local(), "day")) {
-        return "i dag"
+        return "i dag";
       } else if (dt.hasSame(DateTime.local().plus({ days: 1 }), "day")) {
-        return "i morgen"
+        return "i morgen";
       }
     }
-    return dt.toFormat("cccc d.")
+    return dt.toFormat("cccc d.");
   }
 }
