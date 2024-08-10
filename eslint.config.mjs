@@ -4,7 +4,7 @@ import globals from "globals";
 
 export default {
   ...eslint.configs.recommended,
-  files: ["./src/**/*.js", "./src/**/*.mjs"],
+  files: ["./src/*.js", "./src/*.mjs"],
   plugins: {
     jsdoc,
   },
@@ -16,8 +16,7 @@ export default {
       ...globals.node,
       ...globals.es2022,
       ...globals.es6,
-      ...globals.commonjs,
-      jquery: "$",
+      ...globals.commonjs
     },
   },
   rules: {
@@ -25,5 +24,6 @@ export default {
     "no-unused-vars": 'warn',
     "no-undef": 'warn',
     "jsdoc/require-description": 'warn',
+    "semi": "warn",
   },
 };
