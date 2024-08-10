@@ -22,7 +22,7 @@ Settings.defaultZone = "Europe/Oslo"
 
 const app = express()
 
-const mqttClient = new MqttClient()
+const mqttClient = new MqttClient();
 
 // Create smarthouse connector
 const smart = new Smarthouse(mqttClient)

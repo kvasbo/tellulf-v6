@@ -3,7 +3,7 @@
     "sass": "npx sass --embed-source-map  --watch sass:assets/css",
     "dev": "node --watch src/Server.mjs",
     "build": "npx sass sass:assets/css",
-    "lint": "npx eslint ./src/",
+    "lint": "npx eslint ./src/ -c eslint.config.mjs",
     "start": "node src/Server.js",
     "test": "node src/Test.js",
     "docs": "npx jsdoc -d ./docs/ -r ./src/"
