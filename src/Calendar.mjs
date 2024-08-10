@@ -7,9 +7,9 @@ dotenv.config();
 const SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
 
 // Get the Google key from the environment variable
- 
+
 const key64 = process.env.GOOGLE_KEY_B64 ? process.env.GOOGLE_KEY_B64 : "";
- 
+
 const GOOGLE_KEY = JSON.parse(Buffer.from(key64, "base64").toString("utf8"));
 
 /*
@@ -71,7 +71,7 @@ export class Calendar {
     this.refreshEvents();
     this.refreshBirthdays();
     this.refreshDinners();
-     
+
     setInterval(
       () => {
         this.refreshEvents();
@@ -81,7 +81,7 @@ export class Calendar {
       interval * 60 * 1000,
     );
   }
-  
+
   /**
    * Try to calculate the height of a day in pixels based on the number of events and birthdays.
    * @param {Date} jsDate The date to check
@@ -151,7 +151,7 @@ export class Calendar {
   /**
    * Parse the title of an event, if it is a birthday then change it to display
    * the age of the person if the event title ends in a string.
-   * @param {object} event Event object 
+   * @param {object} event Event object
    * @param {string} type The type of object. Either "event" or "birthday"
    * @returns {string} The display title
    */
@@ -174,11 +174,11 @@ export class Calendar {
   }
 
   async refreshEvents() {
-     
+
     if (process.env.CAL_ID_FELLES) {
-       
+
       this.events = await Calendar.getCalendarData(process.env.CAL_ID_FELLES);
-       
+
       console.log(this.events.length + " events fetched.");
     } else {
       this.events = [];
@@ -186,27 +186,27 @@ export class Calendar {
   }
 
   async refreshDinners() {
-     
+
     if (process.env.CAL_ID_MIDDAG) {
-       
+
       this.dinners = await Calendar.getCalendarData(process.env.CAL_ID_MIDDAG);
-       
+
       console.log(this.dinners.length + " dinners fetched.");
     } else {
       this.dinners = [];
-       
+
       console.log("Dinner calendar ID not found :(");
     }
   }
 
   async refreshBirthdays() {
-     
+
     if (process.env.CAL_ID_BURSDAG) {
       this.birthdays = await Calendar.getCalendarData(
-         
+
         process.env.CAL_ID_BURSDAG,
       );
-       
+
       console.log(this.birthdays.length + " birthdays fetched.");
     } else {
       this.birthdays = [];
@@ -247,7 +247,7 @@ export class Calendar {
         out.push(e);
       });
     } else {
-       
+
       console.log(
         JSON.stringify({
           message: `No upcoming events found for ${calendarId}`,

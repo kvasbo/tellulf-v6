@@ -1,12 +1,14 @@
 {
   "scripts": {
-    "sass": "npx sass --embed-source-map  --watch sass:assets/css",
-    "dev": "node --watch src/Server.mjs",
-    "build": "npx sass sass:assets/css",
-    "lint": "npx eslint ./src/ --stats --no-cache --fix",
-    "start": "node src/Server.mjs",
-    "test": "node src/Test.js",
-    "docs": "npx jsdoc -d ./docs/ -r ./src/"
+    "sass": "bunx sass --embed-source-map --watch sass:assets/css",
+    "dev": "bun --watch src/Server.mjs",
+    "build": "bunx sass sass:assets/css",
+    "lint": "bunx eslint ./src/ --stats --no-cache --fix",
+    "start": "bun src/Server.mjs",
+    "test": "bun src/Test.js",
+    "docs": "bunx jsdoc -d ./docs/ -r ./src/",
+    "run-docker-dev": "docker run --env-file .env -p 3000:3000 tellulf",
+    "build-docker-dev": "docker build --pull -t tellulf ."
   },
   "devDependencies": {
     "@eslint/js": "^9.1.1",
