@@ -9,12 +9,14 @@ export default [
           ...globals.browser,
           ...globals.node,
           ...globals.jquery,
+          hourlyWeatherTemplate: "readonly",
+          calendarDay: "readonly",
+          Twig: "readonly",
         }
       },
       rules: {
-          "semi": "warn",
+          "semi": "error",
           "no-unused-vars": "error",
-          "no-console": "warn",
           "no-undef": "error",
       }
   }

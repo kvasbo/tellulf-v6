@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const hourlyWeatherTemplate = Twig.twig({
   data: `
   <div class="weather">
