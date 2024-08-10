@@ -1,29 +1,44 @@
+// Import globals from the ESM module
+import globals from "globals";
 import jsdoc from "eslint-plugin-jsdoc";
 import eslint from '@eslint/js';
-import globals from "globals";
 
-export default {
-  ...eslint.configs.recommended,
-  files: ["./src/**/*.js", "./src/**/*.mjs"],
-  plugins: {
-    jsdoc,
+export default [
+  jsdoc.configs['flat/recommended'],
+  eslint.configs.recommended,
+  {
+      files: ["src/*.js", "src/*.mjs"],
+      languageOptions: {
+        globals: {
+          ...globals.browser,
+          ...globals.node,
+          ...globals.jquery,
+          hourlyWeatherTemplate: "readonly",
+          calendarDay: "readonly",
+          Twig: "readonly",
+        }
+      },
+      rules: {
+          "semi": "error",
+          "no-unused-vars": "error",
+          "no-undef": "error",
+          // JSDoc rules
+          // TODO: Enable these rules
+          "jsdoc/require-description": 'off',
+          "jsdoc/require-param-description": 'off',
+          "jsdoc/require-returns-description": 'off',
+          "jsdoc/require-param-type": 'off',
+          "jsdoc/require-returns": 'off',
+          "jsdoc/require-returns-type": 'off',
+          "jsdoc/require-param": 'off',
+          "jsdoc/check-param-names": 'off',
+          "jsdoc/require-property-description": 'off',
+      }
   },
-  languageOptions: {
-    ecmaVersion: 2022,
-    sourceType: "module",
-    globals: {
-      ...globals.browser,
-      ...globals.node,
-      ...globals.es2022,
-      ...globals.es6,
-      ...globals.commonjs,
-      jquery: "$",
-    },
-  },
-  rules: {
-    "no-console": 'warn',
-    "no-unused-vars": 'warn',
-    "no-undef": 'warn',
-    "jsdoc/require-description": 'warn',
-  },
-};
+  {
+      files: ["src/Server.mjs"],
+      rules: {
+          "jsdoc/require-description": 'error',
+      }
+  }
+];

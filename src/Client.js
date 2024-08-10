@@ -8,13 +8,13 @@ let wsRetryCount = 0;
 const wsId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
 /**
- * @typedef {Object} Train
+ * @typedef {object} Train
  * @property {string} time
  * @property {string} destination
  */
 
 /**
- * @typedef {Object} HomeyData
+ * @typedef {object} HomeyData
  * @property {number} [tempOut]
  * @property {number} [humOut]
  * @property {number} [power]
@@ -36,7 +36,7 @@ const wsId = Math.random().toString(36).substring(2, 15) + Math.random().toStrin
  */
 
 /**
- * @typedef {Object} TimeData
+ * @typedef {object} TimeData
  * @property {string} time
  * @property {string} date
  * @property {string} week

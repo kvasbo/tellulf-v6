@@ -7,7 +7,7 @@ export class Clock {
   /**
    * Get time, date and week.
    * @param {number} time - Optional time in milliseconds.
-   * @returns {Object} - Object with time, date and week.
+   * @returns {object} - Object with time, date and week.
    * @property {string} time - Time in human readable format
    * @property {string} date - Date in human readable format
    * @property {string} week - Week number

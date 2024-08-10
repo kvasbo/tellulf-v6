@@ -1,4 +1,4 @@
-import * as z from "zod"
+import * as z from "zod";
 
 export const InstantSchema = z.object({
   details: z.object({
@@ -20,7 +20,7 @@ export const InstantSchema = z.object({
     wind_speed_percentile_10: z.number().optional(),
     wind_speed_percentile_90: z.number().optional()
   })
-})
+});
 
 export const Next1HourSchema = z.object({
   summary: z.object({
@@ -33,7 +33,7 @@ export const Next1HourSchema = z.object({
     probability_of_precipitation: z.number(),
     probability_of_thunder: z.number()
   })
-})
+});
 
 export const Next6HoursSchema = z.object({
   summary: z.object({
@@ -47,7 +47,7 @@ export const Next6HoursSchema = z.object({
     precipitation_amount_min: z.number(),
     probability_of_precipitation: z.number()
   })
-})
+});
 
 export const Next12HoursSchema = z.object({
   summary: z.object({
@@ -57,7 +57,7 @@ export const Next12HoursSchema = z.object({
   details: z.object({
     probability_of_precipitation: z.number()
   })
-})
+});
 
 export const TimeSeriesSchema = z.object({
   time: z.string().datetime({ offset: true }),
@@ -67,7 +67,7 @@ export const TimeSeriesSchema = z.object({
     next_6_hours: Next6HoursSchema.optional(),
     next_12_hours: Next12HoursSchema.optional()
   })
-})
+});
 
 export const YrCompleteResponseSchema = z.object({
   type: z.string(),
@@ -107,7 +107,7 @@ export const YrCompleteResponseSchema = z.object({
     }),
     timeseries: z.array(TimeSeriesSchema)
   })
-})
+});
 
 // Define types
 const LongTermForecastDayDetailsSchema = z.object({
@@ -126,14 +126,14 @@ const LongTermForecastDayDetailsSchema = z.object({
   probability_of_frost: z.number(),
   probability_of_heavy_precipitation: z.number(),
   probability_of_precipitation: z.number()
-})
+});
 
 const LongTermForecastDay7DaysDetailsSchema = z.object({
   precipitation_amount: z.number(),
   precipitation_amount_percentile_10: z.number(),
   precipitation_amount_percentile_90: z.number(),
   probability_of_frost: z.number()
-})
+});
 
 const LongTermForecastDaySchema = z.object({
   time: z.string(),
@@ -147,10 +147,10 @@ const LongTermForecastDaySchema = z.object({
       })
       .optional()
   })
-})
+});
 
 export const LongTermForecastSchema = z.object({
   properties: z.object({
     timeseries: z.array(LongTermForecastDaySchema)
   })
-})
+});
