@@ -28,12 +28,17 @@ export default [
           "jsdoc/require-param-description": 'off',
           "jsdoc/require-returns-description": 'off',
           "jsdoc/require-param-type": 'off',
-          "jsdoc/require-example": 'off',
           "jsdoc/require-returns": 'off',
           "jsdoc/require-returns-type": 'off',
           "jsdoc/require-param": 'off',
           "jsdoc/check-param-names": 'off',
           "jsdoc/require-property-description": 'off',
+      }
+  },
+  {
+      files: ["src/Server.mjs"],
+      rules: {
+          "jsdoc/require-description": 'error',
       }
   }
 ];

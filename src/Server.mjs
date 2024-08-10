@@ -130,10 +130,10 @@ function pushDataToClients() {
   });
 }
 
-// Run the update loop for the clock once per minute
 /**
- *
+ * Run the update loop for the clock once per minute
  * @param queueNext
+ * @returns {void}
  */
 function updateClocks(queueNext = true) {
   console.log(
