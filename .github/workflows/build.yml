@@ -22,9 +22,9 @@ jobs:
       - name: Set up Bun
         uses: oven-sh/setup-bun@v2
       - name: Build
-        run: bun build
+        run: bun run build
       - name: Lint
-        run: bun lint
+        run: bun run lint
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Extract metadata (tags, labels)
