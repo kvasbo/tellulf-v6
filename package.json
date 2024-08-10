@@ -4,7 +4,7 @@
     "dev": "node --watch src/Server.mjs",
     "build": "npx sass sass:assets/css",
     "lint": "npx eslint ./src/ -c eslint.config.mjs --debug --fix",
-    "start": "node src/Server.js",
+    "start": "node src/Server.mjs",
     "test": "node src/Test.js",
     "docs": "npx jsdoc -d ./docs/ -r ./src/"
   },
