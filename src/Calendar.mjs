@@ -64,8 +64,8 @@ export class Calendar {
 
   /**
    * Constructor for the Calendar class, that refreshes events, birthdays and dinners every 15 minutes.
-   * @constructor
-   * @param {number} [interval=15] - Optional interval in minutes.
+   * @class
+   * @param {number} [interval] - Optional interval in minutes.
    */
   constructor(interval = 15) {
     this.refreshEvents();
@@ -151,7 +151,7 @@ export class Calendar {
   /**
    * Parse the title of an event, if it is a birthday then change it to display
    * the age of the person if the event title ends in a string.
-   * @param {Object} event Event object 
+   * @param {object} event Event object 
    * @param {string} type The type of object. Either "event" or "birthday"
    * @returns {string} The display title
    */

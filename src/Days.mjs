@@ -66,6 +66,8 @@ export class Days {
   /**
    * Nicely format a date
    * To be switched to using Luxon
+   * @param jsDate
+   * @param relative
    */
   static createNiceDate(jsDate, relative = false) {
     const dt = DateTime.fromJSDate(jsDate)

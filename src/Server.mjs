@@ -131,6 +131,10 @@ function pushDataToClients() {
 }
 
 // Run the update loop for the clock once per minute
+/**
+ *
+ * @param queueNext
+ */
 function updateClocks(queueNext = true) {
   console.log(
     `Sending time (${new Date().toLocaleTimeString()}) to ${
