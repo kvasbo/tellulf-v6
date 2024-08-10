@@ -1,10 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
- 
- 
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-declare const Twig: any;
-
 const hourlyWeatherTemplate = Twig.twig({
   data: `
   <div class="weather">
@@ -30,8 +23,8 @@ const hourlyWeatherTemplate = Twig.twig({
       </div>
     </div>
     {% endfor %}
-  </div>`,
-});
+  </div>`
+})
 
 const calendarDay = Twig.twig({
   data: `
@@ -82,5 +75,5 @@ const calendarDay = Twig.twig({
         </div>
       </div>
     {% endif %}
-  {% endfor %}`,
-});
+  {% endfor %}`
+})
