@@ -7,9 +7,9 @@ dotenv.config();
 const SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
 
 // Get the Google key from the environment variable
-// eslint-disable-next-line no-undef
+ 
 const key64 = process.env.GOOGLE_KEY_B64 ? process.env.GOOGLE_KEY_B64 : "";
-// eslint-disable-next-line no-undef
+ 
 const GOOGLE_KEY = JSON.parse(Buffer.from(key64, "base64").toString("utf8"));
 
 /*
@@ -71,7 +71,7 @@ export class Calendar {
     this.refreshEvents();
     this.refreshBirthdays();
     this.refreshDinners();
-    // eslint-disable-next-line no-undef
+     
     setInterval(
       () => {
         this.refreshEvents();
@@ -174,11 +174,11 @@ export class Calendar {
   }
 
   async refreshEvents() {
-    // eslint-disable-next-line no-undef
+     
     if (process.env.CAL_ID_FELLES) {
-      // eslint-disable-next-line no-undef
+       
       this.events = await Calendar.getCalendarData(process.env.CAL_ID_FELLES);
-      // eslint-disable-next-line no-undef
+       
       console.log(this.events.length + " events fetched.");
     } else {
       this.events = [];
@@ -186,27 +186,27 @@ export class Calendar {
   }
 
   async refreshDinners() {
-    // eslint-disable-next-line no-undef
+     
     if (process.env.CAL_ID_MIDDAG) {
-      // eslint-disable-next-line no-undef
+       
       this.dinners = await Calendar.getCalendarData(process.env.CAL_ID_MIDDAG);
-      // eslint-disable-next-line no-undef
+       
       console.log(this.dinners.length + " dinners fetched.");
     } else {
       this.dinners = [];
-      // eslint-disable-next-line no-undef
+       
       console.log("Dinner calendar ID not found :(");
     }
   }
 
   async refreshBirthdays() {
-    // eslint-disable-next-line no-undef
+     
     if (process.env.CAL_ID_BURSDAG) {
       this.birthdays = await Calendar.getCalendarData(
-        // eslint-disable-next-line no-undef
+         
         process.env.CAL_ID_BURSDAG,
       );
-      // eslint-disable-next-line no-undef
+       
       console.log(this.birthdays.length + " birthdays fetched.");
     } else {
       this.birthdays = [];
@@ -247,7 +247,7 @@ export class Calendar {
         out.push(e);
       });
     } else {
-      // eslint-disable-next-line no-undef
+       
       console.log(
         JSON.stringify({
           message: `No upcoming events found for ${calendarId}`,

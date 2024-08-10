@@ -1,36 +1,28 @@
 {
   "scripts": {
     "sass": "npx sass --embed-source-map  --watch sass:assets/css",
-    "watch": "npx tsc --watch",
-    "dev": "node --watch build/Server.js",
-    "build": "npx tsc --p tsconfig.json && npx sass sass:assets/css",
-    "lint": "yarn eslint ./ts/",
-    "start": "node build/Server.js",
-    "test": "node build/Test.js",
-    "docs": "npx jsdoc -d ./docs/ -r ./ts/"
+    "dev": "node --watch src/Server.mjs",
+    "build": "npx sass sass:assets/css",
+    "lint": "npx eslint ./src/ -c eslint.config.mjs --debug --fix",
+    "start": "node src/Server.js",
+    "test": "node src/Test.js",
+    "docs": "npx jsdoc -d ./docs/ -r ./src/"
   },
   "devDependencies": {
     "@eslint/js": "^9.1.1",
-    "@types/express": "*",
-    "@types/jquery": "*",
-    "@types/luxon": "*",
-    "@types/node": "*",
-    "@types/twig": "*",
     "eslint": "^9.1.0",
-    "eslint-plugin-jsdoc": "^48.2.3",
+    "eslint-plugin-jsdoc": "^50",
     "globals": "^15.0.0",
     "jsdoc": "^4.0.2",
     "prettier": "^3",
-    "sass": "^1.62",
-    "typescript": "^5.4.5",
-    "typescript-eslint": "*"
+    "sass": "^1.62"
   },
   "dependencies": {
     "dotenv": "^16.0",
     "express": "^4.18",
     "googleapis": "*",
     "graphql": "^16.7.1",
-    "graphql-request": "^6.0",
+    "graphql-request": "^7",
     "jquery": "^3",
     "luxon": "^3.3",
     "mqtt": "^5.0",
