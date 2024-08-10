@@ -4,7 +4,7 @@ import globals from "globals";
 
 export default {
   ...eslint.configs.recommended,
-  files: ["./src/*.js", "./src/*.mjs"],
+  files: ["./src/**/*.js", "./src/**/*.mjs"],
   plugins: {
     jsdoc,
   },
