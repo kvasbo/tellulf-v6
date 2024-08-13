@@ -1,5 +1,8 @@
 import { DateTime, Settings } from "luxon";
-import { YrCompleteResponseSchema, LongTermForecastSchema } from "./types.met.mjs";
+import {
+  YrCompleteResponseSchema,
+  LongTermForecastSchema,
+} from "./types.met.mjs";
 
 const YR_URL_FORECAST =
   "https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=59.9508&lon=10.6848";
@@ -20,17 +23,20 @@ export class Weather {
   fetchOptions = {
     method: "GET",
     headers: {
-      "User-Agent": "tellulf v6: audun@kvasbo.no"
-    }
+      "User-Agent": "tellulf v6: audun@kvasbo.no",
+    },
   };
 
   constructor() {
     setTimeout(() => {
       this.updateForecasts();
     }, 1000 * 1);
-    setInterval(() => {
-      this.updateForecasts();
-    }, 30 * 60 * 1000); // Every 30 minutes
+    setInterval(
+      () => {
+        this.updateForecasts();
+      },
+      30 * 60 * 1000,
+    ); // Every 30 minutes
   }
 
   async updateForecasts() {
@@ -42,7 +48,7 @@ export class Weather {
   getCurrentWeather() {
     const out = {
       temperature: 999,
-      symbol: "blank"
+      symbol: "blank",
     };
 
     if (this.forecast[0]) {
@@ -92,14 +98,14 @@ export class Weather {
         meanTemp: series.data.next_24_hours.details.air_temperature_mean,
         lightRainProbability:
           Math.round(
-            series.data.next_24_hours.details.probability_of_precipitation / 10
+            series.data.next_24_hours.details.probability_of_precipitation / 10,
           ) * 10,
         heavyRainProbability:
           Math.round(
             series.data.next_24_hours.details
-              .probability_of_heavy_precipitation / 10
+              .probability_of_heavy_precipitation / 10,
           ) * 10,
-        symbol
+        symbol,
       };
     }
 
@@ -113,7 +119,7 @@ export class Weather {
   getHourlyForecasts() {
     const out = [];
 
-    this.forecast.forEach(series => {
+    this.forecast.forEach((series) => {
       if (series.data?.next_1_hours?.details) {
         const dt = DateTime.fromISO(series.time);
 
@@ -121,7 +127,7 @@ export class Weather {
           symbol: series.data.next_1_hours.summary?.symbol_code,
           details: series.data.next_1_hours.details,
           instant: series.data.instant.details,
-          hour: dt.hour.toString()
+          hour: dt.hour.toString(),
         });
       }
     });
@@ -142,7 +148,7 @@ export class Weather {
         console.log("Long term forecast validated, let's go!");
         console.log(
           "Number of long term days",
-          forecastValidated.data.properties.timeseries.length
+          forecastValidated.data.properties.timeseries.length,
         );
         this.longTermForecast = forecastValidated.data.properties.timeseries;
       } else {
@@ -181,7 +187,7 @@ export class Weather {
         console.log("Forecast validated, let's go!");
         console.log(
           "Number of forecasts",
-          forecastValidated.data.properties.timeseries.length
+          forecastValidated.data.properties.timeseries.length,
         );
         this.forecast = forecastValidated.data.properties.timeseries;
         return;

@@ -11,7 +11,7 @@ import { Smarthouse } from "./Smarthouse.mjs";
 import { MqttClient } from "./MQTT.mjs";
 import { PowerPrice } from "./PowerPrice.mjs";
 
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from "url";
 
 // Get the filename and directory name
 const __filename = fileURLToPath(import.meta.url);
@@ -36,26 +36,26 @@ app.set("view engine", "twig");
 app.use("/assets", express.static(path.join(__dirname, "../assets"))); // Static routes
 app.use(
   "/favicon.ico",
-  express.static(path.join(__dirname, "../assets/favicon.ico"))
+  express.static(path.join(__dirname, "../assets/favicon.ico")),
 );
 app.use(
   "/jquery.js",
   express.static(
-    path.join(__dirname, "../node_modules/jquery/dist/jquery.slim.min.js")
-  )
+    path.join(__dirname, "../node_modules/jquery/dist/jquery.slim.min.js"),
+  ),
 );
 app.use(
   "/twig.js",
-  express.static(path.join(__dirname, "../node_modules/twig/twig.min.js"))
+  express.static(path.join(__dirname, "../node_modules/twig/twig.min.js")),
 );
 app.use(
   "/client_templates.js",
-  express.static(path.join(__dirname, "/Client_templates.js"))
+  express.static(path.join(__dirname, "/Client_templates.js")),
 );
 app.use("/client.js", express.static(path.join(__dirname, "/Client.js")));
 app.use(
   "/client.css",
-  express.static(path.join(__dirname, "../assets/css/tellulf.css"))
+  express.static(path.join(__dirname, "../assets/css/tellulf.css")),
 );
 
 const port = 3000;
@@ -70,7 +70,7 @@ app.get("/", (req, res) => {
     current_weather_icon: days.weather.getCurrentWeather().symbol,
     days: days.generateComingDays(),
     today: days.GenerateToday(),
-    hourly_weather: days.weather.getHourlyForecasts()
+    hourly_weather: days.weather.getHourlyForecasts(),
   };
 
   res.render("index.twig", data);
@@ -116,7 +116,7 @@ function pushDataToClients() {
   const currentWeather = weather.getCurrentWeather();
   const longTermForecast = weather.getDailyForecasts();
   const powerPrice = powerPriceGetter.getPowerPrice();
-  clients.forEach(client => {
+  clients.forEach((client) => {
     client.send(
       JSON.stringify({
         homey,
@@ -124,8 +124,8 @@ function pushDataToClients() {
         entur: enturData,
         hourlyForecast,
         currentWeather,
-        longTermForecast
-      })
+        longTermForecast,
+      }),
     );
   });
 }
@@ -139,7 +139,7 @@ function updateClocks(queueNext = true) {
   console.log(
     `Sending time (${new Date().toLocaleTimeString()}) to ${
       clients.length
-    } clients.`
+    } clients.`,
   );
 
   // Recalculate the delay until the start of the next minute
@@ -147,10 +147,10 @@ function updateClocks(queueNext = true) {
   const delay = 60000 - (now.getSeconds() * 1000 + now.getMilliseconds());
 
   const timePayload = JSON.stringify({
-    time: Clock.getTime()
+    time: Clock.getTime(),
   });
 
-  clients.forEach(client => {
+  clients.forEach((client) => {
     client.send(timePayload);
   });
 
@@ -164,7 +164,7 @@ updateClocks();
 pushDataToClients();
 setInterval(pushDataToClients, 10000);
 
-process.on("uncaughtException", function(err) {
+process.on("uncaughtException", function (err) {
   console.log("Caught exception: " + err);
   process.exit(1);
 });

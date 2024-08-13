@@ -9,7 +9,7 @@ export class Smarthouse {
 
   status = {
     home: structuredClone(statusInitValues),
-    cabin: structuredClone(statusInitValues)
+    cabin: structuredClone(statusInitValues),
   };
 
   temp = -9999;
@@ -33,7 +33,7 @@ export class Smarthouse {
       costTodayCabin: this.status.cabin.day.accumulatedCost,
       coolerRoomHumidity: this.coolerRoomHumidity,
       coolerRoomTemp: this.coolerRoomTemp,
-      coolerRoomBattery: this.coolerRoomBattery
+      coolerRoomBattery: this.coolerRoomBattery,
     };
     return output;
   }
@@ -86,12 +86,12 @@ const statusInitValues = {
   day: {
     accumulatedConsumption: 0,
     accumulatedProduction: 0,
-    accumulatedCost: 0
+    accumulatedCost: 0,
   },
   month: {
     accumulatedConsumption: 0,
     accumulatedProduction: 0,
-    accumulatedCost: 0
+    accumulatedCost: 0,
   },
   minPower: 0,
   averagePower: 0,
@@ -109,6 +109,6 @@ const statusInitValues = {
     tax: 0,
     transportCost: 0,
     energyAfterSupport: 0,
-    totalAfterSupport: 0
-  }
+    totalAfterSupport: 0,
+  },
 };

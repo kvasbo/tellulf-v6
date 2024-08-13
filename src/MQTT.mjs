@@ -7,12 +7,8 @@ const MQTT_PASS = process.env.MQTT_PASS;
 const options = {
   username: MQTT_USER,
   password: MQTT_PASS,
-  clientId:
-    "tellulf-" +
-    Math.random()
-      .toString(16)
-      .substring(2, 8),
-  keepalive: 15
+  clientId: "tellulf-" + Math.random().toString(16).substring(2, 8),
+  keepalive: 15,
 };
 
 export class MqttClient {
@@ -25,7 +21,7 @@ export class MqttClient {
         this.client.subscribe("#");
         this.client.publish("tellulf/poll", "Tellulf is online and polling");
       })
-      .on("error", error => {
+      .on("error", (error) => {
         console.log("MQTT Error", error.message);
         this.client.end();
         this.client.reconnect();

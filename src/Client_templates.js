@@ -24,7 +24,7 @@ const hourlyWeatherTemplate = Twig.twig({
       </div>
     </div>
     {% endfor %}
-  </div>`
+  </div>`,
 });
 
 const calendarDay = Twig.twig({
@@ -76,5 +76,5 @@ const calendarDay = Twig.twig({
         </div>
       </div>
     {% endif %}
-  {% endfor %}`
+  {% endfor %}`,
 });

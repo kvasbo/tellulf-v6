@@ -9,8 +9,8 @@ export class PowerPrice {
       EUR_per_kWh: zod.number(),
       EXR: zod.number(),
       time_start: zod.string(),
-      time_end: zod.string()
-    })
+      time_end: zod.string(),
+    }),
   );
 
   powerPrice = -999;
@@ -21,9 +21,12 @@ export class PowerPrice {
 
   constructor() {
     this.getData();
-    setInterval(() => {
-      this.getData();
-    }, 1000 * 60 * 15);
+    setInterval(
+      () => {
+        this.getData();
+      },
+      1000 * 60 * 15,
+    );
   }
 
   async getData() {
@@ -42,12 +45,12 @@ export class PowerPrice {
 
       if (!validated.success) {
         throw new Error(
-          `Failed to validate data", ${validated.error.flatten()}`
+          `Failed to validate data", ${validated.error.flatten()}`,
         );
       }
 
       // Find the element in the array that contains the current time between time_start and time_end
-      const currentPrice = validated.data.find(element => {
+      const currentPrice = validated.data.find((element) => {
         const start = DateTime.fromISO(element.time_start);
         const end = DateTime.fromISO(element.time_end);
         return start <= now && end >= now;

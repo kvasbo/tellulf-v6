@@ -5,7 +5,9 @@
 /** @type {WebSocket | null} */
 let ws = null;
 let wsRetryCount = 0;
-const wsId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+const wsId =
+  Math.random().toString(36).substring(2, 15) +
+  Math.random().toString(36).substring(2, 15);
 
 /**
  * @typedef {object} Train
@@ -70,7 +72,7 @@ async function connectWebSocket() {
       JSON.stringify({
         message: `Hello, from ${wsId}!`,
         type: "identify",
-        id: wsId
+        id: wsId,
       }),
     );
   };

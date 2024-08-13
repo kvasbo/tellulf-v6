@@ -56,10 +56,8 @@ export class Days {
       sunrise: DateTime.fromJSDate(sunRiseDate)
         .setLocale("nb")
         .toFormat("HH:mm"),
-      sunset: DateTime.fromJSDate(sunSetDate)
-        .setLocale("nb")
-        .toFormat("HH:mm"),
-      displayHeight: dayHeight
+      sunset: DateTime.fromJSDate(sunSetDate).setLocale("nb").toFormat("HH:mm"),
+      displayHeight: dayHeight,
     };
   }
 
@@ -70,9 +68,7 @@ export class Days {
    * @param relative
    */
   static createNiceDate(jsDate, relative = false) {
-    const dt = DateTime.fromJSDate(jsDate)
-      .setLocale("nb")
-      .startOf("day");
+    const dt = DateTime.fromJSDate(jsDate).setLocale("nb").startOf("day");
     if (relative) {
       if (dt.hasSame(DateTime.local(), "day")) {
         return "i dag";

@@ -19,7 +19,7 @@ const EnturCallSchema = z.object({
         forBoarding: z.boolean(),
         forAlighting: z.boolean(),
         destinationDisplay: z.object({
-          frontText: z.string()
+          frontText: z.string(),
         }),
         quay: z.object({ id: z.string() }),
         serviceJourney: z.object({
@@ -27,13 +27,13 @@ const EnturCallSchema = z.object({
             line: z.object({
               id: z.string(),
               name: z.string(),
-              transportMode: z.string()
-            })
-          })
-        })
-      })
-    )
-  })
+              transportMode: z.string(),
+            }),
+          }),
+        }),
+      }),
+    ),
+  }),
 });
 
 const ENTUR_QUERY = gql`
@@ -93,8 +93,8 @@ export class Entur {
         document: ENTUR_QUERY,
         requestHeaders: {
           "ET-Client-Name": "kvasbo-tellulf",
-          "Content-Type": "application/json"
-        }
+          "Content-Type": "application/json",
+        },
       });
 
       // Safely parse data
@@ -105,14 +105,16 @@ export class Entur {
         return;
       }
 
-      const trainsFiltered = res.data.stopPlace.estimatedCalls.filter(call => {
-        return call.quay.id === "NSR:Quay:11518" && call.forBoarding === true;
-      });
+      const trainsFiltered = res.data.stopPlace.estimatedCalls.filter(
+        (call) => {
+          return call.quay.id === "NSR:Quay:11518" && call.forBoarding === true;
+        },
+      );
 
-      const trainsFormatted = trainsFiltered.map(train => {
+      const trainsFormatted = trainsFiltered.map((train) => {
         return {
           time: train.expectedArrivalTime,
-          destination: train.destinationDisplay.frontText
+          destination: train.destinationDisplay.frontText,
         };
       });
       console.group("Entur API data received");

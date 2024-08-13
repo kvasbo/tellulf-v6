@@ -5,7 +5,6 @@
     "build": "bunx sass sass:assets/css",
     "lint": "bunx eslint ./src/ --stats --no-cache --fix",
     "start": "bun src/Server.mjs",
-    "test": "bun src/Test.js",
     "docs": "bunx jsdoc -d ./docs/ -r ./src/",
     "run-docker-dev": "docker run --env-file .env -p 3000:3000 tellulf",
     "build-docker-dev": "docker build --pull -t tellulf ."
