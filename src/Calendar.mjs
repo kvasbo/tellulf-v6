@@ -4,45 +4,9 @@ import { DateTime } from "luxon";
 const SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
 
 // Get the Google key from the environment variable
-
 const key64 = process.env.GOOGLE_KEY_B64 ? process.env.GOOGLE_KEY_B64 : "";
 
 const GOOGLE_KEY = JSON.parse(Buffer.from(key64, "base64").toString("utf8"));
-
-/*
-interface GoogleEvent {
-  summary: string;
-  start: {
-    dateTime?: string;
-    date?: string;
-    timeZone: string;
-  };
-  end: {
-    dateTime?: string;
-    date?: string;
-    timeZone: string;
-  };
-}
-export interface RawEvent {
-  title: string;
-  start: Date;
-  end: Date;
-  fullDay: boolean;
-}
-
-type DayType = "firstDay" | "middleDay" | "lastDay" | "singleDay";
-
-interface EventDisplayTime {
-  start: string;
-  end: string;
-  spacer: string;
-}
-export interface Event extends RawEvent {
-  dayType: DayType;
-  displayTitle: string;
-  displayTime: EventDisplayTime;
-}*/
-
 
 /**
  * Calendar class, with methods for fetching events, birthdays and dinners.
@@ -171,9 +135,7 @@ export class Calendar {
   }
 
   async refreshEvents() {
-
     if (process.env.CAL_ID_FELLES) {
-
       this.events = await Calendar.getCalendarData(process.env.CAL_ID_FELLES);
 
       console.log(this.events.length + " events fetched.");
@@ -183,9 +145,7 @@ export class Calendar {
   }
 
   async refreshDinners() {
-
     if (process.env.CAL_ID_MIDDAG) {
-
       this.dinners = await Calendar.getCalendarData(process.env.CAL_ID_MIDDAG);
 
       console.log(this.dinners.length + " dinners fetched.");
@@ -197,10 +157,8 @@ export class Calendar {
   }
 
   async refreshBirthdays() {
-
     if (process.env.CAL_ID_BURSDAG) {
       this.birthdays = await Calendar.getCalendarData(
-
         process.env.CAL_ID_BURSDAG,
       );
 
@@ -244,7 +202,6 @@ export class Calendar {
         out.push(e);
       });
     } else {
-
       console.log(
         JSON.stringify({
           message: `No upcoming events found for ${calendarId}`,
