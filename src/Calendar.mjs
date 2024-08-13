@@ -1,5 +1,6 @@
 import { google } from "googleapis";
 import { DateTime } from "luxon";
+import { createHash } from "crypto";
 
 const SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
 
@@ -107,6 +108,11 @@ export class Calendar {
       dayType: dayType,
       displayTime: displayTime,
     };
+  }
+
+  getEventsHash() {
+    const jsonString = JSON.stringify(this.events);
+    return createHash('sha256').update(jsonString).digest('hex');
   }
 
   /**
