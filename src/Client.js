@@ -2,9 +2,12 @@
  * This file is the client side of the dashboard. It is not run on the server, but served as is to the client.
  */
 
-/** @type {WebSocket | null} */
+
+let eventsHash = "";
+
 let ws = null;
 let wsRetryCount = 0;
+
 const wsId =
   Math.random().toString(36).substring(2, 15) +
   Math.random().toString(36).substring(2, 15);
@@ -111,6 +114,12 @@ async function connectWebSocket() {
       }
       if (data.hourlyForecast) {
         updateHourlyForecast(data.hourlyForecast);
+      }
+      if (data.eventsHash) {
+        if (eventsHash !== "" && eventsHash !== data.eventsHash) {
+          console.log("Events hash updated");
+          window.location.reload();
+        }
       }
     } catch (e) {
       console.log(e);
