@@ -6,6 +6,7 @@ import { Days } from "./Days.mjs";
 import { Clock } from "./Clock.mjs";
 import { Entur } from "./Entur.mjs";
 import { Weather } from "./Weather.mjs";
+import { Calendar } from "./Calendar.mjs";
 import { Settings } from "luxon";
 import { Smarthouse } from "./Smarthouse.mjs";
 import { MqttClient } from "./MQTT.mjs";
@@ -60,7 +61,8 @@ app.use(
 
 const port = 3000;
 
-const days = new Days();
+const calendar = new Calendar();
+const days = new Days(calendar);
 const entur = new Entur();
 const weather = new Weather();
 
@@ -110,12 +112,15 @@ server.listen(port, () => {
  */
 function pushDataToClients() {
   console.log(`Pushing updated data to ${clients.length} connected clients`);
+
   const homey = smart.getData();
   const enturData = entur.Get();
   const hourlyForecast = weather.getHourlyForecasts();
   const currentWeather = weather.getCurrentWeather();
   const longTermForecast = weather.getDailyForecasts();
   const powerPrice = powerPriceGetter.getPowerPrice();
+  const eventsHash = calendar.getEventsHash();
+  console.log("Events hash", eventsHash);
   clients.forEach((client) => {
     client.send(
       JSON.stringify({
@@ -125,6 +130,7 @@ function pushDataToClients() {
         hourlyForecast,
         currentWeather,
         longTermForecast,
+        eventsHash,
       }),
     );
   });

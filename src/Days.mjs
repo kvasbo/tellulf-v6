@@ -1,5 +1,4 @@
 import { Weather } from "./Weather.mjs";
-import { Calendar } from "./Calendar.mjs";
 import { getSunrise, getSunset } from "sunrise-sunset-js";
 import { DateTime } from "luxon";
 
@@ -7,9 +6,9 @@ export class Days {
   // Cutoff for adding more days to the calendar
   maxCalendarHeight = 1100;
 
-  constructor() {
+  constructor(calendar) {
     this.weather = new Weather();
-    this.calendar = new Calendar();
+    this.calendar = calendar;
   }
 
   generateComingDays(maxNumberOfDays = 10) {
