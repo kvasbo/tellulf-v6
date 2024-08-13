@@ -1,8 +1,5 @@
 import { google } from "googleapis";
 import { DateTime } from "luxon";
-import * as dotenv from "dotenv";
-
-dotenv.config();
 
 const SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
 

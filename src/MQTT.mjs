@@ -1,7 +1,4 @@
 import * as mqtt from "mqtt";
-import * as dotenv from "dotenv";
-
-dotenv.config();
 
 const MQTT_HOST = process.env.MQTT_HOST;
 const MQTT_USER = process.env.MQTT_USER;
