@@ -2,7 +2,6 @@
  * This file is the client side of the dashboard. It is not run on the server, but served as is to the client.
  */
 
-
 let eventsHash = "";
 
 let ws = null;
@@ -116,7 +115,9 @@ async function connectWebSocket() {
         updateHourlyForecast(data.hourlyForecast);
       }
       if (data.eventsHash) {
-        if (eventsHash !== "" && eventsHash !== data.eventsHash) {
+        if (eventsHash === "") {
+          eventsHash = data.eventsHash;
+        } else if (eventsHash !== "" && eventsHash !== data.eventsHash) {
           console.log("Events hash updated");
           window.location.reload();
         }

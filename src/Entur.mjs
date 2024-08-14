@@ -122,7 +122,7 @@ export class Entur {
       console.groupEnd();
       this.trains = trainsFormatted;
     } catch (error) {
-      console.error(error);
+      console.error("Error: ", error);
       this.trains = [];
     }
   }

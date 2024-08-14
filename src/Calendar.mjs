@@ -27,21 +27,22 @@ export class Calendar {
   /**
    * Constructor for the Calendar class, that refreshes events, birthdays and dinners every 15 minutes.
    * @class
-   * @param {number} [interval] - Optional interval in minutes.
+   * @param {number} [interval] - Optional interval for main event reload frequency.
+   * @param {number} [interval] - Optional interval for birthday and dinner reload in seconds.
    */
-  constructor(interval = 15) {
+  constructor(interval = 15, auxInterval = 15 * 60) {
     this.refreshEvents();
     this.refreshBirthdays();
     this.refreshDinners();
 
-    setInterval(
-      () => {
-        this.refreshEvents();
-        this.refreshBirthdays();
-        this.refreshDinners();
-      },
-      interval * 60 * 1000,
-    );
+    setInterval(() => {
+      this.refreshEvents();
+    }, interval * 1000);
+
+    setInterval(() => {
+      this.refreshBirthdays();
+      this.refreshDinners();
+    }, auxInterval * 1000);
   }
 
   /**
@@ -59,26 +60,45 @@ export class Calendar {
     return height;
   }
 
-  // Returns a copy of the events array
+  /**
+   * Retrieves events for a given date.
+   * @param {Date} jsDate - The JavaScript Date object representing the date.
+   * @returns {Array} - An array of events for the given date.
+   */
   getEventsForDate(jsDate) {
     return this.events
       .filter((e) => this.checkEventForDate(e, jsDate))
       .map((e) => this.enrichEvent(e, "event", jsDate));
   }
 
+  /**
+   * Retrieves birthdays for a given date.
+   * @param {Date} jsDate - The JavaScript Date object representing the date.
+   * @returns {Array} - An array of birthdays for the given date.
+   */
   getBirthdaysForDate(jsDate) {
     return this.birthdays
       .filter((e) => this.checkEventForDate(e, jsDate))
       .map((e) => this.enrichEvent(e, "birthday", jsDate));
   }
 
+  /**
+   * Retrieves the dinner events for a given date.
+   * @param {Date} jsDate - The JavaScript Date object representing the date.
+   * @returns {Array} An array of dinner events for the given date.
+   */
   getDinnerForDate(jsDate) {
     return this.dinners
       .filter((e) => this.checkEventForDate(e, jsDate))
       .map((e) => this.enrichEvent(e, "dinner", jsDate));
   }
 
-  // Filters events based on whether they exist on the given date
+  /**
+   * Checks if an event falls on a specific date.
+   * @param {object} event - The event object.
+   * @param {Date} jsDate - The JavaScript Date object representing the date to check.
+   * @returns {boolean} - Returns true if the event falls on the specified date, false otherwise.
+   */
   checkEventForDate(event, jsDate) {
     // Find start of day for all of the fuckers
     const dt = DateTime.fromJSDate(jsDate).startOf("day");
@@ -112,7 +132,7 @@ export class Calendar {
 
   getEventsHash() {
     const jsonString = JSON.stringify(this.events);
-    return createHash('sha256').update(jsonString).digest('hex');
+    return createHash("sha256").update(jsonString).digest("hex");
   }
 
   /**
