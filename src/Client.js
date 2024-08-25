@@ -6,6 +6,7 @@ let eventsHash = "";
 
 let ws = null;
 let wsRetryCount = 0;
+let lastHourlyForecast = "";
 
 const wsId =
   Math.random().toString(36).substring(2, 15) +
@@ -112,7 +113,13 @@ async function connectWebSocket() {
         $(".currentPriceHome").html(`${data.powerPrice.toFixed(2)} kr/kWh`);
       }
       if (data.hourlyForecast) {
-        updateHourlyForecast(data.hourlyForecast);
+        // Check if the forecast has changed
+        const newHourlyForecast = JSON.stringify(data.hourlyForecast);
+        if (newHourlyForecast !== lastHourlyForecast) {
+          lastHourlyForecast = newHourlyForecast;
+          console.log("Updating hourly forecast");
+          updateHourlyForecast(data.hourlyForecast);
+        }
       }
       if (data.eventsHash) {
         if (eventsHash === "") {
