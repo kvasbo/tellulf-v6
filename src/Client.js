@@ -110,7 +110,10 @@ async function connectWebSocket() {
         updateEnturInfo(data.entur);
       }
       if (data.powerPrice) {
-        $(".currentPriceHome").html(`${data.powerPrice.toFixed(2)} kr/kWh`);
+        const currentPowerPrice = data.powerPrice;
+        // Round to two decimals
+        const roundedPrice = Math.round(currentPowerPrice * 100) / 100;
+        $(".currentPriceHome").html(`${roundedPrice} kr/kWh`);
       }
       if (data.hourlyForecast) {
         // Check if the forecast has changed
