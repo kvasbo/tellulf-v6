@@ -3,6 +3,7 @@
  */
 
 let eventsHash = "";
+let version = "";
 
 let ws = null;
 let wsRetryCount = 0;
@@ -99,6 +100,16 @@ async function connectWebSocket() {
   ws.onmessage = function (evt) {
     try {
       const data = JSON.parse(evt.data);
+      if (data.version && version == "") {
+        // Setting the version
+        console.log("Setting version to", data.version);
+        version = data.version;
+      } else if (data.version && data.version !== "") {
+        // Checking if the version is the same, reload if not
+        if (version !== data.version) {
+          window.location.reload();
+        }
+      }
       if (data.time) {
         updateTimeInfo(data.time);
       }
