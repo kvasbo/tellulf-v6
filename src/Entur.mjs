@@ -117,10 +117,8 @@ export class Entur {
           destination: train.destinationDisplay.frontText,
         };
       });
-      console.group("Entur API data received");
-      console.log(trainsFormatted);
-      console.groupEnd();
       this.trains = trainsFormatted;
+      console.log(`Entur updated with ${this.trains.length} trains`);
     } catch (error) {
       console.error("Error: ", error);
       this.trains = [];
