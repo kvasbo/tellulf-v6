@@ -62,7 +62,7 @@
   <div class="block weather_nowcast">
     {% for danger in danger_data%}
     <div class='danger'>
-      <strong>{{ danger.response }}</strong> {{ danger.description }} - {{ danger.instruction }}</p>
+      <strong>{{ danger.response }}</strong> {{ danger.description }}<br><span class='danger_smaller'>{{ danger.instruction }}</span></p>
     </div>
     {% endfor %}
     <div class="weather">
