@@ -115,15 +115,6 @@ async function connectWebSocket() {
         const roundedPrice = Math.round(currentPowerPrice * 100) / 100;
         $(".currentPriceHome").html(`${roundedPrice} kr/kWh`);
       }
-      if (data.hourlyForecast) {
-        // Check if the forecast has changed
-        const newHourlyForecast = JSON.stringify(data.hourlyForecast);
-        if (newHourlyForecast !== lastHourlyForecast) {
-          lastHourlyForecast = newHourlyForecast;
-          console.log("Updating hourly forecast");
-          updateHourlyForecast(data.hourlyForecast);
-        }
-      }
       if (data.eventsHash) {
         if (eventsHash === "") {
           eventsHash = data.eventsHash;
@@ -139,26 +130,6 @@ async function connectWebSocket() {
 }
 
 connectWebSocket();
-
-/** @type {any} */
-
-/**
- * Update the hourly forecast.
- * @param {unknown} forecast
- */
-function updateHourlyForecast(forecast) {
-  if (Array.isArray(forecast) && forecast.length > 0) {
-    const template = hourlyWeatherTemplate.render({
-      hourly_weather: forecast,
-    });
-    const current = $(".weather_nowcast").html;
-    if (current !== template) {
-      $(".weather_nowcast").html(template);
-    } else {
-      console.log("Not updating hourly forecast, no changes");
-    }
-  }
-}
 
 /**
  * Update the UX with Homey data.

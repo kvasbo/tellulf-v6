@@ -73,6 +73,7 @@ app.get("/", (req, res) => {
     days: days.generateComingDays(),
     today: days.GenerateToday(),
     hourly_weather: days.weather.getHourlyForecasts(),
+    danger: days.weather.getDangerData(),
   };
 
   res.render("index.twig", data);
@@ -115,7 +116,6 @@ function pushDataToClients() {
 
   const homey = smart.getData();
   const enturData = entur.Get();
-  const hourlyForecast = weather.getHourlyForecasts();
   const currentWeather = weather.getCurrentWeather();
   const longTermForecast = weather.getDailyForecasts();
   const powerPrice = powerPriceGetter.getPowerPrice();
@@ -127,7 +127,6 @@ function pushDataToClients() {
         homey,
         powerPrice,
         entur: enturData,
-        hourlyForecast,
         currentWeather,
         longTermForecast,
         eventsHash,
