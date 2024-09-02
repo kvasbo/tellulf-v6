@@ -8,6 +8,7 @@ const YR_URL_FORECAST =
   "https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=59.9508&lon=10.6848";
 const YR_URL_FORECAST_LONG =
   "https://api.met.no/weatherapi/subseasonal/1.0/complete?lat=59.9508&lon=10.6848";
+const YR_URL_DANGER = "https://api.met.no/weatherapi/metalerts/2.0/current.json?lat=59.9508&lon=10.6848";
 
 // Configure the time zone
 Settings.defaultZone = "Europe/Oslo";
@@ -18,6 +19,7 @@ Settings.defaultZone = "Europe/Oslo";
 export class Weather {
   forecast = [];
   longTermForecast = [];
+  dangerData = [];
 
   // Common options for fetch
   fetchOptions = {
@@ -43,6 +45,7 @@ export class Weather {
     // Fetch forecast
     this.fetchForecastData();
     this.fetchLongTermForecast();
+    this.fetchDanger();
   }
 
   getCurrentWeather() {
@@ -113,6 +116,13 @@ export class Weather {
   }
 
   /**
+   * Return the danger data
+   */
+  getDangerData() {
+    return this.dangerData;
+  }
+
+  /**
    * Get the hourly forecasts
    * @returns HourlyForecast[]
    */
@@ -132,6 +142,25 @@ export class Weather {
       }
     });
     return out;
+  }
+
+  /**
+   * Fetch the dangerous weather report.
+   * @returns
+   */
+  async fetchDanger() {
+    const data = await fetch(YR_URL_DANGER, this.fetchOptions);
+    const danger = await data.json();
+    const dangerData = danger.features.map((feature) => {
+      return {
+        response: feature.properties.awarenessResponse,
+        severity: feature.properties.severity,
+        description: feature.properties.description,
+        headline: feature.properties.headline,
+        instruction: feature.properties.instruction,
+      };
+    });
+    this.dangerData = dangerData;
   }
 
   /**
