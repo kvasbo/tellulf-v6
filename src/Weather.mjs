@@ -160,7 +160,6 @@ export class Weather {
         instruction: feature.properties.instruction,
       };
     });
-    console.log ("Danger data", dangerData);
     this.dangerData = dangerData;
   }
 

@@ -18,6 +18,11 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Import the src/version.json file
+import { version } from "./version.json";
+
+console.log("version", version);
+
 // Configure the time zone
 Settings.defaultZone = "Europe/Oslo";
 
@@ -105,7 +110,7 @@ wss.on("connection", function connection(ws) {
 });
 
 server.listen(port, () => {
-  console.log(`Tellulf listening on port ${port} for both WS and HTTP`);
+  console.log(`Tellulf version ${version} listening on port ${port} for both WS and HTTP`);
 });
 
 /**
@@ -130,6 +135,7 @@ function pushDataToClients() {
         currentWeather,
         longTermForecast,
         eventsHash,
+        version
       }),
     );
   });
