@@ -156,10 +156,11 @@ export class Weather {
         response: feature.properties.awarenessResponse,
         severity: feature.properties.severity,
         description: feature.properties.description,
-        headline: feature.properties.headline,
+        headline: feature.properties.title,
         instruction: feature.properties.instruction,
       };
     });
+    console.log ("Danger data", dangerData);
     this.dangerData = dangerData;
   }
 

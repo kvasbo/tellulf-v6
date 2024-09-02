@@ -60,6 +60,11 @@
   </div>
 
   <div class="block weather_nowcast">
+    {% for danger in danger_data%}
+    <div class='danger'>
+      <strong>{{ danger.response }}</strong> {{ danger.description }} - {{ danger.instruction }}</p>
+    </div>
+    {% endfor %}
     <div class="weather">
     {% for weather in hourly_weather|slice(1, 18) %}
       <div class="forecast_point">

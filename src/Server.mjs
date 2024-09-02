@@ -73,7 +73,7 @@ app.get("/", (req, res) => {
     days: days.generateComingDays(),
     today: days.GenerateToday(),
     hourly_weather: days.weather.getHourlyForecasts(),
-    danger: days.weather.getDangerData(),
+    danger_data: days.weather.getDangerData(),
   };
 
   res.render("index.twig", data);

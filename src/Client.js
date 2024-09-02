@@ -6,7 +6,6 @@ let eventsHash = "";
 
 let ws = null;
 let wsRetryCount = 0;
-let lastHourlyForecast = "";
 
 const wsId =
   Math.random().toString(36).substring(2, 15) +
