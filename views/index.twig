@@ -10,17 +10,20 @@
 </head>
 
 <body>
-  <div class="block time_and_date">
-    <div class="now_time" id="now_time">Kobler til</div>
-    <div class="now_date" id="now_date"></div>
-    <div class="now_week" id="now_week"></div>
-  </div>
 
-  <div class="block current_weather">
+  <clock>
+    <div class="now_time" id="now_time">Kobler til</div>
+    <div class="date_week">
+      <div class="now_date" id="now_date"></div>
+      <div class="now_week" id="now_week"></div>
+    </div>
+  </clock>
+
+  <currentweather>
     <div class="current_weather_block">
       <div class="current_temperature">{{ current_temperature|round }}&deg;</div>
     </div>
-    <div class="current_weather_block aux-weather-info">
+    <div class="aux-weather-info">
       <div class="day_info_sun">
         <img src="assets/sunrise.png" width="22px" />&nbsp;{{ today.sunrise }}&nbsp;&nbsp; <img src="assets/sunset.png"
           width="22px" />&nbsp;{{ today.sunset }}
@@ -28,9 +31,9 @@
       <div class="current_pressure"></div>
       <div class="current_humidity"></div>
     </div>
-  </div>
+  </currentweather>
 
-  <div class="block weather_nowcast">
+  <nowcast>
     {% for danger in danger_data%}
     <div class='danger'>
       <strong>{{ danger.response }}</strong> {{ danger.description }}</p>
@@ -60,9 +63,9 @@
       </div>
       {% endfor %}
     </div>
-  </div>
+  </nowcast>
 
-    <div class="block calendar" id="calendar">
+  <calendar>
     {% for day in days %}
 
     {% if day.birthdays is not empty or day.events is not empty or day.daily_forecast is not empty or day.dinner is not empty %}
@@ -128,9 +131,9 @@
     {% endif %}
 
     {% endfor %}
-  </div>
+  </calendar>
 
-  <div class="bottom-boxes">
+  <footer>
     <div class="block power-home">
       <div>
         <strong>Hjemme</strong><br />
@@ -150,6 +153,7 @@
         <!--Pris: <span class="currentPriceCabin"></span>-->
       </div>
     </div>
+
     <div class="block bane"></div>
 
     <div class="block cooler">
@@ -157,7 +161,7 @@
       <div>Temp: <span class='coolerTemp'>_</span>&deg;</div>
       <div>Fukt: <span class='coolerHumidity'>_</span>%</div>
     </div>
-  </div>
+  </footer>
 
 </body>
 
