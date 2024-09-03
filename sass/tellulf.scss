@@ -37,7 +37,8 @@ body {
     "bottom-boxes bottom-boxes calendar";
 }
 
-clock, currentweather {
+clock,
+currentweather {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -71,7 +72,6 @@ clock {
       margin-top: 0.5em;
     }
   }
-
 }
 
 currentweather {
@@ -128,7 +128,7 @@ calendar {
             .headerWeatherIconPrep {
               height: $text_subheader;
               width: $text_subheader;
-               margin: 0 0.25em;
+              margin: 0 0.25em;
             }
           }
         }
@@ -180,7 +180,8 @@ nowcast {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  h3, p {
+  h3,
+  p {
     margin-top: 0;
   }
 }
@@ -191,7 +192,10 @@ footer {
   flex-direction: row;
 }
 
-#power-cabin, #power-home, #bane, #cooler {
+#power-cabin,
+#power-home,
+#bane,
+#cooler {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
