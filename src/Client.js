@@ -5,47 +5,14 @@
 let eventsHash = "";
 let version = "";
 
-let ws = null;
+let ws = new WebSocket(
+  "ws://" + window.location.hostname + ":" + window.location.port,
+);
 let wsRetryCount = 0;
 
 const wsId =
   Math.random().toString(36).substring(2, 15) +
   Math.random().toString(36).substring(2, 15);
-
-/**
- * @typedef {object} Train
- * @property {string} time
- * @property {string} destination
- */
-
-/**
- * @typedef {object} HomeyData
- * @property {number} [tempOut]
- * @property {number} [humOut]
- * @property {number} [power]
- * @property {number} [pressure]
- * @property {number} [powerUsedToday]
- * @property {number} [costToday]
- * @property {number} [powerCostNowHome]
- * @property {number} [powerCostNowCabin]
- * @property {number} [tempIn]
- * @property {number} [humIn]
- * @property {number} [co2in]
- * @property {string} [niceTime]
- * @property {number} [powerUsedTodayCabin]
- * @property {number} [powerCabin]
- * @property {number} [costTodayCabin]
- * @property {number} coolerRoomTemp
- * @property {number} coolerRoomHumidity
- * @property {number} coolerRoomBattery
- */
-
-/**
- * @typedef {object} TimeData
- * @property {string} time
- * @property {string} date
- * @property {string} week
- */
 
 let lastUpdatedPower = new Date();
 
@@ -66,10 +33,6 @@ async function connectWebSocket() {
   }
   wsRetryCount++;
 
-  ws = new WebSocket(
-    "ws://" + window.location.hostname + ":" + window.location.port
-  );
-
   ws.onopen = function () {
     // Web Socket is connected, identify ourselves
     ws.send(
@@ -77,7 +40,7 @@ async function connectWebSocket() {
         message: `Hello, from ${wsId}!`,
         type: "identify",
         id: wsId,
-      })
+      }),
     );
   };
 
@@ -124,7 +87,8 @@ async function connectWebSocket() {
         const currentPowerPrice = data.powerPrice;
         // Round to two decimals
         const roundedPrice = Math.round(currentPowerPrice * 100) / 100;
-        document.getElementById("currentPriceHome").innerHTML = `${roundedPrice} kr/kWh`;
+        document.getElementById("currentPriceHome").innerHTML =
+          `${roundedPrice} kr/kWh`;
       }
       if (data.eventsHash) {
         if (eventsHash === "") {
@@ -177,10 +141,14 @@ function updateHomeyInfo(homey) {
     document.getElementById("current_power").innerHTML = `${p} kW`;
   }
   if (homey.powerUsedToday) {
-    document.getElementById("powerUsageTodayHome").innerHTML = Math.round(Number(homey.powerUsedToday)).toString();
+    document.getElementById("powerUsageTodayHome").innerHTML = Math.round(
+      Number(homey.powerUsedToday),
+    ).toString();
   }
   if (homey.powerUsedTodayCabin) {
-    document.getElementById("powerUsageTodayCabin").innerHTML = Math.round(Number(homey.powerUsedTodayCabin)).toString();
+    document.getElementById("powerUsageTodayCabin").innerHTML = Math.round(
+      Number(homey.powerUsedTodayCabin),
+    ).toString();
   }
   if (homey.powerCabin !== undefined) {
     const p = Math.round(Number(homey.powerCabin) / 100) / 10;
@@ -243,7 +211,7 @@ function updateEnturInfo(entur) {
   for (let i = 0; i < Math.min(entur.length, 4); i++) {
     enturHtml += `<span class="entur_item">${entur[i].time.substring(
       11,
-      16
+      16,
     )}</span>`;
   }
 
