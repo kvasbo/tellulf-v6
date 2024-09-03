@@ -238,7 +238,7 @@ function updateTimeInfo(timeData) {
  * @param {Train[]} entur
  */
 function updateEnturInfo(entur) {
-  let enturHtml = "<strong>Neste baner:</strong>";
+  let enturHtml = "<strong>Neste baner</strong>";
 
   for (let i = 0; i < Math.min(entur.length, 4); i++) {
     enturHtml += `<span class="entur_item">${entur[i].time.substring(
