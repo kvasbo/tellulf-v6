@@ -5,7 +5,7 @@
 let eventsHash = "";
 let version = "";
 
-let ws = new WebSocket(
+const ws = new WebSocket(
   "ws://" + window.location.hostname + ":" + window.location.port,
 );
 let wsRetryCount = 0;
