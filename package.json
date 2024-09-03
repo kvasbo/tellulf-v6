@@ -23,7 +23,6 @@
     "googleapis": "^143.0.0",
     "graphql": "^16.9.0",
     "graphql-request": "^7.1.0",
-    "jquery": "^3.7.1",
     "luxon": "^3.5.0",
     "mqtt": "^5.10.1",
     "sunrise-sunset-js": "^2.2.1",

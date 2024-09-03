@@ -45,12 +45,6 @@ app.use(
   express.static(path.join(__dirname, "../assets/favicon.ico")),
 );
 app.use(
-  "/jquery.js",
-  express.static(
-    path.join(__dirname, "../node_modules/jquery/dist/jquery.slim.min.js"),
-  ),
-);
-app.use(
   "/twig.js",
   express.static(path.join(__dirname, "../node_modules/twig/twig.min.js")),
 );

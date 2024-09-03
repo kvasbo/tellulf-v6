@@ -12,7 +12,6 @@ export default [
         globals: {
           ...globals.browser,
           ...globals.node,
-          ...globals.jquery,
           hourlyWeatherTemplate: "readonly",
           calendarDay: "readonly",
           Twig: "readonly",

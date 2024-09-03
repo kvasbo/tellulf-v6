@@ -50,8 +50,9 @@ const wsId =
 let lastUpdatedPower = new Date();
 
 // Reload the page every fifteen seconds
-$(function () {
+window.addEventListener("DOMContentLoaded", function () {
   setReloadClient(1);
+  console.log("Client loaded, will reload at the start of the next hour");
 });
 
 /**
@@ -66,7 +67,7 @@ async function connectWebSocket() {
   wsRetryCount++;
 
   ws = new WebSocket(
-    "ws://" + window.location.hostname + ":" + window.location.port,
+    "ws://" + window.location.hostname + ":" + window.location.port
   );
 
   ws.onopen = function () {
@@ -76,13 +77,13 @@ async function connectWebSocket() {
         message: `Hello, from ${wsId}!`,
         type: "identify",
         id: wsId,
-      }),
+      })
     );
   };
 
   ws.onclose = function () {
-    $("#now_time").html(`Frakoblet`);
-    $("#now_date").html(`(╯°□°)╯︵ ┻━┻`);
+    document.getElementById("now_time").innerHTML = `Frakoblet`;
+    document.getElementById("now_date").innerHTML = `(╯°□°)╯︵ ┻━┻`;
     // Connection has been closed, attempt to reconnect
     setTimeout(function () {
       connectWebSocket();
@@ -123,7 +124,7 @@ async function connectWebSocket() {
         const currentPowerPrice = data.powerPrice;
         // Round to two decimals
         const roundedPrice = Math.round(currentPowerPrice * 100) / 100;
-        $("#currentPriceHome").html(`${roundedPrice} kr/kWh`);
+        document.getElementById("currentPriceHome").innerHTML = `${roundedPrice} kr/kWh`;
       }
       if (data.eventsHash) {
         if (eventsHash === "") {
@@ -150,52 +151,48 @@ function updateHomeyInfo(homey) {
   if (homey.tempOut) {
     const t = Number(homey.tempOut).toFixed(0);
     if (t === "-0") {
-      $("#current_temperature").html(`0&deg;`);
+      document.getElementById("current_temperature").innerHTML = `0&deg;`;
     } else {
-      $("#current_temperature").html(`${t}&deg;`);
+      document.getElementById("current_temperature").innerHTML = `${t}&deg;`;
     }
   } else {
-    $("#current_temperature").html(`?`);
+    document.getElementById("current_temperature").innerHTML = `?`;
   }
 
   // Show pressure
   if (homey.pressure) {
     const p = Number(homey.pressure).toFixed(0);
-    $("#current_pressure").html(`${p} hPa`);
+    document.getElementById("current_pressure").innerHTML = `${p} hPa`;
   }
 
   // Show humidity
   if (homey.humOut) {
     const p = Number(homey.humOut).toFixed(0);
-    $("#current_humidity").html(`${p} % hum`);
+    document.getElementById("current_humidity").innerHTML = `${p} % hum`;
   }
 
   if (homey.power) {
     setLastUpdatedPowerTime();
     const p = Math.round(Number(homey.power) / 100) / 10;
-    $("#current_power").html(`${p} kW`);
+    document.getElementById("current_power").innerHTML = `${p} kW`;
   }
   if (homey.powerUsedToday) {
-    $("#powerUsageTodayHome").html(
-      Math.round(Number(homey.powerUsedToday)).toString(),
-    );
+    document.getElementById("powerUsageTodayHome").innerHTML = Math.round(Number(homey.powerUsedToday)).toString();
   }
   if (homey.powerUsedTodayCabin) {
-    $("#powerUsageTodayCabin").html(
-      Math.round(Number(homey.powerUsedTodayCabin)).toString(),
-    );
+    document.getElementById("powerUsageTodayCabin").innerHTML = Math.round(Number(homey.powerUsedTodayCabin)).toString();
   }
   if (homey.powerCabin !== undefined) {
     const p = Math.round(Number(homey.powerCabin) / 100) / 10;
-    $("#currentPowerCabin").html(`${p} kW`);
+    document.getElementById("currentPowerCabin").innerHTML = `${p} kW`;
   }
   if (homey.coolerRoomTemp !== null) {
     const coolerTemp = homey.coolerRoomTemp;
-    $("#coolerTemp").html(coolerTemp.toString());
+    document.getElementById("coolerTemp").innerHTML = coolerTemp.toString();
   }
   if (homey.coolerRoomHumidity !== null) {
     const coolerHum = homey.coolerRoomHumidity;
-    $("#coolerHumidity").html(coolerHum.toString());
+    document.getElementById("coolerHumidity").innerHTML = coolerHum.toString();
   }
 
   // Remove power data if not updated lately
@@ -218,10 +215,10 @@ function checkLastUpdatedPowerTime() {
   const diffMinutes = Math.round(diff / 1000 / 60);
 
   if (diffMinutes > 1) {
-    $("#current_power").html(`?`);
-    $("#current_price").html(`?`);
-    $("#powerUsageTodayHome").html(`?`);
-    $("#powerCostTodayHome").html(`?`);
+    document.getElementById("current_power").innerHTML = `?`;
+    document.getElementById("current_price").innerHTML = `?`;
+    document.getElementById("powerUsageTodayHome").innerHTML = `?`;
+    document.getElementById("powerCostTodayHome").innerHTML = `?`;
   }
 }
 
@@ -231,9 +228,9 @@ function checkLastUpdatedPowerTime() {
  */
 function updateTimeInfo(timeData) {
   // Update all the interfaces at once
-  $("#now_time").html(timeData.time);
-  $("#now_date").html(timeData.date);
-  $("#now_week").html(`Uke ${timeData.week}`);
+  document.getElementById("now_time").innerHTML = timeData.time;
+  document.getElementById("now_date").innerHTML = timeData.date;
+  document.getElementById("now_week").innerHTML = `Uke ${timeData.week}`;
 }
 
 /**
@@ -246,11 +243,11 @@ function updateEnturInfo(entur) {
   for (let i = 0; i < Math.min(entur.length, 4); i++) {
     enturHtml += `<span class="entur_item">${entur[i].time.substring(
       11,
-      16,
+      16
     )}</span>`;
   }
 
-  $("#bane").html(enturHtml);
+  document.getElementById("bane").innerHTML = enturHtml;
 }
 
 /**
