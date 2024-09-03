@@ -2,6 +2,8 @@ import express from "express";
 import path from "path";
 import WebSocket from "ws";
 import http from "http";
+import Twig from "twig";
+import { readFileSync } from "fs";
 import { Days } from "./Days.mjs";
 import { Clock } from "./Clock.mjs";
 import { Entur } from "./Entur.mjs";
@@ -23,6 +25,10 @@ import { version } from "./version.json";
 
 console.log("version", version);
 
+// Load the twig template
+const templateData = readFileSync("./views/index.twig", "utf8");
+const template = Twig.twig({ id: "index", data: templateData });
+
 // Configure the time zone
 Settings.defaultZone = "Europe/Oslo";
 
@@ -37,8 +43,6 @@ smart.startMqtt();
 const powerPriceGetter = new PowerPrice();
 
 // Express settings
-app.set("views", path.join(__dirname, "../views"));
-app.set("view engine", "twig");
 app.use("/assets", express.static(path.join(__dirname, "../assets"))); // Static routes
 app.use(
   "/favicon.ico",
@@ -67,7 +71,8 @@ app.get("/", (req, res) => {
     danger_data: days.weather.getDangerData(),
   };
 
-  res.render("index.twig", data);
+  const rendered = template.render(data);
+  res.send(rendered);
   console.log("Rendered index");
 });
 
@@ -96,7 +101,9 @@ wss.on("connection", function connection(ws) {
 });
 
 server.listen(port, () => {
-  console.log(`Tellulf version ${version} listening on port ${port} for both WS and HTTP`);
+  console.log(
+    `Tellulf version ${version} listening on port ${port} for both WS and HTTP`,
+  );
 });
 
 /**
@@ -121,7 +128,7 @@ function pushDataToClients() {
         currentWeather,
         longTermForecast,
         eventsHash,
-        version
+        version,
       }),
     );
   });
