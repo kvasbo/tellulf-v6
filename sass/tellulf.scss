@@ -101,7 +101,7 @@ calendar {
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
-  .calendar_day {
+  day {
     .dateHeader {
       margin-top: 0.5rem;
       margin-bottom: 0.25rem;
@@ -207,7 +207,7 @@ footer {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  .forecast_point {
+  forecast {
     display: flex;
     flex: 1;
     flex-direction: column;

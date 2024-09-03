@@ -44,14 +44,6 @@ app.use(
   "/favicon.ico",
   express.static(path.join(__dirname, "../assets/favicon.ico")),
 );
-app.use(
-  "/twig.js",
-  express.static(path.join(__dirname, "../node_modules/twig/twig.min.js")),
-);
-app.use(
-  "/client_templates.js",
-  express.static(path.join(__dirname, "/Client_templates.js")),
-);
 app.use("/client.js", express.static(path.join(__dirname, "/Client.js")));
 app.use(
   "/client.css",

@@ -2,7 +2,6 @@
 <html lang="nb-NO">
     <head>
         <title>Tellulf</title>
-        <script src="twig.js"></script>
         <script src="client.js"></script>
         <link rel="stylesheet" href="client.css" />
     </head>
@@ -31,7 +30,7 @@
             {% endfor %}
             <div class="weather">
                 {% for weather in hourly_weather|slice(1, 18) %}
-                <div class="forecast_point">
+                <forecast>
                     <div class="time">{{ weather.hour }}</div>
                     <div class="weather_symbol">
                         <img class="weather_icon" src="assets/weathericon/png/{{ weather.symbol }}.png" />
@@ -47,7 +46,7 @@
                             &nbsp; {% endif %}
                         </div>
                     </div>
-                </div>
+                </forecast>
                 {% endfor %}
             </div>
         </nowcast>
@@ -55,7 +54,7 @@
         <calendar>
             {% for day in days %} {% if day.birthdays is not empty or day.events is not empty or day.daily_forecast is not empty or day.dinner is not empty %}
 
-            <div class="calendar_day">
+            <day>
                 <div class="dateHeader">
                     {{ day.weekday }}
                     <div class="headerWeather">
@@ -109,7 +108,7 @@
                     </div>
                     {% endif %} {% endfor %}
                 </div>
-            </div>
+            </day>
 
             {% endif %} {% endfor %}
         </calendar>
