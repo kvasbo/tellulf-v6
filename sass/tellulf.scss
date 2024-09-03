@@ -48,7 +48,7 @@ clock, currentweather {
 
 clock {
   grid-area: time_and_date;
-  .now_time {
+  #now_time {
     font-size: $text_huge;
     font-weight: $bold_weight;
     flex: 3;
@@ -58,16 +58,16 @@ clock {
     height: 100%;
     width: 100%;
   }
-  .date_week {
+  #date_week {
     flex: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    .now_date {
+    #now_date {
       font-size: $text_large;
     }
-    .now_week {
+    #now_week {
       margin-top: 0.5em;
     }
   }
@@ -76,7 +76,7 @@ clock {
 
 currentweather {
   grid-area: current_weather;
-  .current_temperature {
+  #current_temperature {
     display: flex;
     flex: 3;
     align-items: center;
@@ -84,7 +84,7 @@ currentweather {
     font-size: $text_huge;
     font-weight: $bold_weight;
   }
-  .aux-weather-info {
+  #aux-weather-info {
     display: flex;
     flex-direction: column;
     flex: 2;
@@ -125,19 +125,10 @@ calendar {
             display: flex;
             flex-direction: row;
             color: grey;
-            .rainProb {
-              // font-size: 0.5em;
-            }
             .headerWeatherIconPrep {
               height: $text_subheader;
               width: $text_subheader;
                margin: 0 0.25em;
-              .light {
-
-              }
-              .heavy {
-
-              }
             }
           }
         }
@@ -200,7 +191,7 @@ footer {
   flex-direction: row;
 }
 
-.power-cabin, .power-home, .bane, .cooler {
+#power-cabin, #power-home, #bane, #cooler {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

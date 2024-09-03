@@ -123,7 +123,7 @@ async function connectWebSocket() {
         const currentPowerPrice = data.powerPrice;
         // Round to two decimals
         const roundedPrice = Math.round(currentPowerPrice * 100) / 100;
-        $(".currentPriceHome").html(`${roundedPrice} kr/kWh`);
+        $("#currentPriceHome").html(`${roundedPrice} kr/kWh`);
       }
       if (data.eventsHash) {
         if (eventsHash === "") {
@@ -150,68 +150,52 @@ function updateHomeyInfo(homey) {
   if (homey.tempOut) {
     const t = Number(homey.tempOut).toFixed(0);
     if (t === "-0") {
-      $(".current_temperature").html(`0&deg;`);
+      $("#current_temperature").html(`0&deg;`);
     } else {
-      $(".current_temperature").html(`${t}&deg;`);
+      $("#current_temperature").html(`${t}&deg;`);
     }
   } else {
-    $(".current_temperature").html(`?`);
+    $("#current_temperature").html(`?`);
   }
 
   // Show pressure
   if (homey.pressure) {
     const p = Number(homey.pressure).toFixed(0);
-    $(".current_pressure").html(`${p} hPa`);
+    $("#current_pressure").html(`${p} hPa`);
   }
 
   // Show humidity
   if (homey.humOut) {
     const p = Number(homey.humOut).toFixed(0);
-    $(".current_humidity").html(`${p} % hum`);
+    $("#current_humidity").html(`${p} % hum`);
   }
 
   if (homey.power) {
     setLastUpdatedPowerTime();
     const p = Math.round(Number(homey.power) / 100) / 10;
-    $(".current_power").html(`${p} kW`);
+    $("#current_power").html(`${p} kW`);
   }
   if (homey.powerUsedToday) {
-    $(".powerUsageTodayHome").html(
+    $("#powerUsageTodayHome").html(
       Math.round(Number(homey.powerUsedToday)).toString(),
     );
   }
-  if (homey.powerCostNowHome) {
-    const currentPowerPrice = homey.powerCostNowHome;
-    $(".currentPriceHome").html(`${currentPowerPrice.toFixed(2)} kr/kWh`);
-  }
-  if (homey.powerCostNowCabin) {
-    const currentPowePriceCabin = homey.powerCostNowCabin;
-    $(".currentPriceCabin").html(`${currentPowePriceCabin.toFixed(2)} kr/kWh`);
-  }
-  if (homey.costToday) {
-    const costToday = +homey.costToday;
-    $(".powerCostTodayHome").html(`${costToday.toFixed(0)}`);
-  }
   if (homey.powerUsedTodayCabin) {
-    $(".powerUsageTodayCabin").html(
+    $("#powerUsageTodayCabin").html(
       Math.round(Number(homey.powerUsedTodayCabin)).toString(),
     );
   }
   if (homey.powerCabin !== undefined) {
     const p = Math.round(Number(homey.powerCabin) / 100) / 10;
-    $(".currentPowerCabin").html(`${p} kW`);
-  }
-  if (homey.costTodayCabin !== undefined) {
-    const costToday = homey.costTodayCabin;
-    $(".powerCostTodayCabin").html(`${costToday.toFixed(0)}`);
+    $("#currentPowerCabin").html(`${p} kW`);
   }
   if (homey.coolerRoomTemp !== null) {
     const coolerTemp = homey.coolerRoomTemp;
-    $(".coolerTemp").html(coolerTemp.toString());
+    $("#coolerTemp").html(coolerTemp.toString());
   }
   if (homey.coolerRoomHumidity !== null) {
     const coolerHum = homey.coolerRoomHumidity;
-    $(".coolerHumidity").html(coolerHum.toString());
+    $("#coolerHumidity").html(coolerHum.toString());
   }
 
   // Remove power data if not updated lately
@@ -234,10 +218,10 @@ function checkLastUpdatedPowerTime() {
   const diffMinutes = Math.round(diff / 1000 / 60);
 
   if (diffMinutes > 1) {
-    $(".current_power").html(`?`);
-    $(".current_price").html(`?`);
-    $(".powerUsageTodayHome").html(`?`);
-    $(".powerCostTodayHome").html(`?`);
+    $("#current_power").html(`?`);
+    $("#current_price").html(`?`);
+    $("#powerUsageTodayHome").html(`?`);
+    $("#powerCostTodayHome").html(`?`);
   }
 }
 
@@ -266,7 +250,7 @@ function updateEnturInfo(entur) {
     )}</span>`;
   }
 
-  $(".bane").html(enturHtml);
+  $("#bane").html(enturHtml);
 }
 
 /**

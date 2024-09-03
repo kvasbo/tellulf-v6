@@ -10,19 +10,19 @@
 
     <body>
         <clock>
-            <div class="now_time" id="now_time">Kobler til</div>
-            <div class="date_week">
-                <div class="now_date" id="now_date"></div>
-                <div class="now_week" id="now_week"></div>
+            <div id="now_time">Kobler til</div>
+            <div id="date_week">
+                <div id="now_date"></div>
+                <div id="now_week"></div>
             </div>
         </clock>
 
         <currentweather>
-            <div class="current_temperature">{{ current_temperature|round }}&deg;</div>
-            <div class="aux-weather-info">
-                <div class="day_info_sun"><img src="assets/sunrise.png" width="22px" />&nbsp;{{ today.sunrise }}&nbsp;&nbsp; <img src="assets/sunset.png" width="22px" />&nbsp;{{ today.sunset }}</div>
-                <div class="current_pressure"></div>
-                <div class="current_humidity"></div>
+            <div id="current_temperature">{{ current_temperature|round }}&deg;</div>
+            <div id="aux-weather-info">
+                <div id="day_info_sun"><img src="assets/sunrise.png" width="22px" />&nbsp;{{ today.sunrise }}&nbsp;&nbsp; <img src="assets/sunset.png" width="22px" />&nbsp;{{ today.sunset }}</div>
+                <div id="current_pressure"></div>
+                <div id="current_humidity"></div>
             </div>
         </currentweather>
 
@@ -116,32 +116,29 @@
         </calendar>
 
         <footer>
-            <div class="power-home">
+            <div id="power-home">
                 <div>
                     <strong>Hjemme</strong><br />
-                    I dag: <span class="powerUsageTodayHome">_</span> kWh<br />
-                    <!--Kost: <span class="powerCostTodayHome">_</span> kr<br />-->
-                    Nå: <span class="current_power"></span><br />
-                    Pris: <span class="currentPriceHome"></span>
+                    I dag: <span id="powerUsageTodayHome">_</span> kWh<br />
+                    Nå: <span id="current_power"></span><br />
+                    Pris: <span id="currentPriceHome"></span>
                 </div>
             </div>
 
-            <div class="power-cabin">
+            <div id="power-cabin">
                 <div>
                     <strong>Hytta</strong><br />
-                    I dag: <span class="powerUsageTodayCabin">_</span> kWh<br />
-                    <!-- Kost: <span class="powerCostTodayCabin">_</span> kr<br />-->
-                    Nå: <span class="currentPowerCabin"></span><br />
-                    <!--Pris: <span class="currentPriceCabin"></span>-->
+                    I dag: <span id="powerUsageTodayCabin">_</span> kWh<br />
+                    Nå: <span id="currentPowerCabin"></span><br />
                 </div>
             </div>
 
-            <div class="bane"></div>
+            <div id="bane"></div>
 
-            <div class="cooler">
+            <div id="cooler">
                 <div><strong>Kjølerom</strong><br /></div>
-                <div>Temp: <span class="coolerTemp">_</span>&deg;</div>
-                <div>Fukt: <span class="coolerHumidity">_</span>%</div>
+                <div>Temp: <span id="coolerTemp">_</span>&deg;</div>
+                <div>Fukt: <span id="coolerHumidity">_</span>%</div>
             </div>
         </footer>
     </body>
