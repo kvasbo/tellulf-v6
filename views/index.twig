@@ -1,165 +1,148 @@
 <!DOCTYPE html>
 <html lang="nb-NO">
+    <head>
+        <title>Tellulf</title>
+        <script src="jquery.js"></script>
+        <script src="twig.js"></script>
+        <script src="client.js"></script>
+        <link rel="stylesheet" href="client.css" />
+    </head>
 
-<head>
-  <title>Tellulf</title>
-  <script src="jquery.js"></script>
-  <script src="twig.js"></script>
-  <script src="client.js"></script>
-  <link rel="stylesheet" href="client.css" />
-</head>
-
-<body>
-
-  <clock>
-    <div class="now_time" id="now_time">Kobler til</div>
-    <div class="date_week">
-      <div class="now_date" id="now_date"></div>
-      <div class="now_week" id="now_week"></div>
-    </div>
-  </clock>
-
-  <currentweather>
-    <div class="current_temperature">{{ current_temperature|round }}&deg;</div>
-    <div class="aux-weather-info">
-      <div class="day_info_sun">
-        <img src="assets/sunrise.png" width="22px" />&nbsp;{{ today.sunrise }}&nbsp;&nbsp; <img src="assets/sunset.png"
-          width="22px" />&nbsp;{{ today.sunset }}
-      </div>
-      <div class="current_pressure"></div>
-      <div class="current_humidity"></div>
-    </div>
-  </currentweather>
-
-  <nowcast>
-    {% for danger in danger_data%}
-    <div class='danger'>
-      <strong>{{ danger.response }}</strong> {{ danger.description }}</p>
-    </div>
-    {% endfor %}
-    <div class="weather">
-    {% for weather in hourly_weather|slice(1, 18) %}
-      <div class="forecast_point">
-        <div class="time">{{ weather.hour }}</div>
-        <div class="weather_symbol">
-          <img class="weather_icon" src="assets/weathericon/png/{{ weather.symbol }}.png" />
-        </div>
-        <div class="temperature">
-          {{ weather.instant.air_temperature|round }}&deg;
-        </div>
-        <div class="forecast_prob">
-          <div class="forecast_prob">
-            {% if weather.details.probability_of_precipitation|round != 0 %}
-            {{ weather.details.probability_of_precipitation|round }}%
-            <br />
-            {{ weather.details.precipitation_amount }}mm
-            {% else %}
-            &nbsp;<br />&nbsp;
-            {% endif %}
-          </div>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-  </nowcast>
-
-  <calendar>
-    {% for day in days %}
-
-    {% if day.birthdays is not empty or day.events is not empty or day.daily_forecast is not empty or day.dinner is not empty %}
-
-    <div class="calendar_day">
-      <div class="dateHeader">{{ day.weekday }}
-        <div class="headerWeather">
-          {% if day.daily_forecast is not empty %}
-          <div class="headerWeatherPrepArea">
-            {% if day.daily_forecast.lightRainProbability > 10 %}
-              <div class="weatherPrep light">
-                <img class="headerWeatherIconPrep light" style="opacity: 100%" src="assets/weathericon/png/lightrain.png" />
-                <span class="rainProb">{{ day.daily_forecast.lightRainProbability }}%</span>
+    <body>
+        <clock>
+            <div class="now_time" id="now_time">Kobler til</div>
+            <div class="date_week">
+                <div class="now_date" id="now_date"></div>
+                <div class="now_week" id="now_week"></div>
             </div>
-            {% endif %}
-            {% if day.daily_forecast.heavyRainProbability > 10 %}
-              <div class="weatherPrep heavy">
-                <img class="headerWeatherIconPrep heavy" style="opacity: 100%" src="assets/weathericon/png/heavyrain.png" />
-                <span class="rainProb">{{ day.daily_forecast.heavyRainProbability }}%</span>
-              </div>
-            {% endif %}
-          </div>
-          <img class="headerWeatherTempIcon" src="assets/low-temperature.png" />
-          {{ day.daily_forecast.minTemp|round }}&deg;
-          <img class="headerWeatherTempIcon" src="assets/high-temperature.png" />
-          {{ day.daily_forecast.maxTemp|round }}&deg;
-          {% endif %}
-        </div>
-      </div>
-      <div class="dinner">
-        {% for dinner in day.dinner %}
-        <div class="dinner"><img class='calendaricon birthday' src="assets/dinner.svg">{{ dinner.displayTitle }}</div>
-        {% endfor %}
-      </div>
-      <div class="birthdays">
-        {% for birthday in day.birthdays %}
-        <div class="birthday"><img class='calendaricon birthday' src="assets/birthday.svg">{{ birthday.displayTitle }}</div>
-        {% endfor %}
-      </div>
-      <div class="events">
-        {% for event in day.events %}
-        {% if event.fullDay == true %}
-        <div class="event">{{ event.displayTitle }}</div>
-        {% else %}
-        <div class="event">
-          <span class="event-time">
-          <span class="event-time-start">
-            {{ event.displayTime.start }}
-          </span>
-          <span class="event-time-spacer">
-            {{ event.displayTime.spacer }}
-          </span>
-          <span class="event-time-start">
-            {{ event.displayTime.end }}
-          </span>
-          </span>{{ event.displayTitle }}
-        </div>
-        {% endif %}
-        {% endfor %}
-      </div>
-    </div>
+        </clock>
 
-    {% endif %}
+        <currentweather>
+            <div class="current_temperature">{{ current_temperature|round }}&deg;</div>
+            <div class="aux-weather-info">
+                <div class="day_info_sun"><img src="assets/sunrise.png" width="22px" />&nbsp;{{ today.sunrise }}&nbsp;&nbsp; <img src="assets/sunset.png" width="22px" />&nbsp;{{ today.sunset }}</div>
+                <div class="current_pressure"></div>
+                <div class="current_humidity"></div>
+            </div>
+        </currentweather>
 
-    {% endfor %}
-  </calendar>
+        <nowcast>
+            {% for danger in danger_data%}
+            <div class="danger"><strong>{{ danger.response }}</strong> {{ danger.description }}</div>
+            {% endfor %}
+            <div class="weather">
+                {% for weather in hourly_weather|slice(1, 18) %}
+                <div class="forecast_point">
+                    <div class="time">{{ weather.hour }}</div>
+                    <div class="weather_symbol">
+                        <img class="weather_icon" src="assets/weathericon/png/{{ weather.symbol }}.png" />
+                    </div>
+                    <div class="temperature">
+                        {{ weather.instant.air_temperature|round }}&deg;
+                    </div>
+                    <div class="forecast_prob">
+                        <div class="forecast_prob">
+                            {% if weather.details.probability_of_precipitation|round != 0 %} {{ weather.details.probability_of_precipitation|round }}%
+                            <br />
+                            {{ weather.details.precipitation_amount }}mm {% else %} &nbsp;<br />
+                            &nbsp; {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </nowcast>
 
-  <footer>
-    <div class="power-home">
-      <div>
-        <strong>Hjemme</strong><br />
-        I dag: <span class="powerUsageTodayHome">_</span> kWh<br />
-        <!--Kost: <span class="powerCostTodayHome">_</span> kr<br />-->
-        Nå: <span class="current_power"></span><br />
-        Pris: <span class="currentPriceHome"></span>
-      </div>
-    </div>
+        <calendar>
+            {% for day in days %} {% if day.birthdays is not empty or day.events is not empty or day.daily_forecast is not empty or day.dinner is not empty %}
 
-    <div class="power-cabin">
-      <div>
-        <strong>Hytta</strong><br />
-        I dag: <span class="powerUsageTodayCabin">_</span> kWh<br />
-        <!-- Kost: <span class="powerCostTodayCabin">_</span> kr<br />-->
-        Nå: <span class="currentPowerCabin"></span><br />
-        <!--Pris: <span class="currentPriceCabin"></span>-->
-      </div>
-    </div>
+            <div class="calendar_day">
+                <div class="dateHeader">
+                    {{ day.weekday }}
+                    <div class="headerWeather">
+                        {% if day.daily_forecast is not empty %}
+                        <div class="headerWeatherPrepArea">
+                            {% if day.daily_forecast.lightRainProbability > 10 %}
+                            <div class="weatherPrep light">
+                                <img class="headerWeatherIconPrep light" style="opacity: 100%;" src="assets/weathericon/png/lightrain.png" />
+                                <span class="rainProb">{{ day.daily_forecast.lightRainProbability }}%</span>
+                            </div>
+                            {% endif %} {% if day.daily_forecast.heavyRainProbability > 10 %}
+                            <div class="weatherPrep heavy">
+                                <img class="headerWeatherIconPrep heavy" style="opacity: 100%;" src="assets/weathericon/png/heavyrain.png" />
+                                <span class="rainProb">{{ day.daily_forecast.heavyRainProbability }}%</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <img class="headerWeatherTempIcon" src="assets/low-temperature.png" />
+                        {{ day.daily_forecast.minTemp|round }}&deg;
+                        <img class="headerWeatherTempIcon" src="assets/high-temperature.png" />
+                        {{ day.daily_forecast.maxTemp|round }}&deg; {% endif %}
+                    </div>
+                </div>
+                <div class="dinner">
+                    {% for dinner in day.dinner %}
+                    <div class="dinner"><img class="calendaricon birthday" src="assets/dinner.svg" />{{ dinner.displayTitle }}</div>
+                    {% endfor %}
+                </div>
+                <div class="birthdays">
+                    {% for birthday in day.birthdays %}
+                    <div class="birthday"><img class="calendaricon birthday" src="assets/birthday.svg" />{{ birthday.displayTitle }}</div>
+                    {% endfor %}
+                </div>
+                <div class="events">
+                    {% for event in day.events %} {% if event.fullDay == true %}
+                    <div class="event">{{ event.displayTitle }}</div>
+                    {% else %}
+                    <div class="event">
+                        <span class="event-time">
+                            <span class="event-time-start">
+                                {{ event.displayTime.start }}
+                            </span>
+                            <span class="event-time-spacer">
+                                {{ event.displayTime.spacer }}
+                            </span>
+                            <span class="event-time-start">
+                                {{ event.displayTime.end }}
+                            </span>
+                        </span>
+                        {{ event.displayTitle }}
+                    </div>
+                    {% endif %} {% endfor %}
+                </div>
+            </div>
 
-    <div class="bane"></div>
+            {% endif %} {% endfor %}
+        </calendar>
 
-    <div class="cooler">
-      <div><strong>Kjølerom</strong><br /></div>
-      <div>Temp: <span class='coolerTemp'>_</span>&deg;</div>
-      <div>Fukt: <span class='coolerHumidity'>_</span>%</div>
-    </div>
-  </footer>
+        <footer>
+            <div class="power-home">
+                <div>
+                    <strong>Hjemme</strong><br />
+                    I dag: <span class="powerUsageTodayHome">_</span> kWh<br />
+                    <!--Kost: <span class="powerCostTodayHome">_</span> kr<br />-->
+                    Nå: <span class="current_power"></span><br />
+                    Pris: <span class="currentPriceHome"></span>
+                </div>
+            </div>
 
-</body>
+            <div class="power-cabin">
+                <div>
+                    <strong>Hytta</strong><br />
+                    I dag: <span class="powerUsageTodayCabin">_</span> kWh<br />
+                    <!-- Kost: <span class="powerCostTodayCabin">_</span> kr<br />-->
+                    Nå: <span class="currentPowerCabin"></span><br />
+                    <!--Pris: <span class="currentPriceCabin"></span>-->
+                </div>
+            </div>
+
+            <div class="bane"></div>
+
+            <div class="cooler">
+                <div><strong>Kjølerom</strong><br /></div>
+                <div>Temp: <span class="coolerTemp">_</span>&deg;</div>
+                <div>Fukt: <span class="coolerHumidity">_</span>%</div>
+            </div>
+        </footer>
+    </body>
 </html>
