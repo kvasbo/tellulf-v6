@@ -10,6 +10,7 @@ $text_large: 75px;
 $text_subheader: 25px;
 $text_size: 20px;
 $text_small: 14px;
+$grid_margin: 15px;
 $margin: 10px;
 $gray: #444444;
 
@@ -23,21 +24,17 @@ body {
   font-size: $text_size;
   height: 1200px;
   width: 1600px;
-  padding: 10px;
+  padding: $grid_margin;
   margin: 0;
   display: grid;
   grid-template-columns: 35% 22% 1fr;
   grid-template-rows: 30% 55% 1fr;
-  row-gap: 10px;
-  column-gap: 10px;
+  row-gap: $grid_margin;
+  column-gap: $grid_margin;
   grid-template-areas:
     "time_and_date current_weather calendar"
     "weather_nowcast weather_nowcast calendar"
     "bottom-boxes bottom-boxes calendar";
-}
-
-.block {
-  overflow: hidden;
 }
 
 clock, currentweather {
