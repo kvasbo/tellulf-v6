@@ -16,33 +16,6 @@
     <div class="now_week" id="now_week"></div>
   </div>
 
-  <div class="block power-home">
-    <div>
-      <strong>Hjemme</strong><br />
-      I dag: <span class="powerUsageTodayHome">_</span> kWh<br />
-      <!--Kost: <span class="powerCostTodayHome">_</span> kr<br />-->
-      Nå: <span class="current_power"></span><br />
-      Pris: <span class="currentPriceHome"></span>
-    </div>
-  </div>
-
-    <div class="block power-cabin">
-    <div>
-      <strong>Hytta</strong><br />
-      I dag: <span class="powerUsageTodayCabin">_</span> kWh<br />
-      <!-- Kost: <span class="powerCostTodayCabin">_</span> kr<br />-->
-      Nå: <span class="currentPowerCabin"></span><br />
-      <!--Pris: <span class="currentPriceCabin"></span>-->
-    </div>
-  </div>
-  <div class="block bane"></div>
-
-  <div class="block cooler">
-    <div><strong>Kjølerom</strong><br /></div>
-    <div>Temp: <span class='coolerTemp'>_</span>&deg;</div>
-    <div>Fukt: <span class='coolerHumidity'>_</span>%</div>
-  </div>
-
   <div class="block current_weather">
     <div class="current_weather_block">
       <div class="current_temperature">{{ current_temperature|round }}&deg;</div>
@@ -155,6 +128,35 @@
     {% endif %}
 
     {% endfor %}
+  </div>
+
+  <div class="bottom-boxes">
+    <div class="block power-home">
+      <div>
+        <strong>Hjemme</strong><br />
+        I dag: <span class="powerUsageTodayHome">_</span> kWh<br />
+        <!--Kost: <span class="powerCostTodayHome">_</span> kr<br />-->
+        Nå: <span class="current_power"></span><br />
+        Pris: <span class="currentPriceHome"></span>
+      </div>
+    </div>
+
+    <div class="block power-cabin">
+      <div>
+        <strong>Hytta</strong><br />
+        I dag: <span class="powerUsageTodayCabin">_</span> kWh<br />
+        <!-- Kost: <span class="powerCostTodayCabin">_</span> kr<br />-->
+        Nå: <span class="currentPowerCabin"></span><br />
+        <!--Pris: <span class="currentPriceCabin"></span>-->
+      </div>
+    </div>
+    <div class="block bane"></div>
+
+    <div class="block cooler">
+      <div><strong>Kjølerom</strong><br /></div>
+      <div>Temp: <span class='coolerTemp'>_</span>&deg;</div>
+      <div>Fukt: <span class='coolerHumidity'>_</span>%</div>
+    </div>
   </div>
 
 </body>

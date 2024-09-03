@@ -184,30 +184,19 @@ body {
   }
 }
 
-.power-cabin, .power-home, .bane, .cooler {
+.bottom-boxes {
   grid-row: 44 / 49;
+  grid-column: 2 / 29;
+  display: flex;
+  flex-direction: row;
+}
+
+.power-cabin, .power-home, .bane, .cooler {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 100%;
-  height: 100%;
-}
-
-.power-home {
-  grid-column: 2 / 8;
-}
-
-.power-cabin {
-  grid-column: 9 / 15;
-}
-
-.bane {
-  grid-column: 16 / 22;
-}
-
-.cooler {
-  grid-column: 23 / 29;
+  flex: 1;
 }
 
 .weather {
