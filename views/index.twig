@@ -45,7 +45,6 @@
 
   <div class="block current_weather">
     <div class="current_weather_block">
-      <img class="current_weather_symbol" src="assets/weathericon/png/{{ current_weather_icon }}.png" />
       <div class="current_temperature">{{ current_temperature|round }}&deg;</div>
     </div>
     <div class="current_weather_block aux-weather-info">
@@ -61,7 +60,7 @@
   <div class="block weather_nowcast">
     {% for danger in danger_data%}
     <div class='danger'>
-      <strong>{{ danger.response }}</strong> {{ danger.description }}<br><span class='danger_smaller'>{{ danger.instruction }}</span></p>
+      <strong>{{ danger.response }}</strong> {{ danger.description }}</p>
     </div>
     {% endfor %}
     <div class="weather">

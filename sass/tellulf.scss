@@ -11,7 +11,6 @@ $text_subheader: 25px;
 $text_size: 20px;
 $text_small: 14px;
 $margin: 10px;
-$first-column-width: 40%;
 $gray: #444444;
 
 * {
@@ -19,7 +18,6 @@ $gray: #444444;
 }
 
 body {
-  background-color: white;
   font-family: "Montserrat", sans-serif;
   font-weight: $font_weight;
   font-size: $text_size;
@@ -28,18 +26,17 @@ body {
   padding: 0;
   margin: 0;
   display: grid;
-  grid-template-columns: 15% 15% 15% 15% auto;
-  grid-template-rows: auto 18% 36% 16%;
+  grid-template-columns: repeat(50, 1fr);
+  grid-template-rows: repeat(50, 1fr);
 }
 
 .block {
-  padding: 2rem;
   overflow: hidden;
 }
 
 .time_and_date {
-  grid-row: 1 / 2;
-  grid-column: 1 / 3;
+  grid-row: 1 / 20;
+  grid-column: 1 / 20;
   width: 100%;
   height: 100%;
   display: flex;
@@ -58,9 +55,35 @@ body {
   }
 }
 
+.current_weather {
+  grid-row: 1 / 20;
+  grid-column: 20 / 30;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .current_weather_block {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    .current_temperature {
+      font-size: $text_huge;
+      font-weight: $bold_weight;
+      margin-left: 25px;
+    }
+    &.aux-weather-info {
+      flex-direction: column;
+    }
+  }
+}
+
 .calendar {
-  grid-row: 1 / 5;
-  grid-column: 5 / 6;
+  grid-row: 1 / 50;
+  grid-column: 30 / 49;
   width: 100%;
   height: 100%;
   display: flex;
@@ -140,35 +163,9 @@ body {
   }
 }
 
-.current_weather {
-  grid-row: 1 / 2;
-  grid-column: 3 / 5;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  .current_weather_block {
-    &.aux-weather-info {
-      flex-direction: column;
-    }
-    display: flex;
-    flex: 1;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    .current_temperature {
-      font-size: $text_xlarge;
-      font-weight: $bold_weight;
-      margin-left: 25px;
-    }
-  }
-}
-
 .weather_nowcast {
-  grid-row: 2 / 4;
-  grid-column: 1 / 5;
+  grid-row: 20 / 41;
+  grid-column: 2 / 29;
   width: 100%;
   height: 100%;
   display: flex;
@@ -182,54 +179,35 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  .danger_smaller {
-    font-size: $text_small;
-  }
   h3, p {
     margin-top: 0;
   }
 }
 
-.power-home {
-  grid-row: 4 / 5;
-  grid-column: 1 / 2;
-  width: 100%;
-  height: 100%;
+.power-cabin, .power-home, .bane, .cooler {
+  grid-row: 44 / 49;
   display: flex;
+  flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  width: 100%;
+  height: 100%;
+}
+
+.power-home {
+  grid-column: 2 / 8;
 }
 
 .power-cabin {
-  grid-row: 4 / 5;
-  grid-column: 2 / 3;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  grid-column: 9 / 15;
 }
 
 .bane {
-  grid-column: 3 / 4;
-  grid-row: 4 / 5;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+  grid-column: 16 / 22;
 }
 
 .cooler {
-  grid-row: 4 / 5;
-  grid-column: 4 / 5;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-direction: column;
+  grid-column: 23 / 29;
 }
 
 .weather {
