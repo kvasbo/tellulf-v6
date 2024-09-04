@@ -18,13 +18,6 @@ $gray: #444444;
 }
 
 body {
-  font-family: "Montserrat", sans-serif;
-  font-weight: $font_weight;
-  font-size: $text_size;
-  height: 1200px;
-  width: 1600px;
-  padding: $grid_margin;
-  margin: 0;
   display: grid;
   grid-template-columns: 35% 22% 1fr;
   grid-template-rows: 30% 55% 1fr;
@@ -34,6 +27,13 @@ body {
     "time_and_date current_weather calendar"
     "weather_nowcast weather_nowcast calendar"
     "bottom-boxes bottom-boxes calendar";
+  font-family: "Montserrat", sans-serif;
+  font-weight: $font_weight;
+  font-size: $text_size;
+  height: 1200px;
+  width: 1600px;
+  padding: $grid_margin;
+  margin: 0;
 }
 
 clock,
@@ -48,23 +48,23 @@ currentweather {
 
 #now_time,
 #current_temperature {
-  display: flex;
   align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
+  display: flex;
   flex: 3;
   font-size: $text_huge;
   font-weight: $bold_weight;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
 }
 
 #date_week,
 #aux-weather-info {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   flex: 2;
+  justify-content: center;
 }
 
 clock {
@@ -93,36 +93,35 @@ calendar {
   overflow: hidden;
   day {
     .dateHeader {
-      margin-top: 0.5rem;
-      margin-bottom: 0.25rem;
-      border-bottom: 1px solid $gray;
-      width: 100%;
-      justify-content: space-between;
       align-items: center;
+      border-bottom: 1px solid $gray;
       display: flex;
       font-size: $text_subheader;
+      justify-content: space-between;
+      margin-bottom: 0.25rem;
+      margin-top: 0.5rem;
+      width: 100%;
       .headerWeather {
-        display: flex;
         align-items: center;
+        display: flex;
         .headerWeatherPrepArea {
           display: flex;
-
           margin-right: 0.2em;
           .weatherPrep {
-            flex: 1;
-            display: flex;
             color: grey;
+            display: flex;
+            flex: 1;
             .headerWeatherIconPrep {
               height: $text_subheader;
-              width: $text_subheader;
               margin: 0 0.25em;
+              width: $text_subheader;
             }
           }
         }
         .headerWeatherTempIcon {
-          width: $text_subheader;
           height: $text_subheader;
           opacity: 0.4;
+          width: $text_subheader;
         }
       }
     }
@@ -131,21 +130,21 @@ calendar {
       .event-time {
         color: $gray;
         display: flex;
-        width: 135px;
-        margin-right: 10px;
         justify-content: flex-start;
+        margin-right: 10px;
         span {
           display: flex;
           flex-direction: column;
           justify-content: center;
         }
-        .event-time-start,
-        .event-time-end {
+        .event-time-end,
+        .event-time-start {
           width: 60px;
         }
         .event-time-spacer {
           width: 20px;
         }
+        width: 135px;
       }
     }
   }
@@ -162,10 +161,11 @@ nowcast {
 }
 
 .danger {
-  margin-bottom: 0.5em;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: flex-start;
+  margin-bottom: 0.5em;
   h3,
   p {
     margin-top: 0;
@@ -192,12 +192,12 @@ footer {
   display: flex;
   flex-wrap: wrap;
   forecast {
+    align-items: center;
     display: flex;
     flex: 1;
     flex-direction: column;
-    margin: $margin $margin 0 $margin;
-    align-items: center;
     justify-content: center;
+    margin: $margin $margin 0 $margin;
     .forecast_prob {
       color: $gray;
       font-size: $text_small;
@@ -207,12 +207,12 @@ footer {
 }
 
 .weather_icon {
-  width: $text_large;
   height: $text_large;
+  width: $text_large;
 }
 
 .calendaricon {
-  width: $text_small;
   height: $text_small;
   margin-right: 0.3em;
+  width: $text_small;
 }
