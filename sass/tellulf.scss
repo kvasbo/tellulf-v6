@@ -1,5 +1,3 @@
-@use "sass:math";
-
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800");
 
 $font_weight: 400;
@@ -132,6 +130,7 @@ calendar {
         display: flex;
         justify-content: flex-start;
         margin-right: 10px;
+        width: 135px;
         span {
           display: flex;
           flex-direction: column;
@@ -144,7 +143,6 @@ calendar {
         .event-time-spacer {
           width: 20px;
         }
-        width: 135px;
       }
     }
   }
