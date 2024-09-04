@@ -13,11 +13,11 @@
     "eslint": "^9.9.1",
     "globals": "^15.9.0",
     "prettier": "^3.3.3",
-    "sass": "^1.77.8"
+    "sass": "^1.78.0"
   },
   "dependencies": {
     "express": "^4.19.2",
-    "googleapis": "^143.0.0",
+    "googleapis": "^144.0.0",
     "graphql": "^16.9.0",
     "graphql-request": "^7.1.0",
     "luxon": "^3.5.0",
