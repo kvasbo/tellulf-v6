@@ -24,11 +24,13 @@ const __dirname = path.dirname(__filename);
 // Import the src/version.json file
 import { version } from "./version.json";
 
-console.log("version", version);
-
 // Load the twig template
 const templateData = readFileSync("./views/index.twig", "utf8");
 const template = Twig.twig({ id: "index", data: templateData });
+
+// Load and compile Sass and JS
+const stylesheet = sass.compile("./sass/tellulf.scss", { style: "compressed" });
+const clientJs = readFileSync("./src/Client.js", "utf8");
 
 // Configure the time zone
 Settings.defaultZone = "Europe/Oslo";
@@ -40,10 +42,6 @@ const mqttClient = new MqttClient();
 // Create smarthouse connector
 const smart = new Smarthouse(mqttClient);
 smart.startMqtt();
-
-// Load and compile Sass and JS
-const stylesheet = sass.compile("./sass/tellulf.scss");
-const clientJs = readFileSync("./src/Client.js", "utf8");
 
 const powerPriceGetter = new PowerPrice();
 
