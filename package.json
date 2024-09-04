@@ -1,6 +1,8 @@
 {
   "scripts": {
+    "sass": "bunx sass --embed-source-map --watch sass:assets/css",
     "dev": "bun --watch src/Server.mjs",
+    "build": "bunx sass sass:assets/css",
     "lint": "bunx eslint ./src/ --stats --no-cache --fix",
     "start": "bun src/Server.mjs",
     "run-docker-dev": "docker run --env-file .env -p 3000:3000 tellulf",
@@ -10,7 +12,8 @@
     "@eslint/js": "^9.9.1",
     "eslint": "^9.9.1",
     "globals": "^15.9.0",
-    "prettier": "^3.3.3"
+    "prettier": "^3.3.3",
+    "sass": "^1.78.0"
   },
   "dependencies": {
     "express": "^4.19.2",
@@ -19,7 +22,6 @@
     "graphql-request": "^7.1.0",
     "luxon": "^3.5.0",
     "mqtt": "^5.10.1",
-    "sass": "^1.78.0",
     "sunrise-sunset-js": "^2.2.1",
     "twig": "^1.17.1",
     "ws": "^8.18.0",
