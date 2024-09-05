@@ -3,7 +3,10 @@ import path from "path";
 import WebSocket from "ws";
 import http from "http";
 import Twig from "twig";
+import * as sass from "sass";
 import { readFileSync } from "fs";
+import { fileURLToPath } from "url";
+
 import { Days } from "./Days.mjs";
 import { Clock } from "./Clock.mjs";
 import { Entur } from "./Entur.mjs";
@@ -13,8 +16,6 @@ import { Settings } from "luxon";
 import { Smarthouse } from "./Smarthouse.mjs";
 import { MqttClient } from "./MQTT.mjs";
 import { PowerPrice } from "./PowerPrice.mjs";
-
-import { fileURLToPath } from "url";
 
 // Get the filename and directory name
 const __filename = fileURLToPath(import.meta.url);
@@ -46,15 +47,6 @@ const powerPriceGetter = new PowerPrice();
 
 // Express settings
 app.use("/assets", express.static(path.join(__dirname, "../assets"))); // Static routes
-app.use(
-  "/favicon.ico",
-  express.static(path.join(__dirname, "../assets/favicon.ico")),
-);
-app.use("/client.js", express.static(path.join(__dirname, "/Client.js")));
-app.use(
-  "/client.css",
-  express.static(path.join(__dirname, "../assets/css/tellulf.css")),
-);
 
 const port = 3000;
 
@@ -62,6 +54,18 @@ const calendar = new Calendar();
 const days = new Days(calendar);
 const entur = new Entur();
 const weather = new Weather();
+
+// Return stylesheet
+app.get("/client.css", (req, res) => {
+  res.setHeader("Content-Type", "text/css");
+  res.send(stylesheet.css.toString());
+});
+
+// Return javascript
+app.get("/client.js", (req, res) => {
+  res.setHeader("Content-Type", "text/javascript");
+  res.send(clientJs);
+});
 
 app.get("/", (req, res) => {
   const data = {
