@@ -1,4 +1,3 @@
-version: '3.9'
 services:
   tellulf:
     image: ghcr.io/kvasbo/tellulf-v6:main
