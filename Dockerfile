@@ -27,6 +27,7 @@ COPY --from=install /temp/prod/node_modules node_modules
 COPY --from=prerelease /usr/src/app/src ./src
 COPY --from=prerelease /usr/src/app/views ./views
 COPY --from=prerelease /usr/src/app/assets ./assets
+COPY --from=prerelease /usr/src/app/sass ./sass
 COPY --from=prerelease /usr/src/app/package.json .
 
 # run the app
