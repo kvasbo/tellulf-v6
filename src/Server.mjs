@@ -30,7 +30,6 @@ const template = Twig.twig({ id: "index", data: templateData });
 
 // Load and compile Sass and JS
 const stylesheet = sass.compile("./sass/tellulf.scss", { style: "compressed" });
-const clientJs = readFileSync("./src/Client.js", "utf8");
 
 // Configure the time zone
 Settings.defaultZone = "Europe/Oslo";
@@ -64,6 +63,7 @@ app.get("/client.css", (req, res) => {
 // Return javascript
 app.get("/client.js", (req, res) => {
   res.setHeader("Content-Type", "text/javascript");
+  const clientJs = readFileSync("./src/Client.js", "utf8");
   res.send(clientJs);
 });
 

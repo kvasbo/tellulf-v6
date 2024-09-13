@@ -5,9 +5,8 @@
 let eventsHash = "";
 let version = "";
 
-const ws = new WebSocket(
-  "ws://" + window.location.hostname + ":" + window.location.port,
-);
+let ws = null;
+
 let wsRetryCount = 0;
 
 const wsId =
@@ -26,13 +25,10 @@ window.addEventListener("DOMContentLoaded", function () {
  * Connect to the WebSocket and handle reconnections and messages.
  */
 async function connectWebSocket() {
-  // Reload window if we have retried too many times
-  if (wsRetryCount > 10) {
-    console.log("Too many retries, giving up");
-    window.location.reload();
-  }
-  wsRetryCount++;
-
+  console.log("Connecting to WebSocket");
+  ws = new WebSocket(
+    "ws://" + window.location.hostname + ":" + window.location.port,
+  );
   ws.onopen = function () {
     // Web Socket is connected, identify ourselves
     ws.send(
@@ -45,20 +41,8 @@ async function connectWebSocket() {
   };
 
   ws.onclose = function () {
-    document.getElementById("now_time").innerHTML = `Frakoblet`;
-    document.getElementById("now_date").innerHTML = `(╯°□°)╯︵ ┻━┻`;
-    // Connection has been closed, attempt to reconnect
-    setTimeout(function () {
-      connectWebSocket();
-    }, 15000); // Try to reconnect after 15 seconds
-  };
-
-  ws.onerror = function (error) {
-    // Handle errors
-    console.log("WebSocket error:", error);
-    setTimeout(function () {
-      connectWebSocket();
-    }, 5000); // Try to reconnect after 5 seconds
+    document.getElementById("now_time").innerHTML = `:(`;
+    document.getElementById("now_date").innerHTML = ``;
   };
 
   ws.onmessage = function (evt) {
@@ -104,7 +88,29 @@ async function connectWebSocket() {
   };
 }
 
-connectWebSocket();
+// Run a loop to check if the WebSocket is open
+function checkWebSocket() {
+  if (ws === null) {
+    connectWebSocket();
+  }
+  else if (ws.readyState !== 1) {
+     // Reload window if we have retried too many times
+     console.log("WebSocket not open, trying to connect. Tries:", wsRetryCount);
+     // 15 minutes as we wait for 10 seconds per try
+      if (wsRetryCount > (15 * 6)) {
+        console.log("Too many retries, giving up");
+        window.location.reload();
+      }
+      wsRetryCount++;
+    connectWebSocket();
+  } else {
+    wsRetryCount = 0;
+    console.log("WebSocket is open");
+  }
+  setTimeout(checkWebSocket, 10000);
+}
+
+checkWebSocket();
 
 /**
  * Update the UX with Homey data.
