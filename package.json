@@ -7,8 +7,8 @@
     "build-docker-dev": "docker build --pull -t tellulf ."
   },
   "devDependencies": {
-    "@eslint/js": "^9.10.0",
-    "eslint": "^9.10.0",
+    "@eslint/js": "^9.11.1",
+    "eslint": "^9.11.1",
     "globals": "^15.9.0",
     "prettier": "^3.3.3"
   },
@@ -19,7 +19,7 @@
     "graphql-request": "^7.1.0",
     "luxon": "^3.5.0",
     "mqtt": "^5.10.1",
-    "sass": "^1.78.0",
+    "sass": "^1.79.3",
     "sunrise-sunset-js": "^2.2.1",
     "twig": "^1.17.1",
     "ws": "^8.18.0",
