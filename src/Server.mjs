@@ -67,6 +67,13 @@ app.get("/client.js", (req, res) => {
   res.send(clientJs);
 });
 
+// Return manifest
+app.get("/manifest.json", (req, res) => {
+  res.setHeader("Content-Type", "text/json");
+  const clientJs = readFileSync("./assets/manifest.json", "utf8");
+  res.send(clientJs);
+});
+
 app.get("/", (req, res) => {
   const data = {
     current_temperature: days.weather.getCurrentWeather().temperature,
