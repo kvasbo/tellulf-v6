@@ -14,6 +14,8 @@ RUN cd /temp/dev && bun install --frozen-lockfile
 RUN mkdir -p /temp/prod
 COPY package.json bun.lockb /temp/prod/
 RUN cd /temp/prod && bun install --frozen-lockfile --production
+# Build SASS
+RUN bun run sass
 
 # copy node_modules from temp directory
 # then copy all (non-ignored) project files into the image
@@ -29,9 +31,6 @@ COPY --from=prerelease /usr/src/app/views ./views
 COPY --from=prerelease /usr/src/app/assets ./assets
 COPY --from=prerelease /usr/src/app/sass ./sass
 COPY --from=prerelease /usr/src/app/package.json .
-
-# Build SASS
-RUN bun run sass
 
 # run the app
 USER bun
