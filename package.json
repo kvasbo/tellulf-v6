@@ -3,6 +3,8 @@
     "dev": "bun --watch src/Server.mjs",
     "lint": "bunx eslint ./src/ --stats --no-cache --fix",
     "start": "bun src/Server.mjs",
+    "sass": "bunx sass sass/tellulf.scss:assets/css/tellulf.css",
+    "sass-watch": "bunx sass --watch sass/tellulf.scss:assets/css/tellulf.css",
     "run-docker-dev": "docker run --env-file .env -p 3000:3000 tellulf",
     "build-docker-dev": "docker build --pull -t tellulf ."
   },
@@ -19,7 +21,7 @@
     "graphql-request": "^7.1.0",
     "luxon": "^3.5.0",
     "mqtt": "^5.10.1",
-    "sass": "^1.79.5",
+    "sass": "^1.80.1",
     "sunrise-sunset-js": "^2.2.1",
     "twig": "^1.17.1",
     "ws": "^8.18.0",
