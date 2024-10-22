@@ -119,7 +119,7 @@ checkWebSocket();
 function updateHomeyInfo(homey) {
   // Show temperature
   if (homey.tempOut) {
-    const t = Number(homey.tempOut).toFixed(0);
+    const t = Number(homey.tempOut).toFixed(1);
     if (t === "-0") {
       document.getElementById("current_temperature").innerHTML = `0&deg;`;
     } else {
@@ -235,22 +235,3 @@ function setReloadClient(inHours) {
   const diff = startOfNextHour.getTime() - now.getTime();
   setTimeout(() => window.location.reload(), diff);
 }
-
-// Make the screen stay alive
-let wakeLock = null;
-
-async function requestWakeLock() {
-  try {
-    wakeLock = await navigator.wakeLock.request('screen');
-    console.log('Wake Lock is active');
-
-    wakeLock.addEventListener('release', () => {
-      console.log('Wake Lock was released');
-    });
-  } catch (err) {
-    console.error(`${err.name}, ${err.message}`);
-  }
-}
-
-// Call the function to request the wake lock
-requestWakeLock();
