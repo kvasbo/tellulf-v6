@@ -32,7 +32,7 @@ export class Weather {
   constructor() {
     setTimeout(() => {
       this.updateForecasts();
-    }, 1000 * 1);
+    }, 1000);
     setInterval(
       () => {
         this.updateForecasts();
@@ -41,7 +41,7 @@ export class Weather {
     ); // Every 30 minutes
   }
 
-  async updateForecasts() {
+  updateForecasts() {
     // Fetch forecast
     this.fetchForecastData();
     this.fetchLongTermForecast();
@@ -151,7 +151,7 @@ export class Weather {
   async fetchDanger() {
     const data = await fetch(YR_URL_DANGER, this.fetchOptions);
     const danger = await data.json();
-    const dangerData = danger.features.map((feature) => {
+    this.dangerData = danger.features.map((feature) => {
       return {
         response: feature.properties.awarenessResponse,
         severity: feature.properties.severity,
@@ -160,7 +160,6 @@ export class Weather {
         instruction: feature.properties.instruction,
       };
     });
-    this.dangerData = dangerData;
   }
 
   /**
@@ -188,7 +187,6 @@ export class Weather {
 
   /**
    * Do the fetching from Met api
-   * @param url
    * @returns
    */
   async fetchForecastData() {
@@ -219,7 +217,7 @@ export class Weather {
           forecastValidated.data.properties.timeseries.length,
         );
         this.forecast = forecastValidated.data.properties.timeseries;
-        return;
+
       } else {
         console.log("Could not validate forecast");
         console.log(forecastValidated);
@@ -232,7 +230,7 @@ export class Weather {
       setTimeout(() => {
         this.fetchForecastData();
       }, 1000 * 10);
-      return;
+
     }
   }
 }
