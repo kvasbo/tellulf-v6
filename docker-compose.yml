@@ -18,4 +18,5 @@ services:
       - MQTT_PASS=${MQTT_PASS}
 networks:
   default:
-    driver: bridge
+    name: ${NETWORK_NAME}
+    external: true
