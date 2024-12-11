@@ -190,12 +190,12 @@ footer {
   display: flex;
   flex-wrap: wrap;
   forecast {
+    width: 9%;
     align-items: center;
     display: flex;
-    flex: 1;
     flex-direction: column;
     justify-content: center;
-    margin: $margin $margin 0 $margin;
+    margin: $margin 1% 0 $margin;
     .forecast_prob {
       color: $gray;
       font-size: $text_small;
