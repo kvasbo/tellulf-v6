@@ -1,76 +1,4 @@
-import { gql, request } from "graphql-request";
-import * as z from "zod";
-
-// Define API schema
-const EnturCallSchema = z.object({
-  stopPlace: z.object({
-    id: z.string(),
-    name: z.string(),
-    estimatedCalls: z.array(
-      z.object({
-        realtime: z.boolean(),
-        aimedArrivalTime: z.string(),
-        aimedDepartureTime: z.string(),
-        expectedArrivalTime: z.string(),
-        expectedDepartureTime: z.string(),
-        actualArrivalTime: z.string().nullable(),
-        actualDepartureTime: z.string().nullable(),
-        date: z.string(),
-        forBoarding: z.boolean(),
-        forAlighting: z.boolean(),
-        destinationDisplay: z.object({
-          frontText: z.string(),
-        }),
-        quay: z.object({ id: z.string() }),
-        serviceJourney: z.object({
-          journeyPattern: z.object({
-            line: z.object({
-              id: z.string(),
-              name: z.string(),
-              transportMode: z.string(),
-            }),
-          }),
-        }),
-      }),
-    ),
-  }),
-});
-
-const ENTUR_QUERY = gql`
-  {
-    stopPlace(id: "NSR:StopPlace:58268") {
-      id
-      name
-      estimatedCalls(timeRange: 72100, numberOfDepartures: 10) {
-        realtime
-        aimedArrivalTime
-        aimedDepartureTime
-        expectedArrivalTime
-        expectedDepartureTime
-        actualArrivalTime
-        actualDepartureTime
-        date
-        forBoarding
-        forAlighting
-        destinationDisplay {
-          frontText
-        }
-        quay {
-          id
-        }
-        serviceJourney {
-          journeyPattern {
-            line {
-              id
-              name
-              transportMode
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+import { XMLParser } from "fast-xml-parser";
 
 export class Entur {
   trains = [];
@@ -88,36 +16,45 @@ export class Entur {
 
   async Update() {
     try {
-      const data = await request({
-        url: "https://api.entur.io/journey-planner/v2/graphql",
-        document: ENTUR_QUERY,
-        requestHeaders: {
-          "ET-Client-Name": "kvasbo-tellulf",
-          "Content-Type": "application/json",
-        },
-      });
-
-      // Safely parse data
-      const res = EnturCallSchema.safeParse(data);
-
-      if (!res.success) {
-        this.trains = [];
-        return;
-      }
-
-      const trainsFiltered = res.data.stopPlace.estimatedCalls.filter(
-        (call) => {
-          return call.quay.id === "NSR:Quay:11518" && call.forBoarding === true;
-        },
+      const parser = new XMLParser();
+      const xmlData = await fetch(
+        "https://api.entur.io/realtime/v1/rest/et?datasetId=RUT",
       );
-
-      const trainsFormatted = trainsFiltered.map((train) => {
+      const text = await xmlData.text();
+      const parsed = parser.parse(text);
+      const trips =
+        parsed.Siri.ServiceDelivery.EstimatedTimetableDelivery
+          .EstimatedJourneyVersionFrame.EstimatedVehicleJourney;
+      const filteredTrips = trips.filter((trip) => {
+        if (
+          !trip.EstimatedCalls?.EstimatedCall ||
+          trip.EstimatedCalls.EstimatedCall.length === 0
+        ) {
+          return false;
+        }
+        if (trip.LineRef !== "RUT:Line:1" || trip.DirectionRef !== 1) {
+          return false;
+        }
+        if (
+          !Array.isArray(trip.EstimatedCalls.EstimatedCall) ||
+          trip.EstimatedCalls.EstimatedCall.filter(
+            (call) => call.StopPointName === "Slemdal",
+          ).length === 0
+        ) {
+          return false;
+        }
+        return true;
+      });
+      this.trains = filteredTrips.map((trip) => {
+        const found = trip.EstimatedCalls.EstimatedCall.find(
+          (stop) => stop.StopPointName === "Slemdal",
+        );
         return {
-          time: train.expectedArrivalTime,
-          destination: train.destinationDisplay.frontText,
+          time: found.ExpectedDepartureTime,
+          destination: found.DestinationDisplay,
         };
       });
-      this.trains = trainsFormatted;
+
       console.log(`Entur updated with ${this.trains.length} trains`);
     } catch (error) {
       console.error("Error: ", error);

@@ -10,20 +10,19 @@
     "@eslint/js": "^9.16.0",
     "eslint": "^9.16.0",
     "globals": "^15.13.0",
-    "prettier": "^3.4.1"
+    "prettier": "^3.4.2"
   },
   "dependencies": {
     "express": "^5.0.1",
+    "fast-xml-parser": "^4.5.0",
     "googleapis": "^144.0.0",
-    "graphql": "^16.9.0",
-    "graphql-request": "^7.1.2",
     "luxon": "^3.5.0",
     "mqtt": "^5.10.3",
-    "sass": "^1.81.1",
+    "sass": "^1.82.0",
     "sunrise-sunset-js": "^2.2.1",
     "twig": "^1.17.1",
     "ws": "^8.18.0",
-    "zod": "^3.23.8"
+    "zod": "^3.24.1"
   },
   "name": "tellulf-v6",
   "version": "1.0.0",
