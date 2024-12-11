@@ -28,8 +28,6 @@ import { version } from "./version.json";
 const templateData = readFileSync("./views/index.twig", "utf8");
 const template = Twig.twig({ id: "index", data: templateData });
 
-// Load and compile Sass and JS
-const stylesheet = sass.compile("./sass/tellulf.scss", { style: "compressed" });
 
 // Configure the time zone
 Settings.defaultZone = "Europe/Oslo";
@@ -56,6 +54,8 @@ const weather = new Weather();
 
 // Return stylesheet
 app.get("/client.css", (req, res) => {
+  // Load and compile Sass and JS
+  const stylesheet = sass.compile("./sass/tellulf.scss", { style: "compressed" });
   res.setHeader("Content-Type", "text/css");
   res.send(stylesheet.css.toString());
 });
