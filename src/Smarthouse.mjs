@@ -1,6 +1,9 @@
+import { Database } from "./Database.mjs";
+
 export class Smarthouse {
   constructor(mqttClient) {
     this.mqttClient = mqttClient;
+    this.database = new Database();
   }
 
   coolerRoomTemp = -9999;
@@ -56,6 +59,7 @@ export class Smarthouse {
         case "tellulf/weather/tempOut":
           this.temp = parseFloat(message.toString());
           this.mqttClient.log("Temperature set to:", this.temp);
+          this.database.putTemperaturePoint(this.temp);
           break;
         case "tellulf/weather/humidity":
           this.hum = parseFloat(message.toString());
