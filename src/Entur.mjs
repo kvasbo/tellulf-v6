@@ -45,7 +45,7 @@ export class Entur {
         }
         return true;
       });
-      this.trains = filteredTrips.map((trip) => {
+      const filteredTrains = filteredTrips.map((trip) => {
         const found = trip.EstimatedCalls.EstimatedCall.find(
           (stop) => stop.StopPointName === "Slemdal",
         );
@@ -53,6 +53,10 @@ export class Entur {
           time: found.ExpectedDepartureTime,
           destination: found.DestinationDisplay,
         };
+      });
+
+      this.trains = filteredTrains.sort((a, b) => {
+        return new Date(a.time) - new Date(b.time);
       });
 
       console.log(`Entur updated with ${this.trains.length} trains`);
