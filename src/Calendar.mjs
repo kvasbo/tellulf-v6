@@ -247,11 +247,13 @@ export class Calendar {
       };
     }
 
+    const arrow = "→";
+
     if (dayType === "lastDay") {
       return {
         start: "",
         end: DateTime.fromJSDate(event.end).toFormat("HH:mm"),
-        spacer: "⇝",
+        spacer: arrow,
       };
     }
 
@@ -259,7 +261,7 @@ export class Calendar {
       return {
         start: DateTime.fromJSDate(event.start).toFormat("HH:mm"),
         end: "",
-        spacer: "⇝",
+        spacer: arrow,
       };
     }
 
@@ -267,7 +269,7 @@ export class Calendar {
     return {
       start: DateTime.fromJSDate(event.start).toFormat("HH:mm"),
       end: DateTime.fromJSDate(event.end).toFormat("HH:mm"),
-      spacer: "⇝",
+      spacer: arrow,
     };
   }
 
